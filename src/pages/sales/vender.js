@@ -11,26 +11,19 @@ import {
   Card,
   Typography
 } from '@mui/material';
-import { DashboardLayout } from '../../../../components/dashboard-layout';
-import Table from '../../../../components/Table'
-import ToolBar from "../../../../components/ToolBar";
+import { DashboardLayout } from '../../components/dashboard-layout';
+import Table from '../../components/Table'
+import ToolBar from '../../components/ToolBar'
 
-const RawMaterial = () => {
+const Vender = () => {
   const [data, setData] = useState([]);
   const columns = [
-    { title: "Name", field: "raw_name" },
-    { title: "Quantity", field: "raw_quantity" },
-    { title: "Description", field: "raw_description" },
-    { title: "Material Code", field: "raw_materialcode" },
-    { title: "Specification", field: "raw_spec" },
-    { title: "Material Unit", field: "raw_materialunit" },
-    { title: "Value", field: "raw_value" },
-    { title: "Reference Number", field: "raw_referncenum" },
-    { title: "Date", field: "raw_date" },
-    { title: "Remark", field: "raw_remark" },
+    { title: "Name", field: "name" },
+    { title: "Email", field: "email" },
+    { title: "Phone", field: "phone" },
   ];
   useEffect(() => {
-    fetch("http://196.188.123.14:3000/rawmaterials")
+    fetch("https://jsonplaceholder.typicode.com/users")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
@@ -38,7 +31,7 @@ const RawMaterial = () => {
     <>
       <Head>
         <title>
-          RawMaterial
+        Vender
         </title>
       </Head>
       <Box
@@ -49,7 +42,7 @@ const RawMaterial = () => {
         }}
       >
         <Container maxWidth="ml">
-        <ToolBar title="SIV" href="/warehouse/stockList/RawMaterial/addSiv" />
+        {/* <ToolBar title="Recieving" href="/procurment/paymentrequest/add" /> */}
 
           {/* <Typography
             sx={{ mb: 3 }}
@@ -60,7 +53,7 @@ const RawMaterial = () => {
           <Card maxWidth="lg">
         
         <Table 
-          title='Raw Material stockList' 
+          title='Vender' 
           data={data} 
           columns={columns}
           // actions={[
@@ -82,10 +75,10 @@ const RawMaterial = () => {
   )
 };
 
-RawMaterial.getLayout = (page) => (
+Vender.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default RawMaterial;
+export default Vender;

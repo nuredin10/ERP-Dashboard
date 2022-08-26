@@ -157,9 +157,29 @@ const production = [
 
 const sales = [
   {
-    href: "/sales/issue",
+    href: "/sales/request",
     icon: <UsersIcon fontSize="small" />,
-    title: 'View All Products'
+    title: 'Request'
+  },
+  {
+    href: "/sales/viewitemrecieved",
+    icon: <UsersIcon fontSize="small" />,
+    title: 'View Item Recieved'
+  },
+  {
+    href: "/sales/vender",
+    icon: <UsersIcon fontSize="small" />,
+    title: 'Vender (CRM)'
+  },
+  {
+    href: "/sales/salesorder",
+    icon: <UsersIcon fontSize="small" />,
+    title: 'Sales Order'
+  },
+  {
+    href: "/sales/salesquotation",
+    icon: <UsersIcon fontSize="small" />,
+    title: 'Sales Quotation'
   },
 ]
 
@@ -414,14 +434,16 @@ export const DashboardSidebar = (props) => {
           ))}
         </Box>
         <Divider sx={{ borderColor: "#2D3748", my: 3, }} />
-        {/* <Box sx={{ flexGrow: 1 }}>
-          {items.map((item) => (
+        <Box sx={{ flexGrow: 1 }}>
+        <Typography variant="menuTitle">SALES</Typography>
+
+          {sales.map((item) => (
             <>
               <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
             </>
           ))}
         </Box>
-        <Divider sx={{ borderColor: "#2D3748" }} /> */}
+        <Divider sx={{ borderColor: "#2D3748" }} /> 
         {/* <Box
           sx={{
             px: 2,
