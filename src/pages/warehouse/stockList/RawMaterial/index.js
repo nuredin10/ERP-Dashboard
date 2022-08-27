@@ -30,7 +30,7 @@ const RawMaterial = () => {
     { title: "Remark", field: "raw_remark" },
   ];
   useEffect(() => {
-    fetch("http://196.188.123.14:3000/rawmaterials")
+    fetch("http://versavvy.com:49000/rawmaterials")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);

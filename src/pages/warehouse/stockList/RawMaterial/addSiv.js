@@ -36,7 +36,7 @@ const AddSiv = () => {
 
   const newUser = (user) => {
     // console.log(user)
-    fetch("http://localhost:3000/addnewrawmaterials", {
+    fetch("http://versavvy.com:49000/addnewrawmaterials", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -85,103 +85,103 @@ const AddSiv = () => {
               <input type="submit" />
             </form> */}
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <form onSubmit={handleSubmit(newUser)}>
-              <Grid container 
-              spacing={4}>
-                <Grid item 
-                xs={12}
-sm={12}>
-                  <Typography variant="h6">Add Raw Material SIV</Typography>
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_name "
-label="Name"
-type="text"
-fullWidth
-{...register("raw_name")}/>
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_quantity"
-label="Quantity"
-type="text"
-fullWidth
-{...register("raw_quantity")}/>
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_description"
-label="Description"
-type="text"
-fullWidth
-{...register("raw_description")}/>
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_materialcode"
-label="MaterialCode"
-type="text"
-fullWidth
-{...register("raw_materialcode")} />
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_spec"
-label="Specification"
-type="text"
-fullWidth
-{...register("raw_spec")}/>
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_materialunit"
-label="Material Unit"
-type="text"
-fullWidth
-{...register("raw_materialunit")}/>
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_value"
-label="Value"
-type="text"
-fullWidth
-{...register("raw_value")}/>
-                </Grid>
-                <Grid item 
-                xs={12}
-sm={6}>
-                  <TextField required 
-                  name="raw_referncenum"
-label="Reference Number"
-type="text"
-fullWidth
-{...register("raw_referncenum")}/>
-                </Grid>
-                <Grid item >
-                <TextField required 
-                name="raw_date"
-label="Date"
-type="text"
-fullWidth
-{...register("raw_date")}/>
+              <form onSubmit={handleSubmit(newUser)}>
+                <Grid container
+                  spacing={4}>
+                  <Grid item
+                    xs={12}
+                    sm={12}>
+                    <Typography variant="h6">Add Raw Material SIV</Typography>
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_name "
+                      label="Name"
+                      type="text"
+                      fullWidth
+                      {...register("raw_name")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_quantity"
+                      label="Quantity"
+                      type="text"
+                      fullWidth
+                      {...register("raw_quantity")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_description"
+                      label="Description"
+                      type="text"
+                      fullWidth
+                      {...register("raw_description")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_materialcode"
+                      label="MaterialCode"
+                      type="text"
+                      fullWidth
+                      {...register("raw_materialcode")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_spec"
+                      label="Specification"
+                      type="text"
+                      fullWidth
+                      {...register("raw_spec")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_materialunit"
+                      label="Material Unit"
+                      type="text"
+                      fullWidth
+                      {...register("raw_materialunit")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_value"
+                      label="Value"
+                      type="text"
+                      fullWidth
+                      {...register("raw_value")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="raw_referncenum"
+                      label="Reference Number"
+                      type="text"
+                      fullWidth
+                      {...register("raw_referncenum")} />
+                  </Grid>
+                  <Grid item >
+                    <TextField required
+                      name="raw_date"
+                      label="Date"
+                      type="text"
+                      fullWidth
+                      {...register("raw_date")} />
 
-                  {/* <DesktopDatePicker
+                    {/* <DesktopDatePicker
                     sx={{ maxWidth: 500 }}
                     name="raw_date"
                     label="Date"
@@ -189,25 +189,25 @@ fullWidth
                     value={"2014-08-18T21:11:54"}
                     renderInput={(params) => <TextField {...params} {...register("raw_date")}/>}
                   /> */}
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={12}>
+                    <TextField required
+                      name="raw_remark"
+                      label="Remark"
+                      type="text"
+                      fullWidth
+                      {...register("raw_remark")} />
+                  </Grid>
+                  <Grid item>
+                    <Button type="submit"
+                      sx={{ marginRight: "2rem" }}
+                      variant='contained'>Save</Button>
+                    <Button variant='outlined'>Cancel</Button>
+                  </Grid>
                 </Grid>
-                <Grid item
-xs={12}
-sm={12}>
-                  <TextField required
-name="raw_remark"
-label="Remark"
-type="text"
-fullWidth
-{...register("raw_remark")}/>
-                </Grid> 
-                <Grid item>
-                  <Button type="submit" 
-                  sx={{ marginRight: "2rem" }}
-variant='contained'>Save</Button>
-                  <Button variant='outlined'>Cancel</Button>
-                </Grid>
-              </Grid>
-                </form>
+              </form>
             </LocalizationProvider>
           </Card>
         </Box>

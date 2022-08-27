@@ -81,58 +81,26 @@ const wareHouseItemsAccordion = [
     icon: <Inventory2Icon fontSize="small" />,
     // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,    // endIconLess: <ExpandLessIcon fontSize="small"/>,
     title: "Stock List",
-    subMenu: [
-      {
-        href: "/warehouse/stockList/RawMaterial",
-        icon: <UsersIcon fontSize="small" />,
-        title: "Raw Material",
-      },
-      {
-        href: "/warehouse/stockList/Accessories",
-        icon: <UsersIcon fontSize="small" />,
-        title: "Accessories",
-      },
-      {
-        href: "/warehouse/stockList/FinishedGoods",
-        icon: <UsersIcon fontSize="small" />,
-        title: "Finished Goods",
-      },
-    ],
+    
   },
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Requested Items",
     // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,
     // endIconLess: <ExpandLessIcon fontSize="small"/>,
-    subMenu: [
-      {
-        href: "/warehouse/requesteditems/RawMaterial",
-        icon: <UsersIcon fontSize="small" />,
-        title: "Raw Material",
-      },
-      {
-        href: "/warehouse/requesteditems/Accessories",
-        icon: <UsersIcon fontSize="small" />,
-        title: "Accessories",
-      },
-      {
-        href: "/warehouse/requesteditems/FinishedGoods",
-        icon: <UsersIcon fontSize="small" />,
-        title: "Finished Goods",
-      },
-    ],
+    
   },
 ];
 
 const wareHouseItems = [
   {
     href: "/warehouse/Recieving",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <RecievingIcon fontSize="small" />,
     title: "Recieving",
   },
   {
     href: "/warehouse/PurchaseOrder",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Purchase Order",
   },
 ];
@@ -140,7 +108,7 @@ const wareHouseItems = [
 const production = [
   {
     href: "/production/AllRawMaterials",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <RawmaterialIcon fontSize="small" />,
     title: "All Raw Materials",
   },
   {
