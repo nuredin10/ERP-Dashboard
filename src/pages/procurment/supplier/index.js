@@ -42,10 +42,13 @@ const Supplier = () => {
         }}
       >
         
-        <ToolBar title='Supplier' href='/procurment/supplier/add'/>
+        <ToolBar title='Supplier' 
+        href='/procurment/supplier/add'/>
         <Card maxWidth="lg">
         
-          <Table title='Supplier' data={data} columns={columns}></Table>
+          <Table title='Supplier' 
+          data={data}
+columns={columns}></Table>
 
           {/* <Typography sx={{ mb: 3 }} variant="h4">
             Supplier

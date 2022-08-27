@@ -41,7 +41,8 @@ const Recieving = () => {
         }}
       >
         <Container maxWidth="ml">
-        <ToolBar title="Recieving" href="/procurment/paymentrequest/add" />
+        <ToolBar title="Recieving" 
+        href="/procurment/paymentrequest/add" />
 
           {/* <Typography
             sx={{ mb: 3 }}

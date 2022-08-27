@@ -44,7 +44,8 @@ const PurchaseRequest = () => {
           py: 8,
         }}
       >
-        <Typography variant='h5' sx={{mb: 4, mt: -2, ml: 3}}>Purchase Request</Typography>
+        <Typography variant='h5' 
+        sx={{mb: 4, mt: -2, ml: 3}}>Purchase Request</Typography>
         {/* <ToolBar title='Supplier' href='/procurment/supplier/add'/> */}
         <Card maxWidth="lg">
         

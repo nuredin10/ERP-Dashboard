@@ -42,10 +42,13 @@ const Rfq = () => {
         }}
       >
         
-        <ToolBar title='Request for Quatations' href='/procurment/purchaserequest/rfq/add'/>
+        <ToolBar title='Request for Quatations' 
+        href='/procurment/purchaserequest/rfq/add'/>
         <Card maxWidth="lg">
         
-          <Table title='Request for Quatations' data={data} columns={columns}></Table>
+          <Table title='Request for Quatations' 
+          data={data}
+columns={columns}></Table>
 
           {/* <Typography sx={{ mb: 3 }} variant="h4">
             Supplier

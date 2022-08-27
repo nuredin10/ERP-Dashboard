@@ -23,7 +23,8 @@ import { DashboardLayout } from "src/components/dashboard-layout";
 import Link from "@mui/material/Link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const add = () => {
+const Add = () => {
+
   const [status, setStatus] = React.useState('');
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -62,29 +63,70 @@ const add = () => {
             </Link>
           </Box>
           <Card sx={{ width: "70%", padding: "2%" }}>
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={12}>
+            <Grid container 
+            spacing={4}>
+              <Grid item 
+              xs={12}
+sm={12}>
                 <Typography variant="h6">Add Payment Request</Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="id" label="ID" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="id"
+label="ID"
+type="text"
+fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="Name" label="Name" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="Name"
+label="Name"
+type="text"
+fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="Address" label="Address" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="Address"
+label="Address"
+type="text"
+fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="City" label="City" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="City"
+label="City"
+type="text"
+fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="Country" label="Country" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="Country"
+label="Country"
+type="text"
+fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="Nationality" label="Nationality" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="Nationality"
+label="Nationality"
+type="text"
+fullWidth />
               </Grid>
-              <Grid item lg={12} sm={12}>
+              <Grid item 
+              lg={12}
+sm={12}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Status</InputLabel>
                     <Select
@@ -102,7 +144,9 @@ const add = () => {
                   </FormControl>
                 </Grid>
                 <Grid item>
-                    <Button type="submit" sx={{marginRight: "2rem"}} variant='contained'>Save</Button>
+                    <Button type="submit"
+sx={{marginRight: "2rem"}}
+variant='contained'>Save</Button>
                     <Button variant='outlined'>Cancel</Button>
                 </Grid>
             </Grid>
@@ -113,6 +157,6 @@ const add = () => {
   );
 };
 
-add.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Add.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default add;
+export default Add;

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { Doughnut, Line, Bar, Scale, BubbleController, RadarController, TimeScale } from 'react-chartjs-2';
-import {Area} from 'react-chartjs-2'
+import { Area } from 'react-chartjs-2'
 import { Pie } from "react-chartjs-2";
 import { Participant } from "react-chartjs-2"
 import { UserData } from '../__mocks__/Data';
@@ -90,26 +90,33 @@ const Analytics = () => {
               <TotalProfit sx={{ height: '100%' }} />
             </Grid>
           </Grid>
-          <Grid container spacing={4}>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <Sales />
-          </Grid>
-            <Grid item xs={4}>
-              <Doughnut data={userData} width="10" />
+          <Grid container
+            spacing={4}>
+            <Grid
+              item
+              lg={8}
+              md={12}
+              xl={9}
+              xs={12}
+            >
+              <Sales />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item
+              xs={4}>
+              <Doughnut data={userData}
+                width="10" />
+            </Grid>
+            <Grid item 
+            xs={6}>
               <Bar data={userData} />
             </Grid>
-            <Grid item xs={6}>
-              <Line data={userData} width="10" height='5' />
+            <Grid item 
+            xs={6}>
+              <Line data={userData}
+width="10"
+height='5' />
             </Grid>
-             {/* <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <Line data={userData} />
             </Grid> */}
             {/* <Grid item xs={6}>

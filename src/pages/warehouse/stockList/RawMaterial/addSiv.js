@@ -27,7 +27,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 
-const addSiv = () => {
+const AddSiv = () => {
   const [status, setStatus] = React.useState("");
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -86,36 +86,100 @@ const addSiv = () => {
             </form> */}
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <form onSubmit={handleSubmit(newUser)}>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={12}>
+              <Grid container 
+              spacing={4}>
+                <Grid item 
+                xs={12}
+sm={12}>
                   <Typography variant="h6">Add Raw Material SIV</Typography>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_name " label="Name" type="text" fullWidth  {...register("raw_name")}/>
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_name "
+label="Name"
+type="text"
+fullWidth
+{...register("raw_name")}/>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_quantity" label="Quantity" type="text" fullWidth {...register("raw_quantity")}/>
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_quantity"
+label="Quantity"
+type="text"
+fullWidth
+{...register("raw_quantity")}/>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_description" label="Description" type="text" fullWidth {...register("raw_description")}/>
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_description"
+label="Description"
+type="text"
+fullWidth
+{...register("raw_description")}/>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_materialcode" label="MaterialCode" type="text" fullWidth {...register("raw_materialcode")} />
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_materialcode"
+label="MaterialCode"
+type="text"
+fullWidth
+{...register("raw_materialcode")} />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_spec" label="Specification" type="text" fullWidth {...register("raw_spec")}/>
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_spec"
+label="Specification"
+type="text"
+fullWidth
+{...register("raw_spec")}/>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_materialunit" label="Material Unit" type="text" fullWidth {...register("raw_materialunit")}/>
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_materialunit"
+label="Material Unit"
+type="text"
+fullWidth
+{...register("raw_materialunit")}/>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_value" label="Value" type="text" fullWidth {...register("raw_value")}/>
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_value"
+label="Value"
+type="text"
+fullWidth
+{...register("raw_value")}/>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="raw_referncenum" label="Reference Number" type="text" fullWidth {...register("raw_referncenum")}/>
+                <Grid item 
+                xs={12}
+sm={6}>
+                  <TextField required 
+                  name="raw_referncenum"
+label="Reference Number"
+type="text"
+fullWidth
+{...register("raw_referncenum")}/>
                 </Grid>
                 <Grid item >
-                <TextField required name="raw_date" label="Date" type="text" fullWidth {...register("raw_date")}/>
+                <TextField required 
+                name="raw_date"
+label="Date"
+type="text"
+fullWidth
+{...register("raw_date")}/>
 
                   {/* <DesktopDatePicker
                     sx={{ maxWidth: 500 }}
@@ -126,11 +190,20 @@ const addSiv = () => {
                     renderInput={(params) => <TextField {...params} {...register("raw_date")}/>}
                   /> */}
                 </Grid>
-                <Grid item xs={12} sm={12}>
-                  <TextField required name="raw_remark" label="Remark" type="text" fullWidth {...register("raw_remark")}/>
+                <Grid item
+xs={12}
+sm={12}>
+                  <TextField required
+name="raw_remark"
+label="Remark"
+type="text"
+fullWidth
+{...register("raw_remark")}/>
                 </Grid> 
                 <Grid item>
-                  <Button type="submit" sx={{ marginRight: "2rem" }} variant='contained'>Save</Button>
+                  <Button type="submit" 
+                  sx={{ marginRight: "2rem" }}
+variant='contained'>Save</Button>
                   <Button variant='outlined'>Cancel</Button>
                 </Grid>
               </Grid>
@@ -143,6 +216,6 @@ const addSiv = () => {
   );
 };
 
-addSiv.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddSiv.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default addSiv;
+export default AddSiv;

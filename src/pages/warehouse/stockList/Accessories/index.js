@@ -42,7 +42,8 @@ const Accessories = () => {
         }}
       >
         <Container maxWidth="ml">
-        <ToolBar title="SIV" href="/warehouse/stockList/Accessories/addSiv"  />
+        <ToolBar title="SIV" 
+        href="/warehouse/stockList/Accessories/addSiv"  />
 
           {/* <Typography
             sx={{ mb: 3 }}

@@ -19,14 +19,24 @@ const Finance = () => {
           <Typography variant="h1">Finance</Typography>
           <Box>
             <Container maxWidth={false}>
-              <Grid container spacing={2}>
-                <Grid item lg={4} sm={6} xs={12}>
+              <Grid container 
+              spacing={2}>
+                <Grid item 
+                lg={4}
+sm={6}
+xs={12}>
                   <Sales />
                 </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
+                <Grid item 
+                lg={4}
+sm={6}
+xs={12}>
                   <Cost />
                 </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
+                <Grid item 
+                lg={4}
+sm={6}
+xs={12}>
                   <Profit/>
                 </Grid>
               </Grid>

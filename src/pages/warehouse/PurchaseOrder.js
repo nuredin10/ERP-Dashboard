@@ -71,12 +71,21 @@ const PurchaseOrder = () => {
           <Card sx={{ width: "70%", padding: "2%" }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
 
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={12}>
+            <Grid container 
+            spacing={4}>
+              <Grid item 
+              xs={12}
+sm={12}>
                 <Typography variant="h6">Add Payment Request</Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="mat_requestname" label="Request Name" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="mat_requestname"
+label="Request Name"
+type="text"
+fullWidth />
               </Grid>
               <Grid item >
                   <DesktopDatePicker
@@ -90,11 +99,23 @@ const PurchaseOrder = () => {
                   />
                   {/* <TextField required name="accs_date" label="Date" type="text" fullWidth /> */}
                 </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="mat_requestdept" label="Department" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="mat_requestdept"
+label="Department"
+type="text"
+fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="mat_reqpersonid" label="Person ID" type="text" fullWidth />
+              <Grid item 
+              xs={12}
+sm={6}>
+                <TextField required 
+                name="mat_reqpersonid"
+label="Person ID"
+type="text"
+fullWidth />
               </Grid>
               {/* <Grid item xs={12} sm={6}>
                 <TextField required name="Country" label="Country" type="text" fullWidth />
@@ -120,7 +141,9 @@ const PurchaseOrder = () => {
                   </FormControl>
                 </Grid> */}
                 <Grid item>
-                    <Button type="submit" sx={{marginRight: "2rem"}} variant='contained'>Save</Button>
+                    <Button type="submit" 
+                    sx={{marginRight: "2rem"}}
+variant='contained'>Save</Button>
                     <Button variant='outlined'>Cancel</Button>
                 </Grid>
             </Grid>

@@ -47,7 +47,8 @@ const PaymentRequest = () => {
           py: 8,
         }}
       >
-        <ToolBar title="Payment Request" href="/procurment/paymentrequest/add" />
+        <ToolBar title="Payment Request" 
+        href="/procurment/paymentrequest/add" />
         <Card maxWidth="lg">
           <Table
             title="Payment Request"

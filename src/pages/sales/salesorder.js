@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head';
 import {
   FormControl,
@@ -38,7 +38,7 @@ const SalesOrder = () => {
     <>
       <Head>
         <title>
-        SalesOrder
+          SalesOrder
         </title>
       </Head>
       <Box
@@ -69,18 +69,27 @@ const SalesOrder = () => {
             </Link>
           </Box> */}
           <Card sx={{ width: "70%", padding: "2%" }}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
 
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={12}>
-                <Typography variant="h6">SalesOrder</Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="mat_requestname" label="Request Name" type="text" fullWidth />
-              </Grid>
-              <Grid item >
+              <Grid container
+spacing={4}>
+                <Grid item
+xs={12}
+sm={12}>
+                  <Typography variant="h6">SalesOrder</Typography>
+                </Grid>
+                <Grid item
+xs={12}
+sm={6}>
+                  <TextField required
+name="mat_requestname"
+label="Request Name"
+type="text"
+fullWidth />
+                </Grid>
+                <Grid item >
                   <DesktopDatePicker
-                    sx={{maxWidth: 500}}
+                    sx={{ maxWidth: 500 }}
                     name="accs_date"
                     label="Date"
                     inputFormat="MM/dd/yyyy"
@@ -90,13 +99,25 @@ const SalesOrder = () => {
                   />
                   {/* <TextField required name="accs_date" label="Date" type="text" fullWidth /> */}
                 </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="mat_requestdept" label="Department" type="text" fullWidth />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField required name="mat_reqpersonid" label="Person ID" type="text" fullWidth />
-              </Grid>
-              {/* <Grid item xs={12} sm={6}>
+                <Grid item
+xs={12}
+sm={6}>
+                  <TextField required
+name="mat_requestdept"
+label="Department"
+type="text"
+fullWidth />
+                </Grid>
+                <Grid item
+xs={12}
+sm={6}>
+                  <TextField required
+name="mat_reqpersonid"
+label="Person ID"
+type="text"
+fullWidth />
+                </Grid>
+                {/* <Grid item xs={12} sm={6}>
                 <TextField required name="Country" label="Country" type="text" fullWidth />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -120,14 +141,16 @@ const SalesOrder = () => {
                   </FormControl>
                 </Grid> */}
                 <Grid item>
-                    <Button type="submit" sx={{marginRight: "2rem"}} variant='contained'>Save</Button>
-                    <Button variant='outlined'>Cancel</Button>
+                  <Button type="submit"
+sx={{ marginRight: "2rem" }}
+variant='contained'>Save</Button>
+                  <Button variant='outlined'>Cancel</Button>
                 </Grid>
-            </Grid>
+              </Grid>
             </LocalizationProvider>
 
           </Card>
-        </Box>  
+        </Box>
       </Box>
     </>
   )

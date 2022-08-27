@@ -39,6 +39,7 @@ import { FinishedGoods as FinishedGoodsIcon } from "../icons/finishedGoods";
 import { Requested as RequestedIcon } from "../icons/requested";
 import { Recieving as RecievingIcon } from "../icons/Recieving";
 import { PurchaseOrder as PurchaseOrderIcon } from "../icons/purchaseOrder";
+
 const generalItems = [
   {
     href: "/",
@@ -277,7 +278,7 @@ const RequestedItems = [
 // ];
 
 export const DashboardSidebar = (props) => {
-  const [expanded, setExpanded] = useState("panel1");
+  const [expanded, setExpanded] = useState(false);
   const { open, onClose } = props;
   const router = useRouter();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
@@ -319,7 +320,8 @@ export const DashboardSidebar = (props) => {
       >
         <div>
           <Box sx={{ p: 3 }}>
-            <NextLink href="/" passHref>
+            <NextLink href="/" 
+              passHref>
               <a>
                 <Logo
                   sx={{
@@ -374,7 +376,11 @@ export const DashboardSidebar = (props) => {
           <Typography variant="menuTitle">GENERAL</Typography>
           {generalItems.map((item) => (
             <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              <NavItem 
+                key={item.title} 
+                icon={item.icon} 
+                href={item.href} 
+                title={item.title} />
             </>
           ))}
         </Box>
@@ -383,7 +389,11 @@ export const DashboardSidebar = (props) => {
           <Typography variant="menuTitle">PROCURMENT</Typography>
           {procurmentItems.map((item) => (
             <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              <NavItem 
+                key={item.title} 
+                icon={item.icon} 
+                href={item.href} 
+                title={item.title} />
             </>
           ))}
         </Box>
@@ -415,7 +425,11 @@ export const DashboardSidebar = (props) => {
               </AccordionSummary>
               <AccordionDetails>
                 {StockListItems.map((item) => (
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  <NavItem 
+                    key={item.title} 
+                    icon={item.icon} 
+                    href={item.href} 
+                    title={item.title} />
                 ))}
               </AccordionDetails>
             </Accordion>
@@ -445,14 +459,23 @@ export const DashboardSidebar = (props) => {
               </AccordionSummary>
               <AccordionDetails>
                 {RequestedItems.map((item) => (
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  <NavItem 
+                    key={item.title} 
+                    icon={item.icon} 
+                    href={item.href} 
+                    title={item.title} />
                 ))}
               </AccordionDetails>
             </Accordion>
             <Box>
               {wareHouseItems.map((item) => (
                 <>
-                  <NavItem sx={{ marginLeft: 1, maxWidth: " 90%" }} key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  <NavItem 
+                    sx={{ marginLeft: 1, maxWidth: " 90%" }} 
+                    key={item.title} 
+                    icon={item.icon} 
+                    href={item.href} 
+                    title={item.title} />
                 </>
               ))}
             </Box>
@@ -463,7 +486,11 @@ export const DashboardSidebar = (props) => {
           <Typography variant="menuTitle">PRODUCTION</Typography>
           {production.map((item) => (
             <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              <NavItem 
+                key={item.title} 
+                icon={item.icon} 
+                href={item.href} 
+                title={item.title} />
             </>
           ))}
         </Box>
@@ -473,7 +500,11 @@ export const DashboardSidebar = (props) => {
 
           {sales.map((item) => (
             <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              <NavItem 
+                key={item.title} 
+                icon={item.icon} 
+                href={item.href} 
+                title={item.title} />
             </>
           ))}
         </Box>
