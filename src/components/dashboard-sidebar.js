@@ -37,7 +37,7 @@ import { Rawmaterial as RawmaterialIcon } from "../icons/rawmaterial";
 import { Accessories as AccessoriesIcon } from "../icons/accessories";
 import { FinishedGoods as FinishedGoodsIcon } from "../icons/finishedGoods";
 import { Requested as RequestedIcon } from "../icons/requested";
-import { Recieving as RecievingIcon } from "../icons/Recieving";
+import { Recieving as RecievingIcon } from "../icons/recieving";
 import { PurchaseOrder as PurchaseOrderIcon } from "../icons/purchaseOrder";
 
 const generalItems = [
