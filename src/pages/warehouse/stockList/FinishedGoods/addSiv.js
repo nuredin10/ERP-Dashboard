@@ -65,116 +65,136 @@ const AddSiv = () => {
             </Link>
           </Box>
           <Card sx={{ width: "70%", padding: "2%" }}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Grid container 
-            spacing={4}>
-              <Grid item 
-              xs={12}
-sm={12}>
-                <Typography variant="h6">Add Finished Goods SIV</Typography>
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_name "
-label="Name"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_quantity"
-label="Quantity"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_description"
-label="Description"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_materialcode"
-label="MaterialCode"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_spec"
-label="Specification"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_materialunit"
-label="Material Unit"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_value"
-label="Value"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="finished_referncenum"
-label="Reference Number"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item >
-                  <DesktopDatePicker
-                    sx={{maxWidth: 500}}
-                    name="accs_date"
+            {/* <form onSubmit={handleSubmit(newUser)}>
+              <input type="text" name="name" {...register("name")} />
+              <input type="text" password="email" {...register("email")} />
+              <input type="submit" />
+            </form> */}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <form onSubmit={handleSubmit(newUser)}>
+                <Grid container
+                  spacing={4}>
+                  <Grid item
+                    xs={12}
+                    sm={12}>
+                    <Typography variant="h6">Add Finished Goods SIV</Typography>
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_name "
+                      label="Name"
+                      type="text"
+                      fullWidth
+                      {...register("finished_name")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_quantity"
+                      label="Quantity"
+                      type="text"
+                      fullWidth
+                      {...register("finished_quantity")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_description"
+                      label="Description"
+                      type="text"
+                      fullWidth
+                      {...register("finished_description")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_materialcode"
+                      label="MaterialCode"
+                      type="text"
+                      fullWidth
+                      {...register("finished_materialcode")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_spec"
+                      label="Specification"
+                      type="text"
+                      fullWidth
+                      {...register("finished_spec")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_materialunit"
+                      label="Material Unit"
+                      type="text"
+                      fullWidth
+                      {...register("finished_materialunit")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_value"
+                      label="Value"
+                      type="text"
+                      fullWidth
+                      {...register("finished_value")} />
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={6}>
+                    <TextField required
+                      name="finished_referncenum"
+                      label="Reference Number"
+                      type="text"
+                      fullWidth
+                      {...register("finished_referncenum")} />
+                  </Grid>
+                  <Grid item >
+                    <TextField required
+                      name="finished_date"
+                      label="Date"
+                      type="text"
+                      fullWidth
+                      {...register("finished_date")} />
+
+                    {/* <DesktopDatePicker
+                    sx={{ maxWidth: 500 }}
+                    name="finished_date"
                     label="Date"
                     inputFormat="MM/dd/yyyy"
                     value={"2014-08-18T21:11:54"}
-                    // onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  {/* <TextField required name="accs_date" label="Date" type="text" fullWidth /> */}
-                </Grid>
-              <Grid item 
-              xs={12}
-sm={12}>
-                <TextField required 
-                name="finished_remark"
-label="Remark"
-type="text"
-fullWidth />
-              </Grid>
-                <Grid item>
-                    <Button type="submit" 
-                    sx={{marginRight: "2rem"}}
-variant='contained'>Save</Button>
+                    renderInput={(params) => <TextField {...params} {...register("finished_date")}/>}
+                  /> */}
+                  </Grid>
+                  <Grid item
+                    xs={12}
+                    sm={12}>
+                    <TextField required
+                      name="finished_remark"
+                      label="Remark"
+                      type="text"
+                      fullWidth
+                      {...register("finished_remark")} />
+                  </Grid>
+                  <Grid item>
+                    <Button type="submit"
+                      sx={{ marginRight: "2rem" }}
+                      variant='contained'>Save</Button>
                     <Button variant='outlined'>Cancel</Button>
+                  </Grid>
                 </Grid>
-            </Grid>
+              </form>
             </LocalizationProvider>
-
           </Card>
         </Box>
       </Box>

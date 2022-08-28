@@ -18,12 +18,19 @@ import ToolBar from '../../../../components/ToolBar'
 const Accessories = () => {
   const [data, setData] = useState([]);
   const columns = [
-    { title: "Name", field: "name" },
-    { title: "Email", field: "email" },
-    { title: "Phone", field: "phone" },
+    { title: "Name", field: "accs_name" },
+    { title: "Quantity", field: "accs_quantity" },
+    { title: "Description", field: "accs_description" },
+    { title: "Material Code", field: "accs_materialcode" },
+    { title: "Specification", field: "accs_spec" },
+    { title: "Material Unit", field: "accs_materialunit" },
+    { title: "Value", field: "accs_value" },
+    { title: "Reference Number", field: "accs_referncenum" },
+    { title: "Date", field: "accs_date" },
+    { title: "Remark", field: "accs_remark" },
   ];
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("http://versavvy.com:49000/accessory")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
