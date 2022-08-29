@@ -26,6 +26,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
+import Router from 'next/router'
 
 const AddSiv = () => {
   const [status, setStatus] = React.useState("");
@@ -44,6 +45,8 @@ const AddSiv = () => {
       },
       body: JSON.stringify(user)
     });
+    Router.push('/warehouse/stockList/Accessories')
+
   };
 
   return (

@@ -30,7 +30,7 @@ const FinishedGoods = () => {
     { title: "Remark", field: "finished_remark" },
   ];
   useEffect(() => {
-    fetch("http://versavvy.com:49000/rawmaterials")
+    fetch("http://versavvy.com:49000/finishedMaterial")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);

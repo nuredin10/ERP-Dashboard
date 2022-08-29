@@ -26,6 +26,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { useForm } from "react-hook-form";
+import Router from 'next/router'
 
 const AddSiv = () => {
   const [status, setStatus] = React.useState('');
@@ -33,6 +34,21 @@ const AddSiv = () => {
     setStatus(event.target.value);
   };
   
+  const { register, handleSubmit } = useForm();
+
+  const newUser = (user) => {
+    console.log(user)
+    fetch("http://versavvy.com:49000/addnewFinMaterials", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user)
+    });
+    Router.push('/warehouse/stockList/FinishedGoods')
+  };
+
   return (
     <>
       <Head>
@@ -48,7 +64,7 @@ const AddSiv = () => {
         <Box
           sx={{
             width: "100%",
-            height: "100vh",
+            height: "auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

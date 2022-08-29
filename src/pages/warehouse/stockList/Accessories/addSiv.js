@@ -26,12 +26,14 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
+import Router from 'next/router'
 
 const AddSiv = () => {
   const [status, setStatus] = React.useState("");
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
+  
   const { register, handleSubmit } = useForm();
 
   const newUser = (user) => {
@@ -44,6 +46,7 @@ const AddSiv = () => {
       },
       body: JSON.stringify(user)
     });
+    Router.push('/warehouse/stockList/Accessories')
   };
 
   return (
@@ -61,7 +64,7 @@ const AddSiv = () => {
         <Box
           sx={{
             width: "100%",
-            height: "100vh",
+            height: "auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -78,7 +81,7 @@ const AddSiv = () => {
               <ArrowBackIcon /> Accessories
             </Link>
           </Box>
-          <Card sx={{ width: "70%", padding: "2%" }}>
+          <Card sx={{ width: "70%", padding: "2%", height: 'auto' }}>
             {/* <form onSubmit={handleSubmit(newUser)}>
               <input type="text" name="name" {...register("name")} />
               <input type="text" password="email" {...register("email")} />

@@ -64,6 +64,18 @@ const RawMaterial = () => {
           title='Raw Material stockList' 
           data={data} 
           columns={columns}
+          options={{
+            actionsColumnIndex: -1,
+            selection: true,
+            
+          }}
+          actions={[
+            {
+              tooltip: 'Remove All Selected Users',
+              icon: 'delete',
+              onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
+            }
+          ]}
           // actions={[
           //   rowData => ({
           //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
