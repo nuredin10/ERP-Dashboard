@@ -40,8 +40,8 @@ const RawMaterial = () => {
         <title>
           RawMaterial
         </title>
-        
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
+
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
       </Head>
       <Box
         component="main"
