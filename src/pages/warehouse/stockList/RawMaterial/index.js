@@ -30,7 +30,7 @@ const RawMaterial = () => {
     { title: "Remark", field: "raw_remark" },
   ];
   useEffect(() => {
-    fetch("http://versavvy.com:49000/rawmaterials")
+    fetch("http://versavvy.com:59000/rawmaterials")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
@@ -41,7 +41,6 @@ const RawMaterial = () => {
           RawMaterial
         </title>
 
-        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
       </Head>
       <Box
         component="main"

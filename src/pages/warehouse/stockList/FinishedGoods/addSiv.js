@@ -38,7 +38,7 @@ const AddSiv = () => {
 
   const newUser = (user) => {
     console.log(user)
-    fetch("http://versavvy.com:49000/addnewFinMaterials", {
+    fetch("http://versavvy.com:59000/addnewFinMaterials", {
       method: "POST",
       headers: {
         Accept: "application/json",
