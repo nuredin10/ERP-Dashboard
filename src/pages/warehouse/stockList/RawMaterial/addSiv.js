@@ -45,7 +45,7 @@ const AddSiv = () => {
       },
       body: JSON.stringify(user)
     });
-    Router.push('/warehouse/stockList/Accessories')
+    Router.push('/warehouse/stockList/RawMaterial')
 
   };
 
