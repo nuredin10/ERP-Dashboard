@@ -30,7 +30,7 @@ const RawMaterial = () => {
     { title: "Remark", field: "raw_remark" },
   ];
   useEffect(() => {
-    fetch("http://versavvy.com:59000/rawmaterials")
+    fetch("http://localhost:59000/rawmaterials")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
@@ -41,7 +41,7 @@ const RawMaterial = () => {
         <title>
           RawMaterial
         </title>
-        
+
       </Head>
       <Box
         component="main"
