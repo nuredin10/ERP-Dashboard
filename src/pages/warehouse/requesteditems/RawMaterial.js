@@ -13,6 +13,10 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
+import axios from 'axios'
+
 const RawMaterial = () => {
   const [data, setData] = useState([]);
   const columns = [
@@ -26,7 +30,7 @@ const RawMaterial = () => {
   ];
 
   useEffect(() => {
-    fetch("http://versavvy.com:59000/showStoreRequestion")
+    fetch("http://localhost:59000/showStoreRequestion")
       .then((resp) => resp.json())
       .then((resp) => {
         const raw = resp.filter((raw) => raw.req_materialtype.includes("RAW"));
@@ -41,6 +45,31 @@ const RawMaterial = () => {
   //   // const raw = data.filter( (raw) => raw.req_materialtype.includes("RAW"))
   //   setRawmaterial(data)
   // },[])
+  const accept = async(id) => {
+    await axios.post('http://localhost:59000/responseStoreRequestion', {
+      id: id,
+      status: "Accept"
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const decline = async(id) => {
+    await axios.post('http://localhost:59000/responseStoreRequestion', {
+      id: id,
+      status: "Decline"
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <>
       <Head>
@@ -72,6 +101,18 @@ const RawMaterial = () => {
               //     onClick:()=> (rowData)
               //   })
               // ]}
+              actions={[
+                rowData => ({
+                  icon: () => < DoneIcon />,
+                  tooltip: 'Accpet ',
+                  onClick: () => (accept(rowData.id))
+                }),
+                rowData => ({
+                  icon: () => < CloseIcon />,
+                  tooltip: 'Reject ',
+                  onClick: () => (decline(rowData.id))
+                })
+              ]}
             />
 
             {/* <Typography sx={{ mb: 3 }} variant="h4">

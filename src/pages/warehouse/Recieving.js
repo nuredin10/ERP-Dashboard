@@ -56,6 +56,19 @@ const Recieving = () => {
         console.log(error);
       });
   }
+
+  const decline = async(id) => {
+    await axios.post('http://localhost:59000/confirmPurchased', {
+      id: id,
+      status: "Decline"
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <>
       <Head>
@@ -91,7 +104,7 @@ const Recieving = () => {
                 rowData => ({
                   icon: () => < CloseIcon />,
                   tooltip: 'Reject ',
-                  onClick: () => (console.log(rowData.id))
+                  onClick: () => (decline(rowData.id))
                 })
               ]}
             />
