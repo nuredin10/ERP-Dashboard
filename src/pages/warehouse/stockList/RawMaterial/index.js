@@ -33,11 +33,7 @@ const RawMaterial = () => {
   ];
 
   useEffect(() => {
-<<<<<<< HEAD
-    fetch("https://jsonplaceholder.typicode.com/posts")
-=======
     fetch("http://localhost:59000/rawmaterials")
->>>>>>> 4c32bf2d43b6d0920e37939ab429f0ffec912943
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
