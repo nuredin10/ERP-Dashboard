@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import Head from 'next/head';
+import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import {
   FormControl,
   FormLabel,
@@ -19,17 +19,17 @@ import {
   Grid,
   DatePicker,
 } from "@mui/material";
-import { DashboardLayout } from '../../components/dashboard-layout';
-import Table from '../../components/Table'
-import ToolBar from '../../components/ToolBar'
+import { DashboardLayout } from "../../components/dashboard-layout";
+import Table from "../../components/Table";
+import ToolBar from "../../components/ToolBar";
 import Link from "@mui/material/Link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 const PurchaseOrder = () => {
-  const [status, setStatus] = React.useState('');
+  const [status, setStatus] = React.useState("");
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
@@ -37,15 +37,13 @@ const PurchaseOrder = () => {
   return (
     <>
       <Head>
-        <title>
-        Purchase Order
-        </title>
+        <title>Purchase Order</title>
       </Head>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}
       >
         <Box
@@ -69,27 +67,23 @@ const PurchaseOrder = () => {
             </Link>
           </Box>
           <Card sx={{ width: "70%", padding: "2%" }}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-
-            <Grid container 
-            spacing={4}>
-              <Grid item 
-              xs={12}
-sm={12}>
-                <Typography variant="h6">Add Payment Request</Typography>
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="mat_requestname"
-label="Request Name"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item >
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={12}>
+                  <Typography variant="h6">Add Payment Request</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="mat_requestname"
+                    label="Request Name"
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item>
                   <DesktopDatePicker
-                    sx={{maxWidth: 500}}
+                    sx={{ maxWidth: 500 }}
                     name="accs_date"
                     label="Date"
                     inputFormat="MM/dd/yyyy"
@@ -99,25 +93,25 @@ fullWidth />
                   />
                   {/* <TextField required name="accs_date" label="Date" type="text" fullWidth /> */}
                 </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="mat_requestdept"
-label="Department"
-type="text"
-fullWidth />
-              </Grid>
-              <Grid item 
-              xs={12}
-sm={6}>
-                <TextField required 
-                name="mat_reqpersonid"
-label="Person ID"
-type="text"
-fullWidth />
-              </Grid>
-              {/* <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="mat_requestdept"
+                    label="Department"
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="mat_reqpersonid"
+                    label="Person ID"
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+                {/* <Grid item xs={12} sm={6}>
                 <TextField required name="Country" label="Country" type="text" fullWidth />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -141,25 +135,20 @@ fullWidth />
                   </FormControl>
                 </Grid> */}
                 <Grid item>
-                    <Button type="submit" 
-                    sx={{marginRight: "2rem"}}
-variant='contained'>Save</Button>
-                    <Button variant='outlined'>Cancel</Button>
+                  <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                    Save
+                  </Button>
+                  <Button variant="outlined">Cancel</Button>
                 </Grid>
-            </Grid>
+              </Grid>
             </LocalizationProvider>
-
           </Card>
-        </Box>  
+        </Box>
       </Box>
     </>
-  )
+  );
 };
 
-PurchaseOrder.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
-);
+PurchaseOrder.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default PurchaseOrder;

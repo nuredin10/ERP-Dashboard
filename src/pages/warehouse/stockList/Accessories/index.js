@@ -30,7 +30,7 @@ const Accessories = () => {
     { title: "Remark", field: "accs_remark" },
   ];
   useEffect(() => {
-    fetch("http://versavvy.com:49000/accessory")
+    fetch("http://localhost:59000/accessory")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);

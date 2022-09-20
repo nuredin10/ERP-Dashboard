@@ -32,13 +32,13 @@ const AddSiv = () => {
   const [status, setStatus] = React.useState('');
   const handleChange = (event) => {
     setStatus(event.target.value);
-  };
+  };  
   
   const { register, handleSubmit } = useForm();
 
   const newUser = (user) => {
     console.log(user)
-    fetch("http://versavvy.com:49000/addnewFinMaterials", {
+    fetch("http://versavvy.com:59000/addnewFinMaterials", {
       method: "POST",
       headers: {
         Accept: "application/json",
