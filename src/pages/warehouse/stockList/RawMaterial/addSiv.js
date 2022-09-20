@@ -17,6 +17,7 @@ import {
   Typography,
   Grid,
   DatePicker,
+  Alert
 } from "@mui/material";
 import Head from "next/head";
 import { DashboardLayout } from "src/components/dashboard-layout";
@@ -26,27 +27,37 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
-import Router from 'next/router'
+import Router from "next/router";
 
 const AddSiv = () => {
   const [status, setStatus] = React.useState("");
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const [data, setData] = React.useState([]);
+
+  const [notify, setNotify] = React.useState("");
+
+  const submitAllForms = () => {
+    console.log(data);
+    setNotify("success");
+  };
 
   const newUser = (user) => {
-    // console.log(user)
-    fetch("http://versavvy.com:49000/addnewrawmaterials", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user)
-    });
-    Router.push('/warehouse/stockList/Accessories')
-
+    const newDatas = [user, ...data];
+    setData(newDatas);
+    reset();
+    setNotify("info");
+    // fetch("http://versavvy.com:49000/addnewrawmaterials", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(user)
+    // });
+    // Router.push('/warehouse/stockList/Accessories')
   };
 
   return (
@@ -64,24 +75,31 @@ const AddSiv = () => {
         <Box
           sx={{
             width: "100%",
-            height: "100vh",
+            // height: "100vh",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Box sx={{ marginLeft: "-60%", marginBottom: "2%" }}>
-            <Link
-              href="/warehouse/stockList/RawMaterial"
-              color="black"
-              underline="none"
-              variant="subtitle2"
-              sx={{ cursor: "pointer" }}
-            >
-              <ArrowBackIcon /> Raw Material
-            </Link>
+          <Box sx={{mt: -5,mb: 2, width: '90%', display: 'flex', justifyContent:'space-between', alignItems: 'center'}}>
+            <Box >
+              <Link
+                href="/warehouse/stockList/RawMaterial"
+                color="black"
+                underline="none"
+                variant="subtitle2"
+                sx={{ cursor: "pointer" }}
+              >
+                <ArrowBackIcon /> Raw Material
+              </Link>
+            </Box>
+            <Box >
+              {notify ? (
+                notify == 'success' ? <Alert variant="filled" severity="success">Saved Successfully</Alert> : <Alert variant="filled" severity="info">Added Successfully</Alert>
+              ) : null }
+            </Box>
           </Box>
-          <Card sx={{ width: "70%", padding: "2%" }}>
+          <Card sx={{ width: "90%", padding: "2%" }}>
             {/* <form onSubmit={handleSubmit(newUser)}>
               <input type="text" name="name" {...register("name")} />
               <input type="text" password="email" {...register("email")} />
@@ -89,100 +107,100 @@ const AddSiv = () => {
             </form> */}
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <form onSubmit={handleSubmit(newUser)}>
-                <Grid container
-                  spacing={4}>
-                  <Grid item
-                    xs={12}
-                    sm={12}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Add Raw Material SIV</Typography>
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_name "
                       label="Name"
                       type="text"
+                      value={data.name}
                       fullWidth
-                      {...register("raw_name")} />
+                      {...register("raw_name")}
+                    />
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_quantity"
                       label="Quantity"
                       type="text"
                       fullWidth
-                      {...register("raw_quantity")} />
+                      {...register("raw_quantity")}
+                    />
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_description"
                       label="Description"
                       type="text"
                       fullWidth
-                      {...register("raw_description")} />
+                      {...register("raw_description")}
+                    />
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_materialcode"
                       label="MaterialCode"
                       type="text"
                       fullWidth
-                      {...register("raw_materialcode")} />
+                      {...register("raw_materialcode")}
+                    />
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_spec"
                       label="Specification"
                       type="text"
                       fullWidth
-                      {...register("raw_spec")} />
+                      {...register("raw_spec")}
+                    />
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_materialunit"
                       label="Material Unit"
                       type="text"
                       fullWidth
-                      {...register("raw_materialunit")} />
+                      {...register("raw_materialunit")}
+                    />
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_value"
                       label="Value"
                       type="text"
                       fullWidth
-                      {...register("raw_value")} />
+                      {...register("raw_value")}
+                    />
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={6}>
-                    <TextField required
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="raw_referncenum"
                       label="Reference Number"
                       type="text"
                       fullWidth
-                      {...register("raw_referncenum")} />
+                      {...register("raw_referncenum")}
+                    />
                   </Grid>
-                  <Grid item >
-                    <TextField required
+                  <Grid item>
+                    <TextField
+                      required
                       name="raw_date"
                       label="Date"
                       type="text"
                       fullWidth
-                      {...register("raw_date")} />
+                      {...register("raw_date")}
+                    />
 
                     {/* <DesktopDatePicker
                     sx={{ maxWidth: 500 }}
@@ -193,25 +211,33 @@ const AddSiv = () => {
                     renderInput={(params) => <TextField {...params} {...register("raw_date")}/>}
                   /> */}
                   </Grid>
-                  <Grid item
-                    xs={12}
-                    sm={12}>
-                    <TextField required
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      required
                       name="raw_remark"
                       label="Remark"
                       type="text"
                       fullWidth
-                      {...register("raw_remark")} />
+                      {...register("raw_remark")}
+                    />
                   </Grid>
-                  <Grid item>
-                    <Button type="submit"
-                      sx={{ marginRight: "2rem" }}
-                      variant='contained'>Save</Button>
-                    <Button variant='outlined'>Cancel</Button>
+                  <Grid item lg={8}>
+                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                      Add
+                    </Button>
+                    <Button variant="outlined">Clear</Button>
                   </Grid>
                 </Grid>
               </form>
             </LocalizationProvider>
+          </Card>
+          <Card sx={{ width: "90%", m: 2, p: "2%" }}>
+            <Box>
+              <Button onClick={submitAllForms} sx={{ marginRight: "2rem" }} variant="contained">
+                Save
+              </Button>
+              <Button variant="outlined">Cancel</Button>
+            </Box>
           </Card>
         </Box>
       </Box>

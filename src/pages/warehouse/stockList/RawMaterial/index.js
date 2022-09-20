@@ -18,6 +18,8 @@ import ToolBar from "../../../../components/ToolBar";
 const RawMaterial = () => {
   const [data, setData] = useState([]);
   const columns = [
+    {title: "Id", field: "userId"},
+    {title: "Title", field: "title"},
     { title: "Name", field: "raw_name" },
     { title: "Quantity", field: "raw_quantity" },
     { title: "Description", field: "raw_description" },
@@ -29,11 +31,13 @@ const RawMaterial = () => {
     { title: "Date", field: "raw_date" },
     { title: "Remark", field: "raw_remark" },
   ];
+
   useEffect(() => {
-    fetch("http://versavvy.com:49000/rawmaterials")
+    fetch("https://jsonplaceholder.typicode.com/posts")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
+
   return (
     <>
       <Head>
@@ -83,7 +87,7 @@ const RawMaterial = () => {
           //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
           //     tooltip: 'Edit ',
           //     onClick:()=> (rowData)
-          //   })
+          //   }) 
           // ]}
           />
 
