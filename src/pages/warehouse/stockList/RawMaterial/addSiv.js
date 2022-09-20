@@ -39,10 +39,10 @@ const AddSiv = () => {
 
   const [notify, setNotify] = React.useState("");
 
-  const submitAllForms = () => {
+  const submitAllForms=()=>{
     console.log(data);
-    setNotify("success");
-  };
+    setNotify("success")
+  }
 
   const newUser = (user) => {
     const newDatas = [user, ...data];
@@ -72,6 +72,11 @@ const AddSiv = () => {
           py: 8,
         }}
       >
+        <Box sx={{position: 'fixed', bottom: '5%',right: '5%', zIndex: '100000', boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}}>
+              {notify ? (
+                notify == 'success' ? <Alert variant="filled" severity="success" color="success">Saved Successfully</Alert> : <Alert variant="filled" severity="info">Added Successfully</Alert>
+              ) : null }
+            </Box>
         <Box
           sx={{
             width: "100%",
@@ -81,23 +86,16 @@ const AddSiv = () => {
             alignItems: "center",
           }}
         >
-          <Box sx={{mt: -5,mb: 2, width: '90%', display: 'flex', justifyContent:'space-between', alignItems: 'center'}}>
-            <Box >
-              <Link
-                href="/warehouse/stockList/RawMaterial"
-                color="black"
-                underline="none"
-                variant="subtitle2"
-                sx={{ cursor: "pointer" }}
-              >
-                <ArrowBackIcon /> Raw Material
-              </Link>
-            </Box>
-            <Box >
-              {notify ? (
-                notify == 'success' ? <Alert variant="filled" severity="success">Saved Successfully</Alert> : <Alert variant="filled" severity="info">Added Successfully</Alert>
-              ) : null }
-            </Box>
+          <Box sx={{ marginLeft: "-80%", marginBottom: "2%" }}>
+            <Link
+              href="/warehouse/stockList/RawMaterial"
+              color="black"
+              underline="none"
+              variant="subtitle2"
+              sx={{ cursor: "pointer" }}
+            >
+              <ArrowBackIcon /> Raw Material
+            </Link>
           </Box>
           <Card sx={{ width: "90%", padding: "2%" }}>
             {/* <form onSubmit={handleSubmit(newUser)}>
@@ -231,7 +229,7 @@ const AddSiv = () => {
               </form>
             </LocalizationProvider>
           </Card>
-          <Card sx={{ width: "90%", m: 2, p: "2%" }}>
+          <Card sx={{width: '90%', m: 2, p: "2%"}}>
             <Box>
               <Button onClick={submitAllForms} sx={{ marginRight: "2rem" }} variant="contained">
                 Save
