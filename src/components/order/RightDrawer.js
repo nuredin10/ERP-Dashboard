@@ -5,8 +5,17 @@ import { ButtonGroup } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import MaterialTable from "material-table";
+
 const RightDrawer = (props) => {
   console.log(props.selectedSummery);
+
+  const columns = [
+    { title: "Name", field: "finished_name" },
+    { title: "Quantity", field: "finished_quantity" },
+    { title: "Description", field: "finished_description" },
+  ];
+
 
   return (
     <Box>
@@ -172,6 +181,18 @@ const RightDrawer = (props) => {
                   {props.selectedOrder.finished_status}
                 </Typography>
               </Box>
+            </Box>
+
+            <Box sx={{ml: -2}}>
+              <MaterialTable
+                title="Items"
+                data={props.selectedSummery}
+                columns={columns}
+                options={{
+                  search: false,
+                  paging: false
+                }}
+              />
             </Box>
           </Box>
         </Box>

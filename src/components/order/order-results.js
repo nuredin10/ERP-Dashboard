@@ -41,7 +41,7 @@ function a11yProps(index) {
 
 export const OrderResults = (props) => {
   const data = props.data;
-  console.log(data);
+  //console.log(data);
   const [status, setStatus] = useState("green");
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -49,7 +49,7 @@ export const OrderResults = (props) => {
   };
 
   const orderOnClickHandler = (e, data) => {
-    console.log(e);
+    //console.log(e);
     axios
       .post("http://localhost:59000/showSummeryByID", {
         id: e.id,
@@ -77,11 +77,33 @@ export const OrderResults = (props) => {
         </Tabs>
       </Box>
       {data.map((e, i) => (
-      <TabPanel value={value} index={e.finished_name
-        == 'PVC' ? 0 : (e.finished_name == 'PPR' ? 1 : (e.finished_name == 'Fitting' ? 2 : (e.finished_name == "Condute"? 3:0)))} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: "30px", color: 'white', width: 110, height: "4vh", marginLeft: "10%" }}>
-    
-        <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3 }}>
-          <Grid container>
+        <TabPanel
+          value={value}
+          index={
+            e.finished_name == "PVC"
+              ? 0
+              : e.finished_name == "PPR"
+              ? 1
+              : e.finished_name == "Fitting"
+              ? 2
+              : e.finished_name == "Condute"
+              ? 3
+              : 0
+          }
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "30px",
+            color: "white",
+            width: 110,
+            height: "4vh",
+            marginLeft: "10%",
+            
+          }}
+        >
+          <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3,mb: '-5%' }}>
+            <Grid container >
               <Grid
                 onClick={() => orderOnClickHandler(e)}
                 item
@@ -96,6 +118,7 @@ export const OrderResults = (props) => {
                   display: "flex",
                   justifyContent: "space-between",
                   borderTop: 1,
+                
                   borderColor: "rgb(229, 231, 235)",
                 }}
                 lg={12}
@@ -135,10 +158,10 @@ export const OrderResults = (props) => {
                   <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
                 </Box>
               </Grid>
-          </Grid>
-        </Box>
-      </TabPanel>
-            ))}
+            </Grid>
+          </Box>
+        </TabPanel>
+      ))}
     </Box>
   );
 };

@@ -107,7 +107,7 @@ const FinishedGoods = () => {
   const [selectedSummery, setSummery] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:59000/finishedMaterial")
+    fetch("http://versavvy.com:59000/finishedMaterial")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
@@ -127,7 +127,7 @@ const FinishedGoods = () => {
               setSummery = {setSummery}
               data={data}
             />
-            <RightDrawer drawer={drawer} setDrawer={setDrawer} selectedOrder={selectedOrder} selectedSummery={selectedSummery}/>
+            <RightDrawer drawer={drawer} setDrawer={setDrawer} selectedOrder={selectedOrder} selectedSummery={data}/>
             <Divider sx={{ borderColor: 'gray', mt: 3}} />
           </Box>
         </Container>
