@@ -207,6 +207,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { Box, Container, Typography, Grid, Divider } from "@mui/material";
 import { DashboardLayout } from "../../../../components/dashboard-layout";
+import axios from 'axios'
 
 // import styles from '../styles/Home.module.css';
 import OrdersToolBar from "../../../../components/RawMaterials/order-toolbar";
@@ -218,10 +219,15 @@ const FinishedGoods = () => {
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [summery, setSummery] = useState([]);
   const [data, setData] = useState([]);
+
   useEffect(() => {
-    fetch("http://localhost:59000/rawmaterials")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+    axios.get("http://localhost:59000/rawmaterials")
+      .then((response)=>{
+          setData(response.data)
+        })
+      .catch((response)=>{
+        console.log(response)
+      })
   }, []);
 
   

@@ -40,6 +40,8 @@ import { Requested as RequestedIcon } from "../icons/requested";
 import { Recieving as RecievingIcon } from "../icons/recieving";
 import { PurchaseOrder as PurchaseOrderIcon } from "../icons/purchaseOrder";
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import ViewListIcon from '@mui/icons-material/ViewList';
+
 const generalItems = [
   {
     href: "/",
@@ -131,22 +133,22 @@ const production = [
 const sales = [
   {
     href: "/sales/request",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <RequestedIcon fontSize="small" />,
     title: "Request",
   },
   {
     href: "/sales/viewitemrecieved",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <RecievingIcon fontSize="small" />,
     title: "View Item Recieved",
   },
   {
     href: "/sales/vender",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <ViewListIcon fontSize="small" />,
     title: "Customers list (CRM)",
   },
   {
     href: "/sales/salesorder",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Order",
   },
   {

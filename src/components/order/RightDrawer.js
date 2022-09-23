@@ -38,7 +38,7 @@ const RightDrawer = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "45vw",
+            width: "35vw",
             minHeight: "93vh",
             height: "auto",
             marginTop: "7vh",
@@ -73,7 +73,7 @@ const RightDrawer = (props) => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-around",
-              width: "90%",
+              width: "100%",
               height: "8vh",
               marginTop: "8%",
               backgroundColor: "rgb(243, 244, 246)",
@@ -81,14 +81,14 @@ const RightDrawer = (props) => {
             }}
           >
             <Typography variant="subtitle2">Summery</Typography>
-            <Box sx={{ width: "60%", display: "flex", justifyContent: "space-evenly" }}>
+            <Box sx={{ width: "50%", display: "flex", justifyContent: "space-evenly" }}>
               <Button size="small" variant="outlined" href="/warehouse/stockList/FinishedGoods/monthlyReport">
                 Monthly 
               </Button>
               <Button size="small" variant="outlined" href="/warehouse/stockList/FinishedGoods/yearlyReport">
                 Yearly
               </Button>
-              <Button size="small">   
+              <Button size="small" href="/warehouse/stockList/summary">   
                 All
               </Button>
             </Box>
