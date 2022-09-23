@@ -8,22 +8,37 @@ import axios from "axios";
 import MaterialTable from "material-table";
 
 const RightDrawer = (props) => {
-  console.log("k");
+  // const [issued, setIssued] = useState([]);
+  // const [recived, setRecived] = useState([]);
 
-  // var summerydata = [{
-  //   summery_date: "2020-10-89",
-  //   stockat_hand: "67",
-  //   stock_recieved: "8",
-  //   stockat_end: "75",
-  // }];
+  var issued = [];
+  var recived = [];
 
-  const columns = [
+  useEffect(() => {
+    props.selectedSummery.map((e) => (e.stock_recieved != "" ? recived.push(e) : issued.push(e)));
+    console.log(recived);
+  }, []);
+
+  var summerydata = {
+    summery_date: "2020-10-89",
+    stockat_hand: "67",
+    stock_recieved: "8",
+    stockat_end: "75",
+  };
+
+  const ReceviedColumns = [
     { title: "Date", field: "summery_date" },
     { title: "Begining balance", field: "stockat_hand" },
     { title: "Stock recived", field: "stock_recieved" },
     { title: "Ending balance", field: "stockat_end" },
   ];
-
+  const IssuedColumns = [
+    { title: "Date", field: "summery_date" },
+    { title: "Department", field: "department_issued" },
+    { title: "Begining balance", field: "stockat_hand" },
+    { title: "Stock recived", field: "stock_issued" },
+    { title: "Ending balance", field: "stockat_end" },
+  ];
   return (
     <Box>
       {/* <h1>asdc</h1> */}
@@ -38,7 +53,7 @@ const RightDrawer = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "45vw",
+            width: "25vw",
             minHeight: "93vh",
             height: "auto",
             marginTop: "7vh",
@@ -60,7 +75,7 @@ const RightDrawer = (props) => {
             }}
           >
             <Typography variant="h5" color="white">
-              {props.selectedOrder.finished_name}
+              {props.selectedOrder.raw_name}
             </Typography>
             <Button onClick={() => props.setDrawer(() => false)} sx={{ color: "white" }}>
               <CloseIcon />
@@ -82,15 +97,13 @@ const RightDrawer = (props) => {
           >
             <Typography variant="subtitle2">Summery</Typography>
             <Box sx={{ width: "60%", display: "flex", justifyContent: "space-evenly" }}>
-            <Button size="small" variant="outlined">
-                Monthly 
+              <Button size="small" variant="outlined">
+                Monthly
               </Button>
               <Button size="small" variant="outlined">
                 Yearly
               </Button>
-              <Button size="small">   
-                All
-              </Button>
+              <Button size="small">All</Button>
             </Box>
           </Box>
 
@@ -111,7 +124,7 @@ const RightDrawer = (props) => {
                   Material Code:
                 </Typography>
                 <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_materialcode}
+                  {props.selectedOrder.raw_materialcode}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-around", marginTop: "5%" }}>
@@ -119,8 +132,7 @@ const RightDrawer = (props) => {
                   Stock at hand:
                 </Typography>
                 <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_quantity}{" "}
-                  {props.selectedOrder.finished_materialunit}
+                  {props.selectedOrder.raw_quantity} {props.selectedOrder.raw_materialunit}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-around", marginTop: "5%" }}>
@@ -129,7 +141,7 @@ const RightDrawer = (props) => {
                 </Typography>
                 <Box sx={{ width: "70%" }}>
                   <Typography variant="subtitle2" color="primary">
-                    {props.selectedOrder.finished_date}
+                    {props.selectedOrder.raw_date}
                   </Typography>
                 </Box>
               </Box>
@@ -138,7 +150,7 @@ const RightDrawer = (props) => {
                   specification
                 </Typography>
                 <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_spec}
+                  {props.selectedOrder.raw_spec}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-around", marginTop: "5%" }}>
@@ -146,15 +158,7 @@ const RightDrawer = (props) => {
                   Describtion:
                 </Typography>
                 <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_description}
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "space-around", marginTop: "5%" }}>
-                <Typography variant="subtitle1" sx={{ width: "35%" }}>
-                  Diameter
-                </Typography>
-                <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_diameter}
+                  {props.selectedOrder.raw_description}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-around", marginTop: "5%" }}>
@@ -162,15 +166,7 @@ const RightDrawer = (props) => {
                   Value
                 </Typography>
                 <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_value}
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "space-around", marginTop: "5%" }}>
-                <Typography variant="subtitle1" sx={{ width: "35%" }}>
-                  Status
-                </Typography>
-                <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_status}
+                  {props.selectedOrder.raw_value}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-around", marginTop: "5%" }}>
@@ -178,16 +174,16 @@ const RightDrawer = (props) => {
                   Remark
                 </Typography>
                 <Typography variant="subtitle2" sx={{ width: "70%" }}>
-                  {props.selectedOrder.finished_remark}
+                  {props.selectedOrder.raw_remark}
                 </Typography>
               </Box>
             </Box>
-
+            {}
             <Box sx={{ ml: -2 }}>
               <MaterialTable
-                title="Daily stock movement"
-                data={props.summery}
-                columns={columns}
+                title="Daily stock recived"
+                data={recived}
+                columns={ReceviedColumns}
                 options={{
                   search: false,
                   paging: false,
@@ -198,8 +194,8 @@ const RightDrawer = (props) => {
             <Box sx={{ ml: -2 }}>
               <MaterialTable
                 title="Daily stock issued"
-                data={props.summery}
-                columns={columns}
+                data={issued}
+                columns={IssuedColumns}
                 options={{
                   search: false,
                   paging: false,

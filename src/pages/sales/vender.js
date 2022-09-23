@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import Head from 'next/head';
+import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import {
   Box,
   Button,
@@ -9,76 +9,64 @@ import {
   Link,
   TextField,
   Card,
-  Typography
-} from '@mui/material';
-import { DashboardLayout } from '../../components/dashboard-layout';
-import Table from '../../components/Table'
-import ToolBar from '../../components/ToolBar'
+  Typography,
+} from "@mui/material";
+import { DashboardLayout } from "../../components/dashboard-layout";
+import Table from "../../components/Table";
+import ToolBar from "../../components/ToolBar";
 
 const Vender = () => {
   const [data, setData] = useState([]);
   const columns = [
-    { title: "Name", field: "name" },
-    { title: "Email", field: "email" },
-    { title: "Phone", field: "phone" },
+    { title: "Customer Name", field: "customer_name" },
+    { title: "Phone Number", field: "customer_phone" },
+    { title: "Delivery Mode", field: "delivery_mode" },
+    { title: "Address", field: "customer_address" },
   ];
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("http://localhost:4000/showCustomers")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
+
   return (
     <>
       <Head>
-        <title>
-        Vender
-        </title>
+        <title>customers</title>
       </Head>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}
       >
         <Container maxWidth="ml">
-        {/* <ToolBar title="Recieving" href="/procurment/paymentrequest/add" /> */}
-
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
+          <ToolBar title="customer" href="/sales/Customers/addCustomers" />
           <Card maxWidth="lg">
-        
-        <Table 
-          title='Vender' 
-          data={data} 
-          columns={columns}
-          // actions={[
-          //   rowData => ({
-          //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
-          //     tooltip: 'Edit ',
-          //     onClick:()=> (rowData)
-          //   })
-          // ]}
-          />
-
-        {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
-      </Card>
+            <Table
+              title="Customers List"
+              data={data}
+              columns={columns}
+              options={{
+                actionsColumnIndex: -1,
+                selection: true,
+              }}
+              actions={[
+                {
+                  tooltip: "Remove All Selected Users",
+                  icon: "delete",
+                  onClick: (evt, data) => alert("You want to delete " + data.length + " rows"),
+                },
+              ]}
+            />
+          </Card>
         </Container>
       </Box>
     </>
-  )
+  );
 };
 
-Vender.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
-);
+Vender.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Vender;
