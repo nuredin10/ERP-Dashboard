@@ -72,7 +72,7 @@ const AddSiv = () => {
   return (
     <>
       <Head>
-        <title>Raw Material | Add SIV</title>
+        <title>Raw Material | Add GRN</title>
       </Head>
       <Box
         component="main"

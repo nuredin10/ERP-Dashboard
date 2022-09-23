@@ -57,8 +57,9 @@ export const OrderResults = (props) => {
       })
       .then(function (response) {
         props.setSummery(response.data);
+        // console.log(response.data)
       });
-
+  
     props.setSelectedOrder(e);
     props.setDrawer(true);
   };

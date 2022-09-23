@@ -64,7 +64,7 @@
 //             Raw Material stockList
 //           </Typography> */}
 //           <Card maxWidth="lg">
-        
+
 //         <Table 
 //           title='Raw Material stockList' 
 //           data={data} 
@@ -72,7 +72,7 @@
 //           options={{
 //             actionsColumnIndex: -1,
 //             selection: true,
-            
+
 //           }}
 //           actions={[
 //             {
@@ -216,13 +216,15 @@ import RightDrawer from "../../../../components/RawMaterials/RightDrawer";
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
-  const [selectedSummery, setSummery] = useState([]);
+  const [summery, setSummery] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:59000/rawmaterials")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
+
+  
   return (
     <>
       <Head>
@@ -243,7 +245,7 @@ const FinishedGoods = () => {
               drawer={drawer}
               setDrawer={setDrawer}
               selectedOrder={selectedOrder}
-              selectedSummery={selectedSummery}
+              summery={summery}
             />
             <Divider sx={{ borderColor: "gray", mt: 3 }} />
           </Box>

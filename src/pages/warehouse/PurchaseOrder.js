@@ -63,14 +63,14 @@ const PurchaseOrder = () => {
               variant="subtitle2"
               sx={{ cursor: "pointer" }}
             >
-              <ArrowBackIcon /> payment request
+              <ArrowBackIcon /> purchase request
             </Link>
           </Box>
           <Card sx={{ width: "70%", padding: "2%" }}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={12}>
-                  <Typography variant="h6">Add Payment Request</Typography>
+                  <Typography variant="h6">Add Purchase Request</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField

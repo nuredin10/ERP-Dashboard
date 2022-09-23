@@ -91,7 +91,7 @@ const RawMaterial = () => {
           </Typography> */}
           <Card maxWidth="lg">
             <Table
-              title="Raw Material stockList"
+              title="Raw Material requested"
               data={data}
               columns={columns}
               // actions={[

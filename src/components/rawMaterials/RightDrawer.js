@@ -11,14 +11,7 @@ const RightDrawer = (props) => {
   // const [issued, setIssued] = useState([]);
   // const [recived, setRecived] = useState([]);
 
-  var issued = [];
-  var recived = [];
-
-  useEffect(() => {
-    props.selectedSummery.map((e) => (e.stock_recieved != "" ? recived.push(e) : issued.push(e)));
-    console.log(recived);
-  }, []);
-
+  
   var summerydata = {
     summery_date: "2020-10-89",
     stockat_hand: "67",
@@ -178,8 +171,8 @@ const RightDrawer = (props) => {
                 </Typography>
               </Box>
             </Box>
-            {}
-            <Box sx={{ ml: -2 }}>
+            { }
+            {/* <Box sx={{ ml: -2 }}>
               <MaterialTable
                 title="Daily stock recived"
                 data={recived}
@@ -201,7 +194,7 @@ const RightDrawer = (props) => {
                   paging: false,
                 }}
               />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </Drawer>

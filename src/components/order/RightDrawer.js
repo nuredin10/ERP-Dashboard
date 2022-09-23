@@ -82,10 +82,10 @@ const RightDrawer = (props) => {
           >
             <Typography variant="subtitle2">Summery</Typography>
             <Box sx={{ width: "60%", display: "flex", justifyContent: "space-evenly" }}>
-            <Button size="small" variant="outlined">
+              <Button size="small" variant="outlined" href="/warehouse/stockList/FinishedGoods/monthlyReport">
                 Monthly 
               </Button>
-              <Button size="small" variant="outlined">
+              <Button size="small" variant="outlined" href="/warehouse/stockList/FinishedGoods/yearlyReport">
                 Yearly
               </Button>
               <Button size="small">   

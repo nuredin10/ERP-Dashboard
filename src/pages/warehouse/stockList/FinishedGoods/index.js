@@ -128,7 +128,7 @@ const FinishedGoods = () => {
               data={data}
             />
             <RightDrawer
-              drawer={drawer}
+              drawer={drawer  }
               setDrawer={setDrawer}
               selectedOrder={selectedOrder}
               summery={summery}
