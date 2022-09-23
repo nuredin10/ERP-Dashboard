@@ -142,7 +142,7 @@ const sales = [
   {
     href: "/sales/vender",
     icon: <UsersIcon fontSize="small" />,
-    title: "Vender (CRM)",
+    title: "Customers list (CRM)",
   },
   {
     href: "/sales/salesorder",

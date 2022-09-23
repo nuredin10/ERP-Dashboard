@@ -37,7 +37,7 @@ const AddSiv = () => {
 
   const newUser = (user) => {
     // console.log(user)
-    fetch("http://versavvy.com:59000/addnewrawmaterials", {
+    fetch("http://localhost:59000/addnewrawmaterials", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -52,7 +52,7 @@ const AddSiv = () => {
   return (
     <>
       <Head>
-        <title>Raw Material | Add SIV</title>
+        <title>Raw Material | Add GRN</title>
       </Head>
       <Box
         component="main"
@@ -94,7 +94,7 @@ const AddSiv = () => {
                   <Grid item
                     xs={12}
                     sm={12}>
-                    <Typography variant="h6">Add Raw Material SIV</Typography>
+                    <Typography variant="h6">Add Raw Material GRN</Typography>
                   </Grid>
                   <Grid item
                     xs={12}

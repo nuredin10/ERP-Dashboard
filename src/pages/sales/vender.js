@@ -53,7 +53,7 @@ const Vender = () => {
           <Card maxWidth="lg">
         
         <Table 
-          title='Vender' 
+          title='Customers List' 
           data={data} 
           columns={columns}
           // actions={[

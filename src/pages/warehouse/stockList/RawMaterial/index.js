@@ -51,7 +51,7 @@ const RawMaterial = () => {
         }}
       >
         <Container maxWidth="ml">
-        <ToolBar title="SIV" 
+        <ToolBar title="GRN" 
         href="/warehouse/stockList/RawMaterial/addSiv" />
 
           {/* <Typography
