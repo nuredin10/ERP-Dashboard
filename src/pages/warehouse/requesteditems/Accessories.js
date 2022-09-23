@@ -26,7 +26,7 @@ const Accessories = () => {
     { title: "Status", field: "mat_status" },
   ];
   useEffect(() => {
-    fetch("http://versavvy.com:59000/showStoreRequestion")
+    fetch("http://localhost:59000/showStoreRequestion")
       .then((resp) => resp.json())
       .then((resp) => {
         const accessories = resp.filter((acc) => acc.req_materialtype.includes("ACCS"));
