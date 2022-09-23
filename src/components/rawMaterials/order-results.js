@@ -53,13 +53,13 @@ export const OrderResults = (props) => {
     axios
       .post("http://localhost:59000/showSummeryByID", {
         id: e.id,
-        materialType: "FIN",
+        materialType: "RAW",
       })
       .then(function (response) {
         props.setSummery(response.data);
-        console.log(response)
+        // console.log(response.data)
       });
-
+  
     props.setSelectedOrder(e);
     props.setDrawer(true);
   };
@@ -68,11 +68,8 @@ export const OrderResults = (props) => {
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="All" {...a11yProps(0)} />
-          <Tab label="PVC" {...a11yProps(1)} />
-          <Tab label="PPR" {...a11yProps(2)} />
-          <Tab label="Hope" {...a11yProps(3)} />
-          <Tab label="Fittings" {...a11yProps(4)} />
-          <Tab label="Condutes" {...a11yProps(3)} />
+          <Tab label="Add catagories" {...a11yProps(0)} />
+
         </Tabs>
       </Box>
       <TabPanel
@@ -124,8 +121,8 @@ export const OrderResults = (props) => {
                     <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                   </Box>
                   <Box sx={{ marginLeft: "20%" }}>
-                    <Typography variant="h6">{e.finished_name}</Typography>
-                    <Typography variant="body1">{e.finished_spec}</Typography>
+                    <Typography variant="h6">{e.raw_name}</Typography>
+                    <Typography variant="body1">{e.raw_spec}</Typography>
                   </Box>
                 </Box>
                 {}
@@ -142,7 +139,7 @@ export const OrderResults = (props) => {
                     marginLeft: "10%",
                   }}
                 >
-                  <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
+                  <Typography sx={{ textAlign: "center" }}>{e.raw_materialcode}</Typography>
                 </Box>
               </Grid>
             ))}
@@ -167,7 +164,7 @@ export const OrderResults = (props) => {
         <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3 }}>
           <Grid container>
             {data.map((e, i) =>
-              e.finished_name == "PVC" ? (
+              e.raw_name == "PVC" ? (
                 <Grid
                   onClick={() => orderOnClickHandler(e)}
                   item
@@ -200,8 +197,8 @@ export const OrderResults = (props) => {
                       <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                     </Box>
                     <Box sx={{ marginLeft: "20%" }}>
-                      <Typography variant="h6">{e.finished_name}</Typography>
-                      <Typography variant="body1">{e.finished_spec}</Typography>
+                      <Typography variant="h6">{e.raw_name}</Typography>
+                      <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
                   {}
@@ -218,7 +215,7 @@ export const OrderResults = (props) => {
                       marginLeft: "10%",
                     }}
                   >
-                    <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
+                    <Typography sx={{ textAlign: "center" }}>{e.raw_materialcode}</Typography>
                   </Box>
                 </Grid>
               ) : null
@@ -244,7 +241,7 @@ export const OrderResults = (props) => {
         <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3 }}>
           <Grid container>
             {data.map((e, i) =>
-              e.finished_name == "PPR" ? (
+              e.raw_name == "PPR" ? (
                 <Grid
                   onClick={() => orderOnClickHandler(e)}
                   item
@@ -277,8 +274,8 @@ export const OrderResults = (props) => {
                       <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                     </Box>
                     <Box sx={{ marginLeft: "20%" }}>
-                      <Typography variant="h6">{e.finished_name}</Typography>
-                      <Typography variant="body1">{e.finished_spec}</Typography>
+                      <Typography variant="h6">{e.raw_name}</Typography>
+                      <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
                   {}
@@ -295,7 +292,7 @@ export const OrderResults = (props) => {
                       marginLeft: "10%",
                     }}
                   >
-                    <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
+                    <Typography sx={{ textAlign: "center" }}>{e.raw_materialcode}</Typography>
                   </Box>
                 </Grid>
               ) : null
@@ -321,7 +318,7 @@ export const OrderResults = (props) => {
         <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3 }}>
           <Grid container>
             {data.map((e, i) =>
-              e.finished_name == "Fitting" ? (
+              e.raw_name == "Fitting" ? (
                 <Grid
                   onClick={() => orderOnClickHandler(e)}
                   item
@@ -354,8 +351,8 @@ export const OrderResults = (props) => {
                       <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                     </Box>
                     <Box sx={{ marginLeft: "20%" }}>
-                      <Typography variant="h6">{e.finished_name}</Typography>
-                      <Typography variant="body1">{e.finished_spec}</Typography>
+                      <Typography variant="h6">{e.raw_name}</Typography>
+                      <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
                   {}
@@ -372,7 +369,7 @@ export const OrderResults = (props) => {
                       marginLeft: "10%",
                     }}
                   >
-                    <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
+                    <Typography sx={{ textAlign: "center" }}>{e.raw_materialcode}</Typography>
                   </Box>
                 </Grid>
               ) : null
@@ -398,7 +395,7 @@ export const OrderResults = (props) => {
         <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3 }}>
           <Grid container>
             {data.map((e, i) =>
-              e.finished_name == "PVC" ? (
+              e.raw_name == "PVC" ? (
                 <Grid
                   onClick={() => orderOnClickHandler(e)}
                   item
@@ -431,8 +428,8 @@ export const OrderResults = (props) => {
                       <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                     </Box>
                     <Box sx={{ marginLeft: "20%" }}>
-                      <Typography variant="h6">{e.finished_name}</Typography>
-                      <Typography variant="body1">{e.finished_spec}</Typography>
+                      <Typography variant="h6">{e.raw_name}</Typography>
+                      <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
                   {}
@@ -449,7 +446,7 @@ export const OrderResults = (props) => {
                       marginLeft: "10%",
                     }}
                   >
-                    <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
+                    <Typography sx={{ textAlign: "center" }}>{e.raw_materialcode}</Typography>
                   </Box>
                 </Grid>
               ) : null
@@ -475,7 +472,7 @@ export const OrderResults = (props) => {
         <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3 }}>
           <Grid container>
             {data.map((e, i) =>
-              e.finished_name == "Condute" ? (
+              e.raw_name == "Condute" ? (
                 <Grid
                   onClick={() => orderOnClickHandler(e)}
                   item
@@ -508,8 +505,8 @@ export const OrderResults = (props) => {
                       <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                     </Box>
                     <Box sx={{ marginLeft: "20%" }}>
-                      <Typography variant="h6">{e.finished_name}</Typography>
-                      <Typography variant="body1">{e.finished_spec}</Typography>
+                      <Typography variant="h6">{e.raw_name}</Typography>
+                      <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
                   {}
@@ -526,7 +523,7 @@ export const OrderResults = (props) => {
                       marginLeft: "10%",
                     }}
                   >
-                    <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
+                    <Typography sx={{ textAlign: "center" }}>{e.raw_materialcode}</Typography>
                   </Box>
                 </Grid>
               ) : null

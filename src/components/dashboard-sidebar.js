@@ -39,7 +39,7 @@ import { FinishedGoods as FinishedGoodsIcon } from "../icons/finishedGoods";
 import { Requested as RequestedIcon } from "../icons/requested";
 import { Recieving as RecievingIcon } from "../icons/recieving";
 import { PurchaseOrder as PurchaseOrderIcon } from "../icons/purchaseOrder";
-
+import SummarizeIcon from '@mui/icons-material/Summarize';
 const generalItems = [
   {
     href: "/",
@@ -171,6 +171,11 @@ const StockListItems = [
     href: "/warehouse/stockList/FinishedGoods",
     icon: <FinishedGoodsIcon fontSize="small" />,
     title: "Finished Goods",
+  },
+  {
+    href: "/warehouse/stockList/summary",
+    icon: <SummarizeIcon fontSize="small" />,
+    title: "Summary",
   },
 ];
 

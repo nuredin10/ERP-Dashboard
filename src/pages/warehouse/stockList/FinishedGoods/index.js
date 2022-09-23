@@ -94,17 +94,17 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { Box, Container, Typography, Grid, Divider } from "@mui/material";
-import { DashboardLayout } from '../../../../components/dashboard-layout';
-
+import { DashboardLayout } from "../../../../components/dashboard-layout";
 
 // import styles from '../styles/Home.module.css';
 import OrdersToolBar from "../../../../components/order/order-toolbar";
 import { OrderResults } from "../../../../components/order/order-results";
 import RightDrawer from "../../../../components/order/RightDrawer";
+
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
-  const [selectedSummery, setSummery] = useState([]);
+  const [summery, setSummery] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:59000/finishedMaterial")
@@ -124,11 +124,16 @@ const FinishedGoods = () => {
               drawer={drawer}
               setDrawer={setDrawer}
               setSelectedOrder={setSelectedOrder}
-              setSummery = {setSummery}
+              setSummery={setSummery}
               data={data}
             />
-            <RightDrawer drawer={drawer} setDrawer={setDrawer} selectedOrder={selectedOrder} selectedSummery={data}/>
-            <Divider sx={{ borderColor: 'gray', mt: 3}} />
+            <RightDrawer
+              drawer={drawer  }
+              setDrawer={setDrawer}
+              selectedOrder={selectedOrder}
+              summery={summery}
+            />
+            <Divider sx={{ borderColor: "gray", mt: 3 }} />
           </Box>
         </Container>
       </Box>
