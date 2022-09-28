@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import MaterialTable from "material-table";
+import Router from 'next/router'
 
 const RightDrawer = (props) => {
   // const [issued, setIssued] = useState([]);
@@ -18,6 +19,9 @@ const RightDrawer = (props) => {
     stock_recieved: "8",
     stockat_end: "75",
   };
+
+  const selectedOrder = props.selectedOrder.id
+
 
   const ReceviedColumns = [
     { title: "Date", field: "summery_date" },
@@ -90,10 +94,16 @@ const RightDrawer = (props) => {
           >
             <Typography variant="subtitle2">Summery</Typography>
             <Box sx={{ width: "50%", display: "flex", justifyContent: "space-evenly" }}>
-              <Button size="small" variant="outlined">
+              <Button size="small" variant="outlined" onClick={() => Router.push({
+                pathname: "/warehouse/stockList/RawMaterial/monthlyReport",
+                query: { selectedOrder }
+              })}>
                 Monthly
               </Button>
-              <Button size="small" variant="outlined">
+              <Button size="small" variant="outlined" onClick={() => Router.push({
+                pathname: "//warehouse/stockList/RawMaterial/yearlyReport",
+                query: { selectedOrder }
+              })}>
                 Yearly
               </Button>
               <Button size="small">All</Button>

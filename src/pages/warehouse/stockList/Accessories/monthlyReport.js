@@ -62,7 +62,7 @@ const MonthlyReport = () => {
 
   const req = {
     id: props.selectedOrder,
-    materialType: "FIN",
+    materialType: "ACCS",
     selectedMonth: selectMonth
   }
   useEffect(() => {
@@ -75,7 +75,7 @@ const MonthlyReport = () => {
       .catch(function (res) {
         console.log(res)
       })
-      console.log(req)
+    console.log(req)
   }, [selectMonth]);
 
   useEffect(() => {
@@ -84,9 +84,9 @@ const MonthlyReport = () => {
     data.map((e) => {
       e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
     })
-  }, [selectMonth,data])
+  }, [selectMonth, data])
 
-  
+
 
   return (
     <>
@@ -102,9 +102,9 @@ const MonthlyReport = () => {
           py: 8
         }}
       >
-        <Grid container spacing={1} sx={{mb:2,display: 'flex', alignItems: 'center'}}>
+        <Grid container spacing={1} sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
           <Grid item lg={2}>
-            <Typography variant="h6" sx={{textAlign: "center"}}>Show this month</Typography>
+            <Typography variant="h6" sx={{ textAlign: "center" }}>Show this month</Typography>
           </Grid>
           <Grid item lg={2}>
             <FormControl fullWidth>

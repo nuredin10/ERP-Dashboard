@@ -85,12 +85,15 @@ const RightDrawer = (props) => {
             <Typography variant="subtitle2">Summery</Typography>
             <Box sx={{ width: "50%", display: "flex", justifyContent: "space-evenly" }}>
               <Button size="small" variant="outlined" onClick={() => Router.push({
-                pathname: "//warehouse/stockList/FinishedGoods/monthlyReport",
+                pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
                 query: { selectedOrder }
               }) }>
                 Monthly 
               </Button>
-              <Button size="small" variant="outlined" href="/warehouse/stockList/FinishedGoods/yearlyReport">
+              <Button size="small" variant="outlined" onClick={() => Router.push({
+                pathname: "//warehouse/stockList/FinishedGoods/yearlyReport",
+                query: { selectedOrder }
+              })} >
                 Yearly
               </Button>
               <Button size="small" href="/warehouse/stockList/summary">   

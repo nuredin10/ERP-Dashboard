@@ -61,7 +61,6 @@ export const OrderResults = (props) => {
       });
 
     props.setSelectedOrder(e);
-    console.log(props.setSelectedOrder(e))
     props.setDrawer(true);
   };
   return (

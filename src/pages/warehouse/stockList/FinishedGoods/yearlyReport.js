@@ -1,39 +1,93 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head';
 import {
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  TextField,
+  MenuItem,
+  Select,
+  FormGroup,
+  Checkbox,
   Box,
   Button,
-  Checkbox,
-  Container,
-  FormHelperText,
-  Link,
-  TextField,
   Card,
-  Typography
-} from '@mui/material';
+  InputLabel,
+  ButtonBox,
+  Container,
+  Typography,
+  Grid,
+  DatePicker,
+} from "@mui/material";
 import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
 import ToolBar from '../../../../components/ToolBar'
+import { useRouter } from 'next/router'
+import axios from 'axios'
 
-const YearlyReport = () => {
+const MonthlyReport = () => {
+  const [selectYear, setSelectYear] = useState('')
+
+  const handleYearChange = (e) => {
+    setSelectYear(e.target.value)
+  }
+  const router = useRouter()
+  const {
+    query: { selectedOrder }
+  } = router
+
+  const props = {
+    selectedOrder
+  }
+
   const [data, setData] = useState([]);
-  const columns = [
-    { title: "Name", field: "accs_name" },
-    { title: "Quantity", field: "accs_quantity" },
-    { title: "Description", field: "accs_description" },
-    { title: "Material Code", field: "accs_materialcode" },
-    { title: "Specification", field: "accs_spec" },
-    { title: "Material Unit", field: "accs_materialunit" },
-    { title: "Value", field: "accs_value" },
-    { title: "Reference Number", field: "accs_referncenum" },
-    { title: "Date", field: "accs_date" },
-    { title: "Remark", field: "accs_remark" },
+
+  const [recievedSummery, setRecivedSummery] = useState([]);
+  const [issuedSummery, setIssuedSummery] = useState([]);
+
+  const recievedcolumns = [
+    { title: "Date", field: "summery_date" },
+    { title: "Stock at Hand", field: "stockat_hand" },
+    { title: "Stock Recieved", field: "stock_recieved" },
+    { title: "Department Issued", field: "department_issued" },
+    { title: "stock at End", field: "stockat_end" },
   ];
+  const issuedcolumns = [
+    { title: "Date", field: "summery_date" },
+    { title: "Stock at Hand", field: "stockat_hand" },
+    { title: "Stock Issued", field: "stock_issued" },
+    { title: "Department Issued", field: "department_issued" },
+    { title: "stock at End", field: "stockat_end" },
+  ];
+
+  const req = {
+    id: props.selectedOrder,
+    materialType: "FIN",
+    selectedYear: selectYear
+  }
   useEffect(() => {
-    fetch("http://localhost:59000/accessory")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
-  }, []);
+
+    axios.post("http://localhost:59000/showSummeryByYear", req)
+      .then(function (res) {
+        setData(res.data)
+        console.log("new req")
+      })
+      .catch(function (res) {
+        console.log(res)
+      })
+    console.log(req)
+  }, [selectYear]);
+
+  useEffect(() => {
+    setRecivedSummery([])
+    setIssuedSummery([])
+    data.map((e) => {
+      e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
+    })
+  }, [selectYear, data])
+
+
+
   return (
     <>
       <Head>
@@ -48,57 +102,56 @@ const YearlyReport = () => {
           py: 8
         }}
       >
+        <Grid container spacing={1} sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
+          <Grid item lg={2}>
+            <Typography variant="h6" sx={{ textAlign: "center" }}>Show this Year</Typography>
+          </Grid>
+          <Grid item lg={2}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                Select Year
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="JobType"
+                value={selectYear}
+                label="Job Type"
+                onChange={handleYearChange}
+              >
+                <MenuItem value="2022">2022</MenuItem>
+                <MenuItem value="2023">2023</MenuItem>
+                <MenuItem value="2024">2024</MenuItem>
+                
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+
         <Container maxWidth="ml">
-        {/* <ToolBar title="SIV" 
-        href="/warehouse/stockList/Accessories/addSiv"  /> */}
-
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
           <Card maxWidth="lg">
-        
-        <Table 
-          title='Yearly Report' 
-          data={data} 
-          columns={columns}
-          // options={{
-          //   actionsColumnIndex: -1,
-          //   selection: true,
-            
-          // }}
-          // actions={[
-          //   {
-          //     tooltip: 'Remove All Selected Users',
-          //     icon: 'delete',
-          //     onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
-          //   }
-          // ]}
-          // actions={[
-          //   rowData => ({
-          //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
-          //     tooltip: 'Edit ',
-          //     onClick:()=> (rowData)
-          //   })
-          // ]}
-          />
-
-        {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
-      </Card>
+            <Table
+              title='Monthly Stock Recieved Report'
+              data={recievedSummery}
+              columns={recievedcolumns}
+            />
+          </Card>
+          <Card maxWidth="lg">
+            <Table
+              title='Monthly Stock Issued Report'
+              data={issuedSummery}
+              columns={issuedcolumns}
+            />
+          </Card>
         </Container>
       </Box>
     </>
   )
 };
 
-YearlyReport.getLayout = (page) => (
+MonthlyReport.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default YearlyReport;
+export default MonthlyReport;

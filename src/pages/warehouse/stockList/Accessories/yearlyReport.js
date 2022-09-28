@@ -26,10 +26,10 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 
 const MonthlyReport = () => {
-  const [selectMonth, setSelectMonth] = useState('')
+  const [selectYear, setSelectYear] = useState('')
 
-  const handleMonthChange = (e) => {
-    setSelectMonth(e.target.value)
+  const handleYearChange = (e) => {
+    setSelectYear(e.target.value)
   }
   const router = useRouter()
   const {
@@ -62,12 +62,12 @@ const MonthlyReport = () => {
 
   const req = {
     id: props.selectedOrder,
-    materialType: "FIN",
-    selectedMonth: selectMonth
+    materialType: "ACCS",
+    selectedYear: selectYear
   }
   useEffect(() => {
 
-    axios.post("http://localhost:59000/showSummeryByMonth", req)
+    axios.post("http://localhost:59000/showSummeryByYear", req)
       .then(function (res) {
         setData(res.data)
         console.log("new req")
@@ -75,8 +75,8 @@ const MonthlyReport = () => {
       .catch(function (res) {
         console.log(res)
       })
-      console.log(req)
-  }, [selectMonth]);
+    console.log(req)
+  }, [selectYear]);
 
   useEffect(() => {
     setRecivedSummery([])
@@ -84,15 +84,15 @@ const MonthlyReport = () => {
     data.map((e) => {
       e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
     })
-  }, [selectMonth,data])
+  }, [selectYear, data])
 
-  
+
 
   return (
     <>
       <Head>
         <title>
-          Monthly Report
+          Yearly Report
         </title>
       </Head>
       <Box
@@ -102,34 +102,26 @@ const MonthlyReport = () => {
           py: 8
         }}
       >
-        <Grid container spacing={1} sx={{mb:2,display: 'flex', alignItems: 'center'}}>
+        <Grid container spacing={1} sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
           <Grid item lg={2}>
-            <Typography variant="h6" sx={{textAlign: "center"}}>Show this month</Typography>
+            <Typography variant="h6" sx={{ textAlign: "center" }}>Show this Year</Typography>
           </Grid>
           <Grid item lg={2}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
-                Job Type
+                Select Year
               </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="JobType"
-                value={selectMonth}
+                value={selectYear}
                 label="Job Type"
-                onChange={handleMonthChange}
+                onChange={handleYearChange}
               >
-                <MenuItem value="0">Janurary</MenuItem>
-                <MenuItem value="1">February</MenuItem>
-                <MenuItem value="2">March</MenuItem>
-                <MenuItem value="3">April</MenuItem>
-                <MenuItem value="4">May</MenuItem>
-                <MenuItem value="5">June</MenuItem>
-                <MenuItem value="6">July</MenuItem>
-                <MenuItem value="7">August</MenuItem>
-                <MenuItem value="8">September</MenuItem>
-                <MenuItem value="9">October</MenuItem>
-                <MenuItem value="10">Novermber</MenuItem>
-                <MenuItem value="11">December</MenuItem>
+                <MenuItem value="2022">2022</MenuItem>
+                <MenuItem value="2023">2023</MenuItem>
+                <MenuItem value="2024">2024</MenuItem>
+                
               </Select>
             </FormControl>
           </Grid>

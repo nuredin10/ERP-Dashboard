@@ -6,9 +6,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import MaterialTable from "material-table";
+import Router from 'next/router'
 
 const RightDrawer = (props) => {
   console.log("k");
+  const selectedOrder = props.selectedOrder.id
 
   var summerydata = {
     summery_date: "2020-10-89",
@@ -82,10 +84,16 @@ const RightDrawer = (props) => {
           >
             <Typography variant="subtitle2">Summery</Typography>
             <Box sx={{ width: "60%", display: "flex", justifyContent: "space-evenly" }}>
-            <Button size="small" variant="outlined">
+              <Button size="small" variant="outlined" onClick={() => Router.push({
+                pathname: "/warehouse/stockList/Accessories/monthlyReport",
+                query: { selectedOrder }
+              })}>
                 Monthly 
               </Button>
-              <Button size="small" variant="outlined">
+              <Button size="small" variant="outlined" onClick={() => Router.push({
+                pathname: "//warehouse/stockList/Accessories/yearlyReport",
+                query: { selectedOrder }
+              })}>
                 Yearly
               </Button>
               <Button size="small">   

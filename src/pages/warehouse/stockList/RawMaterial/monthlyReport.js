@@ -62,7 +62,7 @@ const MonthlyReport = () => {
 
   const req = {
     id: props.selectedOrder,
-    materialType: "FIN",
+    materialType: "RAW",
     selectedMonth: selectMonth
   }
   useEffect(() => {
