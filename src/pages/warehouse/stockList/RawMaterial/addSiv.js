@@ -46,6 +46,15 @@ const AddSiv = () => {
     axios.post("http://localhost:59000/addnewrawmaterials")
       .then(res=>console.log(res.data.id))
     setNotify("success")
+    fetch("http://localhost:59000/addnewrawmaterials", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    });
+    Router.push('/warehouse/stockList/Accessories')
   }
 
   const newUser = (user) => {
@@ -59,7 +68,7 @@ const AddSiv = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify( )
     });
     // Router.push('/warehouse/stockList/Accessories')
   };

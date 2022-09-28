@@ -32,19 +32,23 @@ import { useForm } from "react-hook-form";
 const Request = () => {
   const [status, setStatus] = React.useState("");
   const { register, handleSubmit, reset } = useForm();
-  const handleChange = (event) => {
-    setStatus(event.target.value);
+
+  const [value, setValue] = useState();
+
+  const handleDateChange = (newValue) => {
+    setValue(newValue);
   };
+
   const newRequest = (user) => {
-    console.log(user)
-    // fetch("http://localhost:4000/addFinRequest", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(user),
-    // });
+    console.log(user);
+    fetch("http://localhost:59000/addFinRequest", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
     // Router.push("/sales/vender");
   };
 
@@ -71,86 +75,92 @@ const Request = () => {
         >
           <Card sx={{ width: "70%", padding: "2%" }}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <form onSubmit={handleSubmit(newRequest)}>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={12}>
-                  <Typography variant="h6">Request</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_requestname"
-                    label="Request Name"
-                    type="text"
-                    fullWidth
-                    
-                  />
-                </Grid>
-                <Grid item>
-                  <DesktopDatePicker
-                    sx={{ maxWidth: 500 }}
-                    name="mat_requestdate"
-                    label="Date"
-                    inputFormat="MM/dd/yyyy"
-                    value={"2014-08-18T21:11:54"}
-                    // onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                   </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_requestdept"
-                    label="Department"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_reqpersonid"
-                    label="Person ID"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_description"
-                    label="Describtion"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_quantity"
-                    label="Quantity"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
+              <form onSubmit={handleSubmit(newRequest)}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12} sm={12}>
+                    <Typography variant="h6">Request</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="mat_requestname"
+                      label="Request Name"
+                      type="text"
+                      fullWidth
+                      {...register("mat_requestname")}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <DesktopDatePicker
+                      sx={{ maxWidth: 500 }}
+                      name="mat_requestdate"
+                      label="Date"
+                      inputFormat="MM/dd/yyyy"
+                      value={value}
+                      onChange={handleDateChange}
+                      {...register("mat_requestdate")}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="mat_requestdept"
+                      label="Department"
+                      type="text"
+                      fullWidth
+                      {...register("mat_requestdept")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="mat_reqpersonid"
+                      label="Person ID"
+                      type="text"
+                      fullWidth
+                      {...register("mat_reqpersonid")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="mat_description"
+                      label="Describtion"
+                      type="text"
+                      fullWidth
+                      {...register("mat_description")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="mat_quantity"
+                      label="Quantity"
+                      type="text"
+                      fullWidth
+                      {...register("mat_quantity")}
+                    />
+                  </Grid>
 
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="req_materialtype"
-                    label="Material type"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="req_materialtype"
+                      label="Material type"
+                      type="text"
+                      fullWidth
+                      {...register("req_materialtype")}
+                    />
+                  </Grid>
 
-                <Grid item>
-                  <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
-                    Request
-                  </Button>
-                  <Button variant="outlined">Cancel</Button>
+                  <Grid item>
+                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                      Request
+                    </Button>
+                    <Button variant="outlined">Cancel</Button>
+                  </Grid>
                 </Grid>
-              </Grid>
               </form>
             </LocalizationProvider>
           </Card>

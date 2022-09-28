@@ -14,26 +14,57 @@ import {
 import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
 import ToolBar from '../../../../components/ToolBar'
+import { useRouter } from 'next/router'
+import axios from 'axios'
 
 const MonthlyReport = () => {
+
+  const router = useRouter()
+  const {
+    query: { selectedOrder }
+  } = router
+
+  const props = {
+    selectedOrder
+  }
+
   const [data, setData] = useState([]);
+
+  const [recievedSummery, setRecivedSummery] = useState([]);
+  const [issuedSummery, setIssuedSummery] = useState([]);
+
   const columns = [
-    { title: "Name", field: "accs_name" },
-    { title: "Quantity", field: "accs_quantity" },
-    { title: "Description", field: "accs_description" },
-    { title: "Material Code", field: "accs_materialcode" },
-    { title: "Specification", field: "accs_spec" },
-    { title: "Material Unit", field: "accs_materialunit" },
-    { title: "Value", field: "accs_value" },
-    { title: "Reference Number", field: "accs_referncenum" },
-    { title: "Date", field: "accs_date" },
-    { title: "Remark", field: "accs_remark" },
+    { title: "Date", field: "summery_date" },
+    { title: "Stock at Hand", field: "stockat_hand" },
+    { title: "Stock Recieved", field: "stock_recieved" },
+    { title: "Stock Issued", field: "stock_issued" },
+    { title: "Department Issued", field: "department_issued" },
+    { title: "stock at End", field: "stockat_end" },
   ];
+
   useEffect(() => {
-    fetch("http://localhost:59000/accessory")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+    const req = {
+      id: props.selectedOrder,
+      materialType: "FIN",
+      selectedMonth: ""
+    }
+
+    axios.post("http://localhost:59000/showSummeryByMonth", req)
+      .then(function (res) {
+        setData(res.data)
+      })
+      .catch(function (res) {
+        console.log(res)
+      })
+
+    
   }, []);
+
+  useEffect(()=>{
+    data.map((e) => {
+      e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
+    })
+  },[data])
   return (
     <>
       <Head>
@@ -49,45 +80,19 @@ const MonthlyReport = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <ToolBar title="SIV" 
-        href="/warehouse/stockList/Accessories/addSiv"  /> */}
-
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
           <Card maxWidth="lg">
-
             <Table
-              title='Monthly Report'
-              data={data}
+              title='Monthly Stock Recieved Report'
+              data={recievedSummery}
               columns={columns}
-            // options={{
-            //   actionsColumnIndex: -1,
-            //   selection: true,
-
-            // }}
-            // actions={[
-            //   {
-            //     tooltip: 'Remove All Selected Users',
-            //     icon: 'delete',
-            //     onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
-            //   }
-            // ]}
-            // actions={[
-            //   rowData => ({
-            //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
-            //     tooltip: 'Edit ',
-            //     onClick:()=> (rowData)
-            //   })
-            // ]}
+            />  
+          </Card>
+          <Card maxWidth="lg">
+            <Table
+              title='Monthly Stock Issued Report'
+              data={issuedSummery}
+              columns={columns}
             />
-
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
           </Card>
         </Container>
       </Box>

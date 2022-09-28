@@ -106,11 +106,15 @@ const FinishedGoods = () => {
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [summery, setSummery] = useState([]);
   const [data, setData] = useState([]);
+  
   useEffect(() => {
     fetch("http://localhost:59000/finishedMaterial")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
+
+  // console.log(selectedOrder)
+
   return (
     <>
       <Head>

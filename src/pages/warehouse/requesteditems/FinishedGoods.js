@@ -28,7 +28,7 @@ const FinishedGoods = () => {
   ];
 
   useEffect(() => {
-    fetch("http://versavvy.com:59000/showStoreRequestion")
+    fetch("http://localhost:59000/showStoreRequestion")
       .then((resp) => resp.json())
       .then((resp) => {
         const finishedData = resp.filter((finish) => finish.req_materialtype.includes("FIN"));
