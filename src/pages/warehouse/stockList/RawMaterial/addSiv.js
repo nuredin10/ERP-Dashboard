@@ -60,17 +60,13 @@ const AddSiv = () => {
   const newUser = (user) => {
     // const newDatas = [user, ...data];
     // setData(newDatas);
-    // reset();
-    // setNotify("info");
-    fetch("http://versavvy.com:49000/addnewrawmaterials", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify( )
-    });
-    // Router.push('/warehouse/stockList/Accessories')
+    reset();
+    axios.post("http://localhost:59000/addnewrawmaterials",user)
+      .then(res=>console.log(res.data))
+      .catch(res=>console.log(res))
+    setNotify("success");
+    console.log(user)
+
   };
 
   return (
@@ -234,7 +230,7 @@ const AddSiv = () => {
                   </Grid>
                   <Grid item lg={8}>
                     <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
-                      Add
+                      Save
                     </Button>
                     <Button variant="outlined">Clear</Button>
                   </Grid>
@@ -242,14 +238,14 @@ const AddSiv = () => {
               </form>
             </LocalizationProvider>
           </Card>
-          <Card sx={{width: '90%', m: 2, p: "2%"}}>
+          {/* <Card sx={{width: '90%', m: 2, p: "2%"}}>
             <Box>
-              <Button onClick={submitAllForms} sx={{ marginRight: "2rem" }} variant="contained">
+              <Button sx={{ marginRight: "2rem" }} variant="contained">
                 Save
               </Button>
               <Button variant="outlined">Cancel</Button>
             </Box>
-          </Card>
+          </Card> */}
         </Box>
       </Box>
     </>
