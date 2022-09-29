@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import Head from 'next/head';
+import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import {
   Box,
   Button,
@@ -9,76 +9,51 @@ import {
   Link,
   TextField,
   Card,
-  Typography
-} from '@mui/material';
-import { DashboardLayout } from '../../components/dashboard-layout';
-import Table from '../../components/Table'
-import ToolBar from '../../components/ToolBar'
+  Typography,
+} from "@mui/material";
+import { DashboardLayout } from "../../components/dashboard-layout";
+import Table from "../../components/Table";
+import ToolBar from "../../components/ToolBar";
 
 const SalesQuotaion = () => {
   const [data, setData] = useState([]);
   const columns = [
-    { title: "Name", field: "name" },
-    { title: "Email", field: "email" },
-    { title: "Phone", field: "phone" },
+    { title: "Material Name", field: "sold_name" },
+    { title: "Quantity", field: "sold_qty" },
+    { title: "Sold Date", field: "sold_date" },
+    { title: "Description", field: "sold_description" },
+    { title: "Employee ID", field: "sold_personid" },
+    { title: "Sold Value", field: "sold_value" },
+    { title: "Sold For", field: "sold_total" },
+    { title: "Customer Name", field: "store_purchaserName" },
   ];
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("http://localhost:4000/salesSummery")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);
   return (
     <>
       <Head>
-        <title>
-        Sales Quotaion
-        </title>
+        <title>Sales Summery</title>
       </Head>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}
       >
         <Container maxWidth="ml">
-        {/* <ToolBar title="Recieving" href="/procurment/paymentrequest/add" /> */}
-
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
           <Card maxWidth="lg">
-        
-        <Table 
-          title='Sales Quotaion' 
-          data={data} 
-          columns={columns}
-          // actions={[
-          //   rowData => ({
-          //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
-          //     tooltip: 'Edit ',
-          //     onClick:()=> (rowData)
-          //   })
-          // ]}
-          />
-
-        {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
-      </Card>
+            <Table title="Sales Summery" data={data} columns={columns} />
+          </Card>
         </Container>
       </Box>
     </>
-  )
+  );
 };
 
-SalesQuotaion.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
-);
+SalesQuotaion.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default SalesQuotaion;

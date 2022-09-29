@@ -154,7 +154,7 @@ const sales = [
   {
     href: "/sales/salesquotation",
     icon: <UsersIcon fontSize="small" />,
-    title: "Sales Quotation",
+    title: "Sales Summery",
   },
 ];
 
