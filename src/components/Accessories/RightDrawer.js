@@ -40,7 +40,7 @@ const RightDrawer = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "25vw",
+            width: "27vw",
             minHeight: "93vh",
             height: "auto",
             marginTop: "7vh",
@@ -91,12 +91,12 @@ const RightDrawer = (props) => {
                 Monthly 
               </Button>
               <Button size="small" variant="outlined" onClick={() => Router.push({
-                pathname: "//warehouse/stockList/Accessories/yearlyReport",
+                pathname: "/warehouse/stockList/Accessories/yearlyReport",
                 query: { selectedOrder }
               })}>
                 Yearly
               </Button>
-              <Button size="small">   
+              <Button size="small" href="/warehouse/stockList/summary">   
                 All
               </Button>
             </Box>
