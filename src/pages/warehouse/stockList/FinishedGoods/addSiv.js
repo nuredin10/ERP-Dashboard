@@ -27,6 +27,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { useForm } from "react-hook-form";
 import Router from 'next/router'
+import axios from 'axios'
 
 const AddSiv = () => {
   const [status, setStatus] = React.useState('');
@@ -38,14 +39,21 @@ const AddSiv = () => {
 
   const newUser = (user) => {
     console.log(user)
-    fetch("http://versavvy.com:59000/addnewFinMaterials", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user)
-    });
+    axios.post("http://versavvy.com:59000/addnewFinMaterials",user)
+    .then(function(res){
+      console.log(res)
+    })
+    .catch(function(res){
+      console.log(res)
+    })
+    // fetch("", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(user)
+    // });
     Router.push('/warehouse/stockList/FinishedGoods')
   };
 

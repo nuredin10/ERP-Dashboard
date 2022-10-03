@@ -41,6 +41,7 @@ import { Recieving as RecievingIcon } from "../icons/recieving";
 import { PurchaseOrder as PurchaseOrderIcon } from "../icons/purchaseOrder";
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import StoreIcon from '@mui/icons-material/Store';
 
 const generalItems = [
   {
@@ -115,17 +116,17 @@ const production = [
   },
   {
     href: "/production/IssueMaterial",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <RequestedIcon fontSize="small" />,
     title: "Issue Material",
   },
   {
     href: "/production/StoreVoucher",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <StoreIcon fontSize="small" />,
     title: "Store Voucher",
   },
   {
     href: "/production/ViewAllProducts",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <ViewListIcon fontSize="small" />,
     title: "View All Products",
   },
 ];
@@ -153,7 +154,7 @@ const sales = [
   },
   {
     href: "/sales/salesquotation",
-    icon: <UsersIcon fontSize="small" />,
+    icon: <SummarizeIcon fontSize="small" />,
     title: "Sales Summery",
   },
 ];
@@ -309,7 +310,7 @@ export const DashboardSidebar = (props) => {
           ))}
         </Box>
         <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-        <Box sx={{ flexGrow: 1 }}>
+        {/* <Box sx={{ flexGrow: 1 }}>
           <Typography variant="menuTitle">PROCURMENT</Typography>
           {procurmentItems.map((item) => (
             <>
@@ -321,7 +322,7 @@ export const DashboardSidebar = (props) => {
             </>
           ))}
         </Box>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+        <Divider sx={{ borderColor: "#2D3748", my: 3 }} /> */}
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="menuTitle">Ware House</Typography>
           <Box sx={{ marginTop: "2vh" }}>
