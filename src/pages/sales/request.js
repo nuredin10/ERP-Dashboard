@@ -37,18 +37,19 @@ const Request = () => {
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
+    
   };
 
   const newRequest = (user) => {
     console.log(user);
-    fetch("http://localhost:59000/addFinRequest", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
+    // fetch("http://localhost:59000/addFinRequest", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(user),
+    // });
     // Router.push("/sales/vender");
   };
 
