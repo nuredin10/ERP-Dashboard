@@ -60,14 +60,14 @@ const SalesOrder = () => {
       
     };
     console.log(newForm);
-    // fetch("http://localhost:4000/creatSalesOrder", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(DataTransfer),
-    // });
+    fetch("http://localhost:4000/creatSalesOrder", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newForm),
+    });
   };
   return (
     <>
@@ -281,7 +281,7 @@ const SalesOrder = () => {
 
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
+                  
                       name="Ordered_item4"
                       label="Item Orderd 4"
                       type="text"
@@ -292,7 +292,7 @@ const SalesOrder = () => {
 
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
+                     
                       name="Ordered_Quantity4"
                       label="Quantity"
                       type="text"
