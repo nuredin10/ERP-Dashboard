@@ -52,13 +52,8 @@ const SalesOrder = () => {
 
 
   const { register, handleSubmit, reset } = useForm();
-  const [value, setValue] = useState();
   const [payment, setPayment] = useState();
   const [orderInfo, setOrderInfo] = useState([])
-
-  const handleDateChange = (newValue) => {
-    setValue(newValue);
-  };
 
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
@@ -66,10 +61,8 @@ const SalesOrder = () => {
 
   const newRequest = (data) => {
 
-    console.log(value);
     const newForm = {
       ...data,
-      sales_date: value,
       payment_status: payment,
       order_information: orderInfo
 
@@ -125,17 +118,7 @@ const SalesOrder = () => {
                       {...register("company_name")}
                     />
                   </Grid>
-                  <Grid item>
-                    <DesktopDatePicker
-                      sx={{ maxWidth: 500 }}
-                      name="order_date"
-                      label="Date"
-                      inputFormat="MM/dd/yyyy"
-                      value={"2014-08-18T21:11:54"}
-                      onChange={handleDateChange}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </Grid>
+              
 
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h7">Customer Information/Account Information</Typography>
