@@ -33,15 +33,20 @@ const Request = () => {
   const [status, setStatus] = React.useState("");
   const { register, handleSubmit, reset } = useForm();
 
-  const [value, setValue] = useState();
+  const [dateValue, setDateValue] = useState();
 
   const handleDateChange = (newValue) => {
-    setValue(newValue);
+    setDateValue(newValue);
     
   };
 
   const newRequest = (user) => {
-    console.log(user);
+    const req = {
+      ...user,
+      mat_requestdate: dateValue
+    }
+    console.log(req)
+    
     // fetch("http://localhost:59000/addFinRequest", {
     //   method: "POST",
     //   headers: {
@@ -97,9 +102,9 @@ const Request = () => {
                       name="mat_requestdate"
                       label="Date"
                       inputFormat="MM/dd/yyyy"
-                      value={value}
+                      value={dateValue}
                       onChange={handleDateChange}
-                      {...register("mat_requestdate")}
+                      // {...register("mat_requestdate")}
                       renderInput={(params) => <TextField {...params} />}
                     />
                   </Grid>

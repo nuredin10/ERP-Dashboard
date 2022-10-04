@@ -18,6 +18,7 @@ import {
   Typography,
   Grid,
   DatePicker,
+  Modal
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
@@ -28,36 +29,50 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
+import Router from 'next/router'
+import OrderInformation from "src/components/sales/orderInformation";
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  width: '70%',
+  transform: 'translate(-50%, -50%)',
+  // width: 400,
+  height: '80%',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const SalesOrder = () => {
-  const [status, setStatus] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
 
   const { register, handleSubmit, reset } = useForm();
   const [value, setValue] = useState();
   const [payment, setPayment] = useState();
-  const [fullForm, setForm] = useState();
+  const [orderInfo, setOrderInfo] = useState([])
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
   };
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
-
   const handlePaymentChange = (newValue) => {
-    setPayment(newValue);
+    setPayment(newValue.target.value);
   };
 
   const newRequest = (data) => {
-    console.log(data);
 
     console.log(value);
     const newForm = {
       ...data,
-        sales_date: value,
-        payment_status: payment.target.value,
-      
+      sales_date: value,
+      payment_status: payment,
+      order_information: orderInfo
+
     };
     console.log(newForm);
     // fetch("http://localhost:4000/creatSalesOrder", {
@@ -69,6 +84,9 @@ const SalesOrder = () => {
     //   body: JSON.stringify(DataTransfer),
     // });
   };
+
+
+
   return (
     <>
       <Head>
@@ -210,96 +228,23 @@ const SalesOrder = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={6} sm={6} lg={6}>
                     <Typography variant="h7">Order Information</Typography>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_item1"
-                      label="Item Orderd 1"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_item1")}
-                    />
+                  <Grid item xs={6} sm={6} lg={6}>
+                    <Button onClick={handleOpen} variant='outlined'>Add</Button>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_Quantity1"
-                      label="Quantity"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_Quantity1")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_item2"
-                      label="Item Orderd 2"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_item2")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_Quantity2"
-                      label="Quantity"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_Quantity2")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_item3"
-                      label="Item Orderd 3"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_item3")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_Quantity3"
-                      label="Quantity"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_Quantity3")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_item4"
-                      label="Item Orderd 4"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_item4")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Ordered_Quantity4"
-                      label="Quantity"
-                      type="text"
-                      fullWidth
-                      {...register("Ordered_Quantity4")}
-                    />
-                  </Grid>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <OrderInformation setOrderInfo={setOrderInfo} handleClose={handleClose}/>
+                    </Box>
+                  </Modal>
 
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h7">Payment information</Typography>
