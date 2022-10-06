@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
+import axios from 'axios'
 
 const FinishedGoods = () => {
   const [data, setData] = useState([]);
@@ -36,6 +39,33 @@ const FinishedGoods = () => {
       });
   }, []);
 
+
+  const accept = async(id) => {
+    await axios.post('http://localhost:59000/responseStoreRequestion', {
+      id: id,
+      status: "Accept"
+    })
+      .then(function (response) {
+        console.log(response);
+        Router.push("//warehouse/requesteditems/RawMaterial")
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const decline = async(id) => {
+    await axios.post('http://localhost:59000/responseStoreRequestion', {
+      id: id,
+      status: "Decline"
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   // const [finished, setFinished] = useState([]);
 
   // useEffect(()=>{
@@ -66,13 +96,18 @@ const FinishedGoods = () => {
               title="Finished Goods"
               data={data}
               columns={columns}
-              // actions={[
-              //   rowData => ({
-              //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
-              //     tooltip: 'Edit ',
-              //     onClick:()=> (rowData)
-              //   })
-              // ]}
+              actions={[
+                rowData => ({
+                  icon: () => < DoneIcon sx={{color: 'green'}}/>,
+                  tooltip: 'Accpet ',
+                  onClick: () => (accept(rowData.id))
+                }),
+                rowData => ({
+                  icon: () => < CloseIcon sx={{ color: 'red' }} />,
+                  tooltip: 'Reject ',
+                  onClick: () => (decline(rowData.id))
+                })
+              ]}
             />
 
             {/* <Typography sx={{ mb: 3 }} variant="h4">
