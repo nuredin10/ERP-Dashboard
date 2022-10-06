@@ -20,8 +20,7 @@ import {
   DatePicker,
   IconButton,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import CloseIcon from '@mui/icons-material/Close';
 import Table from "../../../components/Table";
 import axios from "axios";
 import { RESPONSE_LIMIT_DEFAULT } from "next/dist/server/api-utils";
@@ -60,7 +59,8 @@ const OrderListInformation = ({ OrderdId, handleClose }) => {
         <title>{}</title>
       </Head>
 
-      <Container maxWidth="ml">
+      <IconButton sx={{ float: 'right', ml: 5, color: 'red' }} onClick={handleClose}><CloseIcon /></IconButton>
+      <Container maxWidth="ml" >
         <Card maxWidth="lg">
           <Table title="Ordered Materials" data={data} columns={columns} />
         </Card>

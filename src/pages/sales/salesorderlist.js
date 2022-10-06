@@ -48,7 +48,8 @@ const SalesOrderList = () => {
     // width: 400,
     height: "80%",
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    borderRadius: '10px',
+    overflowY: 'scroll',
     boxShadow: 24,
     p: 4,
   };

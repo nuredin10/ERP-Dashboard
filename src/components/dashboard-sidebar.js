@@ -63,20 +63,20 @@ const generalItems = [
 
 const procurmentItems = [
   {
-    href: "/procurment/supplier",
+    href: "/procurment/addpurchasedmaterial",
     icon: <Google fontSize="small" />,
-    title: "Supplier",
+    title: "Add Purchased Material",
   },
-  {
-    href: "/procurment/purchaserequest",
-    icon: <UsersIcon fontSize="small" />,
-    title: "Purchase Request",
-  },
-  {
-    href: "/procurment/paymentrequest",
-    icon: <UsersIcon fontSize="small" />,
-    title: "Payment Request",
-  },
+  // {
+  //   href: "/procurment/purchaserequest",
+  //   icon: <UsersIcon fontSize="small" />,
+  //   title: "Purchase Request",
+  // },
+  // {
+  //   href: "/procurment/paymentrequest",
+  //   icon: <UsersIcon fontSize="small" />,
+  //   title: "Payment Request",
+  // },
 ];
 
 const wareHouseItemsAccordion = [
@@ -310,7 +310,7 @@ export const DashboardSidebar = (props) => {
           ))}
         </Box>
         <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-        {/* <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 }}>
           <Typography variant="menuTitle">PROCURMENT</Typography>
           {procurmentItems.map((item) => (
             <>
@@ -322,7 +322,7 @@ export const DashboardSidebar = (props) => {
             </>
           ))}
         </Box>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} /> */}
+        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="menuTitle">Ware House</Typography>
           <Box sx={{ marginTop: "2vh" }}>
