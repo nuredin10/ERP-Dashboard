@@ -24,7 +24,7 @@ const Vender = () => {
     { title: "Address", field: "customer_address" },
   ];
   useEffect(() => {
-    fetch("http://localhost:4000/showCustomers")
+    fetch("http://localhost:59000/showCustomers")
       .then((resp) => resp.json())
       .then((resp) => setData(resp));
   }, []);

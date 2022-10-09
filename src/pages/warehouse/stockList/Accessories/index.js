@@ -133,9 +133,10 @@ const Accessories = () => {
       </Head>
       <Box component="main">
         <Container maxWidth={false}>
-          <Box>
+          <Box >
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
             <OrderResults
+             
               drawer={drawer}
               setDrawer={setDrawer}
               setSelectedOrder={setSelectedOrder}

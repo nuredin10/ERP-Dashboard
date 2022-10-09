@@ -86,7 +86,7 @@ export const OrderResults = (props) => {
           marginLeft: "10%",
         }}
       >
-        <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3 }}>
+        <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3, ml: -4 }}>
           <Grid container>
             {data.map((e, i) => (
               <Grid
@@ -120,7 +120,7 @@ export const OrderResults = (props) => {
                   >
                     <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                   </Box>
-                  <Box sx={{ marginLeft: "20%" }}>
+                  <Box sx={{ marginLeft: "5%", width: 600 }}>
                     <Typography variant="h6">{e.raw_name}</Typography>
                     <Typography variant="body1">{e.raw_spec}</Typography>
                   </Box>

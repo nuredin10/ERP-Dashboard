@@ -50,7 +50,7 @@ const RightDrawer = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "35vw",
+            width: "27vw",
             minHeight: "93vh",
             height: "auto",
             marginTop: "7vh",
@@ -106,7 +106,7 @@ const RightDrawer = (props) => {
               })}>
                 Yearly
               </Button>
-              <Button size="small">All</Button>
+              <Button size="small" href="/warehouse/stockList/summary">All</Button>
             </Box>
           </Box>
 

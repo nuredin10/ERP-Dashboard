@@ -15,6 +15,7 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
+import Router from 'next/router'
 import axios from 'axios'
 
 const RawMaterial = () => {
@@ -34,7 +35,9 @@ const RawMaterial = () => {
       .then((resp) => resp.json())
       .then((resp) => {
         const raw = resp.filter((raw) => raw.req_materialtype.includes("RAW"));
-        setData(raw);
+        const pending = raw.filter((pending) => pending.mat_status.includes("Pending"));
+        setData(pending);
+
       });
   }, []);
 
@@ -52,6 +55,7 @@ const RawMaterial = () => {
     })
       .then(function (response) {
         console.log(response);
+        Router.push("//warehouse/requesteditems/RawMaterial")
       })
       .catch(function (error) {
         console.log(error);
@@ -103,12 +107,12 @@ const RawMaterial = () => {
               // ]}
               actions={[
                 rowData => ({
-                  icon: () => < DoneIcon />,
+                  icon: () => < DoneIcon sx={{color: 'green'}}/>,
                   tooltip: 'Accpet ',
                   onClick: () => (accept(rowData.id))
                 }),
                 rowData => ({
-                  icon: () => < CloseIcon />,
+                  icon: () => < CloseIcon sx={{ color: 'red' }} />,
                   tooltip: 'Reject ',
                   onClick: () => (decline(rowData.id))
                 })

@@ -210,9 +210,9 @@ import { DashboardLayout } from "../../../../components/dashboard-layout";
 import axios from 'axios'
 
 // import styles from '../styles/Home.module.css';
-import OrdersToolBar from "../../../../components/RawMaterials/order-toolbar";
-import { OrderResults } from "../../../../components/RawMaterials/order-results";
-import RightDrawer from "../../../../components/RawMaterials/RightDrawer";
+import OrdersToolBar from "../../../../components/rawMaterials/order-toolbar";
+import { OrderResults } from "../../../../components/rawMaterials/order-results";
+import RightDrawer from "../../../../components/rawMaterials/RightDrawer";
 
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
