@@ -42,6 +42,7 @@ import { PurchaseOrder as PurchaseOrderIcon } from "../icons/purchaseOrder";
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import StoreIcon from '@mui/icons-material/Store';
+import AddIcon from "@mui/icons-material/Add";
 
 const generalItems = [
   {
@@ -64,7 +65,7 @@ const generalItems = [
 const procurmentItems = [
   {
     href: "/procurment/addpurchasedmaterial",
-    icon: <Google fontSize="small" />,
+    icon: <AddIcon fontSize="small" />,
     title: "Add Purchased Material",
   },
   // {

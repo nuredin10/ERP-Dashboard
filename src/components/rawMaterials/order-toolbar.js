@@ -27,9 +27,6 @@ const OrdersToolBar = (props) => {
         <Grid item>
           <Typography variant="h4">Raw Materials</Typography>
         </Grid>
-        <Grid item >
-          <Button variant="contained" href='/warehouse/stockList/RawMaterial/addSiv'>Add New Raw Material</Button>
-        </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ display: "flex", justifyContent: "space-between" }}>
         <Grid item lg={10} sm={12}>
