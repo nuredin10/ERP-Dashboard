@@ -39,7 +39,7 @@ const AddSiv = () => {
 
   const newUser = (user) => {
     console.log(user)
-    axios.post("http://versavvy.com:59000/addnewFinMaterials",user)
+    axios.post("http://localhost:59000/addnewFinMaterials",user)
     .then(function(res){
       console.log(res)
     })
@@ -54,7 +54,7 @@ const AddSiv = () => {
     //   },
     //   body: JSON.stringify(user)
     // });
-    Router.push('/warehouse/stockList/FinishedGoods')
+    // Router.push('/warehouse/stockList/FinishedGoods')
   };
 
   return (
@@ -210,6 +210,28 @@ const AddSiv = () => {
                       type="text"
                       fullWidth
                       {...register("finished_remark")} />
+                  </Grid>
+
+                  <Grid item
+                    xs={12}
+                    sm={12}>
+                    <TextField required
+                      name="finished_diameter"
+                      label="finished_diameter"
+                      type="text"
+                      fullWidth
+                      {...register("finished_diameter")} />
+                  </Grid>
+
+                  <Grid item
+                    xs={12}
+                    sm={12}>
+                    <TextField required
+                      name="finished_catago"
+                      label="finished_catago"
+                      type="text"
+                      fullWidth
+                      {...register("finished_catago")} />
                   </Grid>
                   <Grid item>
                     <Button type="submit"
