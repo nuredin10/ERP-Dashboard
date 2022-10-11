@@ -234,7 +234,7 @@ const FinishedGoods = () => {
   return (
     <>
       <Head>
-        <title>Orders | Material Kit</title>
+        <title>RawMaterials | Proplast</title>
       </Head>
       <Box component="main">
         <Container maxWidth={false}>
