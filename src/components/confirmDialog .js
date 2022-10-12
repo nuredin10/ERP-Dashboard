@@ -17,7 +17,7 @@ import {
   DialogActions,
   DialogContentText ,
 } from "@mui/material";
-const ConfirmDialog = ({dialogOpen,handleClose}) => {
+const ConfirmDialog = ({dialogOpen,handleClose,title,message,confirmAction}) => {
 
     console.log(dialogOpen)
 //    dialogOpen ? console.log("asasasas") : console.log("BOoooooooooooooommmmmmmmmmmmm");
@@ -29,17 +29,16 @@ const ConfirmDialog = ({dialogOpen,handleClose}) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps deterasdcmine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+            {message}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={handleClose} variant='outlined'>No</Button>
+          <Button onClick={confirmAction} autoFocus variant='contained'>
+            Yes
           </Button>
         </DialogActions>
       </Dialog>

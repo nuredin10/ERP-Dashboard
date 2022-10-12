@@ -29,14 +29,14 @@ const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
 
-  const [dialogOpen, setDialogOpen] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
-    setDialogOpen("true");
+    setDialogOpen(true);
   };
 
   const handleClose = () => {
-    setDialogOpen("false");
+    setDialogOpen(false);
   };
 
   const [inputFields, setInputFields] = useState([
@@ -91,17 +91,18 @@ const Addpurchasedmaterial = () => {
 
   const submitHandler = () => {
     // console.log(inputFields)
-    // axios.post("http://localhost:59000/addnewPurchased",inputFields)
-    // .then((res)=>{
-    //   console.log(res)
-    // setIsSuccess('success');
-    // setAlertMsg('Saved Successfully')
-    // })
-    // .catch((res)=>{
-    //   console.log(res)
-    //   setIsSuccess('error')
-    //   setAlertMsg('Something went wrong')
-    // })
+    handleClose();
+    axios.post("http://localhost:59000/addnewPurchased",inputFields)
+    .then((res)=>{
+      console.log(res)
+    setIsSuccess('success');
+    setAlertMsg('Saved Successfully')
+    })
+    .catch((res)=>{
+      console.log(res)
+      setIsSuccess('error')
+      setAlertMsg('Something went wrong')
+    })
   };
 
   const clearAllHandler = () => {
@@ -133,7 +134,10 @@ const Addpurchasedmaterial = () => {
       >
         <ConfirmDialog 
         dialogOpen={dialogOpen}
-        onClose={handleClose}
+        handleClose={handleClose}
+        confirmAction={submitHandler}
+        title="Are you sure?"
+        message="Do you want to save this item?"
         />
         
         <Grid container>
