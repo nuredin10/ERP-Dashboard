@@ -33,11 +33,6 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-
     axios.post('http://localhost:9000/login',{
       email: data.get('email'),
       password: data.get('password'),
