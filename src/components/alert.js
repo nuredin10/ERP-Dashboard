@@ -17,7 +17,6 @@ const CustomAlert = ({ type, message, setIsSuccess }) => {
   }
   useEffect(() => {
     const timeId = setTimeout(() => {
-      // After 3 seconds set the show value to false
       setShow(false)
       setIsSuccess('')
     }, 3000)

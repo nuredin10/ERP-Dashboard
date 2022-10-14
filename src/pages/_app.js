@@ -22,7 +22,7 @@ const App = (props) => {
       <NextNProgress />
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>Material Kit Pro</title>
+          <title>Proplast</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
           <link
             rel="stylesheet"
