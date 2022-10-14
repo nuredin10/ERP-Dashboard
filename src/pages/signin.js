@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import Cookies from 'js-cookie'
 
 function Copyright(props) {
   return (
@@ -38,7 +40,15 @@ export default function SignIn() {
       password: data.get('password'),
     })
     .then((res)=>{
-      console.log(res)
+
+      Cookies.set('token', res.data.jwt)
+      // jwt.verify(token,'PROPLAST', (err, decoded) =>{
+      //   if (err) {
+      //     console.log(err)
+      //   } else {
+      //     console.log(decoded)
+      //   }
+      // })
     })
     .catch((res)=>{
       console.log(res)
