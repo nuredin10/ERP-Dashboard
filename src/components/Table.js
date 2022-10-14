@@ -79,10 +79,10 @@ const Table = (props) => {
         //     onClick: (event, rowData) => confirm("You want to delete " + rowData.name)
         //   }
         // ]}
-        // options={{
-        //   actionsColumnIndex: -1,
-        //   searchFieldAlignment: "right",
-        // }}
+        options={{
+          actionsColumnIndex: -1,
+          searchFieldAlignment: "right",
+        }}
       />
       {/* <MUIDataTable title={"Employee List"} data={customers} columns={columns} options={options} 
         components={{

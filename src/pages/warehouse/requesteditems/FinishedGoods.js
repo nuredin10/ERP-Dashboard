@@ -16,9 +16,12 @@ import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import axios from 'axios'
+import CustomAlert from '../../../components/alert'
 
 const FinishedGoods = () => {
   const [data, setData] = useState([]);
+  const [isSuccess, setIsSuccess] = useState('')
+  const [alertMsg, setAlertMsg] = useState('')
 
   const columns = [
     { title: "Name", field: "mat_requestname" },
@@ -35,7 +38,8 @@ const FinishedGoods = () => {
       .then((resp) => resp.json())
       .then((resp) => {
         const finishedData = resp.filter((finish) => finish.req_materialtype.includes("FIN"));
-         setData(finishedData);
+        const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
+        setData(pending);
       });
   }, []);
 
@@ -47,11 +51,16 @@ const FinishedGoods = () => {
     })
       .then(function (response) {
         console.log(response);
-        Router.push("//warehouse/requesteditems/RawMaterial")
+        Router.push("/warehouse/requesteditems/RawMaterial")
+        setIsSuccess('success');
+        setAlertMsg('Item Accepted')
       })
       .catch(function (error) {
         console.log(error);
+        setIsSuccess('error')
+        setAlertMsg('Something went wrong')
       });
+      
   }
 
   const decline = async(id) => {
@@ -61,9 +70,13 @@ const FinishedGoods = () => {
     })
       .then(function (response) {
         console.log(response);
+        setIsSuccess('info');
+        setAlertMsg('Item Rejected')
       })
       .catch(function (error) {
         console.log(error);
+        setIsSuccess('error')
+        setAlertMsg('Something went wrong')
       });
   }
   // const [finished, setFinished] = useState([]);
@@ -77,11 +90,12 @@ const FinishedGoods = () => {
       <Head>
         <title>Finished Goods</title>
       </Head>
+      {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8,
+          my: 12,
         }}
       >
         <Container maxWidth="ml">

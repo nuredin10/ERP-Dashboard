@@ -17,9 +17,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import Router from 'next/router'
 import axios from 'axios'
+import CustomAlert from '../../../components/alert'
 
 const RawMaterial = () => {
   const [data, setData] = useState([]);
+  const [isSuccess, setIsSuccess] = useState('')
+  const [alertMsg, setAlertMsg] = useState('')
+
   const columns = [
     { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
@@ -55,11 +59,16 @@ const RawMaterial = () => {
     })
       .then(function (response) {
         console.log(response);
-        Router.push("//warehouse/requesteditems/RawMaterial")
+        Router.push("/warehouse/requesteditems/RawMaterial")
+        setIsSuccess('success');
+        setAlertMsg('Item Accepted')
       })
       .catch(function (error) {
         console.log(error);
+        setIsSuccess('error')
+        setAlertMsg('Something went wrong')
       });
+
   }
 
   const decline = async(id) => {
@@ -69,21 +78,27 @@ const RawMaterial = () => {
     })
       .then(function (response) {
         console.log(response);
+        setIsSuccess('info');
+        setAlertMsg('Item Rejected')
       })
       .catch(function (error) {
         console.log(error);
+        setIsSuccess('error')
+        setAlertMsg('Something went wrong')
       });
+
   }
   return (
     <>
       <Head>
         <title>RawMaterial</title>
       </Head>
+          {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8,
+          my: 12,
         }}
       >
         <Container maxWidth="ml">

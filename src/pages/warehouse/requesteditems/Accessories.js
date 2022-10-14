@@ -16,10 +16,14 @@ import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import axios from 'axios'
-
+import CustomAlert from '../../../components/alert'
+import Router from 'next/router'
 
 const Accessories = () => {
   const [data, setData] = useState([]);
+  const [isSuccess, setIsSuccess] = useState('')
+  const [alertMsg, setAlertMsg] = useState('')
+
   const columns = [
     { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
@@ -34,8 +38,8 @@ const Accessories = () => {
       .then((resp) => resp.json())
       .then((resp) => {
         const accessories = resp.filter((acc) => acc.req_materialtype.includes("ACCS"));
-
-        setData(accessories);
+        const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
+        setData(pending);
       });
   }, []);
 
@@ -48,11 +52,16 @@ const Accessories = () => {
       })
       .then(function (response) {
         console.log(response);
-        Router.push("//warehouse/requesteditems/RawMaterial");
+        Router.push("//warehouse/requesteditems/Accessories");
+        setIsSuccess('success');
+        setAlertMsg('Item Accepted')
       })
       .catch(function (error) {
         console.log(error);
+        setIsSuccess('error')
+        setAlertMsg('Something went wrong')
       });
+
   };
 
   const decline = async (id) => {
@@ -63,10 +72,15 @@ const Accessories = () => {
       })
       .then(function (response) {
         console.log(response);
+        setIsSuccess('info');
+        setAlertMsg('Item Rejected')
       })
       .catch(function (error) {
         console.log(error);
+        setIsSuccess('error')
+        setAlertMsg('Something went wrong')
       });
+
   };
 
   return (
@@ -74,11 +88,12 @@ const Accessories = () => {
       <Head>
         <title>Accessories</title>
       </Head>
+      {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8,
+          my: 12,
         }}
       >
         <Container maxWidth="ml">

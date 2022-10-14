@@ -211,7 +211,7 @@ const SalesOrder = () => {
                     <Typography variant="h7">Order Information</Typography>
                   </Grid>
                   <Grid item xs={6} sm={6} lg={6}>
-                    <Button onClick={handleOpen} variant="outlined">
+                    <Button onClick={handleOpen} variant="contained">
                       Add
                     </Button>
                   </Grid>
@@ -294,7 +294,7 @@ const SalesOrder = () => {
                   </Grid>
 
                   <Grid item>
-                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="outlined">
+                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Save
                     </Button>
                     <Button variant="outlined">Cancel</Button>

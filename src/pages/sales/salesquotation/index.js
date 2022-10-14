@@ -11,10 +11,11 @@ import {
   Card,
   Typography,
 } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import Table from "../../components/Table";
-import ToolBar from "../../components/ToolBar";
-
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import Table from "../../../components/Table";
+import ToolBar from "../../../components/ToolBar";
+import AddIcon from '@mui/icons-material/Add';
+import Router from 'next/router'
 const SalesQuotaion = () => {
   const [data, setData] = useState([]);
   const columns = [
@@ -35,7 +36,7 @@ const SalesQuotaion = () => {
   return (
     <>
       <Head>
-        <title>Sales Summery</title>
+        <title>Sales Quotation</title>
       </Head>
       <Box
         component="main"
@@ -44,7 +45,10 @@ const SalesQuotaion = () => {
           py: 8,
         }}
       >
-        <Container maxWidth="ml">
+        <Box maxWidth="ml" sx={{ mr: 5, float: 'right', mb: 2}}>
+          <Button maxWidth="lg" variant="outlined" startIcon={<AddIcon/>} onClick={()=>Router.push('/sales/salesquotation/addquotation')} >Add Quotation</Button>
+        </Box>
+        <Container  maxWidth="ml" sx={{clear: 'right'}}>
           <Card maxWidth="lg">
             <Table title="Sales Summery" data={data} columns={columns} />
           </Card>

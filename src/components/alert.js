@@ -1,15 +1,16 @@
-import React,{useState, useEffect} from 'react'
-import {Alert } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Alert,Box } from '@mui/material'
 
 const CustomAlert = ({ type, message, setIsSuccess }) => {
   const [show, setShow] = useState(true)
 
   const alertStyle = {
-    postion: "absolute",
-    top: '20vh',
-    left: '10%',
-    ml: "20%",
-    mt: 3,
+    // postion: "absolute",
+    // top: 555,
+    // left: 955,
+    // ml: "20%",
+    // mt: 3,
+    border: '1px solid red',
     height: '10%',
     width: '20%',
     color: 'white'
@@ -18,7 +19,7 @@ const CustomAlert = ({ type, message, setIsSuccess }) => {
     const timeId = setTimeout(() => {
       // After 3 seconds set the show value to false
       setShow(false)
-    setIsSuccess('')
+      setIsSuccess('')
     }, 3000)
     return () => {
       clearTimeout(timeId)
@@ -30,7 +31,9 @@ const CustomAlert = ({ type, message, setIsSuccess }) => {
   }
 
   return (
-    <Alert sx={alertStyle} variant="filled" severity={type}>{message}</Alert>
+    <Box sx={{mt: 2, width: '15%', position: 'absolute', right: '2%'}}>
+      <Alert sx={{color: 'white'}}  variant="filled" severity={type}>{message}</Alert>
+    </Box>
   )
 }
 

@@ -196,7 +196,7 @@ const Addpurchasedmaterial = () => {
                         <TextField
                           required
                           name="new_materialtype"
-                          label="Material Type"
+                          label="Remark"
                           type="text"
                           value={input.new_materialtype}
                           onChange={event => handleFormChange(index, event)}

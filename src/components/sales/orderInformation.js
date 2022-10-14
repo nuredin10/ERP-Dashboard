@@ -119,7 +119,7 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
         </Grid>
 
         <Grid item lg={12} md={12} sm={12}>
-          <Button type='submit' variant="outlined" onClick={submitHandler}>Submit</Button>
+          <Button type='submit' variant="contained" onClick={submitHandler}>Submit</Button>
         </Grid>
       </Grid>
     </Box>
