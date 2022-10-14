@@ -6,6 +6,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Bell as BellIcon } from "../icons/bell";
 import { UserCircle as UserCircleIcon } from "../icons/user-circle";
 import { Users as UsersIcon } from "../icons/users";
+import { Typography } from "@material-ui/core";
+import jwt from 'jsonwebtoken'
+import Cookies from 'js-cookie'
+import {useState , useEffect} from 'react'
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -14,6 +18,18 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
+  const token = Cookies.get('token')
+  const [user, setUser] = useState({})
+
+  useEffect(()=>{
+    jwt.verify(token,'PROPLAST', (err, decoded) =>{
+        if (err) {
+          console.log(err)
+        } else {
+          setUser(decoded)
+        }
+      })
+  })
 
   return (
     <>
@@ -65,6 +81,7 @@ export const DashboardNavbar = (props) => {
               </Badge>
             </IconButton>
           </Tooltip>
+          <Typography variant='h2' color='black'>{user.userName}</Typography>
           <Avatar
             sx={{
               height: 40,
