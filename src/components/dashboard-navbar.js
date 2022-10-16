@@ -27,9 +27,10 @@ export const DashboardNavbar = (props) => {
           console.log(err)
         } else {
           setUser(decoded)
+          console.log(user, "sdfSdfsdfsdf")
         }
       })
-  })
+  },[])
 
   return (
     <>
@@ -81,7 +82,7 @@ export const DashboardNavbar = (props) => {
               </Badge>
             </IconButton>
           </Tooltip>
-          <Typography variant='h2' color='black'>{user.userName}</Typography>
+          {/* <Typography variant='h2' color='black'>{user.userName}</Typography> */}
           <Avatar
             sx={{
               height: 40,

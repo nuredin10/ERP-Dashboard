@@ -40,7 +40,7 @@ export default function SignIn() {
       password: data.get('password'),
     })
     .then((res)=>{
-
+      console.log("asdcasdcads "+res.data.jwt)
       Cookies.set('token', res.data.jwt)
       // jwt.verify(token,'PROPLAST', (err, decoded) =>{
       //   if (err) {
