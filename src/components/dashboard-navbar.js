@@ -10,7 +10,7 @@ import { Typography } from "@material-ui/core";
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 import {useState , useEffect} from 'react'
-
+import Router from 'next/router'
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3],
@@ -21,16 +21,16 @@ export const DashboardNavbar = (props) => {
   const token = Cookies.get('token')
   const [user, setUser] = useState({})
 
-  useEffect(()=>{
-    jwt.verify(token,'PROPLAST', (err, decoded) =>{
-        if (err) {
-          console.log(err)
-        } else {
-          setUser(decoded)
-          console.log(user, "sdfSdfsdfsdf")
-        }
-      })
-  },[])
+  // useEffect(()=>{
+  //   jwt.verify(token,'PROPLAST', (err, decoded) =>{
+  //       if (err) {
+  //         console.log(err)
+  //       } else {
+  //         setUser(decoded)
+  //         console.log(user, "sdfSdfsdfsdf")
+  //       }
+  //     })
+  // },[])
 
   return (
     <>
@@ -76,7 +76,11 @@ export const DashboardNavbar = (props) => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Notifications">
-            <IconButton sx={{ ml: 1 }}>
+            <IconButton sx={{ ml: 1 }} onClick={()=>{
+              Cookies.remove("loggedIn")
+              Cookies.remove("token")
+              Router.push('http://localhost:3000')
+            }}>
               <Badge badgeContent={4} color="primary" variant="dot">
                 <BellIcon fontSize="small" />
               </Badge>
