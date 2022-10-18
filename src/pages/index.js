@@ -33,6 +33,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+
+  const [incorrect, setIncorrect] = React.useState(false)
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -41,10 +44,10 @@ export default function SignIn() {
       password: data.get('password'),
     })
     .then((res)=>{
-      console.log("asdcasdcads "+res.data.jwt)
       Cookies.set('token', res.data.jwt)
       Cookies.set("loggedIn", true)
       Router.push('http://localhost:3000/dashboard')
+
       // jwt.verify(token,'PROPLAST', (err, decoded) =>{
       //   if (err) {
       //     console.log(err)
@@ -54,7 +57,9 @@ export default function SignIn() {
       // })
     })
     .catch((res)=>{
-      console.log(res)
+      if(res.response.status == 403){
+        setIncorrect(true)
+      }
     })
   };
 
@@ -126,6 +131,10 @@ export default function SignIn() {
               >
                 Sign In
               </Button>
+              <Grid>
+              {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
+
+              </Grid>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
