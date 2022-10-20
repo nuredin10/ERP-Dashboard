@@ -110,22 +110,22 @@ const wareHouseItems = [
 
 const production = [
   {
-    href: "/production/AllRawMaterials",
+    href: "/production/ProductionOrder",
     icon: <RawmaterialIcon fontSize="small" />,
-    title: "All Raw Materials",
+    title: "Production Order",
   },
   {
-    href: "/production/IssueMaterial",
-    icon: <RequestedIcon fontSize="small" />,
-    title: "Issue Material",
+    href: "/production/addnewbatch",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Add New Batch",
   },
   {
-    href: "/production/StoreVoucher",
+    href: "/production/addproduct",
     icon: <StoreIcon fontSize="small" />,
-    title: "Store Voucher",
+    title: "Add Product",
   },
   {
-    href: "/production/ViewAllProducts",
+    href: "/production/viewallproducts",
     icon: <ViewListIcon fontSize="small" />,
     title: "View All Products",
   },
@@ -252,8 +252,7 @@ export const DashboardSidebar = (props) => {
       });
   },[]);
 
-  const isSuperAdmin = user.role === "Super Admin" ? true : false;
-
+  const isSuperAdmin = /* user.role === "Super Admin" ? true : false;*/ true;
   
   const content = (
     <>

@@ -65,7 +65,7 @@ const BatchFile = () => {
       ...data,
       rawmat_list: JSON.stringify(orderInfo),
     };
-    console.log(newForm);
+    // console.log( newForm);
     axios
       .post("http://localhost:42000/addbatchformula", newForm)
       .then(function (response) {

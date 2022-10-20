@@ -26,7 +26,7 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 
-const AllRawMaterials = () => {
+const ProductionOrder = () => {
   const [data, setData] = useState([]);
   useEffect(() => {}, []);
 
@@ -140,7 +140,7 @@ const AllRawMaterials = () => {
   return (
     <>
       <Head>
-        <title>AllRawMaterials</title>
+        <title>Production Order</title>
       </Head>
       <Box
         component="main"
@@ -174,6 +174,6 @@ const AllRawMaterials = () => {
   );
 };
 
-AllRawMaterials.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+ProductionOrder.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default AllRawMaterials;
+export default ProductionOrder;
