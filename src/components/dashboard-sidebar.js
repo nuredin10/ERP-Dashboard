@@ -122,7 +122,7 @@ const production = [
   {
     href: "/production/addproduct",
     icon: <StoreIcon fontSize="small" />,
-    title: "Add Product",
+    title: "Add Production Order",
   },
   {
     href: "/production/viewallproducts",
@@ -252,7 +252,7 @@ export const DashboardSidebar = (props) => {
       });
   },[]);
 
-  const isSuperAdmin = /* user.role === "Super Admin" ? true : false;*/ true;
+  const isSuperAdmin = user.role === "Super Admin" ? true : false;
   
   const content = (
     <>

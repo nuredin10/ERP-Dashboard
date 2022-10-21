@@ -11,29 +11,29 @@ export default async function middleware(req) {
 
     const url = req.url;
 
-//     if(url == baseUrl+'/'){
-//         if(jwt){
-//             try{
-//                 await jwtVerify(jwt, new TextEncoder().encode(secret));
-//                 return NextResponse.redirect(baseUrl+'/dashboard')
-//             } catch(e){
-//                 console.log(e);
-//                 return NextResponse.next();
-//             }
-//         }
-//     }
+    if(url == baseUrl+'/'){
+        if(jwt){
+            try{
+                await jwtVerify(jwt, new TextEncoder().encode(secret));
+                return NextResponse.redirect(baseUrl+'/dashboard')
+            } catch(e){
+                console.log(e);
+                return NextResponse.next();
+            }
+        }
+    }
 
-//     if(url == baseUrl+'/dashboard'){
-//         if(jwt === undefined){
-//             return NextResponse.redirect(baseUrl+'/')
-//         }
+    if(url == baseUrl+'/dashboard'){
+        if(jwt === undefined){
+            return NextResponse.redirect(baseUrl+'/')
+        }
 
-//         try{
-//             await jwtVerify(jwt, new TextEncoder().encode(secret));
-//             return NextResponse.next();
-//         } catch(e){
-//             return NextResponse.redirect(baseUrl+'/')
-//         }
-//   }
+        try{
+            await jwtVerify(jwt, new TextEncoder().encode(secret));
+            return NextResponse.next();
+        } catch(e){
+            return NextResponse.redirect(baseUrl+'/')
+        }
+  }
   return NextResponse.next()
 }
