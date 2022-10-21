@@ -39,7 +39,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios.post('http://localhost:9000/login',{
+    axios.post('http://versavvy.com:9000/login',{
       email: data.get('email'),
       password: data.get('password'),
     })
@@ -47,7 +47,7 @@ export default function SignIn() {
       Cookies.set('token', res.data.jwt)
       Cookies.set("loggedIn", true)
       Router.push('http://localhost:3000/dashboard')
-
+      console.log(res)
       // jwt.verify(token,'PROPLAST', (err, decoded) =>{
       //   if (err) {
       //     console.log(err)

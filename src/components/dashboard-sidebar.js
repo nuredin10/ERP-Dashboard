@@ -252,7 +252,7 @@ export const DashboardSidebar = (props) => {
       });
   },[]);
 
-  const isSuperAdmin = /* user.role === "Super Admin" ? true : false;*/ true;
+  const isSuperAdmin = user.role === "Super Admin" ? true : false;
   
   const content = (
     <>
