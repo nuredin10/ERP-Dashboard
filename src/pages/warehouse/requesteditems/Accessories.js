@@ -15,7 +15,7 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import axios from 'axios'
+import axios from '../../../components/axios';
 import CustomAlert from '../../../components/alert'
 import Router from 'next/router'
 
@@ -34,25 +34,29 @@ const Accessories = () => {
     { title: "Status", field: "mat_status" },
   ];
   useEffect(() => {
-    fetch("http://localhost:59000/showStoreRequestion")
-      .then((resp) => resp.json())
-      .then((resp) => {
-        const accessories = resp.filter((acc) => acc.req_materialtype.includes("ACCS"));
+    axios.get('/wareHouse/showStoreRequestion')
+      .then((resp)=>{
+        console.log(resp.data)
+        const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
         const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
         setData(pending);
-      });
+      })
+      .catch((error)=>{
+        console.log(error, "sdfgsdfgsdfgsdfg")
+
+      })
   }, []);
 
   const [acc, setAcc] = useState([]);
   const accept = async (id) => {
     await axios
-      .post("http://localhost:59000/responseStoreRequestion", {
+      .post("/wareHouse/responseStoreRequestion", {
         id: id,
         status: "Accept",
       })
       .then(function (response) {
         console.log(response);
-        Router.push("//warehouse/requesteditems/Accessories");
+        Router.push("/warehouse/requesteditems/Accessories");
         setIsSuccess('success');
         setAlertMsg('Item Accepted')
       })
@@ -66,7 +70,7 @@ const Accessories = () => {
 
   const decline = async (id) => {
     await axios
-      .post("http://localhost:59000/responseStoreRequestion", {
+      .post("/wareHouse/responseStoreRequestion", {
         id: id,
         status: "Decline",
       })

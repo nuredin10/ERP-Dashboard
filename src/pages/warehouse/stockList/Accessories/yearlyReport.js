@@ -23,7 +23,7 @@ import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
 import ToolBar from '../../../../components/ToolBar'
 import { useRouter } from 'next/router'
-import axios from 'axios'
+import axios from '../../../../components/axios'
 
 const MonthlyReport = () => {
   const [selectYear, setSelectYear] = useState('')
@@ -67,7 +67,7 @@ const MonthlyReport = () => {
   }
   useEffect(() => {
 
-    axios.post("http://localhost:59000/showSummeryByYear", req)
+    axios.post("/wareHouse/showSummeryByYear", req)
       .then(function (res) {
         setData(res.data)
         console.log("new req")

@@ -16,8 +16,8 @@ import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import axios from "axios"
-
+import axios from "../../components/axios";
+import Router from "next/router";
 
 const Recieving = () => {
   const [data, setData] = useState([]);
@@ -33,23 +33,22 @@ const Recieving = () => {
     { title: "Value", field: "new_value" },
   ];
   useEffect(() => {
-    fetch("http://localhost:59000/shownewPurchased")
-      .then((resp) => {
-        return resp.json();
-      })
-      .then((res) => {
-        const newPurchased = res.filter((res) => res.new_status.includes("NEW"));
-        setData(newPurchased);
-        console.log(res)
-      });
+
+    axios.get('/wareHouse/shownewPurchased')
+    .then((resp)=>{
+      const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
+      setData(newPurchased);
+    })
+
   }, []);
 
   const accept = async(id) => {
-    await axios.post('http://localhost:59000/confirmPurchased', {
+    await axios.post('/wareHouse/confirmPurchased', {
       id: id,
       status: "Accept"
     })
       .then(function (response) {
+        Router.reload(window.location.pathname);
         console.log(response);
       })
       .catch(function (error) {
@@ -58,11 +57,12 @@ const Recieving = () => {
   }
 
   const decline = async(id) => {
-    await axios.post('http://localhost:59000/confirmPurchased', {
+    await axios.post('/wareHouse/confirmPurchased', {
       id: id,
       status: "Decline"
     })
       .then(function (response) {
+        Router.reload(window.location.pathname);
         console.log(response);
       })
       .catch(function (error) {

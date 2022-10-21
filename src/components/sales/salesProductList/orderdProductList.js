@@ -22,8 +22,9 @@ import {
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Table from "../../../components/Table";
-import axios from "axios";
+import axios from "../../../components/axios";
 import { RESPONSE_LIMIT_DEFAULT } from "next/dist/server/api-utils";
+
 
 const OrderListInformation = ({ OrderdId, handleClose }) => {
   const [data, setData] = useState([]);
@@ -42,7 +43,7 @@ const OrderListInformation = ({ OrderdId, handleClose }) => {
   };
   useEffect(() => {
     axios
-      .post("http://localhost:4000/showSalesOrderById", {
+      .post("/salesModule/showSalesOrderById", {
         ID: OrderdId.unique_id,
       })
       .then((resp) => setData(resp.data));

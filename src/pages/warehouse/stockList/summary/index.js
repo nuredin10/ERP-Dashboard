@@ -14,6 +14,7 @@ import {
 import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
 import ToolBar from '../../../../components/ToolBar'
+import axios from '../../../../components/axios'
 
 const Summary = () => {
   const [data, setData] = useState([]);
@@ -30,9 +31,13 @@ const Summary = () => {
     { title: "Remark", field: "accs_remark" },
   ];
   useEffect(() => {
-    fetch("http://localhost:59000/accessory")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+    axios.get("/wareHouse/finishedMaterial")
+      .then((response)=>{
+          setData(response.data)
+        })
+      .catch((response)=>{
+        console.log(response)
+      })
   }, []);
   return (
     <>

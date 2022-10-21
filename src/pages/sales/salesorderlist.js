@@ -17,7 +17,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import OrderList from "src/components/sales/salesProductList/orderdProductList";
-
+import axios from '../../components/axios';
 
 const SalesOrderList = () => {
   const [data, setData] = useState([]);
@@ -61,9 +61,14 @@ const SalesOrderList = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:4000/showSalesOrder")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+    axios.get("/salesModule/showSalesOrder")
+    .then((resp)=>{
+      setData(resp.data)
+    })
+
+    // fetch("http://localhost:4000/showSalesOrder")
+    //   .then((resp) => resp.json())
+    //   .then((resp) => setData(resp));
   }, []);
   return (
     <Box sx={{
@@ -75,7 +80,7 @@ const SalesOrderList = () => {
       </Head>
         <Container maxWidth="ml">
         
-          <Card maxWidth="lg">
+          {/* <Card maxWidth="lg"> */}
             <Table
               title="Sales Order List"
               data={data}
@@ -103,7 +108,7 @@ const SalesOrderList = () => {
             {/* <Typography sx={{ mb: 3 }} variant="h4">
           Supplier
         </Typography> */}
-          </Card>
+          {/* </Card> */}
         </Container>
       
     </Box>

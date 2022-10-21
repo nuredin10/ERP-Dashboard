@@ -31,7 +31,8 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
 import RawMaterialNeed from "src/components/product/raw_Needed";
-import axios from "axios";
+import axios from "../../components/axios";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -67,7 +68,7 @@ const BatchFile = () => {
     };
     // console.log( newForm);
     axios
-      .post("http://localhost:42000/addbatchformula", newForm)
+      .post("/productionModule/addbatchformula", newForm)
       .then(function (response) {
         console.log(response);
       })

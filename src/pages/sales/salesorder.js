@@ -31,7 +31,8 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
 import OrderInformation from "src/components/sales/orderInformation";
-import axios from "axios";
+import axios from "../../components/axios";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -68,9 +69,10 @@ const SalesOrder = () => {
     };
     console.log(newForm);
     axios
-      .post("http://localhost:4000/creatSalesOrder", newForm)
+      .post("/salesModule/creatSalesOrder", newForm)
       .then(function (response) {
         console.log(response);
+        Router.push("/sales/salesorderlist");
       })
       .catch(function (error) {
         console.log(error);

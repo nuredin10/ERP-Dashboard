@@ -12,10 +12,11 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios'
+// import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
+import axios from '../components/axios'
 
 function Copyright(props) {
   return (
@@ -39,7 +40,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios.post('http://localhost:9000/login',{
+    axios.post('/authenticationModule/login',{
       email: data.get('email'),
       password: data.get('password'),
     })
@@ -47,7 +48,7 @@ export default function SignIn() {
       Cookies.set('token', res.data.jwt)
       Cookies.set("loggedIn", true)
       Router.push('http://localhost:3000/dashboard')
-
+      console.log(res)
       // jwt.verify(token,'PROPLAST', (err, decoded) =>{
       //   if (err) {
       //     console.log(err)

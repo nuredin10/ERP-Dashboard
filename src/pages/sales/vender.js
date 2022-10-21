@@ -14,6 +14,7 @@ import {
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
+import axios from '../../components/axios';
 
 const Vender = () => {
   const [data, setData] = useState([]);
@@ -24,9 +25,15 @@ const Vender = () => {
     { title: "Address", field: "customer_address" },
   ];
   useEffect(() => {
-    fetch("http://localhost:59000/showCustomers")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+
+    axios.get('/salesModule/showCustomers')
+    .then((res) =>{
+      setData(res.data);
+    })
+
+    // fetch("http://localhost:59000/showCustomers")
+    //   .then((resp) => resp.json())
+    //   .then((resp) => setData(resp));
   }, []);
 
   return (

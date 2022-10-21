@@ -153,15 +153,15 @@ const sales = [
     title: "Sales Order",
   },
   {
-    href: "/sales/salesquotation",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Sales Quotation",
-  },
-  {
     href: "/sales/salessummery",
-    icon: <SummarizeIcon fontSize="small" />,
+    icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Summery",
   },
+  // {
+  //   href: "/sales/salessummery",
+  //   icon: <SummarizeIcon fontSize="small" />,
+  //   title: "Sales Summery",
+  // },
 ];
 
 const StockListItems = [

@@ -16,7 +16,7 @@ import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import Router from 'next/router'
-import axios from 'axios'
+import axios from '../../../components/axios'
 import CustomAlert from '../../../components/alert'
 
 const RawMaterial = () => {
@@ -35,14 +35,17 @@ const RawMaterial = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:59000/showStoreRequestion")
-      .then((resp) => resp.json())
-      .then((resp) => {
-        const raw = resp.filter((raw) => raw.req_materialtype.includes("RAW"));
-        const pending = raw.filter((pending) => pending.mat_status.includes("Pending"));
+    axios.get('/wareHouse/showStoreRequestion')
+      .then((resp)=>{
+        console.log(resp.data)
+        const rawMaterial = resp.data.filter((raw) => raw.req_materialtype.includes("RAW"));
+        const pending = rawMaterial.filter((pending) => pending.mat_status.includes("PENDING"));
         setData(pending);
+      })
+      .catch((error)=>{
+        console.log(error, "sdfgsdfgsdfgsdfg")
 
-      });
+      })
   }, []);
 
   // const [rawmaterial, setRawmaterial] = useState([]);
@@ -53,7 +56,7 @@ const RawMaterial = () => {
   //   setRawmaterial(data)
   // },[])
   const accept = async(id) => {
-    await axios.post('http://localhost:59000/responseStoreRequestion', {
+    await axios.post('/wareHouse/responseStoreRequestion', {
       id: id,
       status: "Accept"
     })
@@ -72,7 +75,7 @@ const RawMaterial = () => {
   }
 
   const decline = async(id) => {
-    await axios.post('http://localhost:59000/responseStoreRequestion', {
+    await axios.post('/wareHouse/responseStoreRequestion', {
       id: id,
       status: "Decline"
     })

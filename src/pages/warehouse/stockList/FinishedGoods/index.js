@@ -100,6 +100,7 @@ import { DashboardLayout } from "../../../../components/dashboard-layout";
 import OrdersToolBar from "../../../../components/order/order-toolbar";
 import { OrderResults } from "../../../../components/order/order-results";
 import RightDrawer from "../../../../components/order/RightDrawer";
+import axios from '../../../../components/axios'
 
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
@@ -108,9 +109,13 @@ const FinishedGoods = () => {
   const [data, setData] = useState([]);
   
   useEffect(() => {
-    fetch("http://localhost:59000/finishedMaterial")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+    axios.get("/wareHouse/finishedMaterial")
+      .then((response)=>{
+          setData(response.data)
+        })
+      .catch((response)=>{
+        console.log(response)
+      })
   }, []);
 
   // console.log(selectedOrder)

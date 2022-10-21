@@ -15,7 +15,7 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import axios from 'axios'
+import axios from '../../../components/axios';
 import CustomAlert from '../../../components/alert'
 
 const FinishedGoods = () => {
@@ -34,18 +34,32 @@ const FinishedGoods = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:59000/showStoreRequestion")
-      .then((resp) => resp.json())
-      .then((resp) => {
-        const finishedData = resp.filter((finish) => finish.req_materialtype.includes("FIN"));
+
+    axios.get('/wareHouse/showStoreRequestion')
+      .then((resp)=>{
+        console.log(resp.data)
+        const finishedData = resp.data.filter((finish) => finish.req_materialtype.includes("FIN"));
         const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
         setData(pending);
-      });
+      })
+      .catch((error)=>{
+        console.log(error, "sdfgsdfgsdfgsdfg")
+
+      })
+
+    // fetch("https://versavvy.com/ERP_backend/wareHouse/showStoreRequestion")
+    //   .then((resp) => resp.json())
+    //   .then((resp) => {
+    //     console.log(resp)
+    //     // const finishedData = resp.filter((finish) => finish.req_materialtype.includes("FIN"));
+    //     // const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
+    //     // setData(pending);
+    //   });
   }, []);
 
 
   const accept = async(id) => {
-    await axios.post('http://localhost:59000/responseStoreRequestion', {
+    await axios.post('/wareHouse/responseStoreRequestion', {
       id: id,
       status: "Accept"
     })
@@ -64,7 +78,7 @@ const FinishedGoods = () => {
   }
 
   const decline = async(id) => {
-    await axios.post('http://localhost:59000/responseStoreRequestion', {
+    await axios.post('/wareHouse/responseStoreRequestion', {
       id: id,
       status: "Decline"
     })

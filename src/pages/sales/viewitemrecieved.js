@@ -6,6 +6,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import OrdersToolBar from "../../components/sales/salesViewItem/order-toolbar";
 import { OrderResults } from "../../components/sales/salesViewItem/order-results";
 import RightDrawer from "../../components/sales/salesViewItem/RightDrawer";
+import axios from '../../components/axios'
 
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
@@ -13,9 +14,15 @@ const FinishedGoods = () => {
   const [summery, setSummery] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:4000/showAcceptedRequestions")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+
+    axios.get('/salesModule/showAcceptedRequestions')
+    .then((res) =>{
+      setData(res.data)
+    })
+
+    // fetch("http://localhost:4000/showAcceptedRequestions")
+    //   .then((resp) => resp.json())
+    //   .then((resp) => setData(resp));
   }, []);
 
   return (

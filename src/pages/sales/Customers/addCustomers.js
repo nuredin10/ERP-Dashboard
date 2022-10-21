@@ -28,6 +28,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
+import axios from "../../../components/axios";
 
 const AddSiv = () => {
   const [status, setStatus] = React.useState("");
@@ -46,14 +47,22 @@ const AddSiv = () => {
 
   const newUser = (user) => {
     // console.log(user)
-    fetch("http://localhost:4000/addCustomers", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
+    // fetch("http://localhost:4000/addCustomers", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(user),
+    // });
+
+    axios.post('/salesModule/addCustomers', user)
+    .then((res) =>{
+      console.log(res.data);
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
     Router.push("/sales/vender");
   };
 

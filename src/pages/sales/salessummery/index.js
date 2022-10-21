@@ -16,7 +16,9 @@ import Table from "../../../components/Table";
 import ToolBar from "../../../components/ToolBar";
 import AddIcon from '@mui/icons-material/Add';
 import Router from 'next/router'
-const SalesQuotaion = () => {
+import axios from '../../../components/axios';
+
+const SalesSummery = () => {
   const [data, setData] = useState([]);
   const columns = [
     { title: "Material Name", field: "sold_name" },
@@ -29,9 +31,18 @@ const SalesQuotaion = () => {
     { title: "Customer Name", field: "store_purchaserName" },
   ];
   useEffect(() => {
-    fetch("http://localhost:4000/salesSummery")
-      .then((resp) => resp.json())
-      .then((resp) => setData(resp));
+    
+    axios.get('/salesModule/salesSummery')
+    .then((res) =>{
+      setData(res.data);
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
+
+    // fetch("/salesMod/salesSummery")
+    //   .then((resp) => resp.json())
+    //   .then((resp) => setData(resp));
   }, []);
   return (
     <>
@@ -58,6 +69,6 @@ const SalesQuotaion = () => {
   );
 };
 
-SalesQuotaion.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+SalesSummery.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default SalesQuotaion;
+export default SalesSummery;
