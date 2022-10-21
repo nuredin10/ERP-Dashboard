@@ -23,7 +23,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CustomAlert from "../../components/alert";
-import ConfirmDialog from "src/components/ConfirmDialog ";
+import ConfirmDialog from "src/components/confirmDialog ";
 
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
