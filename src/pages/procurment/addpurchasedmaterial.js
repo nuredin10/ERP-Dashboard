@@ -21,7 +21,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../components/axios";
 import CustomAlert from "../../components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 
@@ -92,7 +92,7 @@ const Addpurchasedmaterial = () => {
   const submitHandler = () => {
     // console.log(inputFields)
     handleClose();
-    axios.post("http://localhost:59000/addnewPurchased",inputFields)
+    axios.post("/wareHouse/addnewPurchased",inputFields)
     .then((res)=>{
       console.log(res)
     setIsSuccess('success');
