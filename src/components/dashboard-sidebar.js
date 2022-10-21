@@ -44,7 +44,7 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import StoreIcon from "@mui/icons-material/Store";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
-
+import AddIcon from '@mui/icons-material/Add';
 const generalItems = [
   {
     href: "/",
@@ -66,7 +66,7 @@ const generalItems = [
 const procurmentItems = [
   {
     href: "/procurment/addpurchasedmaterial",
-    icon: <Google fontSize="small" />,
+    icon: <AddIcon fontSize="small" />,
     title: "Add Purchased Material",
   },
   // {
