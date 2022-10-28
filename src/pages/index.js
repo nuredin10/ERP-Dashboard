@@ -47,7 +47,7 @@ export default function SignIn() {
     .then((res)=>{
       Cookies.set('token', res.data.jwt)
       Cookies.set("loggedIn", true)
-      Router.push('https://proplast-dashboard.vercel.app/dashboard')
+      Router.push('http://localhost:3000/dashboard')
       console.log(res)
       // jwt.verify(token,'PROPLAST', (err, decoded) =>{
       //   if (err) {

@@ -31,7 +31,10 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
 import RawMaterialNeed from "src/components/product/raw_Needed";
-import axios from "../../components/axios";
+// import axios from "../../components/axios";
+import axios from "axios";
+import CustomAlert from "../../components/alert";
+import ConfirmDialog from "src/components/confirmDialog ";
 
 const style = {
   position: "absolute",
@@ -50,6 +53,19 @@ const style = {
 
 const BatchFile = () => {
   const [open, setOpen] = React.useState(false);
+  const [isSuccess, setIsSuccess] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -61,20 +77,42 @@ const BatchFile = () => {
     setPayment(newValue.target.value);
   };
 
+  var newForm;
+
+  const makeRequest = () => {
+    axios
+      .post("http://localhost:42000/addbatchformula", newForm)
+      .then(function (response) {
+        console.log(response);
+        setIsSuccess("success");
+        setAlertMsg("Saved Successfully");
+      })
+      .catch(function (error) {
+        console.log(error);
+        setIsSuccess("error");
+        setAlertMsg("Something went wrong");
+      });
+      handleDialogClose();
+  };
+
   const newRequest = (data) => {
-    const newForm = {
+    newForm = {
       ...data,
       rawmat_list: JSON.stringify(orderInfo),
     };
     // console.log( newForm);
-    axios
-      .post("/productionModule/addbatchformula", newForm)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios
+    //   .post("http://localhost:42000/addbatchformula", newForm)
+    //   .then(function (response) {
+    //     console.log(response);
+    //     setIsSuccess("success");
+    //     setAlertMsg("Saved Successfully");
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //     setIsSuccess("error");
+    //     setAlertMsg("Something went wrong");
+    //   });
   };
 
   return (
@@ -89,6 +127,14 @@ const BatchFile = () => {
           py: 8,
         }}
       >
+        <ConfirmDialog
+          dialogOpen={dialogOpen}
+          handleClose={handleDialogClose}
+          confirmAction={makeRequest}
+          title="Are you sure?"
+          message="Do you want to save this item?"
+        />
+
         <Box
           sx={{
             width: "100%",
@@ -105,6 +151,9 @@ const BatchFile = () => {
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h5">Add New Batch File</Typography>
                   </Grid>
+                  {isSuccess != "" ? (
+                    <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+                  ) : null}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -243,9 +292,14 @@ const BatchFile = () => {
                       <RawMaterialNeed setOrderInfo={setOrderInfo} handleClose={handleClose} />
                     </Box>
                   </Modal>
-                
+
                   <Grid item>
-                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                    <Button
+                      onClick={handleDialogOpen}
+                      type="submit"
+                      sx={{ marginRight: "2rem" }}
+                      variant="contained"
+                    >
                       Save
                     </Button>
                     <Button variant="outlined">Cancel</Button>

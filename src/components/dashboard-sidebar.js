@@ -120,6 +120,16 @@ const production = [
     title: "Add New Batch",
   },
   {
+    href: "/production/viewbatch",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "View Batch",
+  },
+  // {
+  //   href: "/production/addnewbatch",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Add New Batch",
+  // },
+  {
     href: "/production/addproduct",
     icon: <StoreIcon fontSize="small" />,
     title: "Add Production Order",

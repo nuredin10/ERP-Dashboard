@@ -15,7 +15,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  DialogContentText ,
+  DialogContentText,
+  Autocomplete,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import AddIcon from "@mui/icons-material/Add";
@@ -90,19 +91,20 @@ const Addpurchasedmaterial = () => {
   };
 
   const submitHandler = () => {
-    // console.log(inputFields)
+    console.log(inputFields)
     handleClose();
-    axios.post("/wareHouse/addnewPurchased",inputFields)
-    .then((res)=>{
-      console.log(res)
-    setIsSuccess('success');
-    setAlertMsg('Saved Successfully')
-    })
-    .catch((res)=>{
-      console.log(res)
-      setIsSuccess('error')
-      setAlertMsg('Something went wrong')
-    })
+    // axios
+    //   .post("/wareHouse/addnewPurchased", inputFields)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setIsSuccess("success");
+    //     setAlertMsg("Saved Successfully");
+    //   })
+    //   .catch((res) => {
+    //     console.log(res);
+    //     setIsSuccess("error");
+    //     setAlertMsg("Something went wrong");
+    //   });
   };
 
   const clearAllHandler = () => {
@@ -121,6 +123,43 @@ const Addpurchasedmaterial = () => {
     width: "20%",
   };
 
+  const autocompleteData = {
+    "Name" : 
+      [
+        { label: 'The Shawshank Redemption'},
+        { label: 'The Godfather', year: 1972 },
+        { label: 'The Godfather: Part II', year: 1974 },
+        { label: 'The Dark Knight', year: 2008 },
+        { label: '12 Angry Men', year: 1957 },
+        { label: "Schindler's List", year: 1993 },
+        { label: 'Pulp Fiction', year: 1994 },
+        {
+          label: 'The Lord of the Rings: The Return of the King',
+          year: 2003,
+        },
+      ],
+     
+      
+    "Quantitty" : [
+      { label: 'Amadeus', year: 1984 },
+      { label: 'To Kill a Mockingbird', year: 1962 },
+      { label: 'Toy Story 3', year: 2010 },
+      { label: 'Logan', year: 2017 },
+      { label: 'Full Metal Jacket', year: 1987 },
+      { label: 'Dangal', year: 2016 },
+      { label: 'The Sting', year: 1973 },
+      { label: '2001: A Space Odyssey', year: 1968 },
+      { label: "Singin' in the Rain", year: 1952 },
+      { label: 'Toy Story', year: 1995 },
+      { label: 'Bicycle Thieves', year: 1948 },
+      { label: 'The Kid', year: 1921 },
+      { label: 'Inglourious Basterds', year: 2009 },
+      { label: 'Snatch', year: 2000 },
+      { label: '3 Idiots', year: 2009 },
+      { label: 'Monty Python and the Holy Grail', year: 1975 },
+    ]
+  }
+
   return (
     <>
       <Head>
@@ -132,19 +171,19 @@ const Addpurchasedmaterial = () => {
           flexGrow: 1,
         }}
       >
-        <ConfirmDialog 
-        dialogOpen={dialogOpen}
-        handleClose={handleClose}
-        confirmAction={submitHandler}
-        title="Are you sure?"
-        message="Do you want to save this item?"
+        <ConfirmDialog
+          dialogOpen={dialogOpen}
+          handleClose={handleClose}
+          confirmAction={submitHandler}
+          title="Are you sure?"
+          message="Do you want to save this item?"
         />
-        
+
         <Grid container>
           <Grid item lg={6} md={12} sm={12} sx={{ m: 5 }}>
             <Typography variant="h3">Add new Purchased Material</Typography>
           </Grid>
-          
+
           {isSuccess != "" ? (
             <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
           ) : null}
@@ -165,7 +204,7 @@ const Addpurchasedmaterial = () => {
                     }}
                   >
                     <Grid item sm={6} md={2} lg={3}>
-                      <TextField
+                      {/* <TextField
                         required
                         name="new_name"
                         label="Name"
@@ -173,16 +212,34 @@ const Addpurchasedmaterial = () => {
                         value={input.new_name}
                         onChange={(event) => handleFormChange(index, event)}
                         fullWidth
+                      /> */}
+                      <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={autocompleteData.Name}
+                        // sx={{ width: 300 }}
+                        onChange={(event) => handleFormChange(index, event)}
+                        renderInput={(params) => <TextField {...params} label="Movie" />}
                       />
                     </Grid>
                     <Grid item sm={6} md={2} lg={2}>
-                      <TextField
+                      {/* <TextField
                         required
                         name="new_quantity"
                         label="Quantity"
                         type="text"
                         value={input.new_quantity}
                         onChange={(event) => handleFormChange(index, event)}
+                      /> */}
+                       <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={autocompleteData.Quantitty}
+                        // sx={{ width: 300 }}
+                        
+                        
+                        
+                        renderInput={(params) => <TextField {...params} name="new_quantity" label="Quantity" onChange={(event) => handleFormChange(index, event)} value={input.new_quantity}/>}
                       />
                     </Grid>
                     <Grid item sm={6} md={2} lg={2}>

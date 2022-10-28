@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import {jwtVerify} from 'jose';
 
 const secret = "PROPLAST"
-const baseUrl = 'https://proplast-dashboard.vercel.app/'
+const baseUrl = 'http://localhost:3000/'
 
 export default async function middleware(req) {
     const {cookies} = req;

@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import axios from "axios";
+import { borderLeft } from "@mui/system";
 
 const ViewBatch = () => {
   function createData(
@@ -64,7 +65,7 @@ const ViewBatch = () => {
 
     return (
       <React.Fragment>
-        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableRow sx={{ "& > *": { borderBottom: "unset" }}}>
           <TableCell>
             <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -79,24 +80,25 @@ const ViewBatch = () => {
           <TableCell align="right">{row.timeneeded}</TableCell>
           <TableCell align="right">{row.efficency}</TableCell>
           <TableCell align="right">{row.shift}</TableCell>
+          <TableCell align="right">{row.production_line}</TableCell>
           <TableCell align="right">{row.waste_name}</TableCell>
           <TableCell align="right">{row.waste_quan}</TableCell>
           <TableCell align="right">{row.waste_unit}</TableCell>
         </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0, border: '1px solid red'}} colSpan={6}>
+        <TableRow sx={{ml: 10}}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0, borderLeft: '3px solid #5048E5'}} colSpan={11}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
+              <Box sx={{ my: 4}}>
                 <Typography variant="h6" gutterBottom component="div">
                   Row Material Needed
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell>mat_requestname</TableCell>
-                      <TableCell>mat_spec</TableCell> 
-                      <TableCell align="right">Quantity</TableCell>
-                      <TableCell align="right">Desc</TableCell>
+                      <TableCell>Material Name</TableCell>
+                      <TableCell>Material Specification</TableCell>
+                      <TableCell>Description</TableCell>
+                      <TableCell>Quantity</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -106,8 +108,8 @@ const ViewBatch = () => {
                           {matNeeded.mat_requestname}
                         </TableCell>
                         <TableCell>{matNeeded.mat_spec}</TableCell>
-                        <TableCell align="right">{matNeeded.mat_description}</TableCell>
-                        <TableCell align="right">{matNeeded.mat_quantity}</TableCell>
+                        <TableCell>{matNeeded.mat_description}</TableCell>
+                        <TableCell>{matNeeded.mat_quantity}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -209,7 +211,7 @@ const ViewBatch = () => {
                 <TableCell align="right">Waste Unit</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody >
               {rows.map((row) => (
                 <Row key={row.name} row={row} />
               ))}
