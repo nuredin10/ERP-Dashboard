@@ -30,8 +30,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
-import RawMaterialNeed from "src/components/product/raw_Needed";
 import axios from "axios";
+import RawMaterialNeed from "src/components/product/raw_Needed";
 const style = {
   position: "absolute",
   top: "50%",
@@ -49,6 +49,8 @@ const style = {
 
 const ProductionOrder = () => {
   const [open, setOpen] = React.useState(false);
+  const [date, setDate] = React.useState(null);
+  const [customOrRegular, setCustomOrRegular] = React.useState("regular");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -59,21 +61,22 @@ const ProductionOrder = () => {
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
-
+  var newForm;
   const newRequest = (data) => {
-    const newForm = {
+    newForm = {
       ...data,
-      rawmat_list: JSON.stringify(orderInfo),
+      rawmat_list: orderInfo,
     };
     console.log(newForm);
-    axios
-      .post("http://localhost:42000/addbatchformula", newForm)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // console.log(newForm);
+    // axios
+    //   .post("http://localhost:42000/addbatchformula", newForm)
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -107,143 +110,136 @@ const ProductionOrder = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="finmat_prod"
-                      label="Finished Good"
+                      name="fin_product"
+                      label="Final Product"
                       type="text"
                       fullWidth
-                      {...register("finmat_prod")}
+                      {...register("fin_product")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="finmat_spec"
+                      name="fin_spec"
                       label="Specification"
                       type="text"
                       fullWidth
-                      {...register("finmat_spec")}
+                      {...register("fin_spec")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="prod_quan"
-                      label="Production Quantity"
+                      name="fin_quan"
+                      label="Quantity"
                       type="text"
                       fullWidth
-                      {...register("prod_quan")}
+                      {...register("fin_quan")}
+                    />
+                  </Grid>
+                  <Grid item lg={6} sm={12}>
+                    <DesktopDatePicker
+                      label="Start Date"
+                      inputFormat="MM/dd/yyyy"
+                      value={date}
+                      onChange={(newValue) => {
+                        setDate(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          name="start_date"
+                          {...register("start_date")}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item lg={6} sm={12}>
+                    <DesktopDatePicker
+                      label="End Date"
+                      inputFormat="MM/dd/yyyy"
+                      value={date}
+                      onChange={(newValue) => {
+                        setDate(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          name="end_date"
+                          {...register("end_date")}
+                        />
+                      )}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="prod_unit"
-                      label="Production unit"
+                      name="batch_mult"
+                      label="Factor"
                       type="text"
                       fullWidth
-                      {...register("prod_unit")}
+                      {...register("batch")}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Add Factors</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="efficency"
-                      label="Efficency"
-                      type="text"
-                      fullWidth
-                      {...register("efficency")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="shift"
-                      label="Shift"
-                      type="text"
-                      fullWidth
-                      {...register("shift")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="timeneeded"
-                      label="Time Allocated"
-                      type="text"
-                      fullWidth
-                      {...register("timeneeded")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="production_line"
-                      label="Production Line"
-                      type="text"
-                      fullWidth
-                      {...register("production_line")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Raw Material Needed</Typography>
-                  </Grid>
-                  <Grid item xs={6} sm={6} lg={6}>
-                    <Button onClick={handleOpen} variant="contained">
-                      Add
-                    </Button>
-                  </Grid>
-
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Expected Waste</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="waste_name"
-                      label="Waste Name"
-                      type="text"
-                      fullWidth
-                      {...register("waste_name")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="waste_quan"
-                      label="Waste Quantity"
-                      type="text"
-                      fullWidth
-                      {...register("waste_quan")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="waste_unit"
-                      label="Waste unit"
-                      type="text"
-                      fullWidth
-                      {...register("waste_unit")}
-                    />
-                  </Grid>
-                  <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                  >
-                    <Box sx={style}>
-                      <RawMaterialNeed setOrderInfo={setOrderInfo} handleClose={handleClose} />
-                    </Box>
-                  </Modal>
-                
                   <Grid item>
+                    <Typography variant="h7">Custom or Regular</Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    {/* <InputLabel id="demo-simple-select-label">Custom or Regular</InputLabel> */}
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={customOrRegular}
+                      label="Custom or Regular"
+                      onChange={(event) => setCustomOrRegular(event.target.value)}
+                    >
+                      <MenuItem value={"custom"}>Custom</MenuItem>
+                      <MenuItem value={"regular"}>Regular</MenuItem>
+                    </Select>
+                  </Grid>
+                  {customOrRegular === "custom" ? (
+                    <>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="expected_fin_qty"
+                          label="Expected Final Quantity"
+                          type="text"
+                          fullWidth
+                          {...register("expected_fin_qty")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="expected_waste_quan"
+                          label="Expected Waste Quantity"
+                          type="text"
+                          fullWidth
+                          {...register("exprercted_waste_quan")}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6} lg={6}>
+                        <Button onClick={handleOpen} variant="outlined">
+                          Add
+                        </Button>
+                      </Grid>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          <RawMaterialNeed setOrderInfo={setOrderInfo} handleClose={handleClose} />
+                        </Box>
+                      </Modal>
+                    </>
+                  ) : null}
+
+                  <Grid item item xs={12} sm={12}>
                     <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Save
                     </Button>

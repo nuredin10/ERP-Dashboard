@@ -69,7 +69,7 @@ const AddForm = () => {
                   />
                 </Grid>
                 <Grid item lg={6} sm={12}>
-                  <TextField name="id" label="Promotion Code" type="text" fullWidth />
+                  <TextField name="batch_mult" label="Factport" type="text" fullWidth />
                 </Grid>
                 <Grid item lg={12} sm={12}>
                   <TextField name="id" label="Total Amount" type="text" fullWidth />
