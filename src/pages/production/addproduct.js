@@ -239,7 +239,7 @@ const ProductionOrder = () => {
                     </>
                   ) : null}
 
-                  <Grid item item xs={12} sm={12}>
+                  <Grid item  xs={12} sm={12}>
                     <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Save
                     </Button>
