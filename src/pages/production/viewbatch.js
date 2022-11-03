@@ -90,7 +90,7 @@ const ViewBatch = () => {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ my: 4}}>
                 <Typography variant="h6" gutterBottom component="div">
-                  Row Material Needed
+                  Raw Material Needed
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>

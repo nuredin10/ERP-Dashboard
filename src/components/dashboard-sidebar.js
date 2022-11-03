@@ -47,14 +47,14 @@ import Cookies from "js-cookie";
 import AddIcon from '@mui/icons-material/Add';
 const generalItems = [
   {
-    href: "/",
+    href: "/dashboard",
     icon: <ChartBarIcon fontSize="small" />,
     title: "Dashboard",
   },
   {
     href: "/finance",
     icon: <ShoppingBagIcon fontSize="small" />,
-    title: "Fincance",
+    title: "Finance",
   },
   {
     href: "/analytics",

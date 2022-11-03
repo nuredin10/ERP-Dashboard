@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import axios from "../../components/axios";
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 const ViewBatch = () => {
   function createData(
@@ -83,13 +84,18 @@ const ViewBatch = () => {
           <TableCell align="right">{row.waste_name}</TableCell>
           <TableCell align="right">{row.waste_quan}</TableCell>
           <TableCell align="right">{row.waste_unit}</TableCell> */}
+          <TableCell>
+            <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+              {open ? <PlayCircleOutlineIcon color="green"/> : <PlayCircleOutlineIcon color="green"/>}
+            </IconButton>
+          </TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
-                  Row Material Needed
+                  Raw Material Needed
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
