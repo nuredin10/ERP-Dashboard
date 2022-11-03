@@ -25,36 +25,37 @@ import {
   Typography,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import axios from "axios";
+import axios from "../../components/axios";
 
 const ViewBatch = () => {
   function createData(
-    finmat_prod,
-    prod_quan,
-    finmat_spec,
-    prod_unit,
-    timeneeded,
-    efficency,
-    shift,
-    production_line,
-    waste_name,
-    waste_quan,
-    waste_unit,
+    fin_product,
+    fin_spec,
+    // est_finQuan,
+    est_westQuan,
+    est_finQuan,
+    status,
+    // shift,
+    // production_line,
+    // waste_name,
+    // waste_quan,
+    // waste_unit,
     rowMaterialNeeded
   ) {
     return {
-      finmat_prod,
-      prod_quan,
-      finmat_spec,
-      prod_unit,
-      timeneeded,
-      efficency,
-      shift,
-      production_line,
-      waste_name,
-      waste_quan,
-      waste_unit,
-      rowMaterialNeeded
+      fin_product,
+      fin_spec,
+      // est_finQuan,
+      est_westQuan,
+      est_finQuan,
+      status,
+      // efficency,
+      // shift,
+      // production_line,
+      // waste_name,
+      // waste_quan,
+      // waste_unit,
+      rowMaterialNeeded,
     };
   }
 
@@ -71,20 +72,20 @@ const ViewBatch = () => {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.finmat_prod}
+            {row.fin_product}
           </TableCell>
-          <TableCell align="right">{row.prod_quan}</TableCell>
-          <TableCell align="right">{row.finmat_spec}</TableCell>
-          <TableCell align="right">{row.prod_unit}</TableCell>
-          <TableCell align="right">{row.timeneeded}</TableCell>
-          <TableCell align="right">{row.efficency}</TableCell>
+          <TableCell align="right">{row.fin_spec}</TableCell>
+          <TableCell align="right">{row.est_westQuan}</TableCell>
+          <TableCell align="right">{row.est_finQuan}</TableCell>
+          <TableCell align="right">{row.status}</TableCell>
+          {/* <TableCell align="right">{row.efficency}</TableCell>
           <TableCell align="right">{row.shift}</TableCell>
           <TableCell align="right">{row.waste_name}</TableCell>
           <TableCell align="right">{row.waste_quan}</TableCell>
-          <TableCell align="right">{row.waste_unit}</TableCell>
+          <TableCell align="right">{row.waste_unit}</TableCell> */}
         </TableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0, border: '1px solid red'}} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
@@ -94,7 +95,7 @@ const ViewBatch = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>mat_requestname</TableCell>
-                      <TableCell>mat_spec</TableCell> 
+                      <TableCell>mat_spec</TableCell>
                       <TableCell align="right">Quantity</TableCell>
                       <TableCell align="right">Desc</TableCell>
                     </TableRow>
@@ -141,7 +142,7 @@ const ViewBatch = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:42000/showbatchformula")
+      .get("/productionModule/showProductionOrder")
       .then((res) => {
         setData(res.data);
         console.log(res.data);
@@ -156,18 +157,18 @@ const ViewBatch = () => {
   data.map((item) => {
     rows.push(
       createData(
-        item.finmat_prod,
-        item.prod_quan,
-        item.finmat_spec,
-        item.prod_unit,
-        item.timeneeded,
-        item.efficency,
-        item.shift,
-        item.production_line,
-        item.waste_name,
-        item.waste_quan,
-        item.waste_unit,
-        JSON.parse(item.rawmat_list)
+        item.fin_product,
+        item.fin_spec,
+        // item.est_finQuan,
+        item.est_westQuan,
+        item.est_finQuan,
+        item.status,
+        // item.shift,
+        // item.production_line,
+        // item.waste_name,
+        // item.waste_quan,
+        // item.waste_unit,
+        item.rawmat_list ? JSON.parse(item.rawmat_list) : JSON.parse(item.raw_mat_needed)
       )
     );
   });
@@ -197,16 +198,16 @@ const ViewBatch = () => {
               <TableRow>
                 <TableCell />
                 <TableCell>Final Product</TableCell>
-                <TableCell align="right">Final Quantity</TableCell>
                 <TableCell align="right">Final Specification</TableCell>
-                <TableCell align="right">Production Unit</TableCell>
-                <TableCell align="right">Time Needed</TableCell>
-                <TableCell align="right">Efficency</TableCell>
+                {/* <TableCell align="right">Final Quantity</TableCell> */}
+                <TableCell align="right">Estimated Final Quantity</TableCell>
+                <TableCell align="right">Estimated Waste Quantity</TableCell>
+                {/* <TableCell align="right">Efficency</TableCell>
                 <TableCell align="right">Shift</TableCell>
                 <TableCell align="right">Production Line</TableCell>
                 <TableCell align="right">Waste Product</TableCell>
-                <TableCell align="right">Waste Quantity</TableCell>
-                <TableCell align="right">Waste Unit</TableCell>
+                <TableCell align="right">Waste Quantity</TableCell> */}
+                <TableCell align="right">Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

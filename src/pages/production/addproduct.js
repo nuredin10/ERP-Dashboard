@@ -30,6 +30,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
+// import axios from "../../components/axios";
 import axios from "axios";
 import RawMaterialNeed from "src/components/product/raw_Needed";
 const style = {
@@ -49,7 +50,8 @@ const style = {
 
 const ProductionOrder = () => {
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState(null);
+  const [startDate, setStartDate] = React.useState();
+  const [endDate, setEndDate] = React.useState(new Date());
   const [customOrRegular, setCustomOrRegular] = React.useState("regular");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -57,17 +59,58 @@ const ProductionOrder = () => {
   const { register, handleSubmit, reset } = useForm();
   const [payment, setPayment] = useState();
   const [orderInfo, setOrderInfo] = useState([]);
+  const [regular, setRegular] = useState([]);
+  const [selectedRegualr, setSelectedRegular] = useState(0);
 
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
+
+  useEffect(() => {
+    axios
+      .get("/productionModule/showbatchformula")
+      .then((res) => {
+        setRegular(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(selectedRegualr, "yooooooooo");
+
   var newForm;
   const newRequest = (data) => {
-    newForm = {
-      ...data,
-      rawmat_list: orderInfo,
-    };
+    if (customOrRegular === "regular") {
+      newForm = {
+        ...data,
+        batch_id: selectedRegualr,
+        custom_regular: customOrRegular,
+        status: "New"
+      };
+    } else {
+      newForm = {
+        ...data,
+        raw_needed: JSON.stringify(orderInfo),
+        custom_regular: customOrRegular,
+        start_dateTime : "09/12/2021",
+        status: "New",
+      };
+    }
+
+    axios
+      .post("http://localhost:42000/addProductionOrder", newForm)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+
     console.log(newForm);
+    // console.log(startDate)
+    // newForm = {
+    //   ...data,
+    //   rawmat_list: orderInfo,
+    // };
+    // console.log(newForm);
     // console.log(newForm);
     // axios
     //   .post("http://localhost:42000/addbatchformula", newForm)
@@ -141,16 +184,18 @@ const ProductionOrder = () => {
                     <DesktopDatePicker
                       label="Start Date"
                       inputFormat="MM/dd/yyyy"
-                      value={date}
+                      value={startDate}
+                      format="DD-MM-YYYY"
                       onChange={(newValue) => {
-                        setDate(newValue);
+                        // console.log(newValue);
+                        setStartDate(newValue);
                       }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           fullWidth
-                          name="start_date"
-                          {...register("start_date")}
+                          // name="start_dateTime"
+                          // {...register("start_dateTime")}
                         />
                       )}
                     />
@@ -159,16 +204,16 @@ const ProductionOrder = () => {
                     <DesktopDatePicker
                       label="End Date"
                       inputFormat="MM/dd/yyyy"
-                      value={date}
+                      value={endDate}
                       onChange={(newValue) => {
-                        setDate(newValue);
+                        setEndDate(newValue);
                       }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           fullWidth
-                          name="end_date"
-                          {...register("end_date")}
+                          name="end_dateTime"
+                          {...register("end_dateTime")}
                         />
                       )}
                     />
@@ -180,7 +225,27 @@ const ProductionOrder = () => {
                       label="Factor"
                       type="text"
                       fullWidth
-                      {...register("batch")}
+                      {...register("batch_mult")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="production_line"
+                      label="Production Line"
+                      type="text"
+                      fullWidth
+                      {...register("production_line")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="shift"
+                      label="Shift"
+                      type="text"
+                      fullWidth
+                      {...register("shift")}
                     />
                   </Grid>
                   <Grid item>
@@ -218,7 +283,7 @@ const ProductionOrder = () => {
                           label="Expected Waste Quantity"
                           type="text"
                           fullWidth
-                          {...register("exprercted_waste_quan")}
+                          {...register("expected_waste_quan")}
                         />
                       </Grid>
                       <Grid item xs={6} sm={6} lg={6}>
@@ -237,9 +302,31 @@ const ProductionOrder = () => {
                         </Box>
                       </Modal>
                     </>
-                  ) : null}
+                  ) : (
+                    <Grid item xs={12} sm={12}>
+                      <InputLabel id="demo-simple-select-label" sx={{ mb: 3 }}>
+                        Select Batch File
+                      </InputLabel>
+                      <Select
+                        id="demo-simple-select"
+                        value={selectedRegualr}
+                        label="Custom or Regular"
+                        onChange={(event) => setSelectedRegular(event.target.value)}
+                      >
+                        {regular.map((item) => {
+                          return (
+                            <MenuItem value={item.id}>
+                              {item.finmat_prod + " | " + item.prod_quan + " | " + item.finmat_spec}
+                            </MenuItem>
+                          );
+                        })}
+                        {/* <MenuItem value={"custom"}></MenuItem> */}
+                        {/* <MenuItem value={"regular"}>Regular</MenuItem> */}
+                      </Select>
+                    </Grid>
+                  )}
 
-                  <Grid item  xs={12} sm={12}>
+                  <Grid item xs={12} sm={12}>
                     <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Save
                     </Button>
