@@ -51,7 +51,7 @@ const style = {
 const ProductionOrder = () => {
   const [open, setOpen] = React.useState(false);
   const [startDate, setStartDate] = React.useState();
-  const [endDate, setEndDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState();
   const [customOrRegular, setCustomOrRegular] = React.useState("regular");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -78,6 +78,14 @@ const ProductionOrder = () => {
 
   console.log(selectedRegualr, "yooooooooo");
 
+
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth,date.getFullYear()].join("/");
+  }
+
   var newForm;
   const newRequest = (data) => {
     if (customOrRegular === "regular") {
@@ -85,24 +93,27 @@ const ProductionOrder = () => {
         ...data,
         batch_id: selectedRegualr,
         custom_regular: customOrRegular,
-        status: "New"
+        status: "New",
+        start_dateTime : convert(startDate),
+        end_dateTime : convert(endDate),
       };
     } else {
       newForm = {
         ...data,
         raw_needed: JSON.stringify(orderInfo),
         custom_regular: customOrRegular,
-        start_dateTime : "09/12/2021",
+        start_dateTime : convert(startDate),
+        end_dateTime : convert(endDate),
         status: "New",
       };
     }
 
-    axios
-      .post("http://localhost:42000/addProductionOrder", newForm)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("http://localhost:42000/addProductionOrder", newForm)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
 
     console.log(newForm);
     // console.log(startDate)
