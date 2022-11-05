@@ -33,6 +33,9 @@ import Router from "next/router";
 import axios from "../../components/axios";
 // import axios from "axios";
 import RawMaterialNeed from "src/components/product/raw_Needed";
+import CustomAlert from "src/components/alert";
+import ConfirmDialog from "src/components/confirmDialog ";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -53,6 +56,10 @@ const ProductionOrder = () => {
   const [startDate, setStartDate] = React.useState();
   const [endDate, setEndDate] = React.useState();
   const [customOrRegular, setCustomOrRegular] = React.useState("regular");
+
+  const [isSuccess, setIsSuccess] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -78,12 +85,11 @@ const ProductionOrder = () => {
 
   console.log(selectedRegualr, "yooooooooo");
 
-
   function convert(str) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
-    return [day, mnth,date.getFullYear()].join("/");
+    return [day, mnth, date.getFullYear()].join("/");
   }
 
   var newForm;
@@ -94,43 +100,32 @@ const ProductionOrder = () => {
         batch_id: selectedRegualr,
         custom_regular: customOrRegular,
         status: "New",
-        start_dateTime : convert(startDate),
-        end_dateTime : convert(endDate),
+        start_dateTime: convert(startDate),
+        end_dateTime: convert(endDate),
       };
     } else {
       newForm = {
         ...data,
         raw_needed: JSON.stringify(orderInfo),
         custom_regular: customOrRegular,
-        start_dateTime : convert(startDate),
-        end_dateTime : convert(endDate),
+        start_dateTime: convert(startDate),
+        end_dateTime: convert(endDate),
         status: "New",
       };
     }
-
     axios
-      .post("http://localhost:42000/addProductionOrder", newForm)
+      .post("/productionModule/addProductionOrder", newForm)
       .then((res) => {
         console.log(res);
+        setIsSuccess("success");
+        setAlertMsg("Production Order Added Successfully");
       })
-      .catch((err) => console.log(err));
-
+      .catch((err) => {
+        console.log(err);
+        setIsSuccess("error");
+        setAlertMsg("Error Occured");
+      });
     console.log(newForm);
-    // console.log(startDate)
-    // newForm = {
-    //   ...data,
-    //   rawmat_list: orderInfo,
-    // };
-    // console.log(newForm);
-    // console.log(newForm);
-    // axios
-    //   .post("http://localhost:42000/addbatchformula", newForm)
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   };
 
   return (
@@ -145,6 +140,11 @@ const ProductionOrder = () => {
           py: 8,
         }}
       >
+        <Box sx={{position: 'absolute', width: '100%', top: '7%', right: '1%'}}>
+          {isSuccess != "" ? (
+            <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+          ) : null}
+        </Box>
         <Box
           sx={{
             width: "100%",

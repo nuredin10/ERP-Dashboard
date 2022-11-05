@@ -93,18 +93,18 @@ const Addpurchasedmaterial = () => {
   const submitHandler = () => {
     console.log(inputFields)
     handleClose();
-    // axios
-    //   .post("/wareHouse/addnewPurchased", inputFields)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setIsSuccess("success");
-    //     setAlertMsg("Saved Successfully");
-    //   })
-    //   .catch((res) => {
-    //     console.log(res);
-    //     setIsSuccess("error");
-    //     setAlertMsg("Something went wrong");
-    //   });
+    axios
+      .post("/wareHouse/addnewPurchased", inputFields)
+      .then((res) => {
+        console.log(res);
+        setIsSuccess("success");
+        setAlertMsg("Saved Successfully");
+      })
+      .catch((res) => {
+        console.log(res);
+        setIsSuccess("error");
+        setAlertMsg("Something went wrong");
+      });
   };
 
   const clearAllHandler = () => {

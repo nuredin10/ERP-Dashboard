@@ -4,17 +4,7 @@ import { Alert,Box } from '@mui/material'
 const CustomAlert = ({ type, message, setIsSuccess }) => {
   const [show, setShow] = useState(true)
 
-  const alertStyle = {
-    // postion: "absolute",
-    // top: 555,
-    // left: 955,
-    // ml: "20%",
-    // mt: 3,
-    border: '1px solid red',
-    height: '10%',
-    width: '20%',
-    color: 'white'
-  }
+
   useEffect(() => {
     const timeId = setTimeout(() => {
       setShow(false)
