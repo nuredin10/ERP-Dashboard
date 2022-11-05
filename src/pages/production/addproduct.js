@@ -30,8 +30,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
-// import axios from "../../components/axios";
-import axios from "axios";
+import axios from "../../components/axios";
+// import axios from "axios";
 import RawMaterialNeed from "src/components/product/raw_Needed";
 const style = {
   position: "absolute",
@@ -108,12 +108,12 @@ const ProductionOrder = () => {
       };
     }
 
-    // axios
-    //   .post("http://localhost:42000/addProductionOrder", newForm)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .post("http://localhost:42000/addProductionOrder", newForm)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
 
     console.log(newForm);
     // console.log(startDate)
@@ -263,7 +263,7 @@ const ProductionOrder = () => {
                     <Typography variant="h7">Custom or Regular</Typography>
                   </Grid>
                   <Grid item xs={6} sm={6}>
-                    {/* <InputLabel id="demo-simple-select-label">Custom or Regular</InputLabel> */}
+                    <InputLabel id="demo-simple-select-label">Custom or Regular</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
