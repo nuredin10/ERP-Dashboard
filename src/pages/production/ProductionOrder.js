@@ -25,7 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import axios from "../../components/axios";
+import productionWxios from "../../components/productionWxios";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 const ViewBatch = () => {
@@ -147,8 +147,8 @@ const ViewBatch = () => {
 
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios
-      .get("/productionModule/showProductionOrder")
+    productionWxios
+      .get("/showProductionOrder")
       .then((res) => {
         setData(res.data);
         console.log(res.data);

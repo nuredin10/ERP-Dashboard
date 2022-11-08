@@ -79,7 +79,7 @@ export const DashboardNavbar = (props) => {
             <IconButton sx={{ ml: 1 }} onClick={()=>{
               Cookies.remove("loggedIn")
               Cookies.remove("token")
-              Router.push('https://proplast-dashboard.vercel.app/')
+              Router.push('/')
             }}>
               <Badge badgeContent={4} color="primary" variant="dot">
                 <BellIcon fontSize="small" />

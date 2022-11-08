@@ -115,7 +115,7 @@ import { DashboardLayout } from "../../../../components/dashboard-layout";
 import OrdersToolBar from "../../../../components/Accessories/order-toolbar";
 import { OrderResults } from "../../../../components/Accessories/order-results";
 import RightDrawer from "../../../../components/Accessories/RightDrawer";
-import axios from '../../../../components/axios'
+import waxios from '../../../../components/wareHouseAxios'
 
 const Accessories = () => {
   const [drawer, setDrawer] = useState(false);
@@ -123,7 +123,7 @@ const Accessories = () => {
   const [selectedSummery, setSummery] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios.get("/wareHouse/accessory")
+    waxios.get("/accessory")
       .then((response)=>{
           setData(response.data)
         })

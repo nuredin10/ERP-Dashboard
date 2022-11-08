@@ -28,7 +28,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
-import axios from 'axios'
+import saxios from 'saxios'
 
 
 const AddQuotation = () => {
@@ -43,7 +43,7 @@ const AddQuotation = () => {
 
   const submitAllForms = () => {
     console.log(data);
-    axios.post("http://localhost:59000/addnewrawmaterials")
+    saxios.post("http://localhost:59000/addnewrawmaterials")
       .then(res => console.log(res.data.id))
     setNotify("success")
     fetch("http://localhost:59000/addnewrawmaterials", {
@@ -61,7 +61,7 @@ const AddQuotation = () => {
     // const newDatas = [user, ...data];
     // setData(newDatas);
     reset();
-    axios.post("http://localhost:59000/addnewrawmaterials", user)
+    saxios.post("http://localhost:59000/addnewrawmaterials", user)
       .then(res => console.log(res.data))
       .catch(res => console.log(res))
     setNotify("success");

@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
-import axios from '../components/axios'
+import laxios from '../components/authenticationAxios'
 
 function Copyright(props) {
   return (
@@ -40,28 +40,28 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios.post('/authenticationModule/login',{
+    laxios.post('/login', {
       email: data.get('email'),
       password: data.get('password'),
     })
-    .then((res)=>{
-      Cookies.set('token', res.data.jwt)
-      Cookies.set("loggedIn", true)
-      Router.push('/dashboard')
-      console.log(res)
-      // jwt.verify(token,'PROPLAST', (err, decoded) =>{
-      //   if (err) {
-      //     console.log(err)
-      //   } else {
-      //     console.log(decoded)
-      //   }
-      // })
-    })
-    .catch((res)=>{
-      if(res.response.status == 403){
-        setIncorrect(true)
-      }
-    })
+      .then((res) => {
+        Cookies.set('token', res.data.jwt)
+        Cookies.set("loggedIn", true)
+        Router.push('/dashboard')
+        console.log(res)
+        // jwt.verify(token,'PROPLAST', (err, decoded) =>{
+        //   if (err) {
+        //     console.log(err)
+        //   } else {
+        //     console.log(decoded)
+        //   }
+        // })
+      })
+      .catch((res) => {
+        if (res.response.status == 403) {
+          setIncorrect(true)
+        }
+      })
   };
 
   return (
@@ -94,7 +94,7 @@ export default function SignIn() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} src='logo.svg' size='small'>
-              
+
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -133,7 +133,7 @@ export default function SignIn() {
                 Sign In
               </Button>
               <Grid>
-              {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
+                {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
 
               </Grid>
               <Grid container>

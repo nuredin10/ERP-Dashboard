@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import axios from "axios";
+import salesAxios from '../../salesAxios'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,6 +42,7 @@ function a11yProps(index) {
 
 export const OrderResults = (props) => {
   const data = props.data;
+  console.log(data)
 
   const [status, setStatus] = useState("green");
   const [value, setValue] = React.useState(0);
@@ -50,8 +52,8 @@ export const OrderResults = (props) => {
 
   const orderOnClickHandler = (e, data) => {
   
-    axios
-      .post("http://localhost:59000/showSummeryByID", {
+    salesAxios
+      .post("/showSummeryByID", {
         id: e.id,
         materialType: "RAW",
       })

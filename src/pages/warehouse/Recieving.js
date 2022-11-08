@@ -16,7 +16,7 @@ import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import axios from "../../components/axios";
+import waxios from "../../components/wareHouseAxios";
 import Router from "next/router";
 
 const Recieving = () => {
@@ -34,7 +34,7 @@ const Recieving = () => {
   ];
   useEffect(() => {
 
-    axios.get('/wareHouse/shownewPurchased')
+    waxios.get('/shownewPurchased')
     .then((resp)=>{
       const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
       setData(newPurchased);
@@ -43,7 +43,7 @@ const Recieving = () => {
   }, []);
 
   const accept = async(id) => {
-    await axios.post('/wareHouse/confirmPurchased', {
+    await waxios.post('/confirmPurchased', {
       id: id,
       status: "Accept"
     })
@@ -57,7 +57,7 @@ const Recieving = () => {
   }
 
   const decline = async(id) => {
-    await axios.post('/wareHouse/confirmPurchased', {
+    await waxios.post('/confirmPurchased', {
       id: id,
       status: "Decline"
     })

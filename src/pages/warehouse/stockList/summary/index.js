@@ -14,7 +14,7 @@ import {
 import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
 import ToolBar from '../../../../components/ToolBar'
-import axios from '../../../../components/axios'
+import waxios from '../../../../components/wareHouseAxios'
 
 const Summary = () => {
   const [data, setData] = useState([]);
@@ -31,7 +31,7 @@ const Summary = () => {
     { title: "Remark", field: "accs_remark" },
   ];
   useEffect(() => {
-    axios.get("/wareHouse/finishedMaterial")
+    waxios.get("/finishedMaterial")
       .then((response)=>{
           setData(response.data)
         })

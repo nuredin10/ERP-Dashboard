@@ -207,7 +207,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { Box, Container, Typography, Grid, Divider } from "@mui/material";
 import { DashboardLayout } from "../../../../components/dashboard-layout";
-import axios from '../../../../components/axios'
+import waxios from '../../../../components/wareHouseAxios'
 // import styles from '../styles/Home.module.css';
 import OrdersToolBar from "../../../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../../../components/rawMaterials/order-results";
@@ -220,7 +220,7 @@ const FinishedGoods = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("/wareHouse/rawmaterials")
+    waxios.get("/rawmaterials")
       .then((response)=>{
           setData(response.data)
         })

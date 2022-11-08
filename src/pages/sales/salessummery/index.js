@@ -16,7 +16,7 @@ import Table from "../../../components/Table";
 import ToolBar from "../../../components/ToolBar";
 import AddIcon from '@mui/icons-material/Add';
 import Router from 'next/router'
-import axios from '../../../components/axios';
+import saxios from '../../../components/salesAxios';
 
 const SalesSummery = () => {
   const [data, setData] = useState([]);
@@ -32,7 +32,7 @@ const SalesSummery = () => {
   ];
   useEffect(() => {
     
-    axios.get('/salesModule/salesSummery')
+    saxios.get('/salesSummery')
     .then((res) =>{
       setData(res.data);
     })
