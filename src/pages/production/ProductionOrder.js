@@ -37,6 +37,7 @@ const ViewBatch = () => {
     est_westQuan,
     est_finQuan,
     status,
+    id,
     // shift,
     // production_line,
     // waste_name,
@@ -51,6 +52,7 @@ const ViewBatch = () => {
       est_westQuan,
       est_finQuan,
       status,
+      id,
       // efficency,
       // shift,
       // production_line,
@@ -65,6 +67,13 @@ const ViewBatch = () => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
 
+
+    const productionStartHandler =(id)=>{
+      console.log("Production Started",id);
+      // 
+
+
+    }
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -80,14 +89,9 @@ const ViewBatch = () => {
           <TableCell align="right">{row.est_westQuan}</TableCell>
           <TableCell align="right">{row.est_finQuan}</TableCell>
           <TableCell align="right">{row.status}</TableCell>
-          {/* <TableCell align="right">{row.efficency}</TableCell>
-          <TableCell align="right">{row.shift}</TableCell>
-          <TableCell align="right">{row.waste_name}</TableCell>
-          <TableCell align="right">{row.waste_quan}</TableCell>
-          <TableCell align="right">{row.waste_unit}</TableCell> */}
           <TableCell>
-            <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-              {open ? <PlayCircleOutlineIcon color="green"/> : <PlayCircleOutlineIcon color="green"/>}
+            <IconButton aria-label="expand row" size="small" onClick={()=>productionStartHandler(row.id)}>
+              <PlayCircleOutlineIcon style={{ color: 'primary.main'}}/>
             </IconButton>
           </TableCell>
         </TableRow>
@@ -170,6 +174,7 @@ const ViewBatch = () => {
         item.est_westQuan,
         item.est_finQuan,
         item.status,
+        item.id,
         // item.shift,
         // item.production_line,
         // item.waste_name,
