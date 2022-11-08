@@ -17,6 +17,7 @@ const FinishedGoods = () => {
 
     axios.get('/salesModule/showAcceptedRequestions')
     .then((res) =>{
+      console.log(res.data, "Asdasdf")
       setData(res.data)
     })
 

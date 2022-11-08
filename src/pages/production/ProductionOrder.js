@@ -25,8 +25,9 @@ import {
   Typography,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import axios from "../../components/axios";
+// import axios from "../../components/axios";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import axios from "axios";
 
 const ViewBatch = () => {
   function createData(
@@ -148,7 +149,7 @@ const ViewBatch = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("/productionModule/showProductionOrder")
+      .get("https://production.proplast.et/showProductionOrder")
       .then((res) => {
         setData(res.data);
         console.log(res.data);
