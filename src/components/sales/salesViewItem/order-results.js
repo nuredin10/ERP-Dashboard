@@ -4,7 +4,7 @@ import { border, flexbox } from "@mui/system";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import axios from "axios";
+import axios from "../../../components/axios";
 import salesAxios from '../../salesAxios'
 
 function TabPanel(props) {
@@ -52,8 +52,8 @@ export const OrderResults = (props) => {
 
   const orderOnClickHandler = (e, data) => {
   
-    salesAxios
-      .post("/showSummeryByID", {
+    axios
+      .post("http://localhost:59000/showSummeryByID", {
         id: e.id,
         materialType: "RAW",
       })

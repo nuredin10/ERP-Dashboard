@@ -17,6 +17,7 @@ const FinishedGoods = () => {
   useEffect(() => {
     saxios.get('/showAcceptedRequestions')
       .then((res) => {
+      console.log(res.data, "Asdasdf")
         setData(res.data);
         console.log(res.data);
       })

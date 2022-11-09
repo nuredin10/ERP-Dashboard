@@ -120,6 +120,11 @@ const production = [
     title: "Production Ongoing"
   },
   {
+    href: "/production/productionFinished",
+    icon: <RawmaterialIcon fontSize="small"/>,
+    title: "Production Finished"
+  },
+  {
     href: "/production/addnewbatch",
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add New Batch",
