@@ -17,6 +17,8 @@ import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 import authAxios from '../components/authAxios'
+import logo from '../../public/logo.svg'
+import CustomAlert from 'src/components/alert';
 
 function Copyright(props) {
   return (
@@ -41,30 +43,35 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log(data)
-    authAxios.post('/login',{
+    authAxios.post('/login', {
       email: data.get('email'),
       password: data.get('password'),
     })
-    .then((res)=>{
-      console.log(res)
-      Cookies.set('token', res.data.jwt)
-      Cookies.set("loggedIn", true)
-      Router.push('/dashboard')
-      // console.log(res)
-      // jwt.verify(token,'PROPLAST', (err, decoded) =>{
-      //   if (err) {
-      //     console.log(err)
-      //   } else {
-      //     console.log(decoded)
-      //   }
-      // })
-    })
-    .catch((res)=>{
-      console.log(res)
-      if(res.response.status == 403){
-        setIncorrect(true)
-      }
-    })
+      .then((res) => {
+        if (res.data.message === 'success') {
+          console.log(res)
+          Cookies.set('token', res.data.jwt)
+          Cookies.set("loggedIn", true)
+          Router.push('/dashboard')
+        }else if(res.data.message === 'fail'){
+          CustomAlert('error', 'Incorrect Username of Password');
+        }
+
+        // console.log(res)
+        // jwt.verify(token,'PROPLAST', (err, decoded) =>{
+        //   if (err) {
+        //     console.log(err)
+        //   } else {
+        //     console.log(decoded)
+        //   }
+        // })
+      })
+      .catch((res) => {
+        console.log(res)
+        if (res.response.status == 403) {
+          setIncorrect(true)
+        }
+      })
   };
 
   return (
@@ -96,9 +103,21 @@ export default function SignIn() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} src='logo.svg' size='small'>
-
+            <Avatar sx={{ width: 100, height: 100, bgcolor: 'secondary.main' }} src='logo.svg'>
             </Avatar>
+            {/* <Box
+              component="img"
+              sx={{
+                height: 100,
+                width: 100
+              }}
+              alt="Proplast Logo"
+              src="logo.svg"
+            /> */}
+
+            {/* <div> */}
+            {/* <img src='logo.svg' alt="Proplast logo" /> */}
+            {/* </div> */}
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>

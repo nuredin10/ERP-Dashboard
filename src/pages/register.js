@@ -2,6 +2,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
+import authAxois from '../components/authAxios';
 import * as Yup from 'yup';
 import {
   Box,
@@ -11,18 +12,22 @@ import {
   FormHelperText,
   Link,
   TextField,
-  Typography
+  Typography,
+  Autocomplete,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { MenuItem, Select } from '@material-ui/core';
 
 const Register = () => {
   const router = useRouter();
+  var oroles;
   const formik = useFormik({
     initialValues: {
       email: '',
       firstName: '',
       lastName: '',
       password: '',
+      roles: '',
       policy: false
     },
     validationSchema: Yup.object({
@@ -43,6 +48,8 @@ const Register = () => {
         .max(255)
         .required(
           'Last name is required'),
+      roles: Yup
+          .string(),
       password: Yup
         .string()
         .max(255)
@@ -56,9 +63,26 @@ const Register = () => {
         )
     }),
     onSubmit: () => {
-      router.push('/');
+      // router.push('/');
+      console.log(formik);
+      var data = formik.values;
+      authAxois.post('/signup', { data,oroles }).then(function (response) {
+        if (response.data.message == 'success') {
+          console.log('Sign Up Success');
+          router.push('/');
+        } else if (response.data.message == 'fail') {
+          console.log('Signig in Failed');
+        }
+      })
+      console.log(formik.values);
     }
   });
+  const roles = [
+    { label: "Super Admin" },
+    { label: "Sales" },
+    { label: "Production" },
+    { label: "Ware House" },
+  ]
 
   return (
     <>
@@ -154,6 +178,32 @@ const Register = () => {
               value={formik.values.password}
               variant="outlined"
             />
+            {/* <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={roles}
+              sx={{ width: '100%' }}
+              value={formik.values.roles}
+              renderInput={(params) => <TextField {...params}  label='Roles'/>}
+            /> */}
+            <Select
+              fullWidth
+              variant="outlined"
+              value={oroles}
+              label="Role"
+              onChange={formik.handleChange}
+              placeholder='Sales'
+            >
+              <MenuItem value="Super Admin">Super Admin</MenuItem>
+              <MenuItem value="Sales">Sales</MenuItem>
+              <MenuItem value="Production">Production</MenuItem>
+              <MenuItem values="Ware House"> Ware House</MenuItem>
+            </Select>
+            {/* <Select
+            fullWidth
+            >
+
+            </Select> */}
             <Box
               sx={{
                 alignItems: 'center',
@@ -193,7 +243,7 @@ const Register = () => {
             )}
             <Box sx={{ py: 2 }}>
               <Button
-                color="primary"
+                color="secondary"
                 disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
