@@ -15,7 +15,7 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import axios from '../../../components/axios';
+import waxios from '../../../components/wareHouseAxios';
 import CustomAlert from '../../../components/alert'
 import Router from 'next/router'
 
@@ -34,7 +34,7 @@ const Accessories = () => {
     { title: "Status", field: "mat_status" },
   ];
   useEffect(() => {
-    axios.get('/wareHouse/showStoreRequestion')
+    waxios.get('/showStoreRequestion')
       .then((resp)=>{
         console.log(resp.data)
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
@@ -49,14 +49,14 @@ const Accessories = () => {
 
   const [acc, setAcc] = useState([]);
   const accept = async (id) => {
-    await axios
-      .post("/wareHouse/responseStoreRequestion", {
+    await waxios
+      .post("/responseStoreRequestion", {
         id: id,
         status: "Accept",
       })
       .then(function (response) {
         console.log(response);
-        Router.push("/warehouse/requesteditems/Accessories");
+        Router.push("/requesteditems/Accessories");
         setIsSuccess('success');
         setAlertMsg('Item Accepted')
       })
@@ -69,8 +69,8 @@ const Accessories = () => {
   };
 
   const decline = async (id) => {
-    await axios
-      .post("/wareHouse/responseStoreRequestion", {
+    await waxios
+      .post("/responseStoreRequestion", {
         id: id,
         status: "Decline",
       })

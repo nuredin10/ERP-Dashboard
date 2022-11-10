@@ -100,7 +100,7 @@ import { DashboardLayout } from "../../../../components/dashboard-layout";
 import OrdersToolBar from "../../../../components/order/order-toolbar";
 import { OrderResults } from "../../../../components/order/order-results";
 import RightDrawer from "../../../../components/order/RightDrawer";
-import axios from '../../../../components/axios'
+import waxios from '../../../../components/wareHouseAxios'
 
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
@@ -109,7 +109,7 @@ const FinishedGoods = () => {
   const [data, setData] = useState([]);
   
   useEffect(() => {
-    axios.get("/wareHouse/finishedMaterial")
+    waxios.get("/finishedMaterial")
       .then((response)=>{
           setData(response.data)
         })

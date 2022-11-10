@@ -17,7 +17,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import OrderList from "src/components/sales/salesProductList/orderdProductList";
-import axios from '../../components/axios';
+import saxios from '../../components/salesAxios';
 
 const SalesOrderList = () => {
   const [data, setData] = useState([]);
@@ -61,7 +61,7 @@ const SalesOrderList = () => {
   };
 
   useEffect(() => {
-    axios.get("/salesModule/showSalesOrder")
+    saxios.get("/showSalesOrder")
     .then((resp)=>{
       setData(resp.data)
     })

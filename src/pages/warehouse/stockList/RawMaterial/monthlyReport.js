@@ -23,7 +23,7 @@ import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
 import ToolBar from '../../../../components/ToolBar'
 import { useRouter } from 'next/router'
-import axios from '../../../../components/axios'
+import waxios from '../../../../components/wareHouseAxios'
 
 const MonthlyReport = () => {
   const [selectMonth, setSelectMonth] = useState('')
@@ -67,7 +67,7 @@ const MonthlyReport = () => {
   }
   useEffect(() => {
 
-    axios.post("/wareHouse/showSummeryByMonth", req)
+    waxios.post("/showSummeryByMonth", req)
       .then(function (res) {
         setData(res.data)
         console.log("new req")

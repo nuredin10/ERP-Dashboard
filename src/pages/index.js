@@ -97,7 +97,7 @@ export default function SignIn() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} src='logo.svg' size='small'>
-              
+
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -136,7 +136,7 @@ export default function SignIn() {
                 Sign In
               </Button>
               <Grid>
-              {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
+                {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
 
               </Grid>
               <Grid container>

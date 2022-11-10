@@ -15,7 +15,7 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import axios from '../../../components/axios';
+import waxios from '../../../components/wareHouseAxios';
 import CustomAlert from '../../../components/alert'
 
 const FinishedGoods = () => {
@@ -35,7 +35,7 @@ const FinishedGoods = () => {
 
   useEffect(() => {
 
-    axios.get('/wareHouse/showStoreRequestion')
+    waxios.get('/showStoreRequestion')
       .then((resp)=>{
         console.log(resp.data)
         const finishedData = resp.data.filter((finish) => finish.req_materialtype.includes("FIN"));
@@ -59,13 +59,13 @@ const FinishedGoods = () => {
 
 
   const accept = async(id) => {
-    await axios.post('/wareHouse/responseStoreRequestion', {
+    await waxios.post('/responseStoreRequestion', {
       id: id,
       status: "Accept"
     })
       .then(function (response) {
         console.log(response);
-        Router.push("/warehouse/requesteditems/RawMaterial")
+        Router.push("/requesteditems/RawMaterial")
         setIsSuccess('success');
         setAlertMsg('Item Accepted')
       })
@@ -78,7 +78,7 @@ const FinishedGoods = () => {
   }
 
   const decline = async(id) => {
-    await axios.post('/wareHouse/responseStoreRequestion', {
+    await waxios.post('/responseStoreRequestion', {
       id: id,
       status: "Decline"
     })
