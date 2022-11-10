@@ -26,7 +26,7 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 // import axios from "../../components/axios";
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import axios from "axios";
 
 const ViewBatch = () => {
@@ -67,13 +67,18 @@ const ViewBatch = () => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
 
-
-    const productionStartHandler =(id)=>{
-      console.log("Production Started",id);
-      // 
-
-
-    }
+    const productionStartHandler = (id) => {
+      console.log("Production Started", id);
+      //
+      axios
+        .post("http://localhost:42000/startProduction", {
+          id: id,
+          status: "START",
+        })
+        .then((respo) => {
+          console.log(respo);
+        });
+    };
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -90,8 +95,12 @@ const ViewBatch = () => {
           <TableCell align="right">{row.est_finQuan}</TableCell>
           <TableCell align="right">{row.status}</TableCell>
           <TableCell>
-            <IconButton aria-label="expand row" size="small" onClick={()=>productionStartHandler(row.id)}>
-              <PlayCircleOutlineIcon style={{ color: 'primary.main'}}/>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => productionStartHandler(row.id)}
+            >
+              <PlayCircleOutlineIcon style={{ color: "primary.main" }} />
             </IconButton>
           </TableCell>
         </TableRow>
@@ -153,7 +162,7 @@ const ViewBatch = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("https://production.proplast.et/showProductionOrder")
+      .get("http://localhost:42000/showProductionOrder")
       .then((res) => {
         setData(res.data);
         console.log(res.data);
