@@ -38,7 +38,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 // import productionWxios from "../../components/productionWxios";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import productionWxios from "../../components/productionWxios";
-
+import PauseIcon from '@mui/icons-material/Pause';
 const ProducitonOngoing = () => {
     const token = Cookies.get('token');
     const decoded = jwt.decode(token);
@@ -131,10 +131,10 @@ const ProducitonOngoing = () => {
                             <TableCell align="right">{row.est_westQuan}</TableCell>
                             <TableCell align="right">{row.est_finQuan}</TableCell>
                             <TableCell align="right">{row.status}</TableCell>
-                            <TableCell>
+                            <TableCell align="right">
                                 <IconButton
                                     aria-label="expand row" size="small" onClick={() => setFinishModalOpen(true)}>
-                                    <DoneAllIcon style={{ color: 'primary.main' }} />
+                                    <DoneAllIcon style={{ color: 'green' }} />
                                 </IconButton>
                                 <Modal
                                     open={finishModalOpen}
@@ -158,9 +158,10 @@ const ProducitonOngoing = () => {
                                                     <TextField label="Remark" variant="outlined" {...register('remark')}/>
                                                     <TextField label="Material Code" variant="outlined" {...register('material_code')}/>
                                                 </div>
-                                                <div className="py-5">
-                                                    <button type="submit" className="py-4 px-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg hover:shadwo-lg">Complete</button>
-                                                </div>
+                                                <Box sx={{mt: 3}}>
+                                                    <Button sx={{mr: 3}}type="submit" variant='contained' /* className="py-4 px-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg hover:shadwo-lg" */>Complete</Button>
+                                                    <Button variant='outlined' onClick={()=>setFinishModalOpen(false)}>Cancel</Button>
+                                                </Box>
                                             </form>
                                         </Typography>
                                     </Box>
@@ -273,6 +274,7 @@ const ProducitonOngoing = () => {
                                 <TableCell align="right">Estimated Final Quantity</TableCell>
                                 <TableCell align="right">Estimated Waste Quantity</TableCell>
                                 <TableCell align="right">Status</TableCell>
+                                <TableCell align="right">Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
