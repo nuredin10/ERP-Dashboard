@@ -69,10 +69,10 @@ const ViewBatch = () => {
 
 
     const productionStartHandler = (id) => {
-      // console.log("Production Started", id);
+      console.log("Production Started", id);
       productionWxios.post('/startProduction', {
         id: id,
-        status: 'START',
+        status: 'PENDING',
       })
         .then(function (response) {
           if (response.data.message === 'Started !') {
@@ -97,7 +97,7 @@ const ViewBatch = () => {
     return (
       <React.Fragment>
         {
-          row.status == 'BEGIN' && 
+          row.status == 'PENDING' && 
         <>
           <TableRow
             sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -183,7 +183,7 @@ const ViewBatch = () => {
       .get("/showProductionOrder")
       .then((res) => {
         setData(res.data);
-        // console.log(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);

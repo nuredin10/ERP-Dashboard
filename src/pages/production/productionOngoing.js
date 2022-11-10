@@ -14,6 +14,11 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Head from "next/head";
+import { useForm } from "react-hook-form";
+import Cookies from 'js-cookie'
+import jwt from 'jsonwebtoken'
+
+
 
 import {
     Box,
@@ -24,7 +29,9 @@ import {
     Link,
     Card,
     TextField,
+    Modal,
     Typography,
+    Divider,
 } from "@mui/material";
 
 import { DashboardLayout } from "../../components/dashboard-layout";
@@ -33,6 +40,8 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import productionWxios from "../../components/productionWxios";
 
 const ProducitonOngoing = () => {
+    const token = Cookies.get('token');
+    const decoded = jwt.decode(token);
 
     function createData(
         fin_product,
@@ -70,18 +79,44 @@ const ProducitonOngoing = () => {
     function Row(props) {
         const { row } = props;
         const [open, setOpen] = useState(false);
+        const [finishModalOpen, setFinishModalOpen] = useState(false);
+        const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-        const productionEndHandler = (id) => {
+
+        const onSubmit = (data) => {
             console.log("Production Ended");
-            productionWxios.post('/addPo')
-
+            console.log(decoded)
+            productionWxios.post('/addProductProduced',{
+                prodID: row.id,
+                new_name: data.name,
+                new_spec: data.spec,
+                new_quantity: data.quantity,
+                personID: decoded.id,
+                new_description: data.desc,
+                new_materialunit: data.material_unit,
+                new_remark: data.remark,
+                new_materialcode: data.material_code
+            });
+            setFinishModalOpen(false);s
         }
-
+        const style = {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 800,
+            bgcolor: 'background.paper',
+            border: '1px solid #efefef',
+            borderRadius: 1,
+            boxShadow: 10,
+            p: 4,
+        };
         return (
             <React.Fragment>
                 {
-                    row.status == 'PENDING' &&
+                    row.status == 'STARTED' &&
                     <>
+
                         <TableRow
                             sx={{ "& > *": { borderBottom: "unset" } }}>
                             <TableCell>
@@ -98,9 +133,38 @@ const ProducitonOngoing = () => {
                             <TableCell align="right">{row.status}</TableCell>
                             <TableCell>
                                 <IconButton
-                                    aria-label="expand row" size="small" onClick={() => productionEndHandler(row.id)}>
+                                    aria-label="expand row" size="small" onClick={() => setFinishModalOpen(true)}>
                                     <DoneAllIcon style={{ color: 'primary.main' }} />
                                 </IconButton>
+                                <Modal
+                                    open={finishModalOpen}
+                                    onClose={() => setFinishModalOpen(false)}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                >
+                                    <Box sx={style}>
+                                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                                            <h1>Production Report</h1>
+                                        </Typography>
+                                        <Divider />
+                                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                            <form onSubmit={handleSubmit(onSubmit)}>
+                                                <div className="grid grid-cols-3 gap-5">
+                                                    <TextField label="Name" variant="outlined" {...register('name')}/>
+                                                    <TextField label="Spec" variant="outlined" {...register('spec')}/>
+                                                    <TextField label="Quantity" variant="outlined" {...register('quantity')}/>
+                                                    <TextField label="Description" variant="outlined" {...register('desc')}/>
+                                                    <TextField label="Material Unit" variant="outlined" {...register('material_unit')}/>
+                                                    <TextField label="Remark" variant="outlined" {...register('remark')}/>
+                                                    <TextField label="Material Code" variant="outlined" {...register('material_code')}/>
+                                                </div>
+                                                <div className="py-5">
+                                                    <button type="submit" className="py-4 px-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg hover:shadwo-lg">Complete</button>
+                                                </div>
+                                            </form>
+                                        </Typography>
+                                    </Box>
+                                </Modal>
                             </TableCell>
                         </TableRow>
                         <TableRow>
