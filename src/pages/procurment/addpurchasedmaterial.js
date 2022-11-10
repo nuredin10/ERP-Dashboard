@@ -204,7 +204,7 @@ const Addpurchasedmaterial = () => {
                     }}
                   >
                     <Grid item sm={6} md={2} lg={3}>
-                      {/* <TextField
+                      <TextField
                         required
                         name="new_name"
                         label="Name"
@@ -212,26 +212,26 @@ const Addpurchasedmaterial = () => {
                         value={input.new_name}
                         onChange={(event) => handleFormChange(index, event)}
                         fullWidth
-                      /> */}
-                      <Autocomplete
+                      />
+                      {/* <Autocomplete
                         disablePortal
                         id="combo-box-demo"
                         options={autocompleteData.Name}
                         // sx={{ width: 300 }}
                         onChange={(event) => handleFormChange(index, event)}
                         renderInput={(params) => <TextField {...params} label="Movie" />}
-                      />
+                      /> */}
                     </Grid>
                     <Grid item sm={6} md={2} lg={2}>
-                      {/* <TextField
+                      <TextField
                         required
                         name="new_quantity"
                         label="Quantity"
                         type="text"
                         value={input.new_quantity}
                         onChange={(event) => handleFormChange(index, event)}
-                      /> */}
-                       <Autocomplete
+                      />
+                       {/* <Autocomplete
                         disablePortal
                         id="combo-box-demo"
                         options={autocompleteData.Quantitty}
@@ -240,7 +240,7 @@ const Addpurchasedmaterial = () => {
                         
                         
                         renderInput={(params) => <TextField {...params} name="new_quantity" label="Quantity" onChange={(event) => handleFormChange(index, event)} value={input.new_quantity}/>}
-                      />
+                      /> */}
                     </Grid>
                     <Grid item sm={6} md={2} lg={2}>
                       <TextField
