@@ -38,6 +38,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 // import productionWxios from "../../components/productionWxios";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import productionWxios from "../../components/productionWxios";
+import CustomAlert from "src/components/alert";
 
 const ProducitonOngoing = () => {
     const token = Cookies.get('token');
@@ -97,7 +98,7 @@ const ProducitonOngoing = () => {
                 new_remark: data.remark,
                 new_materialcode: data.material_code
             });
-            setFinishModalOpen(false);s
+            setFinishModalOpen(false);
         }
         const style = {
             position: 'absolute',

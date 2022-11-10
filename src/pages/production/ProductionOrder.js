@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Head from "next/head";
+import Router from "next/router";
 import {
   Box,
   Button,
@@ -28,6 +29,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 // import productionWxios from "../../components/productionWxios";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import productionWxios from "../../components/productionWxios";
+import CustomAlert from "src/components/alert";
 
 const ViewBatch = () => {
   function createData(
@@ -77,6 +79,8 @@ const ViewBatch = () => {
         .then(function (response) {
           if (response.data.message === 'Started !') {
             console.log('Production has been Started');
+            CustomAlert('success', 'Production has been started');
+            Router.reload();
           }
           else if (response.data.message === 'update status error') {
             console.log('update Server Error');
