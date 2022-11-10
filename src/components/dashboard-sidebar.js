@@ -69,11 +69,11 @@ const procurmentItems = [
     icon: <AddIcon fontSize="small" />,
     title: "Add Purchased Material",
   },
-  // {
-  //   href: "/procurment/purchaserequest",
-  //   icon: <UsersIcon fontSize="small" />,
-  //   title: "Purchase Request",
-  // },
+  {
+    href: "/procurment/requestedorders",
+    icon: <UsersIcon fontSize="small" />,
+    title: "Purchase Orders",
+  },
   // {
   //   href: "/procurment/paymentrequest",
   //   icon: <UsersIcon fontSize="small" />,
@@ -104,7 +104,7 @@ const wareHouseItems = [
   {
     href: "/warehouse/PurchaseOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Purchase Order",
+    title: "Purchase Request",
   },
 ];
 
