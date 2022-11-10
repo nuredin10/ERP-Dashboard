@@ -45,6 +45,10 @@ import StoreIcon from "@mui/icons-material/Store";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 import AddIcon from '@mui/icons-material/Add';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
 const generalItems = [
   {
     href: "/dashboard",
@@ -111,17 +115,17 @@ const wareHouseItems = [
 const production = [
   {
     href: "/production/ProductionOrder",
-    icon: <RawmaterialIcon fontSize="small" />,
+    icon: <PendingActionsIcon fontSize="small" />,
     title: "Production Order",
   },
   {
     href: "/production/productionOngoing",
-    icon: <RawmaterialIcon fontSize="small"/>,
+    icon: <AutorenewIcon fontSize="small"/>,
     title: "Production Ongoing"
   },
   {
     href: "/production/productionFinished",
-    icon: <RawmaterialIcon fontSize="small"/>,
+    icon: <CheckCircleOutlineIcon fontSize="small"/>,
     title: "Production Finished"
   },
   {
@@ -131,7 +135,7 @@ const production = [
   },
   {
     href: "/production/viewbatch",
-    icon: <PurchaseOrderIcon fontSize="small" />,
+    icon: <ViewListIcon fontSize="small" />,
     title: "View Batch",
   },
   // {
@@ -141,7 +145,7 @@ const production = [
   // },
   {
     href: "/production/addproduct",
-    icon: <StoreIcon fontSize="small" />,
+    icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
   {
