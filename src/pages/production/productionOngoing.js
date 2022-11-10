@@ -97,7 +97,9 @@ const ProducitonOngoing = () => {
                 new_materialunit: data.material_unit,
                 new_remark: data.remark,
                 new_materialcode: data.material_code
-            });
+            }).then(
+            
+            );
             setFinishModalOpen(false);
         }
         const style = {
