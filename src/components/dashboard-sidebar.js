@@ -294,6 +294,7 @@ export const DashboardSidebar = (props) => {
           flexDirection: "column",
           height: "100%",
         }}
+        className='scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 h-32 overflow-y-scroll'
       >
         <div>
           <Box sx={{ p: 3 }}>
