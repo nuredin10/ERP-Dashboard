@@ -38,6 +38,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 // import productionWxios from "../../components/productionWxios";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import productionWxios from "../../components/productionWxios";
+import CustomAlert from "src/components/alert";
 import PauseIcon from '@mui/icons-material/Pause';
 const ProducitonOngoing = () => {
     const token = Cookies.get('token');
@@ -96,8 +97,10 @@ const ProducitonOngoing = () => {
                 new_materialunit: data.material_unit,
                 new_remark: data.remark,
                 new_materialcode: data.material_code
-            });
-            setFinishModalOpen(false);s
+            }).then(
+            
+            );
+            setFinishModalOpen(false);
         }
         const style = {
             position: 'absolute',

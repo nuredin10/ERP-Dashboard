@@ -9,7 +9,7 @@ import { Users as UsersIcon } from "../icons/users";
 import { Typography } from "@material-ui/core";
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
-import {useState , useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Router from 'next/router'
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -31,6 +31,15 @@ export const DashboardNavbar = (props) => {
   //       }
   //     })
   // },[])
+  var width;
+
+  if (typeof window != 'undefined') {
+    console.log('You are on the browser');
+    console.log(window.innerWidth);
+    width = window.innerWidth;
+  } else {
+    console.log('You are on the server')
+  }
 
   return (
     <>
@@ -41,15 +50,20 @@ export const DashboardNavbar = (props) => {
           },
           width: {
             lg: "calc(100% - 280px)",
+            // xs: '100%',
+            // sm: '100%'
+            // md: "100%",
+
           },
+         
         }}
         {...other}
       >
         <Toolbar
           disableGutters
           sx={{
-            minHeight: 64,
-            left: 0,
+            minHeight: 100,
+            left: 2,
             px: 2,
           }}
         >
@@ -76,7 +90,7 @@ export const DashboardNavbar = (props) => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Notifications">
-            <IconButton sx={{ ml: 1 }} onClick={()=>{
+            <IconButton sx={{ ml: 1 }} onClick={() => {
               Cookies.remove("loggedIn")
               Cookies.remove("token")
               Router.push('/')

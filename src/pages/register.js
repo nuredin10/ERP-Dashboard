@@ -2,6 +2,9 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
+import { useState } from 'react';
+import authAxois from '../components/authAxios';
+import axios from 'axios';
 import * as Yup from 'yup';
 import {
   Box,
@@ -11,12 +14,18 @@ import {
   FormHelperText,
   Link,
   TextField,
-  Typography
+  Typography,
+  Autocomplete,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { MenuItem, Select } from '@material-ui/core';
+// import { DashboardLayout } from "./dashboard-layout";
+import { DashboardLayout } from 'src/components/dashboard-layout';
 
 const Register = () => {
   const router = useRouter();
+  const [oroles, setOroles] = useState();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -43,6 +52,7 @@ const Register = () => {
         .max(255)
         .required(
           'Last name is required'),
+     
       password: Yup
         .string()
         .max(255)
@@ -56,9 +66,26 @@ const Register = () => {
         )
     }),
     onSubmit: () => {
-      router.push('/');
+      // router.push('/');
+      console.log(formik);
+      var data = formik.values;
+      authAxois.post('/signup', { data,oroles }).then(function (response) {
+        if (response.data.message == 'success') {
+          console.log('Sign Up Success');
+          router.push('/');
+        } else if (response.data.message == 'fail') {
+          console.log('Signig in Failed');
+        }
+      })
+      console.log(formik.values);
     }
   });
+  const roles = [
+    { label: "Super Admin" },
+    { label: "Sales" },
+    { label: "Production" },
+    { label: "Ware House" },
+  ]
 
   return (
     <>
@@ -77,7 +104,7 @@ const Register = () => {
         }}
       >
         <Container maxWidth="sm">
-          <NextLink
+          {/* <NextLink
             href="/"
             passHref
           >
@@ -87,7 +114,7 @@ const Register = () => {
             >
               Dashboard
             </Button>
-          </NextLink>
+          </NextLink> */}
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography
@@ -154,6 +181,32 @@ const Register = () => {
               value={formik.values.password}
               variant="outlined"
             />
+            {/* <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={roles}
+              sx={{ width: '100%' }}
+              value={formik.values.roles}
+              renderInput={(params) => <TextField {...params}  label='Roles'/>}
+            /> */}
+            <Select
+              fullWidth
+              variant="outlined"
+              value={oroles}
+              label="Role"
+              onChange={(e)=> setOroles(e.target.value)}
+              placeholder='Sales'
+            >
+              <MenuItem value="Super Admin">Super Admin</MenuItem>
+              <MenuItem value="Sales">Sales</MenuItem>
+              <MenuItem value="Production">Production</MenuItem>
+              <MenuItem values="Ware House"> Ware House</MenuItem>
+            </Select>
+            {/* <Select
+            fullWidth
+            >
+
+            </Select> */}
             <Box
               sx={{
                 alignItems: 'center',
@@ -227,5 +280,6 @@ const Register = () => {
     </>
   );
 };
+Register.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
 
 export default Register;
