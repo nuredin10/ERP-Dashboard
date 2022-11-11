@@ -16,7 +16,7 @@ import Table from "../../../components/Table";
 import ToolBar from "../../../components/ToolBar";
 import AddIcon from '@mui/icons-material/Add';
 import Router from 'next/router'
-import saxios from '../../../components/salesAxios';
+// import saxios from '../../../components/salesAxios';
 
 const SalesSummery = () => {
   const [data, setData] = useState([]);
