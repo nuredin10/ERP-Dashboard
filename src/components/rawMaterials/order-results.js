@@ -109,7 +109,6 @@ export const OrderResults = (props) => {
                   width: '100%',
                   display: "flex",
                   justifyContent: "space-between",
-                  border: '2px solid black',
                   borderTop: 1,
                   borderColor: "rgb(229, 231, 235)",
                 }}
