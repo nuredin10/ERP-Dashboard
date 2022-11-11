@@ -15,6 +15,7 @@ import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { Google as Google } from "../icons/google";
 import { Logo } from "./logo";
+import Image from 'next/image'
 import { NavItem } from "./nav-item";
 import { DropdownNavItem } from "./dropdown-nav-item";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -148,11 +149,11 @@ const production = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
-  {
-    href: "/production/viewallproducts",
-    icon: <ViewListIcon fontSize="small" />,
-    title: "View All Products",
-  },
+  // {
+  //   href: "/production/viewallproducts",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View All Products",
+  // },
 ];
 
 const sales = [
@@ -288,15 +289,18 @@ export const DashboardSidebar = (props) => {
         }}
       >
         <div>
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5}}>
             <NextLink href="/" passHref>
               <a>
-                <Logo
+                <Image src='/LOGOLIGHT1.svg' height= "100" width= "200" >
+                  
+                </Image>
+                {/* <Logo
                   sx={{
-                    height: 42,
-                    width: 42,
+                    
                   }}
-                />
+                  href='/logo.svg'
+                /> */}
               </a>
             </NextLink>
           </Box>

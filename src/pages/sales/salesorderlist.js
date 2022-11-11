@@ -55,7 +55,7 @@ const SalesOrderList = () => {
   };
 
   const cartViwer = (rowData) => {
-    console.log(rowData);
+    // console.log(rowData);
     setselectedData(rowData);
     handleOpen();
   };
@@ -101,7 +101,7 @@ const SalesOrderList = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <OrderList OrderdId= {selectedData}  handleClose={handleClose} />
+                <OrderList OrderdId= {selectedData.unique_id}  handleClose={handleClose} />
               </Box>
             </Modal>
 

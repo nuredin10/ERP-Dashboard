@@ -34,7 +34,7 @@ const ToolBar = (props) => (
           {/* {props.title} */}
         </Typography>
         <Box sx={{ display: 'flex',width: 'auto' }}>
-          <Button
+          {/* <Button
             startIcon={(<UploadIcon fontSize="small" />)}
             sx={{ mr: 3 }}
           >
@@ -45,7 +45,7 @@ const ToolBar = (props) => (
             sx={{ mr: 3 }}
           >
             Export
-          </Button>
+          </Button> */}
           <AddButton sx={{ mr: 3 }} 
           icon={<AddIcon/>}
 href={props.href}

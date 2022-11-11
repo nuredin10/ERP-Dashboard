@@ -44,7 +44,7 @@ const FinishedGoods = () => {
       })
       .catch((error)=>{
         console.log(error, "sdfgsdfgsdfgsdfg")
-
+        
       })
 
     // fetch("https://versavvy.com/ERP_backend/wareHouse/showStoreRequestion")
@@ -58,8 +58,8 @@ const FinishedGoods = () => {
   }, []);
 
 
-  const accept = async(id) => {
-    await waxios.post('/responseStoreRequestion', {
+  const accept = (id) => {
+    waxios.post('/responseStoreRequestion', {
       id: id,
       status: "Accept"
     })
@@ -67,7 +67,7 @@ const FinishedGoods = () => {
         console.log(response);
         Router.push("/requesteditems/RawMaterial")
         setIsSuccess('success');
-        setAlertMsg('Item Accepted')
+        setAlertMsg('Request Accepted');
       })
       .catch(function (error) {
         console.log(error);
