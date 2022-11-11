@@ -50,7 +50,10 @@ const RightDrawer = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "27vw",
+            width: {
+              xs: "80vw",
+              lg:"27vw"
+            },
             minHeight: "93vh",
             height: "auto",
             marginTop: "7vh",

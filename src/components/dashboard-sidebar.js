@@ -121,12 +121,12 @@ const production = [
   },
   {
     href: "/production/productionOngoing",
-    icon: <AutorenewIcon fontSize="small"/>,
+    icon: <AutorenewIcon fontSize="small" />,
     title: "Production Ongoing"
   },
   {
     href: "/production/productionFinished",
-    icon: <CheckCircleOutlineIcon fontSize="small"/>,
+    icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished"
   },
   {
@@ -230,6 +230,14 @@ const RequestedItems = [
   },
 ];
 
+const RegisterUser = [
+  {
+    href: '/register',
+    icon: <UsersIcon fontSize="small" />,
+    title: 'Register a new User'
+  }
+]
+
 export const DashboardSidebar = (props) => {
   const [expanded, setExpanded] = useState(false);
   const { open, onClose } = props;
@@ -287,6 +295,7 @@ export const DashboardSidebar = (props) => {
           flexDirection: "column",
           height: "100%",
         }}
+        // className='section scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 h-32 overflow-y-scroll'
       >
         <div>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5}}>
@@ -415,6 +424,16 @@ export const DashboardSidebar = (props) => {
               <Typography variant="menuTitle">SALES</Typography>
 
               {sales.map((item) => (
+                <>
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">USER</Typography>
+
+              {RegisterUser.map((item) => (
                 <>
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,11 +13,14 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 import authAxios from '../components/authAxios'
+import logo from '../../public/logo.svg'
+import CustomAlert from 'src/components/alert';
+import axios from 'axios';
+import Alert from '@Mui/material/Alert';
 
 function Copyright(props) {
   return (
@@ -36,35 +40,42 @@ const theme = createTheme();
 export default function SignIn() {
 
   const [incorrect, setIncorrect] = React.useState(false)
-
+  const [alertS, setAlertS] = useState(false)
+  const alertComponent = (<Alert severity='error'>Incorrect Username or Password</Alert>);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log(data)
-    authAxios.post('/login',{
+    authAxios.post('/login', {
+    // axios.post('http://localhost:42000/test', {
       email: data.get('email'),
       password: data.get('password'),
     })
-    .then((res)=>{
-      console.log(res)
-      Cookies.set('token', res.data.jwt)
-      Cookies.set("loggedIn", true)
-      Router.push('/dashboard')
-      // console.log(res)
-      // jwt.verify(token,'PROPLAST', (err, decoded) =>{
-      //   if (err) {
-      //     console.log(err)
-      //   } else {
-      //     console.log(decoded)
-      //   }
-      // })
-    })
-    .catch((res)=>{
-      console.log(res)
-      if(res.response.status == 403){
-        setIncorrect(true)
-      }
-    })
+      .then((res) => {
+        console.log(res)
+        Cookies.set('token', res.data.jwt)
+        Cookies.set("loggedIn", true)
+        Router.push('/dashboard')
+        // console.log(res)
+        // jwt.verify(token,'PROPLAST', (err, decoded) =>{
+        //   if (err) {
+        //     console.log(err)
+        //   } else {
+        //     console.log(decoded)
+        //   }
+        // })
+      })
+      .catch((res) => {
+        console.log(res)
+        // setIncorrect(true)
+        if (res.response.status == 401) {
+          // setIncorrect(true)
+          console.log('Incorrect');
+          // <Alert severity="error">This is an error alert — check it out!</Alert>
+          setAlertS(true);
+
+        }
+      })
   };
 
   return (
@@ -96,9 +107,26 @@ export default function SignIn() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} src='logo.svg' size='small'>
+            {/* <Avatar sx={{ width: 100, height: 100 }} src='logo.svg'>
+            </Avatar> */}
+            <div className='py-6'>
+              <img
+                className='w-60'
+                src="logo2.svg" alt="Proplast Logo" />
+            </div>
+            {/* <Box
+              component="img"
+              sx={{
+                height: 100,
+                width: 100
+              }}
+              alt="Proplast Logo"
+              src="logo.svg"
+            /> */}
 
-            </Avatar>
+            {/* <div> */}
+            {/* <img src='logo.svg' alt="Proplast logo" /> */}
+            {/* </div> */}
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
@@ -128,10 +156,11 @@ export default function SignIn() {
                 label="Remember me"
               />
               <Button
+                color='primary'
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, height: 50 }}
               >
                 Sign In
               </Button>
