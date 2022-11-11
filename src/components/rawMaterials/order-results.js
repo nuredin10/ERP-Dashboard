@@ -41,6 +41,7 @@ function a11yProps(index) {
 
 export const OrderResults = (props) => {
   const data = props.data;
+  const mwidth = props.mwidth;
 
   const [status, setStatus] = useState("green");
   const [value, setValue] = React.useState(0);
@@ -49,7 +50,7 @@ export const OrderResults = (props) => {
   };
 
   const orderOnClickHandler = (e, data) => {
-  
+
     axios
       .post("http://localhost:59000/showSummeryByID", {
         id: e.id,
@@ -59,7 +60,7 @@ export const OrderResults = (props) => {
         props.setSummery(response.data);
         // console.log(response.data)
       });
-  
+
     props.setSelectedOrder(e);
     props.setDrawer(true);
   };
@@ -69,24 +70,30 @@ export const OrderResults = (props) => {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="All" {...a11yProps(0)} />
           <Tab label="Add catagories" {...a11yProps(0)} />
-
+          <Tab label="None" />
         </Tabs>
       </Box>
+
       <TabPanel
         value={value}
         index={0}
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "start",
           borderRadius: "30px",
           color: "white",
-          width: 110,
+          width: 'auto',
           height: "4vh",
-          marginLeft: "10%",
+          // marginLeft: "10%",
         }}
       >
-        <Box className={`${props.drawer ? "drawer-open" : "drawer-close"}`} sx={{ mt: 3, ml: -4 }}>
+        <Box
+          className={`${props.drawer ? "drawer-open" : "drawer-close"}`}
+          sx={{
+            mt: 1,
+            ml: -4
+          }}>
           <Grid container>
             {data.map((e, i) => (
               <Grid
@@ -99,43 +106,63 @@ export const OrderResults = (props) => {
                   display: "flex",
                   alignItems: "center",
                   height: "10vh",
-                  width: "100%",
+                  width: '100%',
                   display: "flex",
                   justifyContent: "space-between",
+                  border: '2px solid black',
                   borderTop: 1,
                   borderColor: "rgb(229, 231, 235)",
                 }}
                 lg={12}
               >
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+
+                  }}>
+
                   <Box
                     sx={{
                       height: "70%",
-                      width: 56,
-                      borderRadius: "15px",
+                      width: {
+                        sm: 50,
+                        lg: 56
+                      },
+                      // width: '100%',
+                      borderRadius: "10px",
                       backgroundColor: "rgb(229, 231, 235)",
-                      padding: 1,
+                      padding: 2,
                       textAlign: "center",
                     }}
                   >
                     <Typography sx={{ fontWeight: "500" }}>{e.id}</Typography>
                   </Box>
-                  <Box sx={{ marginLeft: "5%", width: 600 }}>
+
+                  <Box
+                    sx={{
+                      marginLeft: "5%",
+                      paddingX: 2,
+                      width: {
+                        md: '100%',
+                        lg: 'auto'
+                      }
+                    }}>
                     <Typography variant="h6">{e.raw_name}</Typography>
                     <Typography variant="body1">{e.raw_spec}</Typography>
                   </Box>
                 </Box>
-                {}
+
                 <Box
                   className={"pending-status"}
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    borderRadius: "30px",
+                    borderRadius: "10px",
                     color: "white",
                     width: 110,
-                    height: 30,
+                    height: 50,
                     marginLeft: "10%",
                   }}
                 >
@@ -201,7 +228,7 @@ export const OrderResults = (props) => {
                       <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
-                  {}
+                  { }
                   <Box
                     className={"pending-status"}
                     sx={{
@@ -278,7 +305,7 @@ export const OrderResults = (props) => {
                       <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
-                  {}
+                  { }
                   <Box
                     className={"pending-status"}
                     sx={{
@@ -355,7 +382,7 @@ export const OrderResults = (props) => {
                       <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
-                  {}
+                  { }
                   <Box
                     className={"pending-status"}
                     sx={{
@@ -432,7 +459,7 @@ export const OrderResults = (props) => {
                       <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
-                  {}
+                  { }
                   <Box
                     className={"pending-status"}
                     sx={{
@@ -509,7 +536,7 @@ export const OrderResults = (props) => {
                       <Typography variant="body1">{e.raw_spec}</Typography>
                     </Box>
                   </Box>
-                  {}
+                  { }
                   <Box
                     className={"pending-status"}
                     sx={{

@@ -120,12 +120,12 @@ const production = [
   },
   {
     href: "/production/productionOngoing",
-    icon: <AutorenewIcon fontSize="small"/>,
+    icon: <AutorenewIcon fontSize="small" />,
     title: "Production Ongoing"
   },
   {
     href: "/production/productionFinished",
-    icon: <CheckCircleOutlineIcon fontSize="small"/>,
+    icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished"
   },
   {
@@ -148,11 +148,11 @@ const production = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
-  {
-    href: "/production/viewallproducts",
-    icon: <ViewListIcon fontSize="small" />,
-    title: "View All Products",
-  },
+  // {
+  //   href: "/production/viewallproducts",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View All Products",
+  // },
 ];
 
 const sales = [
@@ -294,7 +294,7 @@ export const DashboardSidebar = (props) => {
           flexDirection: "column",
           height: "100%",
         }}
-        className='scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 h-32 overflow-y-scroll'
+        // className='section scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 h-32 overflow-y-scroll'
       >
         <div>
           <Box sx={{ p: 3 }}>

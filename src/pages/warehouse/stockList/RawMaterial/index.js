@@ -218,6 +218,16 @@ const FinishedGoods = () => {
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [summery, setSummery] = useState([]);
   const [data, setData] = useState([]);
+  // const [width, setWidth] = useState();
+  var width;
+  // const size = useWindowSize();
+  if (typeof window != 'undefined') {
+    console.log('You are on the browser');
+    console.log(window.innerWidth);
+    width = window.innerWidth;
+  } else {
+    console.log('You are on the server')
+  }
 
   useEffect(() => {
     waxios.get("/rawmaterials")
@@ -235,7 +245,11 @@ const FinishedGoods = () => {
       <Head>
         <title>RawMaterials | Proplast</title>
       </Head>
-      <Box component="main">
+      <Box component="main"
+        sx={{
+          // display: ''
+        }}
+      >
         <Container maxWidth={false}>
           <Box>
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
@@ -245,11 +259,9 @@ const FinishedGoods = () => {
               setSelectedOrder={setSelectedOrder}
               setSummery={setSummery}
               data={data}
+              width={width}
             />
-            <Box
-            sx={{
-              
-            }}>
+            <Box>
               <RightDrawer
                 drawer={drawer}
                 setDrawer={setDrawer}
