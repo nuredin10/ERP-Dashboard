@@ -221,15 +221,15 @@ const FinishedGoods = () => {
 
   useEffect(() => {
     waxios.get("/rawmaterials")
-      .then((response)=>{
-          setData(response.data)
-        })
-      .catch((response)=>{
+      .then((response) => {
+        setData(response.data)
+      })
+      .catch((response) => {
         console.log(response)
       })
   }, []);
 
-  
+
   return (
     <>
       <Head>
@@ -246,12 +246,17 @@ const FinishedGoods = () => {
               setSummery={setSummery}
               data={data}
             />
-            <RightDrawer
-              drawer={drawer}
-              setDrawer={setDrawer}
-              selectedOrder={selectedOrder}
-              summery={summery}
-            />
+            <Box
+            sx={{
+              
+            }}>
+              <RightDrawer
+                drawer={drawer}
+                setDrawer={setDrawer}
+                selectedOrder={selectedOrder}
+                summery={summery}
+              />
+            </Box>
             <Divider sx={{ borderColor: "gray", mt: 3 }} />
           </Box>
         </Container>
