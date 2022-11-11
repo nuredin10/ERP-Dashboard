@@ -49,6 +49,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 const generalItems = [
   {
@@ -238,6 +239,14 @@ const RegisterUser = [
   }
 ]
 
+const Finance =[
+  {
+    href: '/finance/accountpayable',
+    icon: <PaymentIcon fontSize="small"/>,
+    title: 'Account Payable'
+  }
+]
+
 export const DashboardSidebar = (props) => {
   const [expanded, setExpanded] = useState(false);
   const { open, onClose } = props;
@@ -424,6 +433,16 @@ export const DashboardSidebar = (props) => {
               <Typography variant="menuTitle">SALES</Typography>
 
               {sales.map((item) => (
+                <>
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">FINANCE</Typography>
+
+              {Finance.map((item) => (
                 <>
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
