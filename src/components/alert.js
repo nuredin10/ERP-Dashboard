@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Alert,Box } from '@mui/material'
 
 const CustomAlert = ({ type, message, setIsSuccess }) => {
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
 
 
   useEffect(() => {
