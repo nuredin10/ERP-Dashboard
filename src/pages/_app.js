@@ -10,7 +10,7 @@ import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import NextNProgress from "nextjs-progressbar";
 import Router from "next/router";
-import { RoleProvider } from "src/lib/RoleContext";
+import { UserProvider } from "src/lib/UserContext";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -35,12 +35,12 @@ const App = (props) => {
           />
         </Head>
         {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
-        <RoleProvider>
+        <UserProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             {getLayout(<Component {...pageProps} />)}
           </ThemeProvider>
-        </RoleProvider>
+        </UserProvider>
         {/* </LocalizationProvider> */}
       </CacheProvider>
     </>
