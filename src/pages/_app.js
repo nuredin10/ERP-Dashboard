@@ -1,6 +1,6 @@
 import Head from "next/head";
 import "../styles/globals.css";
-import '../styles/scrollbar.css';
+import "../styles/scrollbar.css";
 import { CacheProvider } from "@emotion/react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -10,6 +10,7 @@ import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import NextNProgress from "nextjs-progressbar";
 import Router from "next/router";
+import { RoleProvider } from "src/lib/RoleContext";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -34,10 +35,12 @@ const App = (props) => {
           />
         </Head>
         {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
-        </ThemeProvider>
+        <RoleProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {getLayout(<Component {...pageProps} />)}
+          </ThemeProvider>
+        </RoleProvider>
         {/* </LocalizationProvider> */}
       </CacheProvider>
     </>
