@@ -63,6 +63,7 @@ const SalesOrderList = () => {
   useEffect(() => {
     saxios.get("/showSalesOrder")
     .then((resp)=>{
+      console.log(resp)
       setData(resp.data)
     })
 
@@ -101,7 +102,12 @@ const SalesOrderList = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <OrderList OrderdId= {selectedData}  handleClose={handleClose} />
+                {
+                  selectedData ? (
+
+                    <OrderList OrderdId= {selectedData.unique_id}  handleClose={handleClose} />
+                  ) : null
+                }
               </Box>
             </Modal>
 

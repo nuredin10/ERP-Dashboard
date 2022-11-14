@@ -102,7 +102,7 @@ const PurchaseOrder = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid i em xs={12} sm={6}>
                   <TextField
                     required
                     name="mat_reqpersonid"

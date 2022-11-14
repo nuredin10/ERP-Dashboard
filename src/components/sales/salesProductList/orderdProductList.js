@@ -20,11 +20,10 @@ import {
   DatePicker,
   IconButton,
 } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import Table from "../../../components/Table";
-import axios from "../../../components/axios";
+import saxios from "../../../components/salesAxios";
 import { RESPONSE_LIMIT_DEFAULT } from "next/dist/server/api-utils";
-
 
 const OrderListInformation = ({ OrderdId, handleClose }) => {
   const [data, setData] = useState([]);
@@ -42,11 +41,16 @@ const OrderListInformation = ({ OrderdId, handleClose }) => {
     handleClose();
   };
   useEffect(() => {
-    axios
-      .post("/salesModule/showSalesOrderById", {
-        ID: OrderdId.unique_id,
+    console.log(OrderdId);
+    saxios
+      .post("/showSalesOrderById", {
+        ID: OrderdId,
       })
-      .then((resp) => setData(resp.data));
+      .then((resp) => {
+        console.log(res);
+        setData(resp.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
   return (
     <Box
@@ -60,8 +64,10 @@ const OrderListInformation = ({ OrderdId, handleClose }) => {
         <title>{}</title>
       </Head>
 
-      <IconButton sx={{ float: 'right', ml: 5, color: 'red' }} onClick={handleClose}><CloseIcon /></IconButton>
-      <Container maxWidth="ml" >
+      <IconButton sx={{ float: "right", ml: 5, color: "red" }} onClick={handleClose}>
+        <CloseIcon />
+      </IconButton>
+      <Container maxWidth="ml">
         <Card maxWidth="lg">
           <Table title="Ordered Materials" data={data} columns={columns} />
         </Card>

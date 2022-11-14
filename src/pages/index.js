@@ -20,7 +20,9 @@ import authAxios from '../components/authAxios'
 import logo from '../../public/logo.svg'
 import CustomAlert from 'src/components/alert';
 import axios from 'axios';
-import Alert from '@Mui/material/Alert';
+import Alert from "@mui/material"
+// import Alert from '@Mui/material/Alert';
+// import {useRole} from '../lib/RoleContext'
 
 function Copyright(props) {
   return (
@@ -42,10 +44,13 @@ export default function SignIn() {
   const [incorrect, setIncorrect] = React.useState(false)
   const [alertS, setAlertS] = useState(false)
   const alertComponent = (<Alert severity='error'>Incorrect Username or Password</Alert>);
+  // const {role, setRole} = useRole()
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log(data)
+    // console.log(role)
     authAxios.post('/login', {
     // axios.post('http://localhost:42000/test', {
       email: data.get('email'),

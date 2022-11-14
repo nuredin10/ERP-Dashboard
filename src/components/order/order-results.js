@@ -142,7 +142,7 @@ export const OrderResults = (props) => {
                     marginLeft: "10%",
                   }}
                 >
-                  <Typography sx={{ textAlign: "center" }}>{e.finished_materialcode}</Typography>
+                  <Typography sx={{ textAlign: "center" }}>{e.finished_diameter}</Typography>
                 </Box>
               </Grid>
             ))}

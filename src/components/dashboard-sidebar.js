@@ -15,6 +15,7 @@ import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { Google as Google } from "../icons/google";
 import { Logo } from "./logo";
+import Image from 'next/image'
 import { NavItem } from "./nav-item";
 import { DropdownNavItem } from "./dropdown-nav-item";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -48,6 +49,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 const generalItems = [
   {
@@ -237,6 +239,14 @@ const RegisterUser = [
   }
 ]
 
+const Finance =[
+  {
+    href: '/finance/accountpayable',
+    icon: <PaymentIcon fontSize="small"/>,
+    title: 'Account Payable'
+  }
+]
+
 export const DashboardSidebar = (props) => {
   const [expanded, setExpanded] = useState(false);
   const { open, onClose } = props;
@@ -297,15 +307,18 @@ export const DashboardSidebar = (props) => {
         // className='section scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 h-32 overflow-y-scroll'
       >
         <div>
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5}}>
             <NextLink href="/" passHref>
               <a>
-                <Logo
+                <Image src='/LOGOLIGHT1.svg' height= "100" width= "200" >
+                  
+                </Image>
+                {/* <Logo
                   sx={{
-                    height: 42,
-                    width: 42,
+                    
                   }}
-                />
+                  href='/logo.svg'
+                /> */}
               </a>
             </NextLink>
           </Box>
@@ -420,6 +433,16 @@ export const DashboardSidebar = (props) => {
               <Typography variant="menuTitle">SALES</Typography>
 
               {sales.map((item) => (
+                <>
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">FINANCE</Typography>
+
+              {Finance.map((item) => (
                 <>
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>

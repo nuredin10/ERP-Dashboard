@@ -56,9 +56,9 @@ const SalesSummery = () => {
           py: 8,
         }}
       >
-        <Box maxWidth="ml" sx={{ mr: 5, float: 'right', mb: 2}}>
+        {/* <Box maxWidth="ml" sx={{ mr: 5, float: 'right', mb: 2}}>
           <Button maxWidth="lg" variant="outlined" startIcon={<AddIcon/>} onClick={()=>Router.push('/sales/salesquotation/addquotation')} >Add Quotation</Button>
-        </Box>
+        </Box> */}
         <Container  maxWidth="ml" sx={{clear: 'right'}}>
           <Card maxWidth="lg">
             <Table title="Sales Summery" data={data} columns={columns} />
