@@ -12,7 +12,7 @@ import {
   Box,
   Button,
   Card,
-  InputLabel,
+  InputLabel, 
   ButtonBox,
   Container,
   Typography,
@@ -42,13 +42,9 @@ const MonthlyReport = () => {
     setSelectMonth(e.target.value);
   };
   const router = useRouter();
-  const {
-    query: { summeryId },
-  } = router;
-
-  const props = {
-    summeryId,
-  };
+  
+  const router2 = useRouter();
+  const {id} = router2.query;
 
   const [data, setData] = useState([]);
 
@@ -64,23 +60,21 @@ const MonthlyReport = () => {
     { title: "stock at End", field: "stockat_end" },
   ];
 
-  const req = {
-    id: props.selectedOrder,
-    materialType: "FIN",
-    // selectedMonth: selectMonth,
-  };
+  
   useEffect(() => {
-    console.log(props.summeryId, "idddddd")
-    // waxios
-    //   .post("/showSummeryByMonth", req)
-    //   .then(function (res) {
-    //     setData(res.data);
-    //     console.log("new req");
-    //   })
-    //   .catch(function (res) {
-    //     console.log(res);
-    //   });
-    // console.log(req);
+    waxios
+      .post("/showSummeryByMonth", {
+        id: id,
+        materialType: "RAW",
+        selectedMonth: ""
+      })
+      .then(function (res) {
+        setData(res.data);
+        console.log(res.data);
+      })
+      .catch(function (res) {
+        console.log(res);
+      });
   }, []);
 
   useEffect(() => {
@@ -217,7 +211,7 @@ const MonthlyReport = () => {
             ref={sheetRef}
           >
             <Card maxWidth="lg">
-              <Table title="Monthly Stock Movement Report" data={recievedSummery} columns={column} />
+              <Table title="Monthly Stock Movement Report" data={data} columns={column} />
             </Card>
           </div>
           {/* <Card maxWidth="lg">

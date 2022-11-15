@@ -101,7 +101,7 @@ const FinishedGoods = () => {
                     // console.log(rowData)
                     Router.push({
                       pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
-                      query: { summeryId: rowData.id }
+                      query: { id: rowData.id }
                     })
                   }
                 })

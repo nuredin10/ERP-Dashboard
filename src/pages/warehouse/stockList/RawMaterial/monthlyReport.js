@@ -9,7 +9,7 @@ import {
   Select,
   FormGroup,
   Checkbox,
-  Box,
+  Box, 
   Button,
   Card,
   InputLabel,
@@ -36,17 +36,14 @@ import ReactToPrint, { useReactToPrint } from 'react-to-print';
 const MonthlyReport = () => {
   const [selectMonth, setSelectMonth] = useState('')
   const sheetRef = useRef();
+  // const id = 
   const handleMonthChange = (e) => {
     setSelectMonth(e.target.value)
   }
   const router = useRouter()
-  const {
-    query: { selectedOrder }
-  } = router
-
-  const props = {
-    selectedOrder   
-  }
+  
+  const router2 = useRouter();
+  const { id } = router2.query;
 
   const [data, setData] = useState([]);
 
@@ -64,27 +61,34 @@ const MonthlyReport = () => {
     { title: "Date", field: "summery_date" },
     { title: "Stock at Hand", field: "stockat_hand" },
     { title: "Stock Issued", field: "stock_issued" },
+    { title: "Stock Recieved", field: "stock_recieved" },
     { title: "Department Issued", field: "department_issued" },
     { title: "stock at End", field: "stockat_end" },
   ];
 
-  const req = {
-    id: props.selectedOrder,
-    materialType: "RAW",
-    selectedMonth: selectMonth
-  }
+  // const req = {
+  //   id: id,
+  //   materialType: "RAW",
+  //   selectedMonth: ""
+  // }
+  // console.log(req);
   useEffect(() => {
-
-    waxios.post("/showSummeryByMonth", req)
+    // console.log(req);
+    waxios.post("/showSummeryByMonth", {
+      id: id,
+      materialType: "RAW",
+      selectedMonth: ""
+    })
       .then(function (res) {
         setData(res.data);
         console.log(res.data);
+        console.log('Works');
         // console.log("new req")
       })
       .catch(function (res) {
         console.log(res)
       })
-    console.log(req)
+    // console.log(req)
   }, [selectMonth]);
 
   useEffect(() => {
@@ -222,13 +226,13 @@ const MonthlyReport = () => {
           <div
             ref={sheetRef}
           >
-            <Card maxWidth="lg">
+            {/* <Card maxWidth="lg">
               <Table
                 title='Monthly Stock Recieved Report'
                 data={recievedSummery}
                 columns={recievedcolumns}
               />
-            </Card>
+            </Card> */}
             <Card maxWidth="lg">
               <Table
                 title='Monthly Stock Issued Report'

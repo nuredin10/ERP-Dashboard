@@ -38,14 +38,9 @@ const MonthlyReport = () => {
     setSelectMonth(e.target.value)
   }
   const router = useRouter()
-  const {
-    query: { selectedOrder }
-  } = router
 
-  const props = {
-    selectedOrder
-  }
-
+  const router2 = useRouter();
+  const { id } = router.query;
   const [data, setData] = useState([]);
 
   const [recievedSummery, setRecivedSummery] = useState([]);
@@ -62,26 +57,26 @@ const MonthlyReport = () => {
     { title: "Date", field: "summery_date" },
     { title: "Stock at Hand", field: "stockat_hand" },
     { title: "Stock Issued", field: "stock_issued" },
+    { title: "Stock Recieved", field: "stock_recieved" },
     { title: "Department Issued", field: "department_issued" },
     { title: "stock at End", field: "stockat_end" },
   ];
 
-  const req = {
-    id: props.selectedOrder,
-    materialType: "ACCS",
-    selectedMonth: selectMonth
-  }
+
   useEffect(() => {
 
-    waxios.post("/showSummeryByMonth", req)
+    waxios.post("/showSummeryByMonth", {
+      id: id,
+      materialType: "ACCS",
+      selectedMonth: ""
+    })
       .then(function (res) {
         setData(res.data)
-        console.log("new req")
+        console.log(res.data)
       })
       .catch(function (res) {
         console.log(res)
       })
-    console.log(req)
   }, [selectMonth]);
 
   useEffect(() => {
@@ -193,13 +188,6 @@ const MonthlyReport = () => {
           <div
             ref={sheetRef}
           >
-            <Card maxWidth="lg">
-              <Table
-                title='Monthly Stock Recieved Report'
-                data={recievedSummery}
-                columns={recievedcolumns}
-              />
-            </Card>
             <Card maxWidth="lg">
               <Table
                 title='Monthly Stock Issued Report'

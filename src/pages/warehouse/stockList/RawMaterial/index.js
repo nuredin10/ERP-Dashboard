@@ -279,7 +279,7 @@ const FinishedGoods = () => {
       >
         <Container
           sx={{
-            display:{
+            display: {
               xs: 'none',
               lg: 'block'
             }
@@ -297,7 +297,9 @@ const FinishedGoods = () => {
                   onClick: () => {
                     Router.push({
                       pathname: "/warehouse/stockList/RawMaterial/monthlyReport",
-                      query: { summeryId: rowData.id }
+                      query: {
+                        id: rowData.id,
+                      } 
                     })
                   }
                 })
@@ -308,18 +310,19 @@ const FinishedGoods = () => {
                 }
               }}
             >
+
             </Table>
           </Card>
         </Container>
 
         <Container
-        sx={{
-          display:{
-            xs: 'block',
-            lg: 'none'
-          }
-        }}
-        maxWidth={false}>
+          sx={{
+            display: {
+              xs: 'block',
+              lg: 'none'
+            }
+          }}
+          maxWidth={false}>
           <Box>
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
             <OrderResults

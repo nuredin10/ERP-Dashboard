@@ -92,6 +92,7 @@ const ProducitonOngoing = () => {
                 new_name: data.name,
                 new_spec: data.spec,
                 new_quantity: data.quantity,
+                new_color: data.color,
                 personID: decoded.id,
                 new_description: data.desc,
                 new_materialunit: data.material_unit,
@@ -156,6 +157,7 @@ const ProducitonOngoing = () => {
                                                     <TextField label="Name" variant="outlined" {...register('name')}/>
                                                     <TextField label="Spec" variant="outlined" {...register('spec')}/>
                                                     <TextField label="Quantity" variant="outlined" {...register('quantity')}/>
+                                                    <TextField label="Color" variant="outlined" {...register('color')}/>
                                                     <TextField label="Description" variant="outlined" {...register('desc')}/>
                                                     <TextField label="Material Unit" variant="outlined" {...register('material_unit')}/>
                                                     <TextField label="Remark" variant="outlined" {...register('remark')}/>

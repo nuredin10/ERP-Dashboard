@@ -187,7 +187,7 @@ const Accessories = () => {
                   onClick: () => {
                     Router.push({
                       pathname: "/warehouse/stockList/Accessories/monthlyReport",
-                      query: { summeryId: rowData.id }
+                      query: { id: rowData.id }
                     })
                   }
                 })
@@ -203,13 +203,13 @@ const Accessories = () => {
         </Container>
 
         <Container
-        sx={{
-          display:{
-            xs: 'block',
-            lg: 'none'
-          }
-        }}
-        maxWidth={false}>
+          sx={{
+            display: {
+              xs: 'block',
+              lg: 'none'
+            }
+          }}
+          maxWidth={false}>
           <Box >
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
             <OrderResults
