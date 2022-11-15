@@ -50,6 +50,7 @@ const Vender = () => {
       >
         <Container maxWidth="ml">
           <ToolBar title="customer" href="/sales/Customers/addCustomers" />
+          <ToolBar title="customer" href="/sales/Customers/addCustomers" />
           <Card maxWidth="lg">
             <Table
               title="Customers List"

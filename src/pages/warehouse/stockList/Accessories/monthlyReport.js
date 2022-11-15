@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head';
 import {
   FormControl,
@@ -25,8 +25,14 @@ import ToolBar from '../../../../components/ToolBar'
 import { useRouter } from 'next/router'
 import waxios from '../../../../components/wareHouseAxios'
 
+import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
+import xlsx from 'xlsx';
+import { FormControlUnstyledContext } from '@mui/base';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
+
 const MonthlyReport = () => {
-  const [selectMonth, setSelectMonth] = useState('')
+  const [selectMonth, setSelectMonth] = useState('');
+  const sheetRef = useRef();
 
   const handleMonthChange = (e) => {
     setSelectMonth(e.target.value)
@@ -88,6 +94,26 @@ const MonthlyReport = () => {
 
 
 
+  const excel = () => {
+    const data2 = [
+      {
+        'Date': '12-1201-12',
+        'Email': 'natty@gail.com',
+        'Name': 'Natnael Engeda'
+      },
+    ];
+
+    const XLSX = xlsx;
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet(data2);
+    utils.book_append_sheet(workbook, worksheet, "Report");
+    writeFileXLSX(workbook, "Report.xlsx");
+  }
+  const print = useReactToPrint({
+    content: () => sheetRef.current
+  })
+
+
   return (
     <>
       <Head>
@@ -133,23 +159,55 @@ const MonthlyReport = () => {
               </Select>
             </FormControl>
           </Grid>
+          <Grid
+            sx={{
+              marginLeft: 20,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'space-between',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Button
+              onClick={excel}
+              component="a"
+              disableRipple
+              variant='contained'>
+              Excel
+            </Button>
+
+            <Button
+              onClick={print}
+              sx={{
+                ml: 5
+              }}
+              component="a"
+              disableRipple
+              variant='contained'>
+              Print
+            </Button>
+          </Grid>
         </Grid>
 
         <Container maxWidth="ml">
-          <Card maxWidth="lg">
-            <Table
-              title='Monthly Stock Recieved Report'
-              data={recievedSummery}
-              columns={recievedcolumns}
-            />
-          </Card>
-          <Card maxWidth="lg">
-            <Table
-              title='Monthly Stock Issued Report'
-              data={issuedSummery}
-              columns={issuedcolumns}
-            />
-          </Card>
+          <div
+            ref={sheetRef}
+          >
+            <Card maxWidth="lg">
+              <Table
+                title='Monthly Stock Recieved Report'
+                data={recievedSummery}
+                columns={recievedcolumns}
+              />
+            </Card>
+            <Card maxWidth="lg">
+              <Table
+                title='Monthly Stock Issued Report'
+                data={issuedSummery}
+                columns={issuedcolumns}
+              />
+            </Card>
+          </div>
         </Container>
       </Box>
     </>

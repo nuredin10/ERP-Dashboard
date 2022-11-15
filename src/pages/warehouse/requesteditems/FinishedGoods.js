@@ -65,7 +65,7 @@ const FinishedGoods = () => {
     })
       .then(function (response) {
         console.log(response);
-        Router.push("/requesteditems/RawMaterial")
+        // Router.push("/requesteditems/RawMaterial")
         setIsSuccess('success');
         setAlertMsg('Request Accepted');
       })
