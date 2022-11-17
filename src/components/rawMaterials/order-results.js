@@ -83,8 +83,9 @@ export const OrderResults = (props) => {
           justifyContent: "start",
           borderRadius: "30px",
           color: "white",
-          width: 'auto',
-          height: "4vh",
+          width: '100%',
+          height: "5vh",
+          // border: '1px solid black'
           // marginLeft: "10%",
         }}
       >
@@ -92,7 +93,8 @@ export const OrderResults = (props) => {
           className={`${props.drawer ? "drawer-open" : "drawer-close"}`}
           sx={{
             mt: 1,
-            ml: -4
+            ml: -4,
+            border: '1px solid black'
           }}>
           <Grid container>
             {data.map((e, i) => (
@@ -109,7 +111,6 @@ export const OrderResults = (props) => {
                   width: '100%',
                   display: "flex",
                   justifyContent: "space-between",
-                  border: '2px solid black',
                   borderTop: 1,
                   borderColor: "rgb(229, 231, 235)",
                 }}

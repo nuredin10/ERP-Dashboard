@@ -454,7 +454,7 @@ export const DashboardSidebar = (props) => {
 
               {RegisterUser.map((item) => (
                 <>
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  <NavItem key={item.href} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
             </Box>

@@ -59,7 +59,7 @@
 //             Raw Material stockList
 //           </Typography> */}
 //           <Card maxWidth="lg">
-        
+
 //         <Table 
 //           title='Accessories' 
 //           data={data} 
@@ -67,7 +67,7 @@
 //           options={{
 //             actionsColumnIndex: -1,
 //             selection: true,
-            
+
 //           }}
 //           actions={[
 //             {
@@ -108,26 +108,56 @@
 
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import { Box, Container, Typography, Grid, Divider } from "@mui/material";
+import SummarizeIcon from '@mui/icons-material/Summarize';
 import { DashboardLayout } from "../../../../components/dashboard-layout";
 
 // import styles from '../styles/Home.module.css';
 import OrdersToolBar from "../../../../components/Accessories/order-toolbar";
 import { OrderResults } from "../../../../components/Accessories/order-results";
 import RightDrawer from "../../../../components/Accessories/RightDrawer";
+import Router from 'next/router'
+
+import Table from "../../../../components/Table";
 import waxios from '../../../../components/wareHouseAxios'
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormHelperText,
+  Link,
+  TextField,
+  Card,
+  Typography,
+  Divider
+} from "@mui/material";
 
 const Accessories = () => {
   const [drawer, setDrawer] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [selectedSummery, setSummery] = useState([]);
   const [data, setData] = useState([]);
+  const columns = [
+    { title: "Name", field: "accs_name" },
+    { title: "Quantity", field: "accs_quantity" },
+    { title: "Description", field: "accs_description" },
+    { title: "Material Code", field: "accs_materialcode" },
+    { title: "Specification", field: "accs_spec" },
+    { title: "Material Unit", field: "accs_materialunit" },
+    { title: "Value", field: "accs_value" },
+    { title: "Reference Number", field: "accs_referncenum" },
+    { title: "Date", field: "accs_date" },
+    { title: "Remark", field: "accs_remark" },
+    { title: "Status", field: "acss_status" }
+  ];
+
   useEffect(() => {
     waxios.get("/accessory")
-      .then((response)=>{
-          setData(response.data)
-        })
-      .catch((response)=>{
+      .then((response) => {
+        setData(response.data)
+        console.log(response.data)
+      })
+      .catch((response) => {
         console.log(response)
       })
   }, []);
@@ -137,11 +167,52 @@ const Accessories = () => {
         <title>Orders | Material Kit</title>
       </Head>
       <Box component="main">
-        <Container maxWidth={false}>
+        <Container
+          sx={{
+            display: {
+              xs: 'none',
+              lg: 'block'
+            }
+          }}
+          maxWidth='ml'>
+          <Card maxWidth='lg'>
+            <Table
+              title='Raw Materials'
+              data={data}
+              columns={columns}
+              actions={[
+                (rowData) => ({
+                  icon: () => <SummarizeIcon size='small' />,
+                  tooltip: 'Summary',
+                  onClick: () => {
+                    Router.push({
+                      pathname: "/warehouse/stockList/Accessories/monthlyReport",
+                      query: { id: rowData.id }
+                    })
+                  }
+                })
+              ]}
+              localization={{
+                header: {
+                  actions: "SUMMARY"
+                }
+              }}
+            >
+            </Table>
+          </Card>
+        </Container>
+
+        <Container
+          sx={{
+            display: {
+              xs: 'block',
+              lg: 'none'
+            }
+          }}
+          maxWidth={false}>
           <Box >
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
             <OrderResults
-             
               drawer={drawer}
               setDrawer={setDrawer}
               setSelectedOrder={setSelectedOrder}

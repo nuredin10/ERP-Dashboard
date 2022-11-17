@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head';
 import {
   FormControl,
@@ -25,21 +25,22 @@ import ToolBar from '../../../../components/ToolBar'
 import { useRouter } from 'next/router'
 import waxios from '../../../../components/wareHouseAxios'
 
+import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
+import xlsx from 'xlsx';
+import { FormControlUnstyledContext } from '@mui/base';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
+
 const MonthlyReport = () => {
-  const [selectMonth, setSelectMonth] = useState('')
+  const [selectMonth, setSelectMonth] = useState('');
+  const sheetRef = useRef();
 
   const handleMonthChange = (e) => {
     setSelectMonth(e.target.value)
   }
   const router = useRouter()
-  const {
-    query: { selectedOrder }
-  } = router
 
-  const props = {
-    selectedOrder
-  }
-
+  const router2 = useRouter();
+  const { id } = router.query;
   const [data, setData] = useState([]);
 
   const [recievedSummery, setRecivedSummery] = useState([]);
@@ -56,26 +57,26 @@ const MonthlyReport = () => {
     { title: "Date", field: "summery_date" },
     { title: "Stock at Hand", field: "stockat_hand" },
     { title: "Stock Issued", field: "stock_issued" },
+    { title: "Stock Recieved", field: "stock_recieved" },
     { title: "Department Issued", field: "department_issued" },
     { title: "stock at End", field: "stockat_end" },
   ];
 
-  const req = {
-    id: props.selectedOrder,
-    materialType: "ACCS",
-    selectedMonth: selectMonth
-  }
+
   useEffect(() => {
 
-    waxios.post("/showSummeryByMonth", req)
+    waxios.post("/showSummeryByMonth", {
+      id: id,
+      materialType: "ACCS",
+      selectedMonth: ""
+    })
       .then(function (res) {
         setData(res.data)
-        console.log("new req")
+        console.log(res.data)
       })
       .catch(function (res) {
         console.log(res)
       })
-    console.log(req)
   }, [selectMonth]);
 
   useEffect(() => {
@@ -86,6 +87,26 @@ const MonthlyReport = () => {
     })
   }, [selectMonth, data])
 
+
+
+  const excel = () => {
+    const data2 = [
+      {
+        'Date': '12-1201-12',
+        'Email': 'natty@gail.com',
+        'Name': 'Natnael Engeda'
+      },
+    ];
+
+    const XLSX = xlsx;
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet(data2);
+    utils.book_append_sheet(workbook, worksheet, "Report");
+    writeFileXLSX(workbook, "Report.xlsx");
+  }
+  const print = useReactToPrint({
+    content: () => sheetRef.current
+  })
 
 
   return (
@@ -133,23 +154,48 @@ const MonthlyReport = () => {
               </Select>
             </FormControl>
           </Grid>
+          <Grid
+            sx={{
+              marginLeft: 20,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'space-between',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Button
+              onClick={excel}
+              component="a"
+              disableRipple
+              variant='contained'>
+              Excel
+            </Button>
+
+            <Button
+              onClick={print}
+              sx={{
+                ml: 5
+              }}
+              component="a"
+              disableRipple
+              variant='contained'>
+              Print
+            </Button>
+          </Grid>
         </Grid>
 
         <Container maxWidth="ml">
-          <Card maxWidth="lg">
-            <Table
-              title='Monthly Stock Recieved Report'
-              data={recievedSummery}
-              columns={recievedcolumns}
-            />
-          </Card>
-          <Card maxWidth="lg">
-            <Table
-              title='Monthly Stock Issued Report'
-              data={issuedSummery}
-              columns={issuedcolumns}
-            />
-          </Card>
+          <div
+            ref={sheetRef}
+          >
+            <Card maxWidth="lg">
+              <Table
+                title='Monthly Stock Issued Report'
+                data={issuedSummery}
+                columns={issuedcolumns}
+              />
+            </Card>
+          </div>
         </Container>
       </Box>
     </>

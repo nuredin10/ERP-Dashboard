@@ -10,6 +10,7 @@ import {
   TextField,
   Card,
   Typography,
+  Divider
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
@@ -100,7 +101,8 @@ const Accessories = () => {
           my: 12,
         }}
       >
-        <Container maxWidth="ml">
+        <Container
+         maxWidth="ml">
           {/* <Typography
             sx={{ mb: 3 }}
             variant="h4"

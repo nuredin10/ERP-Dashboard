@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import {
   FormControl,
@@ -12,7 +12,7 @@ import {
   Box,
   Button,
   Card,
-  InputLabel,
+  InputLabel, 
   ButtonBox,
   Container,
   Typography,
@@ -29,26 +29,28 @@ import waxios from "../../../../components/wareHouseAxios";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
+import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
+import xlsx from 'xlsx';
+import { FormControlUnstyledContext } from '@mui/base';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
+
 const MonthlyReport = () => {
   // const [selectMonth, setSelectMonth] = useState("");
   const [summaryDate, setSummaryDate] = useState();
+  const sheetRef = useRef();
   const handleMonthChange = (e) => {
     setSelectMonth(e.target.value);
   };
   const router = useRouter();
-  const {
-    query: { summeryId },
-  } = router;
-
-  const props = {
-    summeryId,
-  };
+  
+  const router2 = useRouter();
+  const {id} = router2.query;
 
   const [data, setData] = useState([]);
 
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);
-  
+
   const column = [
     { title: "Date", field: "summery_date" },
     { title: "Stock at Hand", field: "stockat_hand" },
@@ -58,23 +60,21 @@ const MonthlyReport = () => {
     { title: "stock at End", field: "stockat_end" },
   ];
 
-  const req = {
-    id: props.selectedOrder,
-    materialType: "FIN",
-    // selectedMonth: selectMonth,
-  };
+  
   useEffect(() => {
-    console.log(props.summeryId, "idddddd")
-    // waxios
-    //   .post("/showSummeryByMonth", req)
-    //   .then(function (res) {
-    //     setData(res.data);
-    //     console.log("new req");
-    //   })
-    //   .catch(function (res) {
-    //     console.log(res);
-    //   });
-    // console.log(req);
+    waxios
+      .post("/showSummeryByMonth", {
+        id: id,
+        materialType: "RAW",
+        selectedMonth: ""
+      })
+      .then(function (res) {
+        setData(res.data);
+        console.log(res.data);
+      })
+      .catch(function (res) {
+        console.log(res);
+      });
   }, []);
 
   useEffect(() => {
@@ -86,6 +86,29 @@ const MonthlyReport = () => {
         : setIssuedSummery((issuedSummery) => [...issuedSummery, e]);
     });
   }, []);
+
+
+
+
+  const excel = () => {
+    const data2 = [
+      {
+        'Date': '12-1201-12',
+        'Email': 'natty@gail.com',
+        'Name': 'Natnael Engeda'
+      },
+    ];
+
+    const XLSX = xlsx;
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet(data2);
+    utils.book_append_sheet(workbook, worksheet, "Report");
+    writeFileXLSX(workbook, "Report.xlsx");
+  }
+  const print = useReactToPrint({
+    content: () => sheetRef.current
+  })
+
 
   return (
     <>
@@ -99,32 +122,60 @@ const MonthlyReport = () => {
           py: 8,
         }}
       >
-        <Grid container spacing={1} sx={{ mb: 2, display: "flex", alignItems: "center" }}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Grid item lg={2}>
-            <Typography variant="h6" sx={{ textAlign: "center" }}>
-              Summary
-            </Typography>
-          </Grid>
-          <Grid item lg={6} sm={12}>
-            <DesktopDatePicker
-              label="Pick Summary Date"
-              inputFormat="MM/dd/yyyy"
-              value={summaryDate}
-              onChange={(newValue) => {
-                setSummaryDate(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
+        <Grid container spacing={1} sx={{ mb: 2, display: "flex", alignItems: "center", justifyContent: 'flex-start' }}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Grid item lg={2}>
+              <Typography variant="h6" sx={{ textAlign: "center" }}>
+                Summary
+              </Typography>
+            </Grid>
+            <Grid item lg={6} sm={12}>
+              <DesktopDatePicker
+                label="Pick Summary Date"
+                inputFormat="MM/dd/yyyy"
+                value={summaryDate}
+                onChange={(newValue) => {
+                  setSummaryDate(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
                   // fullWidth
                   // name="end_dateTime"
                   // {...register("end_dateTime")}
-                />
-              )}
-            />
-          </Grid>
+                  />
+                )}
+              />
+            </Grid>
           </LocalizationProvider>
+          <Grid
+            sx={{
+              // marginLeft: 20,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'space-between',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Button
+              onClick={excel}
+              component="a"
+              disableRipple
+              variant='contained'>
+              Excel
+            </Button>
+
+            <Button
+              onClick={print}
+              sx={{
+                ml: 5
+              }}
+              component="a"
+              disableRipple
+              variant='contained'>
+              Print
+            </Button>
+          </Grid>
 
           {/* <Grid item lg={2}>
             <FormControl fullWidth>
@@ -156,9 +207,13 @@ const MonthlyReport = () => {
         </Grid>
 
         <Container maxWidth="ml">
-          <Card maxWidth="lg">
-            <Table title="Monthly Stock Movement Report" data={recievedSummery} columns={column} />
-          </Card>
+          <div
+            ref={sheetRef}
+          >
+            <Card maxWidth="lg">
+              <Table title="Monthly Stock Movement Report" data={data} columns={column} />
+            </Card>
+          </div>
           {/* <Card maxWidth="lg">
             <Table
               title='Monthly Stock Issued Report'
