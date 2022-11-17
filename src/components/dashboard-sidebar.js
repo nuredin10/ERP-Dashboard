@@ -244,7 +244,23 @@ const Finance =[
     href: '/finance/accountpayable',
     icon: <PaymentIcon fontSize="small"/>,
     title: 'Account Payable'
-  }
+  },
+  {
+    href: '/finance/accountrecieveable',
+    icon: <PaymentIcon fontSize="small"/>,
+    title: 'Account Recieved'
+  },
+  {
+    href: '/finance/pettycash',
+    icon: <PaymentIcon fontSize="small"/>,
+    title: 'Petty Cash'
+  },
+  {
+    href: '/finance/addpettycash',
+    icon: <PaymentIcon fontSize="small"/>,
+    title: 'Add Pettycash'
+  },
+
 ]
 
 export const DashboardSidebar = (props) => {
