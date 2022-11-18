@@ -67,7 +67,7 @@ export default function SignIn() {
       })
       .catch((res) => {
         console.log(res)
-        if (res.response.status == 401) {
+        if (res.response.status == 403) {
           enqueueSnackbar('Incorrect Email or Password', { variant: 'error' })
           console.log('Incorrect');
           setAlertS(true);
