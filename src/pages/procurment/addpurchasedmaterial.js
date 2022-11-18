@@ -94,7 +94,7 @@ const Addpurchasedmaterial = () => {
     console.log(inputFields)
     handleClose();
     axios
-      .post("/wareHouse/addnewPurchased", inputFields)
+      .post("/addnewPurchased", inputFields)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
