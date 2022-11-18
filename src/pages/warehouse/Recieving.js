@@ -48,7 +48,7 @@ const Recieving = () => {
       status: "Accept"
     })
       .then(function (response) {
-        Router.reload(window.location.pathname);
+        // Router.reload(window.location.pathname);
         console.log(response);
       })
       .catch(function (error) {

@@ -75,7 +75,7 @@ const ProductionOrder = () => {
 
   useEffect(() => {
     axios
-      .get("/productionModule/showbatchformula")
+      .get("/showbatchformula")
       .then((res) => {
         setRegular(res.data);
         console.log(res.data);
@@ -114,7 +114,7 @@ const ProductionOrder = () => {
       };
     }
     axios
-      .post("/productionModule/addProductionOrder", newForm)
+      .post("/addProductionOrder", newForm)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");

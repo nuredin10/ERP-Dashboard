@@ -22,7 +22,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useState, useEffect } from "react";
-import axios from "../../components/axios";
+import waxios from "../../components/wareHouseAxios";
 import CustomAlert from "../../components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 
@@ -93,8 +93,8 @@ const Addpurchasedmaterial = () => {
   const submitHandler = () => {
     console.log(inputFields)
     handleClose();
-    axios
-      .post("/wareHouse/addnewPurchased", inputFields)
+    waxios
+      .post("/addnewPurchased", inputFields)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
