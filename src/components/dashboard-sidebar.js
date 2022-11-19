@@ -239,12 +239,28 @@ const RegisterUser = [
   }
 ]
 
-const Finance =[
+const Finance = [
   {
     href: '/finance/accountpayable',
-    icon: <PaymentIcon fontSize="small"/>,
+    icon: <PaymentIcon fontSize="small" />,
     title: 'Account Payable'
-  }
+  },
+  {
+    href: '/finance/accountrecieveable',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Account Recieved'
+  },
+  {
+    href: '/finance/pettycash',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Petty Cash'
+  },
+  {
+    href: '/finance/addpettycash',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Add Pettycash'
+  },
+
 ]
 
 export const DashboardSidebar = (props) => {
@@ -295,7 +311,6 @@ export const DashboardSidebar = (props) => {
   }, []);
 
   const isSuperAdmin = user.role === "Super Admin" ? true : false;
-
   const content = (
     <>
       <Box
@@ -304,14 +319,14 @@ export const DashboardSidebar = (props) => {
           flexDirection: "column",
           height: "100%",
         }}
-        // className='section scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 h-32 overflow-y-scroll'
       >
+
         <div>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5 }}>
             <NextLink href="/" passHref>
               <a>
-                <Image src='/LOGOLIGHT1.svg' height= "100" width= "200" >
-                  
+                <Image src='/LOGOLIGHT1.svg' height="100" width="200" >
+
                 </Image>
                 {/* <Logo
                   sx={{
@@ -333,6 +348,7 @@ export const DashboardSidebar = (props) => {
           ))}
         </Box>
         <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+
         {isSuperAdmin ? (
           <>
             <Box sx={{ flexGrow: 1 }}>
@@ -459,7 +475,7 @@ export const DashboardSidebar = (props) => {
               ))}
             </Box>
           </>
-        ) : user.role === 'Warehouse' ? (
+        ) : user.role === 'Ware House' ? (
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">WARE HOUSE</Typography>
             <Box sx={{ marginTop: "2vh" }}>

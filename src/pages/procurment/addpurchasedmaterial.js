@@ -7,6 +7,8 @@ import {
   FormHelperText,
   Link,
   TextField,
+  Select,
+  MenuItem,
   Card,
   Typography,
   Grid,
@@ -25,11 +27,12 @@ import { useState, useEffect } from "react";
 import axios from "../../components/axios";
 import CustomAlert from "../../components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
+import { useSnackbar } from 'notistack';
 
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
-
+  const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -52,6 +55,8 @@ const Addpurchasedmaterial = () => {
       new_referncenum: "",
       new_materialtype: "",
       new_remark: "",
+      payable_name: "",
+      payable_account: "",
       new_status: "NEW",
     },
   ]);
@@ -74,12 +79,15 @@ const Addpurchasedmaterial = () => {
       new_referncenum: "",
       new_materialtype: "",
       new_remark: "",
+      payable_name: "",
+      payable_account: "",
       new_status: "NEW",
     };
     setIsSuccess("info");
     setInputFields([...inputFields, newfield]);
     setIsSuccess("info");
     setAlertMsg("item added");
+    enqueueSnackbar('Item Added', { variant: 'success' });
   };
 
   const removeFields = (index) => {
@@ -88,29 +96,32 @@ const Addpurchasedmaterial = () => {
     setInputFields(data);
     setIsSuccess("info");
     setAlertMsg("item removed");
+    enqueueSnackbar('Item Removed', { variant: 'error' });
   };
 
   const submitHandler = () => {
-    console.log(inputFields)
+    console.log(inputFields);
     handleClose();
     axios
-      .post("/wareHouse/addnewPurchased", inputFields)
+      .post("/addnewPurchased", inputFields)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
+        enqueueSnackbar('Saved Successfully', { variant: 'success' });
+        clearAllHandler();
         setAlertMsg("Saved Successfully");
       })
       .catch((res) => {
         console.log(res);
         setIsSuccess("error");
         setAlertMsg("Something went wrong");
+        enqueueSnackbar('Something Wend Wrong', { variant: 'error' });
       });
   };
 
   const clearAllHandler = () => {
     setInputFields([]);
-    // setIsSuccess('success');
-    // setAlertMsg('Saved Successfully')
+    // enqueueSnackbar('All Items Cleared', { variant: 'error' });
   };
 
   const alertStyle = {
@@ -124,9 +135,9 @@ const Addpurchasedmaterial = () => {
   };
 
   const autocompleteData = {
-    "Name" : 
+    "Name":
       [
-        { label: 'The Shawshank Redemption'},
+        { label: 'The Shawshank Redemption' },
         { label: 'The Godfather', year: 1972 },
         { label: 'The Godfather: Part II', year: 1974 },
         { label: 'The Dark Knight', year: 2008 },
@@ -138,9 +149,9 @@ const Addpurchasedmaterial = () => {
           year: 2003,
         },
       ],
-     
-      
-    "Quantitty" : [
+
+
+    "Quantitty": [
       { label: 'Amadeus', year: 1984 },
       { label: 'To Kill a Mockingbird', year: 1962 },
       { label: 'Toy Story 3', year: 2010 },
@@ -194,13 +205,17 @@ const Addpurchasedmaterial = () => {
                   <Grid
                     container
                     spacing={2}
+                    // columns={{xs: 4, md: 3}}
                     sx={{
                       boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                       ml: 3,
                       mt: 3,
                       backgroundColor: "white",
                       pb: 2,
+                      pr: 4,
                       borderRadius: "10px",
+                      // display: 'grid'
+
                     }}
                   >
                     <Grid item sm={6} md={2} lg={3}>
@@ -213,17 +228,10 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                         fullWidth
                       />
-                      {/* <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={autocompleteData.Name}
-                        // sx={{ width: 300 }}
-                        onChange={(event) => handleFormChange(index, event)}
-                        renderInput={(params) => <TextField {...params} label="Movie" />}
-                      /> */}
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_quantity"
                         label="Quantity"
@@ -231,19 +239,10 @@ const Addpurchasedmaterial = () => {
                         value={input.new_quantity}
                         onChange={(event) => handleFormChange(index, event)}
                       />
-                       {/* <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={autocompleteData.Quantitty}
-                        // sx={{ width: 300 }}
-                        
-                        
-                        
-                        renderInput={(params) => <TextField {...params} name="new_quantity" label="Quantity" onChange={(event) => handleFormChange(index, event)} value={input.new_quantity}/>}
-                      /> */}
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_materialunit"
                         label="Material Unit"
@@ -252,8 +251,9 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_materialcode"
                         label="MaterialCode"
@@ -262,8 +262,9 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_spec"
                         label="Specification"
@@ -283,8 +284,9 @@ const Addpurchasedmaterial = () => {
                         fullWidth
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_value"
                         label="Value"
@@ -293,8 +295,9 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_referncenum"
                         label="Reference Number"
@@ -303,18 +306,54 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
-                      <TextField
+                    <Grid item sm={6} md={2} lg={3}>
+                      {/* <TextField
                         required
                         name="new_materialtype"
                         label="Material Type"
                         type="text"
                         value={input.new_materialtype}
                         onChange={(event) => handleFormChange(index, event)}
+                      /> */}
+                      <Select
+                        label="Material Type"
+                        name="new_materialtype"
+                        type="select"
+                        value={input.new_materialtype}
+                        defaultValue="RAW"
+                        onChange={(event) => handleFormChange(index, event)}
+                        fullWidth
+                      >
+                        <MenuItem value="RAW">RAW</MenuItem>
+                        <MenuItem value="ACCS">ACCS</MenuItem>
+                      </Select>
+                    </Grid>
+                    <Grid item sm={6} md={2} lg={3}>
+                      <TextField
+                        fullWidth
+                        required
+                        name="payable_name"
+                        label="Payable Name"
+                        type="text"
+                        value={input.payable_name}
+                        onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        required
+                        fullWidth
+                        name="payable_account"
+                        label="Payable Account"
+                        type="text"
+                        value={input.payable_account}
+                        onChange={(event) => handleFormChange(index, event)}
+                      />
+                    </Grid>
+
+                    <Grid item sm={6} md={2} lg={3}>
+                      <TextField
+                        fullWidth
                         required
                         name="new_remark"
                         label="Remark"
@@ -323,7 +362,8 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item xs={1} lg={1} sm={1} md={1} sx={{ mt: "-2%" }}>
+
+                    <Grid item xs={1} lg={2} sm={1} md={1} sx={{ mt: "2%", ml: "2%" }}>
                       <IconButton onClick={() => removeFields(index)}>
                         <RemoveIcon />
                       </IconButton>

@@ -11,6 +11,7 @@ import { theme } from "../theme";
 import NextNProgress from "nextjs-progressbar";
 import Router from "next/router";
 import { UserProvider } from "src/lib/UserContext";
+import { SnackbarProvider } from 'notistack';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -38,7 +39,9 @@ const App = (props) => {
         <UserProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
+            <SnackbarProvider maxSnack={3}>
+              {getLayout(<Component {...pageProps} />)}
+            </SnackbarProvider>
           </ThemeProvider>
         </UserProvider>
         {/* </LocalizationProvider> */}

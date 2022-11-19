@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,12 +18,14 @@ import Cookies from 'js-cookie'
 import Router from 'next/router'
 import authAxios from '../components/authAxios'
 import logo from '../../public/logo.svg'
-import CustomAlert from 'src/components/alert';
 import axios from 'axios';
 import Alert from "@mui/material"
+import CustomAlert from '../components/alert';
+import AlertNew from '../components/AlertNew';
+import Snackbar from '@mui/material/Snackbar';
 // import Alert from '@Mui/material/Alert';
 // import {useRole} from '../lib/RoleContext'
-
+import { useSnackbar } from 'notistack';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -44,39 +46,30 @@ export default function SignIn() {
   const [incorrect, setIncorrect] = React.useState(false)
   const [alertS, setAlertS] = useState(false)
   const alertComponent = (<Alert severity='error'>Incorrect Username or Password</Alert>);
-  // const {role, setRole} = useRole()
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log(data)
-    // console.log(role)
     authAxios.post('/login', {
-    // axios.post('http://localhost:42000/test', {
+      // axios.post('http://localhost:42000/test', {
       email: data.get('email'),
       password: data.get('password'),
     })
       .then((res) => {
         console.log(res)
         Cookies.set('token', res.data.jwt)
-        Cookies.set("loggedIn", true)
+        Cookies.set("loggedIn", true);
+        enqueueSnackbar('Login Success', { variant: 'success' })
         Router.push('/dashboard')
-        // console.log(res)
-        // jwt.verify(token,'PROPLAST', (err, decoded) =>{
-        //   if (err) {
-        //     console.log(err)
-        //   } else {
-        //     console.log(decoded)
-        //   }
-        // })
+
       })
       .catch((res) => {
         console.log(res)
-        // setIncorrect(true)
-        if (res.response.status == 401) {
-          // setIncorrect(true)
+        if (res.response.status == 403) {
+          enqueueSnackbar('Incorrect Email or Password', { variant: 'error' })
           console.log('Incorrect');
-          // <Alert severity="error">This is an error alert — check it out!</Alert>
           setAlertS(true);
 
         }
