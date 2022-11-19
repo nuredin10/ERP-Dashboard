@@ -1,11 +1,11 @@
-import Head from 'next/head';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { useFormik } from 'formik';
-import { useState } from 'react';
-import authAxois from '../components/authAxios';
-import axios from 'axios';
-import * as Yup from 'yup';
+import Head from "next/head";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import { useState } from "react";
+import authAxois from "../components/authAxios";
+import axios from "axios";
+import * as Yup from "yup";
 import {
   Box,
   Button,
@@ -16,164 +16,109 @@ import {
   TextField,
   Typography,
   Autocomplete,
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { MenuItem, Select } from '@material-ui/core';
-import { DashboardLayout } from 'src/components/dashboard-layout';
-import { useSnackbar } from 'notistack';
-
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { MenuItem, Select } from "@material-ui/core";
+import { DashboardLayout } from "src/components/dashboard-layout";
+import { useSnackbar } from "notistack";
 
 const Register = () => {
   const router = useRouter();
   const [oroles, setOroles] = useState();
-  const [age, setAge] = useState('');
+  const [role, setRole] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setRole(event.target.value);
   };
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      role: '',
-      confirmPassword: '',
-      policy: false
+      personId: "",
+      email: "",
+      userName: "",
+      password: "",
+      confirmPassword: "",
+      // oroles: '',
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email(
-          'Must be a valid email')
-        .max(255)
-        .required(
-          'Email is required'),
-      firstName: Yup
-        .string()
-        .max(255)
-        .required(
-          'First name is required'),
-      lastName: Yup
-        .string()
-        .max(255)
-        .required(
-          'Last name is required'),
-      role: Yup
-        .string(),
-      password: Yup
-        .string()
-        .max(255)
-        .required(
-          'Password is required'),
-      confirmPassword: Yup
-        .string()
-        .max(255)
-        .required(
-          'Confirm Password is required'
-        ),
-      policy: Yup
-        .boolean()
-        .oneOf(
-          [true],
-          'This field must be checked'
-        )
+      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+      personId: Yup.string().max(255).required("Person Id is required"),
+      userName: Yup.string().max(255).required("Last name is required"),
+      password: Yup.string().max(255).required("Password is required"),
+      confirmPassword: Yup.string().max(255).required("Confirm Password is required"),
     }),
+
     onSubmit: () => {
-      // router.push('/');
-      console.log(formik);
-      var data = formik.values;
-      authAxois.post('/signup', { data, roles: oroles }).then(function (response) {
-        if (response.data.message == 'success') {
-          console.log('Sign Up Success');
-          enqueueSnackbar('Signup Success', { variant: 'success' });
-
-          router.push('/');
-        } else if (response.data.message == 'fail') {
-          console.log('Signig in Failed');
-          enqueueSnackbar('Signup Fialed', { variant: 'error' });
-
-        }
-      })
-      console.log(formik.values);
-    }
+      const data = {
+        alldata: {
+          ...formik.values,
+          oroles: role,
+        },
+      };
+      authAxois
+        .post("signup", data)
+        .then((res) => {
+          console.log(res);
+          if (res.data.message === "signedup") {
+            enqueueSnackbar("User created successfully", { variant: "success" });
+          } else if (res.data.message === "email already exist") {
+            enqueueSnackbar("Email Already Exist", { variant: "error" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          enqueueSnackbar("Error creating user", { variant: "error" });
+        });
+    },
   });
-  const roles = [
-    { label: "Super Admin" },
-    { label: "Sales" },
-    { label: "Production" },
-    { label: "Ware House" },
-    { label: "Finance" }
-  ]
 
   return (
     <>
       <Head>
-        <title>
-          Register | Material Kit
-        </title>
+        <title>Register | Material Kit</title>
       </Head>
       <Box
         component="main"
         sx={{
-          alignItems: 'center',
-          display: 'flex',
+          alignItems: "center",
+          display: "flex",
           flexGrow: 1,
-          minHeight: '100%'
+          minHeight: "100%",
         }}
       >
         <Container maxWidth="sm">
-          {/* <NextLink
-            href="/"
-            passHref
-          >
-            <Button
-              component="a"
-              startIcon={<ArrowBackIcon fontSize="small" />}
-            >
-              Dashboard
-            </Button>
-          </NextLink> */}
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
-              <Typography
-                color="textPrimary"
-                variant="h4"
-              >
+              <Typography color="textPrimary" variant="h4">
                 Create a new account
               </Typography>
-              <Typography
-                color="textSecondary"
-                gutterBottom
-                variant="body2"
-              >
+              <Typography color="textSecondary" gutterBottom variant="body2">
                 Use your email to create a new account
               </Typography>
             </Box>
             <TextField
-              error={Boolean(formik.touched.firstName && formik.errors.firstName)}
+              error={Boolean(formik.touched.personId && formik.errors.personId)}
               fullWidth
-              helperText={formik.touched.firstName && formik.errors.firstName}
-              label="First Name"
+              helperText={formik.touched.personId && formik.errors.personId}
+              label="Person Id"
               margin="normal"
-              name="firstName"
+              name="personId"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.firstName}
+              value={formik.values.personId}
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
+              error={Boolean(formik.touched.userName && formik.errors.userName)}
               fullWidth
-              helperText={formik.touched.lastName && formik.errors.lastName}
-              label="Last Name"
+              helperText={formik.touched.userName && formik.errors.userName}
+              label="User Name"
               margin="normal"
-              name="lastName"
+              name="userName"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.lastName}
+              value={formik.values.userName}
               variant="outlined"
             />
             <TextField
@@ -215,28 +160,12 @@ const Register = () => {
               value={formik.values.confirmPassword}
               variant="outlined"
             />
-            {/* <Select
-
-              fullWidth
-              variant="outlined"
-              value={formik.values.role}
-              label="Role"
-              name="role"
-              onChange={formik.handleChange}
-              placeholder=''
-            >
-              <MenuItem value="Super Admin">Super Admin</MenuItem>
-              <MenuItem value="Sales">Sales</MenuItem>
-              <MenuItem value="Production">Production</MenuItem>
-              <MenuItem values="Ware House">Ware House</MenuItem>
-              <MenuItem values="Ware House">Finance</MenuItem>
-            </Select> */}
 
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
-              label="Age"
+              value={role}
+              label="Role"
               onChange={handleChange}
               variant="outlined"
               fullWidth
@@ -248,47 +177,9 @@ const Register = () => {
               <MenuItem value="Finance">Finance</MenuItem>
               <MenuItem value="Procument">Procument</MenuItem>
             </Select>
-
-            <Box
-              sx={{
-                alignItems: 'center',
-                display: 'flex',
-                ml: -1
-              }}
-            >
-              <Checkbox
-                checked={formik.values.policy}
-                name="policy"
-                onChange={formik.handleChange}
-              />
-              <Typography
-                color="textSecondary"
-                variant="body2"
-              >
-                I have read the
-                {' '}
-                <NextLink
-                  href="#"
-                  passHref
-                >
-                  <Link
-                    color="primary"
-                    underline="always"
-                    variant="subtitle2"
-                  >
-                    Terms and Conditions
-                  </Link>
-                </NextLink>
-              </Typography>
-            </Box>
-            {Boolean(formik.touched.policy && formik.errors.policy) && (
-              <FormHelperText error>
-                {formik.errors.policy}
-              </FormHelperText>
-            )}
             <Box sx={{ py: 2 }}>
               <Button
-                color="primary"
+                // color="primary"
                 disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
@@ -298,30 +189,20 @@ const Register = () => {
                 Sign Up Now
               </Button>
             </Box>
-            <Typography
-              color="textSecondary"
-              variant="body2"
-            >
-              Have an account?
-              {' '}
-              <NextLink
-                href="/login"
-                passHref
-              >
-                <Link
-                  variant="subtitle2"
-                  underline="hover"
-                >
+            {/* <Typography color="textSecondary" variant="body2">
+              Have an account?{" "}
+              <NextLink href="/login" passHref>
+                <Link variant="subtitle2" underline="hover">
                   Sign In
                 </Link>
               </NextLink>
-            </Typography>
+            </Typography> */}
           </form>
         </Container>
       </Box>
     </>
   );
 };
-Register.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
+Register.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Register;

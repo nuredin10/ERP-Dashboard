@@ -24,13 +24,15 @@ const Dashboard = () => {
       if (err) {
         console.log(err);
       } else {
-        setUser(decoded);
+        console.log(decoded);
+        Cookies.set("user", JSON.stringify(decoded));
+        // setUser(decoded);
       }
     });
   }, []);
   // setRole(user.role)
   // console.log(user, "sdfSdfsdfsdf");
-  console.log(user, "dashboard");
+  // console.log(user, "dashboard");
 
   return (
     <>

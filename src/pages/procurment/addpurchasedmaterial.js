@@ -28,12 +28,16 @@ import axios from "../../components/axios";
 import CustomAlert from "../../components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 import { useSnackbar } from 'notistack';
+import { useUser } from "../../lib/UserContext";
+import Cookie from "js-cookie";
 
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const {user, setUser} = useUser();
 
   const handleClickOpen = () => {
     setDialogOpen(true);
@@ -96,7 +100,7 @@ const Addpurchasedmaterial = () => {
     setInputFields(data);
     setIsSuccess("info");
     setAlertMsg("item removed");
-    enqueueSnackbar('Item Removed', { variant: 'error' });
+    enqueueSnackbar('Item Removed', { variant: 'warning' });
   };
 
   const submitHandler = () => {
