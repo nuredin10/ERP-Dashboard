@@ -12,15 +12,15 @@ import {
   Box,
   Button,
   Card,
-  InputLabel, 
+  InputLabel,
   ButtonBox,
   Container,
   Typography,
-  Grid,
-  DatePicker,
+  Grid
+
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-
+import { DateRangePicker } from "@mantine/dates";
 import { DashboardLayout } from "../../../../components/dashboard-layout";
 import Table from "../../../../components/Table";
 import ToolBar from "../../../../components/ToolBar";
@@ -42,11 +42,12 @@ const MonthlyReport = () => {
     setSelectMonth(e.target.value);
   };
   const router = useRouter();
-  
+
   const router2 = useRouter();
-  const {id} = router2.query;
+  const { id } = router2.query;
 
   const [data, setData] = useState([]);
+  const [date, setDate] = useState([]);
 
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);
@@ -60,13 +61,13 @@ const MonthlyReport = () => {
     { title: "stock at End", field: "stockat_end" },
   ];
 
-  
+
   useEffect(() => {
     waxios
       .post("/showSummeryByMonth", {
         id: id,
         materialType: "RAW",
-        selectedMonth: ""
+        selectedMonth: date
       })
       .then(function (res) {
         setData(res.data);
@@ -75,7 +76,7 @@ const MonthlyReport = () => {
       .catch(function (res) {
         console.log(res);
       });
-  }, []);
+  }, [date]);
 
   useEffect(() => {
     setRecivedSummery([]);
@@ -91,17 +92,9 @@ const MonthlyReport = () => {
 
 
   const excel = () => {
-    const data2 = [
-      {
-        'Date': '12-1201-12',
-        'Email': 'natty@gail.com',
-        'Name': 'Natnael Engeda'
-      },
-    ];
-
     const XLSX = xlsx;
     const workbook = utils.book_new();
-    const worksheet = utils.json_to_sheet(data2);
+    const worksheet = utils.json_to_sheet(data);
     utils.book_append_sheet(workbook, worksheet, "Report");
     writeFileXLSX(workbook, "Report.xlsx");
   }
@@ -129,32 +122,20 @@ const MonthlyReport = () => {
                 Summary
               </Typography>
             </Grid>
-            <Grid item lg={6} sm={12}>
-              <DesktopDatePicker
-                label="Pick Summary Date"
-                inputFormat="MM/dd/yyyy"
-                value={summaryDate}
-                onChange={(newValue) => {
-                  setSummaryDate(newValue);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                  // fullWidth
-                  // name="end_dateTime"
-                  // {...register("end_dateTime")}
-                  />
-                )}
+            <Grid item lg={2}>
+              <DateRangePicker
+                placeholder="Pick date"
+                onChange={setDate}
               />
             </Grid>
           </LocalizationProvider>
           <Grid
             sx={{
-              // marginLeft: 20,
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'space-between',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              px: 10
             }}
           >
             <Button
