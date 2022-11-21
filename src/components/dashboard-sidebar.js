@@ -80,6 +80,11 @@ const procurmentItems = [
     icon: <UsersIcon fontSize="small" />,
     title: "Purchase Orders",
   },
+  {
+    href: "/procurment/declinedorders",
+    icon: <UserIcon fontSize="small"/>,
+    title: "Declined Orders"
+  }
   // {
   //   href: "/procurment/paymentrequest",
   //   icon: <UsersIcon fontSize="small" />,

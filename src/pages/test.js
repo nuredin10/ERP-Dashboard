@@ -1,11 +1,11 @@
-import Head from "next/head";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import { useState } from "react";
-import authAxois from "../components/authAxios";
-import axios from "axios";
-import * as Yup from "yup";
+import Head from 'next/head';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import authAxois from '../components/authAxios';
+import axios from 'axios';
+import * as Yup from 'yup';
 import {
   Box,
   Button,
@@ -83,7 +83,7 @@ const Register = () => {
     }),
     onSubmit: () => {
       // router.push('/');
-      console.log("formik");
+      console.log(formik);
       var data = formik.values;
       authAxois.post('/signup', { data, roles: oroles }).then(function (response) {
         if (response.data.message == 'success') {
@@ -96,9 +96,9 @@ const Register = () => {
           enqueueSnackbar('Signup Fialed', { variant: 'error' });
 
         }
-      });
-      // console.log(formik.values);
-    },
+      })
+      console.log(formik.values);
+    }
   });
   const roles = [
     { label: "Super Admin" },
@@ -107,18 +107,21 @@ const Register = () => {
     { label: "Ware House" },
     { label: "Finance" }
   ]
+
   return (
     <>
       <Head>
-        <title>Register | Material Kit</title>
+        <title>
+          Register | Material Kit
+        </title>
       </Head>
       <Box
         component="main"
         sx={{
-          alignItems: "center",
-          display: "flex",
+          alignItems: 'center',
+          display: 'flex',
           flexGrow: 1,
-          minHeight: "100%",
+          minHeight: '100%'
         }}
       >
         <Container maxWidth="sm">
@@ -135,23 +138,30 @@ const Register = () => {
           </NextLink> */}
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
-              <Typography color="textPrimary" variant="h4">
+              <Typography
+                color="textPrimary"
+                variant="h4"
+              >
                 Create a new account
               </Typography>
-              <Typography color="textSecondary" gutterBottom variant="body2">
+              <Typography
+                color="textSecondary"
+                gutterBottom
+                variant="body2"
+              >
                 Use your email to create a new account
               </Typography>
             </Box>
             <TextField
-              error={Boolean(formik.touched.userName && formik.errors.userName)}
+              error={Boolean(formik.touched.firstName && formik.errors.firstName)}
               fullWidth
-              helperText={formik.touched.userName && formik.errors.userName}
-              label="User Name"
+              helperText={formik.touched.firstName && formik.errors.firstName}
+              label="First Name"
               margin="normal"
-              name="userName"
+              name="firstName"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.userName}
+              value={formik.values.firstName}
               variant="outlined"
             />
             <TextField
@@ -179,20 +189,6 @@ const Register = () => {
               value={formik.values.email}
               variant="outlined"
             />
-            <Select
-              fullWidth
-              variant="outlined"
-              value={oroles}
-              label="Role"
-              onChange={(e) => setOroles(e.target.value)}
-              placeholder="Sales"
-            >
-              <MenuItem value="Super Admin">Super Admin</MenuItem>
-              <MenuItem value="Sales">Sales</MenuItem>
-              <MenuItem value="Production">Production</MenuItem>
-              <MenuItem value="WareHouse">Ware House</MenuItem>
-              <MenuItem value="Finance">Finance</MenuItem>
-            </Select>
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
@@ -219,7 +215,9 @@ const Register = () => {
               value={formik.values.confirmPassword}
               variant="outlined"
             />
-            {/* <SelectfullWidth
+            {/* <Select
+
+              fullWidth
               variant="outlined"
               value={formik.values.role}
               label="Role"
@@ -233,7 +231,7 @@ const Register = () => {
               <MenuItem values="Ware House">Ware House</MenuItem>
               <MenuItem values="Ware House">Finance</MenuItem>
             </Select> */}
-{/* 
+
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -249,13 +247,13 @@ const Register = () => {
               <MenuItem value="Ware House">Ware House</MenuItem>
               <MenuItem value="Finance">Finance</MenuItem>
               <MenuItem value="Procument">Procument</MenuItem>
-            </Select> */}
+            </Select>
 
             <Box
               sx={{
-                alignItems: "center",
-                display: "flex",
-                ml: -1,
+                alignItems: 'center',
+                display: 'flex',
+                ml: -1
               }}
             >
               <Checkbox
@@ -263,17 +261,30 @@ const Register = () => {
                 name="policy"
                 onChange={formik.handleChange}
               />
-              <Typography color="textSecondary" variant="body2">
-                I have read the{" "}
-                <NextLink href="#" passHref>
-                  <Link color="primary" underline="always" variant="subtitle2">
+              <Typography
+                color="textSecondary"
+                variant="body2"
+              >
+                I have read the
+                {' '}
+                <NextLink
+                  href="#"
+                  passHref
+                >
+                  <Link
+                    color="primary"
+                    underline="always"
+                    variant="subtitle2"
+                  >
                     Terms and Conditions
                   </Link>
                 </NextLink>
               </Typography>
             </Box>
             {Boolean(formik.touched.policy && formik.errors.policy) && (
-              <FormHelperText error>{formik.errors.policy}</FormHelperText>
+              <FormHelperText error>
+                {formik.errors.policy}
+              </FormHelperText>
             )}
             <Box sx={{ py: 2 }}>
               <Button
@@ -287,10 +298,20 @@ const Register = () => {
                 Sign Up Now
               </Button>
             </Box>
-            <Typography color="textSecondary" variant="body2">
-              Have an account?{" "}
-              <NextLink href="/login" passHref>
-                <Link variant="subtitle2" underline="hover">
+            <Typography
+              color="textSecondary"
+              variant="body2"
+            >
+              Have an account?
+              {' '}
+              <NextLink
+                href="/login"
+                passHref
+              >
+                <Link
+                  variant="subtitle2"
+                  underline="hover"
+                >
                   Sign In
                 </Link>
               </NextLink>
@@ -301,6 +322,8 @@ const Register = () => {
     </>
   );
 };
-Register.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Register.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>
 
 export default Register;
+
+
