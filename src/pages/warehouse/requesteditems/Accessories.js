@@ -30,8 +30,13 @@ const Accessories = () => {
   const [data, setData] = useState([]);
   const [isSuccess, setIsSuccess] = useState('')
   const [alertMsg, setAlertMsg] = useState('')
+  const [item, setItem] = useState();
+
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
+
+
+
   const columns = [
     { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
@@ -72,17 +77,23 @@ const Accessories = () => {
         status: "Accept",
       })
       .then(function (response) {
-        console.log(response);
-        Router.push("/warehouse/requesteditems/Accessories");
-        setIsSuccess('success');
-        setAlertMsg('Item Accepted')
-        enqueueSnackbar('Item Accepted', { variant: 'success' })
+        if (response.data.message === "no material in store please purchase these items") {
+          setItem(response.data.materials[0].accs_name);
+          setDialogOpen(true);
+
+        } else {
+          console.log(response);
+          Router.push("/warehouse/requesteditems/Accessories");
+          setIsSuccess('success');
+          setAlertMsg('Item Accepted')
+          enqueueSnackbar('Item Accepted', { variant: 'success' })
+
+        }
       })
       .catch(function (error) {
         console.log(error);
         setIsSuccess('error')
         setAlertMsg('Something went wrong')
-        setDialogOpen(true);
 
       });
 
@@ -124,9 +135,21 @@ const Accessories = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Hello THere Mate
+            <div className="flex flex-row gap-1 items-end">
+              <h1 className="font-bold text-lg text-black">Item Name: </h1>
+              <p>{item && item}</p>
+            </div>
           </DialogContentText>
         </DialogContent>
+        <DialogActions>
+          <Button
+          sx={{
+            backgroundColor: 'purple'
+          }}
+          onClick={()=>Router.push('/warehouse/PurchaseOrder')}
+          >Purchase</Button>
+          <Button>Cancel</Button>
+        </DialogActions>
 
       </Dialog>
       {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}

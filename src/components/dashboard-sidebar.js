@@ -320,7 +320,7 @@ export const DashboardSidebar = (props) => {
   const isSuperAdmin = user.role === "Super Admin" ? true : false;
   const content = (
     <>
-      <div className="scrollbar scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-700 scrollbar-thumb-rounded-full scrollbar-track-gray-400">
+      <div className="scrollbar-thin scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-700 scrollbar-thumb-rounded-full scrollbar-track-gray-400">
         <Box
           sx={{
             display: "flex",
