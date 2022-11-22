@@ -30,7 +30,7 @@ const Dashboard = () => {
   }, []);
   // setRole(user.role)
   // console.log(user, "sdfSdfsdfsdf");
-  console.log(user, "dashbioard");
+  console.log(user, "dashboard");
 
   return (
     <>

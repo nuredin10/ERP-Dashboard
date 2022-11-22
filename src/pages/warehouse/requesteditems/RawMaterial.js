@@ -62,7 +62,7 @@ const RawMaterial = () => {
     })
       .then(function (response) {
         console.log(response);
-        Router.push("/requesteditems/RawMaterial")
+        // Router.push("/requesteditems/RawMaterial")
         setIsSuccess('success');
         setAlertMsg('Item Accepted')
       })

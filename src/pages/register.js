@@ -16,49 +16,85 @@ import {
   TextField,
   Typography,
   Autocomplete,
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { MenuItem, Select } from "@material-ui/core";
-// import { DashboardLayout } from "./dashboard-layout";
-import { DashboardLayout } from "src/components/dashboard-layout";
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { MenuItem, Select } from '@material-ui/core';
+import { DashboardLayout } from 'src/components/dashboard-layout';
+import { useSnackbar } from 'notistack';
+
 
 const Register = () => {
   const router = useRouter();
   const [oroles, setOroles] = useState();
+  const [age, setAge] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      userName: "",
-      lastName: "",
-      password: "",
-      confirmPassword: "",
-      policy: false,
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      role: '',
+      confirmPassword: '',
+      policy: false
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      userName: Yup.string().max(255).required("First name is required"),
-      lastName: Yup.string().max(255).required("Last name is required"),
-
-      password: Yup.string().max(255).required("Password is required"),
-      confirmPassword: Yup.string().max(255).required("Password is required"),
-      policy: Yup.boolean().oneOf([true], "This field must be checked"),
+      email: Yup
+        .string()
+        .email(
+          'Must be a valid email')
+        .max(255)
+        .required(
+          'Email is required'),
+      firstName: Yup
+        .string()
+        .max(255)
+        .required(
+          'First name is required'),
+      lastName: Yup
+        .string()
+        .max(255)
+        .required(
+          'Last name is required'),
+      role: Yup
+        .string(),
+      password: Yup
+        .string()
+        .max(255)
+        .required(
+          'Password is required'),
+      confirmPassword: Yup
+        .string()
+        .max(255)
+        .required(
+          'Confirm Password is required'
+        ),
+      policy: Yup
+        .boolean()
+        .oneOf(
+          [true],
+          'This field must be checked'
+        )
     }),
     onSubmit: () => {
       // router.push('/');
       console.log("formik");
       var data = formik.values;
-      var alldata = {
-        ...data,
-        oroles,
-      };
-      console.log(alldata);
-      authAxois.post("/signup", { alldata }).then(function (response) {
-        if (response.data.message == "success") {
-          console.log("Sign Up Success");
-          router.push("/");
-        } else if (response.data.message == "fail") {
-          console.log("Signig in Failed");
+      authAxois.post('/signup', { data, roles: oroles }).then(function (response) {
+        if (response.data.message == 'success') {
+          console.log('Sign Up Success');
+          enqueueSnackbar('Signup Success', { variant: 'success' });
+
+          router.push('/');
+        } else if (response.data.message == 'fail') {
+          console.log('Signig in Failed');
+          enqueueSnackbar('Signup Fialed', { variant: 'error' });
+
         }
       });
       // console.log(formik.values);
@@ -69,7 +105,8 @@ const Register = () => {
     { label: "Sales" },
     { label: "Production" },
     { label: "Ware House" },
-  ];
+    { label: "Finance" }
+  ]
 
   return (
     <>
@@ -170,7 +207,6 @@ const Register = () => {
               value={formik.values.password}
               variant="outlined"
             />
-
             <TextField
               error={Boolean(formik.touched.confirmPassword && formik.errors.confirmPassword)}
               fullWidth
@@ -184,20 +220,40 @@ const Register = () => {
               value={formik.values.confirmPassword}
               variant="outlined"
             />
-            {/* <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={roles}
-              sx={{ width: '100%' }}
-              value={formik.values.roles}
-              renderInput={(params) => <TextField {...params}  label='Roles'/>}
-            /> */}
-
             {/* <Select
-            fullWidth
-            >
 
+              fullWidth
+              variant="outlined"
+              value={formik.values.role}
+              label="Role"
+              name="role"
+              onChange={formik.handleChange}
+              placeholder=''
+            >
+              <MenuItem value="Super Admin">Super Admin</MenuItem>
+              <MenuItem value="Sales">Sales</MenuItem>
+              <MenuItem value="Production">Production</MenuItem>
+              <MenuItem values="Ware House">Ware House</MenuItem>
+              <MenuItem values="Ware House">Finance</MenuItem>
             </Select> */}
+
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="Age"
+              onChange={handleChange}
+              variant="outlined"
+              fullWidth
+            >
+              <MenuItem value="Super Admin">Super Admin</MenuItem>
+              <MenuItem value="Sales">Sales</MenuItem>
+              <MenuItem value="Production">Production</MenuItem>
+              <MenuItem value="Ware House">Ware House</MenuItem>
+              <MenuItem value="Finance">Finance</MenuItem>
+              <MenuItem value="Procument">Procument</MenuItem>
+            </Select>
+
             <Box
               sx={{
                 alignItems: "center",
