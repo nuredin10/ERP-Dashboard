@@ -62,11 +62,11 @@ const generalItems = [
     icon: <ShoppingBagIcon fontSize="small" />,
     title: "Finance",
   },
-  {
-    href: "/analytics",
-    icon: <BarChartIcon fontSize="small" />,
-    title: "Analytics",
-  },
+  // {
+  //   href: "/analytics",
+  //   icon: <BarChartIcon fontSize="small" />,
+  //   title: "Analytics",
+  // },
 ];
 
 const procurmentItems = [

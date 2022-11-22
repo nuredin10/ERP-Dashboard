@@ -25,16 +25,17 @@ import AlertNew from '../components/AlertNew';
 import Snackbar from '@mui/material/Snackbar';
 // import Alert from '@Mui/material/Alert';
 // import {useRole} from '../lib/RoleContext'
+import {useUser} from '../lib/UserContext'
 import { useSnackbar } from 'notistack';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Proplast
+        Versavvy Media PLC, 2023
       </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {/* {new Date().getFullYear()} */}
+      {/* {'.'} */}
     </Typography>
   );
 }
@@ -47,7 +48,8 @@ export default function SignIn() {
   const [alertS, setAlertS] = useState(false)
   const alertComponent = (<Alert severity='error'>Incorrect Username or Password</Alert>);
   const { enqueueSnackbar } = useSnackbar();
-
+  const { user, setUser } = useUser();
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

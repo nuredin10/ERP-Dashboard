@@ -28,12 +28,16 @@ import waxios from "../../components/wareHouseAxios";
 import CustomAlert from "../../components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 import { useSnackbar } from 'notistack';
+import { useUser } from "../../lib/UserContext";
+import Cookie from "js-cookie";
 
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const {user, setUser} = useUser();
 
   const handleClickOpen = () => {
     setDialogOpen(true);
@@ -96,7 +100,7 @@ const Addpurchasedmaterial = () => {
     setInputFields(data);
     setIsSuccess("info");
     setAlertMsg("item removed");
-    enqueueSnackbar('Item Removed', { variant: 'error' });
+    enqueueSnackbar('Item Removed', { variant: 'warning' });
   };
 
   const submitHandler = () => {
@@ -205,16 +209,20 @@ const Addpurchasedmaterial = () => {
                   <Grid
                     container
                     spacing={2}
+                    // columns={{xs: 4, md: 3}}
                     sx={{
                       boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                       ml: 3,
                       mt: 3,
                       backgroundColor: "white",
                       pb: 2,
+                      pr: 4,
                       borderRadius: "10px",
+                      // display: 'grid'
+
                     }}
                   >
-                    <Grid item sm={6} md={2} lg={4}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         required
                         name="new_name"
@@ -225,7 +233,7 @@ const Addpurchasedmaterial = () => {
                         fullWidth
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={4}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         fullWidth
                         required
@@ -236,7 +244,7 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={4}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         fullWidth
                         required
@@ -247,8 +255,9 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_materialcode"
                         label="MaterialCode"
@@ -257,8 +266,9 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_spec"
                         label="Specification"
@@ -280,6 +290,7 @@ const Addpurchasedmaterial = () => {
                     </Grid>
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_value"
                         label="Value"
@@ -288,8 +299,9 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_referncenum"
                         label="Reference Number"
@@ -298,7 +310,7 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       {/* <TextField
                         required
                         name="new_materialtype"
@@ -320,8 +332,9 @@ const Addpurchasedmaterial = () => {
                         <MenuItem value="ACCS">ACCS</MenuItem>
                       </Select>
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="payable_name"
                         label="Payable Name"
@@ -330,7 +343,7 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         required
                         fullWidth
@@ -342,8 +355,9 @@ const Addpurchasedmaterial = () => {
                       />
                     </Grid>
 
-                    <Grid item sm={6} md={2} lg={2}>
+                    <Grid item sm={6} md={2} lg={3}>
                       <TextField
+                        fullWidth
                         required
                         name="new_remark"
                         label="Remark"
@@ -353,7 +367,7 @@ const Addpurchasedmaterial = () => {
                       />
                     </Grid>
 
-                    <Grid item xs={1} lg={1} sm={1} md={1} sx={{ mt: "-2%" }}>
+                    <Grid item xs={1} lg={2} sm={1} md={1} sx={{ mt: "2%", ml: "2%" }}>
                       <IconButton onClick={() => removeFields(index)}>
                         <RemoveIcon />
                       </IconButton>
