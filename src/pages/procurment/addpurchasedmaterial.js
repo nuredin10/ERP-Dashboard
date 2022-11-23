@@ -379,10 +379,17 @@ const Addpurchasedmaterial = () => {
               </Grid>
               <Grid item lg={8}>
                 <Button
+
                   type="submit"
-                  sx={{ marginRight: "2rem" }}
+                  sx={{ 
+                    marginRight: "2rem",
+                    backgroundColor: '#5048E5',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#3832A0'
+                    }
+                  }}
                   onClick={handleClickOpen}
-                  variant="contained"
                 >
                   Save
                 </Button>

@@ -67,7 +67,7 @@ const MonthlyReport = () => {
       .post("/showSummeryByMonth", {
         id: id,
         materialType: "RAW",
-        selectedMonth: date
+        Date: date
       })
       .then(function (res) {
         setData(res.data);
