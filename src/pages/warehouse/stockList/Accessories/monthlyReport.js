@@ -17,14 +17,13 @@ import {
   Container,
   Typography,
   Grid,
-  DatePicker,
 } from "@mui/material";
 import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
 import ToolBar from '../../../../components/ToolBar'
 import { useRouter } from 'next/router'
 import waxios from '../../../../components/wareHouseAxios'
-
+import { DateRangePicker } from '@mantine/dates';
 import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
 import xlsx from 'xlsx';
 import { FormControlUnstyledContext } from '@mui/base';
@@ -41,7 +40,9 @@ const MonthlyReport = () => {
 
   const router2 = useRouter();
   const { id } = router.query;
+
   const [data, setData] = useState([]);
+  const [date, setDate] = useState([]);
 
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);
@@ -68,7 +69,7 @@ const MonthlyReport = () => {
     waxios.post("/showSummeryByMonth", {
       id: id,
       materialType: "ACCS",
-      selectedMonth: ""
+      selectedMonth: date
     })
       .then(function (res) {
         setData(res.data)
@@ -77,7 +78,7 @@ const MonthlyReport = () => {
       .catch(function (res) {
         console.log(res)
       })
-  }, [selectMonth]);
+  }, [date]);
 
   useEffect(() => {
     setRecivedSummery([])
@@ -90,17 +91,10 @@ const MonthlyReport = () => {
 
 
   const excel = () => {
-    const data2 = [
-      {
-        'Date': '12-1201-12',
-        'Email': 'natty@gail.com',
-        'Name': 'Natnael Engeda'
-      },
-    ];
 
     const XLSX = xlsx;
     const workbook = utils.book_new();
-    const worksheet = utils.json_to_sheet(data2);
+    const worksheet = utils.json_to_sheet(data);
     utils.book_append_sheet(workbook, worksheet, "Report");
     writeFileXLSX(workbook, "Report.xlsx");
   }
@@ -128,31 +122,10 @@ const MonthlyReport = () => {
             <Typography variant="h6" sx={{ textAlign: "center" }}>Show this month</Typography>
           </Grid>
           <Grid item lg={2}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                Job Type
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="JobType"
-                value={selectMonth}
-                label="Job Type"
-                onChange={handleMonthChange}
-              >
-                <MenuItem value="0">Janurary</MenuItem>
-                <MenuItem value="1">February</MenuItem>
-                <MenuItem value="2">March</MenuItem>
-                <MenuItem value="3">April</MenuItem>
-                <MenuItem value="4">May</MenuItem>
-                <MenuItem value="5">June</MenuItem>
-                <MenuItem value="6">July</MenuItem>
-                <MenuItem value="7">August</MenuItem>
-                <MenuItem value="8">September</MenuItem>
-                <MenuItem value="9">October</MenuItem>
-                <MenuItem value="10">Novermber</MenuItem>
-                <MenuItem value="11">December</MenuItem>
-              </Select>
-            </FormControl>
+            <DateRangePicker
+              placeholder="Pick date"
+              onChange={setDate}
+            />
           </Grid>
           <Grid
             sx={{

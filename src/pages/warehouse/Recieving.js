@@ -18,7 +18,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import waxios from "../../components/wareHouseAxios";
 import Router from "next/router";
-import Cookies from "js-cookie";
+import { useSnackbar } from "notistack";
 
 const Recieving = () => {
   const [data, setData] = useState([]);
@@ -35,43 +35,48 @@ const Recieving = () => {
     { title: "Specification", field: "new_spec" },
     { title: "Value", field: "new_value" },
   ];
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
-    waxios.get("/shownewPurchased").then((resp) => {
-      const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
-      setData(newPurchased);
-    });
+
+    waxios.get('/shownewPurchased')
+      .then((resp) => {
+        const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
+        setData(newPurchased);
+      })
 
     setUser(JSON.parse(Cookies.get("user")));
   }, []);
-  const accept = async (id) => {
-    await waxios
-      .post("/confirmPurchased", {
-        id: id,
-        status: "Accept",
-      })
-      .then(function (response) {
-        // Router.reload(window.location.pathname);
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
 
-  const decline = async (id) => {
-    await waxios
-      .post("/confirmPurchased", {
-        id: id,
-        status: "Decline",
-      })
+  const accept = async (id) => {
+    await waxios.post('/confirmPurchased', {
+      id: id,
+      status: "Accept"
+    })
       .then(function (response) {
         Router.reload(window.location.pathname);
         console.log(response);
+        enqueueSnackbar('Accepted', { variant: 'success' });
+
       })
       .catch(function (error) {
         console.log(error);
       });
-  };
+  }
+
+  const decline = async (id) => {
+    await waxios.post('/confirmPurchased', {
+      id: id,
+      status: "Decline"
+    })
+      .then(function (response) {
+        Router.reload(window.location.pathname);
+        console.log(response);
+        enqueueSnackbar('Declined', { variant: 'success' })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <>
       <Head>
