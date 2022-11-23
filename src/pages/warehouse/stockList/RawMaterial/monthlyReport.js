@@ -6,7 +6,6 @@ import {
   FormControlLabel,
   TextField,
   MenuItem,
-  Select,
   FormGroup,
   Checkbox,
   Box,
@@ -25,11 +24,13 @@ import { useRouter } from "next/router";
 import waxios from "../../../../components/wareHouseAxios";
 // import xlx
 import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
-import xlsx from "xlsx";
-import { FormControlUnstyledContext } from "@mui/base";
-import ReactToPrint, { useReactToPrint } from "react-to-print";
-import { DateRangePicker } from "@mantine/dates";
-import { datePickerConfig } from "@material-ui/lab";
+import xlsx from 'xlsx';
+import { FormControlUnstyledContext } from '@mui/base';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import { DateRangePicker } from '@mantine/dates';
+import { Select } from '@mantine/core';
+import { IconCalendar } from '@tabler/icons';
+import axios from 'axios'
 
 const MonthlyReport = () => {
   const [selectMonth, setSelectMonth] = useState("");
@@ -41,9 +42,10 @@ const MonthlyReport = () => {
 
   const router2 = useRouter();
   const { id } = router2.query;
-
+  // var nowYead = new 
   const [data, setData] = useState([]);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState({0: Date(), 1: Date()});
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);
@@ -63,25 +65,31 @@ const MonthlyReport = () => {
     { title: "Department Issued", field: "department_issued" },
     { title: "stock at End", field: "stockat_end" },
   ];
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
+
 
   useEffect(() => {
-    console.log(id);
-    waxios
-      .post("/showSummeryByMonth", {
-        id: 15,
-        materialType: "RAW",
-        selectedDate: date,
-        selectYear: "",
-      })
+    waxios.post("/showSummeryByMonth", {
+      id: id,
+      materialType: "RAW",
+      selectedDate: {start: convert(date[0]), end: convert(date[1])},
+      selectedYead: year
+    })
       .then(function (res) {
         setData(res.data);
         console.log(res.data);
         console.log("Works");
       })
       .catch(function (res) {
-        console.log(res);
-      });
-  }, [date]);
+        console.log(res)
+      })
+
+  }, [date[1], year]);
 
   useEffect(() => {
     setRecivedSummery([]);
@@ -94,7 +102,9 @@ const MonthlyReport = () => {
       });
   }, [selectMonth, data]);
 
-  console.log(date);
+  // console.log("Hello");
+  console.log("date-me-now", convert(date[0]));
+  console.log("date-me-now", date)
   const excel = () => {
     const XLSX = xlsx;
     const workbook = utils.book_new();
@@ -145,10 +155,43 @@ const MonthlyReport = () => {
                 Select Month
               </Typography>
             </Grid>
-            <Grid item lg={2}>
-              <DateRangePicker placeholder="Pick date" onChange={setDate} />
-            </Grid>
+            <Grid
+              sx={{
+                display: 'flex'
+              }}
+              item lg={2}>
+              <DateRangePicker
+                className='py-3'
+                placeholder="Pick date"
+                onChange={setDate}
+                size="xl"
+                inputFormat="DD/MM/YYYY"
+                labelFormat="DD/MM/YYYY"
+                icon={<IconCalendar size={16} />}
+              />
 
+            </Grid>
+            <Grid item lg={1}>
+              <TextField
+                fullWidth
+                label="Year"
+                value={year}
+                select
+                onChange={(e) => setYear(e.target.value)}
+              >
+                <MenuItem key={1} value="2019">2019</MenuItem>
+                <MenuItem key={2} value="2020">2020</MenuItem>
+                <MenuItem key={3} value="2021">2021</MenuItem>
+                <MenuItem key={4} value="2022">2022</MenuItem>
+                <MenuItem key={5} value="2024">2023</MenuItem>
+                <MenuItem key={6} value="2025">2025</MenuItem>
+                <MenuItem key={7} value="2026">2026</MenuItem>
+                <MenuItem key={8} value="2027">2027</MenuItem>
+                <MenuItem key={9} value="2028">2028</MenuItem>
+                <MenuItem key={10} value="2029">2029</MenuItem>
+                <MenuItem key={11} value="2030">2030</MenuItem>
+              </TextField>
+            </Grid>
             <Grid
               sx={{
                 marginLeft: 20,

@@ -319,18 +319,19 @@ const Addpurchasedmaterial = () => {
                         value={input.new_materialtype}
                         onChange={(event) => handleFormChange(index, event)}
                       /> */}
-                      <Select
-                        label="Material Type"
+                      <TextField
                         name="new_materialtype"
-                        type="select"
+                        label="Material Type"
+                        placeholder="Material Type"
                         value={input.new_materialtype}
+                        select
                         defaultValue="RAW"
                         onChange={(event) => handleFormChange(index, event)}
                         fullWidth
                       >
                         <MenuItem value="RAW">RAW</MenuItem>
                         <MenuItem value="ACCS">ACCS</MenuItem>
-                      </Select>
+                      </TextField>
                     </Grid>
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
@@ -382,10 +383,17 @@ const Addpurchasedmaterial = () => {
               </Grid>
               <Grid item lg={8}>
                 <Button
+
                   type="submit"
-                  sx={{ marginRight: "2rem" }}
+                  sx={{ 
+                    marginRight: "2rem",
+                    backgroundColor: '#5048E5',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#3832A0'
+                    }
+                  }}
                   onClick={handleClickOpen}
-                  variant="contained"
                 >
                   Save
                 </Button>

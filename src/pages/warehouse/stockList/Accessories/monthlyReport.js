@@ -42,7 +42,8 @@ const MonthlyReport = () => {
   const { id } = router.query;
 
   const [data, setData] = useState([]);
-  const [date, setDate] = useState([]);
+  const [date, setDate] = useState({0: Date(), 1: Date()});
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);
@@ -63,13 +64,20 @@ const MonthlyReport = () => {
     { title: "stock at End", field: "stockat_end" },
   ];
 
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
+
 
   useEffect(() => {
 
     waxios.post("/showSummeryByMonth", {
       id: id,
       materialType: "ACCS",
-      selectedMonth: date
+      Date: date
     })
       .then(function (res) {
         setData(res.data)
