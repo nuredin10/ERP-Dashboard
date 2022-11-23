@@ -42,7 +42,6 @@ const MonthlyReport = () => {
   const { id } = router.query;
   // const router2 = useRouter();
 
-  const newId = useMemo(() => router.query);
   // var nowYead = new
   const [data, setData] = useState([]);
   const [date, setDate] = useState([]);
@@ -77,7 +76,7 @@ const MonthlyReport = () => {
   useEffect(() => {
     waxios
       .post("/showSummeryByMonth", {
-        id: newId.id,
+        id: id,
         materialType: "ACCS",
         selectedDate: { start: date[0], end: date[1] },
         selectedYear: year,

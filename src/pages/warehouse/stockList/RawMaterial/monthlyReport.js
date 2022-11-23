@@ -45,8 +45,8 @@ const MonthlyReport = () => {
   const { id } = router2.query;
   // var nowYead = new 
   const [data, setData] = useState([]);
-  const [date, setDate] = useState({ 0: Date(), 1: Date() });
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [date, setDate] = useState([]);
+  const [year, setYear] = useState("");
 
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);

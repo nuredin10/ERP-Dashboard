@@ -91,6 +91,7 @@ const PurchaseOrder = () => {
                     onChange={(e) => setStatus(e.target.value)}
                   /> */}
                   <DatePicker
+                    fullWidth
                     label="Basic example"
                     value={date}
                     onChange={(newValue) => {
