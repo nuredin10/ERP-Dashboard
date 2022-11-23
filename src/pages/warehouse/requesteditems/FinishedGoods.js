@@ -77,11 +77,18 @@ const FinishedGoods = () => {
       status: "Accept"
     })
       .then(function (response) {
-        console.log(response);
-        // Router.push("/requesteditems/RawMaterial")
-        setIsSuccess('success');
-        setAlertMsg('Request Accepted');
-        enqueueSnackBar('Request Accepted', { variant: 'success' })
+        if (response.data.message === "no_material") {
+          setItem(response.data.materials[0].accs_name);
+          setDialogOpen(true);
+
+        } else {
+          console.log(response);
+          Router.push("/warehouse/requesteditems/Accessories");
+          setIsSuccess('success');
+          setAlertMsg('Item Accepted')
+          enqueueSnackbar('Item Accepted', { variant: 'success' })
+
+        }
       })
       .catch(function (error) {
         console.log(error);
