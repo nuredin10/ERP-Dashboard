@@ -77,7 +77,7 @@ const RawMaterial = () => {
     })
       .then(function (response) {
         console.log(response);
-        Router.push("/requesteditems/RawMaterial")
+        Router.push("/warehouse/requesteditems/RawMaterial")
         setIsSuccess('success');
         setAlertMsg('Item Accepted')
         enqueueSnackbar('Item Accepted', { variant: 'success' })
