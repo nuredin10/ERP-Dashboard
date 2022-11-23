@@ -61,7 +61,7 @@ const Accessories = () => {
         console.log(resp.data)
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
         const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
-        setData(pending);
+        setData(accessories);
       })
       .catch((error) => {
         console.log(error, "sdfgsdfgsdfgsdfg")
@@ -77,7 +77,7 @@ const Accessories = () => {
         status: "Accept",
       })
       .then(function (response) {
-        if (response.data.message === "no material in store please purchase these items") {
+        if (response.data.message === "no_material") {
           setItem(response.data.materials[0].accs_name);
           setDialogOpen(true);
 

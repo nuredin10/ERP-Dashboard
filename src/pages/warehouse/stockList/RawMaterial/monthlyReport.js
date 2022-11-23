@@ -45,7 +45,7 @@ const MonthlyReport = () => {
   const { id } = router2.query;
   // var nowYead = new 
   const [data, setData] = useState([]);
-  const [date, setDate] = useState({0: Date(), 1: Date()});
+  const [date, setDate] = useState({ 0: Date(), 1: Date() });
   const [year, setYear] = useState(new Date().getFullYear());
 
   const [recievedSummery, setRecivedSummery] = useState([]);
@@ -78,10 +78,13 @@ const MonthlyReport = () => {
     waxios.post("/showSummeryByMonth", {
       id: id,
       materialType: "RAW",
-      selectedDate: {start: convert(date[0]), end: convert(date[1])},
+      selectedDate: { start: date[0], end: date[1] },
       selectedYead: year
     })
       .then(function (res) {
+        res.data.map((eachData) => {
+          eachData.summery_date = convert(eachData.summery_date)
+        })
         setData(res.data);
         console.log(res.data);
         console.log('Works');
@@ -95,9 +98,10 @@ const MonthlyReport = () => {
   useEffect(() => {
     setRecivedSummery([])
     setIssuedSummery([])
-    data.map((e) => {
-      e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
-    })
+    data &&
+      data.map((e) => {
+        e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
+      })
   }, [selectMonth, data])
 
   // console.log("Hello");
