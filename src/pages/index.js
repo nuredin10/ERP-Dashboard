@@ -156,11 +156,12 @@ export default function SignIn() {
                 label="Remember me"
               />
               <Button
-                color='primary'
+                // color='primary'1
+               
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, height: 50 }}
+                sx={{ mt: 3, mb: 2, height: 50, backgroundColor: '#5048E5' }}
               >
                 Sign In
               </Button>

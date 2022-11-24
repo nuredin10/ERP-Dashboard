@@ -180,6 +180,9 @@ const Register = () => {
             <Box sx={{ py: 2 }}>
               <Button
                 // color="primary"
+                sx={{
+                  backgroundColor: "#3f51b5",
+                }}
                 disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
