@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
-import Head from 'next/head';
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import Head from "next/head";
 import {
   FormControl,
   FormLabel,
   FormControlLabel,
   TextField,
   MenuItem,
-  Select,
   FormGroup,
   Checkbox,
   Box,
@@ -17,34 +16,39 @@ import {
   Container,
   Typography,
   Grid,
-  DatePicker,
 } from "@mui/material";
-import { DashboardLayout } from '../../../../components/dashboard-layout';
-import Table from '../../../../components/Table'
-import ToolBar from '../../../../components/ToolBar'
-import { useRouter } from 'next/router'
-import waxios from '../../../../components/wareHouseAxios'
-
+import { DashboardLayout } from "../../../../components/dashboard-layout";
+import Table from "../../../../components/Table";
+import ToolBar from "../../../../components/ToolBar";
+import { useRouter } from "next/router";
+import waxios from "../../../../components/wareHouseAxios";
+// import xlx
 import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
-import xlsx from 'xlsx';
-import { FormControlUnstyledContext } from '@mui/base';
-import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import xlsx from "xlsx";
+import { FormControlUnstyledContext } from "@mui/base";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
+import { DateRangePicker } from "@mantine/dates";
+import { Select } from "@mantine/core";
+import { IconCalendar } from "@tabler/icons";
+import axios from "axios";
 
 const MonthlyReport = () => {
-  const [selectMonth, setSelectMonth] = useState('');
+  const [selectMonth, setSelectMonth] = useState("");
   const sheetRef = useRef();
-
   const handleMonthChange = (e) => {
-    setSelectMonth(e.target.value)
-  }
-  const router = useRouter()
-
-  const router2 = useRouter();
+    setSelectMonth(e.target.value);
+  };
+  const router = useRouter();
   const { id } = router.query;
+  // const router2 = useRouter();
+
+  // var nowYead = new
   const [data, setData] = useState([]);
+  const [date, setDate] = useState([]);
+  const [year, setYear] = useState("");
 
   const [recievedSummery, setRecivedSummery] = useState([]);
-  const [issuedSummery, setIssuedSummery] = useState([]);
+  const [issuedSummery, setIssuedSummery] = useState();
 
   const recievedcolumns = [
     { title: "Date", field: "summery_date" },
@@ -61,136 +65,170 @@ const MonthlyReport = () => {
     { title: "Department Issued", field: "department_issued" },
     { title: "stock at End", field: "stockat_end" },
   ];
-
-
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
+  // {start: convert(date[0]), end: convert(date[1])}
+  // /showSummeryByMonth
   useEffect(() => {
-
-    waxios.post("/showSummeryByMonth", {
-      id: id,
-      materialType: "ACCS",
-      selectedMonth: ""
-    })
+    waxios
+      .post("/showSummeryByMonth", {
+        id: id,
+        materialType: "ACCS",
+        selectedDate: { start: date[0], end: date[1] },
+        selectedYear: year,
+      })
       .then(function (res) {
-        setData(res.data)
-        console.log(res.data)
+        res.data.map((eachData) => {
+          eachData.summery_date = convert(eachData.summery_date)
+        })
+        setData(res.data);
+        console.log(res.data);
+        console.log("Works");
       })
       .catch(function (res) {
-        console.log(res)
-      })
-  }, [selectMonth]);
+        console.log(res);
+      });
+  }, [date[1], year]);
 
   useEffect(() => {
-    setRecivedSummery([])
-    setIssuedSummery([])
-    data.map((e) => {
-      e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
-    })
-  }, [selectMonth, data])
+    setRecivedSummery([]);
+    setIssuedSummery([]);
+    data &&
+      data.map((e) => {
+        e.stock_issued == ""
+          ? setRecivedSummery((recievedSummery) => [...recievedSummery, e])
+          : setIssuedSummery((issuedSummery) => [...issuedSummery, e]);
+      });
+  }, [selectMonth, data]);
 
-
-
+  // console.log("Hello");
+  console.log("date-me-now", convert(date[0]));
+  console.log("date-me-now", date);
   const excel = () => {
-    const data2 = [
-      {
-        'Date': '12-1201-12',
-        'Email': 'natty@gail.com',
-        'Name': 'Natnael Engeda'
-      },
-    ];
-
     const XLSX = xlsx;
     const workbook = utils.book_new();
-    const worksheet = utils.json_to_sheet(data2);
+    const worksheet = utils.json_to_sheet(data);
     utils.book_append_sheet(workbook, worksheet, "Report");
     writeFileXLSX(workbook, "Report.xlsx");
-  }
+  };
   const print = useReactToPrint({
-    content: () => sheetRef.current
-  })
-
+    content: () => sheetRef.current,
+  });
 
   return (
     <>
       <Head>
-        <title>
-          Monthly Report
-        </title>
+        <title>Monthly Report</title>
       </Head>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}
       >
-        <Grid container spacing={1} sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
-          <Grid item lg={2}>
-            <Typography variant="h6" sx={{ textAlign: "center" }}>Show this month</Typography>
-          </Grid>
-          <Grid item lg={2}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                Job Type
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="JobType"
-                value={selectMonth}
-                label="Job Type"
-                onChange={handleMonthChange}
-              >
-                <MenuItem value="0">Janurary</MenuItem>
-                <MenuItem value="1">February</MenuItem>
-                <MenuItem value="2">March</MenuItem>
-                <MenuItem value="3">April</MenuItem>
-                <MenuItem value="4">May</MenuItem>
-                <MenuItem value="5">June</MenuItem>
-                <MenuItem value="6">July</MenuItem>
-                <MenuItem value="7">August</MenuItem>
-                <MenuItem value="8">September</MenuItem>
-                <MenuItem value="9">October</MenuItem>
-                <MenuItem value="10">Novermber</MenuItem>
-                <MenuItem value="11">December</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+        <Grid
+          container
+          spacing={1}
+          sx={{
+            mb: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
+        >
           <Grid
+            container
+            spacing={1}
             sx={{
-              marginLeft: 20,
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'space-between',
-              justifyContent: 'space-between'
+              mb: 2,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
             }}
           >
-            <Button
-              onClick={excel}
-              component="a"
-              disableRipple
-              variant='contained'>
-              Excel
-            </Button>
-
-            <Button
-              onClick={print}
+            <Grid item lg={2}>
+              <Typography variant="h6" sx={{ textAlign: "center" }}>
+                Select Month
+              </Typography>
+            </Grid>
+            <Grid
               sx={{
-                ml: 5
+                display: "flex",
               }}
-              component="a"
-              disableRipple
-              variant='contained'>
-              Print
-            </Button>
+              item
+              lg={2}
+            >
+              <DateRangePicker
+                className="py-3"
+                placeholder="Pick date"
+                onChange={setDate}
+                size="xl"
+                inputFormat="DD/MM/YYYY"
+                labelFormat="DD/MM/YYYY"
+                icon={<IconCalendar size={16} />}
+              />
+            </Grid>
+            <Grid item lg={1}>
+              <TextField
+                fullWidth
+                label="Year"
+                value={year}
+                select
+                onChange={(e) => setYear(e.target.value)}
+              >
+                <MenuItem key={1} value="2019">2019</MenuItem>
+                <MenuItem key={2} value="2020">2020</MenuItem>
+                <MenuItem key={3} value="2021">2021</MenuItem>
+                <MenuItem key={4} value="2022">2022</MenuItem>
+                <MenuItem key={5} value="2024">2023</MenuItem>
+                <MenuItem key={6} value="2025">2025</MenuItem>
+                <MenuItem key={7} value="2026">2026</MenuItem>
+                <MenuItem key={8} value="2027">2027</MenuItem>
+                <MenuItem key={9} value="2028">2028</MenuItem>
+                <MenuItem key={10} value="2029">2029</MenuItem>
+                <MenuItem key={11} value="2030">2030</MenuItem>
+              </TextField>
+            </Grid>
+            <Grid
+              sx={{
+                marginLeft: 20,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "space-between",
+                justifyContent: "space-between",
+              }}
+            >
+              <Button onClick={excel} component="a" disableRipple variant="contained">
+                Excel
+              </Button>
+
+              <Button
+                onClick={print}
+                sx={{
+                  ml: 5,
+                }}
+                component="a"
+                disableRipple
+                variant="contained"
+              >
+                Print
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
 
         <Container maxWidth="ml">
-          <div
-            ref={sheetRef}
-          >
+          <div ref={sheetRef}>
             <Card maxWidth="lg">
               <Table
-                title='Monthly Stock Issued Report'
+                title="Monthly Stock Issued Report"
                 data={issuedSummery}
                 columns={issuedcolumns}
               />
@@ -199,13 +237,9 @@ const MonthlyReport = () => {
         </Container>
       </Box>
     </>
-  )
+  );
 };
 
-MonthlyReport.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
-);
+MonthlyReport.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default MonthlyReport;

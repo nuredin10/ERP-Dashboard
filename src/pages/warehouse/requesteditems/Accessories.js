@@ -8,6 +8,11 @@ import {
   FormHelperText,
   Link,
   TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Card,
   Typography,
   Divider
@@ -19,11 +24,18 @@ import DoneIcon from '@mui/icons-material/Done';
 import waxios from '../../../components/wareHouseAxios';
 import CustomAlert from '../../../components/alert'
 import Router from 'next/router'
+import { useSnackbar } from "notistack";
 
 const Accessories = () => {
   const [data, setData] = useState([]);
   const [isSuccess, setIsSuccess] = useState('')
   const [alertMsg, setAlertMsg] = useState('')
+  const [item, setItem] = useState();
+
+  const { enqueueSnackbar } = useSnackbar();
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+
 
   const columns = [
     { title: "Name", field: "mat_requestname" },
@@ -34,15 +46,24 @@ const Accessories = () => {
     { title: "Quantity", field: "mat_quantity" },
     { title: "Status", field: "mat_status" },
   ];
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  }
+  const handleClose = () => {
+    setDialogOpen(false);
+  }
+
+
   useEffect(() => {
     waxios.get('/showStoreRequestion')
-      .then((resp)=>{
+      .then((resp) => {
         console.log(resp.data)
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
         const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
-        setData(pending);
+        setData(accessories);
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.log(error, "sdfgsdfgsdfgsdfg")
 
       })
@@ -56,15 +77,24 @@ const Accessories = () => {
         status: "Accept",
       })
       .then(function (response) {
-        console.log(response);
-        Router.push("/requesteditems/Accessories");
-        setIsSuccess('success');
-        setAlertMsg('Item Accepted')
+        if (response.data.message === "no_material") {
+          setItem(response.data.materials[0].accs_name);
+          setDialogOpen(true);
+
+        } else {
+          console.log(response);
+          Router.push("/warehouse/requesteditems/Accessories");
+          setIsSuccess('success');
+          setAlertMsg('Item Accepted')
+          enqueueSnackbar('Item Accepted', { variant: 'success' })
+
+        }
       })
       .catch(function (error) {
         console.log(error);
         setIsSuccess('error')
         setAlertMsg('Something went wrong')
+
       });
 
   };
@@ -79,6 +109,7 @@ const Accessories = () => {
         console.log(response);
         setIsSuccess('info');
         setAlertMsg('Item Rejected')
+        enqueueSnackbar('Item Rejected', { variant: 'warning' });
       })
       .catch(function (error) {
         console.log(error);
@@ -93,6 +124,34 @@ const Accessories = () => {
       <Head>
         <title>Accessories</title>
       </Head>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>
+          <h1>Item Unavailable</h1>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <div className="flex flex-row gap-1 items-end">
+              <h1 className="font-bold text-lg text-black">Item Name: </h1>
+              <p>{item && item}</p>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+          sx={{
+            backgroundColor: 'purple'
+          }}
+          onClick={()=>Router.push('/warehouse/PurchaseOrder')}
+          >Purchase</Button>
+          <Button>Cancel</Button>
+        </DialogActions>
+
+      </Dialog>
       {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
       <Box
         component="main"
@@ -102,7 +161,7 @@ const Accessories = () => {
         }}
       >
         <Container
-         maxWidth="ml">
+          maxWidth="ml">
           {/* <Typography
             sx={{ mb: 3 }}
             variant="h4"

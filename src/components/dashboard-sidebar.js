@@ -50,6 +50,9 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PaymentIcon from '@mui/icons-material/Payment';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import AddCardIcon from '@mui/icons-material/AddCard';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 
 const generalItems = [
   {
@@ -57,11 +60,19 @@ const generalItems = [
     icon: <ChartBarIcon fontSize="small" />,
     title: "Dashboard",
   },
+<<<<<<< HEAD
   {
     href: "/finance",
     icon: <ShoppingBagIcon fontSize="small" />,
     title: "Finance",
   },
+=======
+  // {
+  //   href: "/finance",
+  //   icon: <ShoppingBagIcon fontSize="small" />,
+  //   title: "Finance",
+  // },
+>>>>>>> 49e12e2c07e30925072e990b5df3de493b285303
   // {
   //   href: "/analytics",
   //   icon: <BarChartIcon fontSize="small" />,
@@ -80,6 +91,11 @@ const procurmentItems = [
     icon: <UsersIcon fontSize="small" />,
     title: "Purchase Orders",
   },
+  {
+    href: "/procurment/declinedorders",
+    icon: <UserIcon fontSize="small" />,
+    title: "Declined Orders"
+  }
   // {
   //   href: "/procurment/paymentrequest",
   //   icon: <UsersIcon fontSize="small" />,
@@ -247,17 +263,17 @@ const Finance = [
   },
   {
     href: '/finance/accountrecieveable',
-    icon: <PaymentIcon fontSize="small" />,
+    icon: <CreditScoreIcon fontSize="small" />,
     title: 'Account Recieved'
   },
   {
     href: '/finance/pettycash',
-    icon: <PaymentIcon fontSize="small" />,
+    icon: <PaymentsIcon fontSize="small" />,
     title: 'Petty Cash'
   },
   {
     href: '/finance/addpettycash',
-    icon: <PaymentIcon fontSize="small" />,
+    icon: <AddCardIcon fontSize="small" />,
     title: 'Add Pettycash'
   },
 
@@ -286,7 +302,6 @@ export const DashboardSidebar = (props) => {
         onClose?.();
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.asPath]
   );
 
@@ -313,53 +328,164 @@ export const DashboardSidebar = (props) => {
   const isSuperAdmin = user.role === "Super Admin" ? true : false;
   const content = (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-        }}
-      >
+      <div className="scrollbar-thin scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-700 scrollbar-thumb-rounded-full scrollbar-track-gray-400">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+          }}
+        >
 
-        <div>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5 }}>
-            <NextLink href="/" passHref>
-              <a>
-                <Image src='/LOGOLIGHT1.svg' height="100" width="200" >
+          <div>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5 }}>
+              <NextLink href="/" passHref>
+                <a>
+                  <Image src='/LOGOLIGHT1.svg' height="100" width="200" >
 
-                </Image>
-                {/* <Logo
-                  sx={{
-                    
-                  }}
-                  href='/logo.svg'
-                /> */}
-              </a>
-            </NextLink>
-          </Box>
-        </div>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">GENERAL</Typography>
-          {generalItems.map((item) => (
-            <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-            </>
-          ))}
-        </Box>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-
-        {isSuperAdmin ? (
-          <>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="menuTitle">PROCURMENT</Typography>
-              {procurmentItems.map((item) => (
-                <>
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                </>
-              ))}
+                  </Image>
+                </a>
+              </NextLink>
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+          </div>
+          <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">GENERAL</Typography>
+            {generalItems.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
+          <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+
+          {isSuperAdmin ? (
+            <>
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="menuTitle">PROCURMENT</Typography>
+                {procurmentItems.map((item) => (
+                  <>
+                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  </>
+                ))}
+              </Box>
+              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="menuTitle">WARE HOUSE</Typography>
+                <Box sx={{ marginTop: "2vh" }}>
+                  <Accordion
+                    expanded={expanded === "panel1"}
+                    onChange={handleChange("panel1")}
+                    sx={{
+                      backgroundColor: "rgb(17, 24, 39)",
+                      "&:before": {
+                        display: "none",
+                      },
+                    }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header"
+                    >
+                      <DropdownNavItem
+                        icon={<WarehouseIcon />}
+                        title={wareHouseItemsAccordion[0].title}
+                        sx={{ marginBottom: -2, marginTop: -2 }}
+                      />
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {StockListItems.map((item) => (
+                        <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                      ))}
+                    </AccordionDetails>
+                  </Accordion>
+                  <Accordion
+                    expanded={expanded === "panel2"}
+                    onChange={handleChange("panel2")}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                    sx={{
+                      backgroundColor: "rgb(17, 24, 39)",
+                      "&:before": {
+                        display: "none",
+                      },
+                    }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1d-content"
+                      id="panel1d-header"
+                    >
+                      <DropdownNavItem
+                        icon={<RequestedIcon />}
+                        title={wareHouseItemsAccordion[1].title}
+                        sx={{ marginBottom: -2, marginTop: -2 }}
+                      />
+                      {/* <Typography>Accordion 1</Typography> */}
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {RequestedItems.map((item) => (
+                        <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                      ))}
+                    </AccordionDetails>
+                  </Accordion>
+                  <Box>
+                    {wareHouseItems.map((item) => (
+                      <>
+                        <NavItem
+                          sx={{ marginLeft: 1, maxWidth: " 90%" }}
+                          key={item.title}
+                          icon={item.icon}
+                          href={item.href}
+                          title={item.title}
+                        />
+                      </>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="menuTitle">PRODUCTION</Typography>
+                {production.map((item) => (
+                  <>
+                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  </>
+                ))}
+              </Box>
+              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="menuTitle">SALES</Typography>
+
+                {sales.map((item) => (
+                  <>
+                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  </>
+                ))}
+              </Box>
+              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="menuTitle">FINANCE</Typography>
+
+                {Finance.map((item) => (
+                  <>
+                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  </>
+                ))}
+              </Box>
+              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="menuTitle">USER</Typography>
+
+                {RegisterUser.map((item) => (
+                  <>
+                    <NavItem key={item.href} icon={item.icon} href={item.href} title={item.title} />
+                  </>
+                ))}
+              </Box>
+            </>
+          ) : user.role === 'Ware House' ? (
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">WARE HOUSE</Typography>
               <Box sx={{ marginTop: "2vh" }}>
@@ -435,7 +561,7 @@ export const DashboardSidebar = (props) => {
                 </Box>
               </Box>
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+          ) : user.role == 'Production' ? (
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">PRODUCTION</Typography>
               {production.map((item) => (
@@ -444,7 +570,7 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+          ) : user.role === 'Sales' ? (
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">SALES</Typography>
 
@@ -454,134 +580,19 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+          ) : user.role === 'Procurment' ? (
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="menuTitle">FINANCE</Typography>
-
-              {Finance.map((item) => (
+              <Typography variant="menuTitle">PROCURMENT</Typography>
+              {procurmentItems.map((item) => (
                 <>
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="menuTitle">USER</Typography>
+          ) : null}
 
-              {RegisterUser.map((item) => (
-                <>
-                  <NavItem key={item.href} icon={item.icon} href={item.href} title={item.title} />
-                </>
-              ))}
-            </Box>
-          </>
-        ) : user.role === 'Ware House' ? (
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="menuTitle">WARE HOUSE</Typography>
-            <Box sx={{ marginTop: "2vh" }}>
-              <Accordion
-                expanded={expanded === "panel1"}
-                onChange={handleChange("panel1")}
-                sx={{
-                  backgroundColor: "rgb(17, 24, 39)",
-                  "&:before": {
-                    display: "none",
-                  },
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1bh-content"
-                  id="panel1bh-header"
-                >
-                  <DropdownNavItem
-                    icon={<WarehouseIcon />}
-                    title={wareHouseItemsAccordion[0].title}
-                    sx={{ marginBottom: -2, marginTop: -2 }}
-                  />
-                </AccordionSummary>
-                <AccordionDetails>
-                  {StockListItems.map((item) => (
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                  ))}
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                expanded={expanded === "panel2"}
-                onChange={handleChange("panel2")}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-                sx={{
-                  backgroundColor: "rgb(17, 24, 39)",
-                  "&:before": {
-                    display: "none",
-                  },
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1d-content"
-                  id="panel1d-header"
-                >
-                  <DropdownNavItem
-                    icon={<RequestedIcon />}
-                    title={wareHouseItemsAccordion[1].title}
-                    sx={{ marginBottom: -2, marginTop: -2 }}
-                  />
-                  {/* <Typography>Accordion 1</Typography> */}
-                </AccordionSummary>
-                <AccordionDetails>
-                  {RequestedItems.map((item) => (
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                  ))}
-                </AccordionDetails>
-              </Accordion>
-              <Box>
-                {wareHouseItems.map((item) => (
-                  <>
-                    <NavItem
-                      sx={{ marginLeft: 1, maxWidth: " 90%" }}
-                      key={item.title}
-                      icon={item.icon}
-                      href={item.href}
-                      title={item.title}
-                    />
-                  </>
-                ))}
-              </Box>
-            </Box>
-          </Box>
-        ) : user.role == 'Production' ? (
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="menuTitle">PRODUCTION</Typography>
-            {production.map((item) => (
-              <>
-                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-              </>
-            ))}
-          </Box>
-        ) : user.role === 'Sales' ? (
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="menuTitle">SALES</Typography>
-
-            {sales.map((item) => (
-              <>
-                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-              </>
-            ))}
-          </Box>
-        ) : user.role === 'Procurment' ? (
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="menuTitle">PROCURMENT</Typography>
-            {procurmentItems.map((item) => (
-              <>
-                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-              </>
-            ))}
-          </Box>
-        ) : null}
-
-      </Box>
+        </Box>
+      </div>
     </>
   );
 
