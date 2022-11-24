@@ -50,7 +50,6 @@ const Register = () => {
     }),
 
     onSubmit: () => {
-<<<<<<< HEAD
       const data = {
         alldata: {
           ...formik.values,
@@ -74,33 +73,6 @@ const Register = () => {
     },
   });
 
-=======
-      // router.push('/');
-      console.log("formik");
-      var data = formik.values;
-      authAxois.post('/signup', { data, roles: oroles }).then(function (response) {
-        if (response.data.message == 'success') {
-          console.log('Sign Up Success');
-          enqueueSnackbar('Signup Success', { variant: 'success' });
-
-          router.push('/');
-        } else if (response.data.message == 'fail') {
-          console.log('Signig in Failed');
-          enqueueSnackbar('Signup Fialed', { variant: 'error' });
-
-        }
-      });
-      // console.log(formik.values);
-    },
-  });
-  const roles = [
-    { label: "Super Admin" },
-    { label: "Sales" },
-    { label: "Production" },
-    { label: "Ware House" },
-    { label: "Finance" }
-  ]
->>>>>>> 49e12e2c07e30925072e990b5df3de493b285303
   return (
     <>
       <Head>
@@ -126,7 +98,6 @@ const Register = () => {
               </Typography>
             </Box>
             <TextField
-<<<<<<< HEAD
               error={Boolean(formik.touched.personId && formik.errors.personId)}
               fullWidth
               helperText={formik.touched.personId && formik.errors.personId}
@@ -136,17 +107,6 @@ const Register = () => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.personId}
-=======
-              error={Boolean(formik.touched.userName && formik.errors.userName)}
-              fullWidth
-              helperText={formik.touched.userName && formik.errors.userName}
-              label="User Name"
-              margin="normal"
-              name="userName"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.userName}
->>>>>>> 49e12e2c07e30925072e990b5df3de493b285303
               variant="outlined"
             />
             <TextField
@@ -174,20 +134,6 @@ const Register = () => {
               value={formik.values.email}
               variant="outlined"
             />
-            <Select
-              fullWidth
-              variant="outlined"
-              value={oroles}
-              label="Role"
-              onChange={(e) => setOroles(e.target.value)}
-              placeholder="Sales"
-            >
-              <MenuItem value="Super Admin">Super Admin</MenuItem>
-              <MenuItem value="Sales">Sales</MenuItem>
-              <MenuItem value="Production">Production</MenuItem>
-              <MenuItem value="WareHouse">Ware House</MenuItem>
-              <MenuItem value="Finance">Finance</MenuItem>
-            </Select>
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
@@ -214,25 +160,7 @@ const Register = () => {
               value={formik.values.confirmPassword}
               variant="outlined"
             />
-<<<<<<< HEAD
 
-=======
-            {/* <SelectfullWidth
-              variant="outlined"
-              value={formik.values.role}
-              label="Role"
-              name="role"
-              onChange={formik.handleChange}
-              placeholder=''
-            >
-              <MenuItem value="Super Admin">Super Admin</MenuItem>
-              <MenuItem value="Sales">Sales</MenuItem>
-              <MenuItem value="Production">Production</MenuItem>
-              <MenuItem values="Ware House">Ware House</MenuItem>
-              <MenuItem values="Ware House">Finance</MenuItem>
-            </Select> */}
-{/* 
->>>>>>> 49e12e2c07e30925072e990b5df3de493b285303
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -248,42 +176,10 @@ const Register = () => {
               <MenuItem value="Ware House">Ware House</MenuItem>
               <MenuItem value="Finance">Finance</MenuItem>
               <MenuItem value="Procument">Procument</MenuItem>
-<<<<<<< HEAD
             </Select>
-=======
-            </Select> */}
-
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                ml: -1,
-              }}
-            >
-              <Checkbox
-                checked={formik.values.policy}
-                name="policy"
-                onChange={formik.handleChange}
-              />
-              <Typography color="textSecondary" variant="body2">
-                I have read the{" "}
-                <NextLink href="#" passHref>
-                  <Link color="primary" underline="always" variant="subtitle2">
-                    Terms and Conditions
-                  </Link>
-                </NextLink>
-              </Typography>
-            </Box>
-            {Boolean(formik.touched.policy && formik.errors.policy) && (
-              <FormHelperText error>{formik.errors.policy}</FormHelperText>
-            )}
->>>>>>> 49e12e2c07e30925072e990b5df3de493b285303
             <Box sx={{ py: 2 }}>
               <Button
                 // color="primary"
-                sx={{
-                  backgroundColor: "#3f51b5",
-                }}
                 disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
@@ -293,11 +189,7 @@ const Register = () => {
                 Sign Up Now
               </Button>
             </Box>
-<<<<<<< HEAD
             {/* <Typography color="textSecondary" variant="body2">
-=======
-            <Typography color="textSecondary" variant="body2">
->>>>>>> 49e12e2c07e30925072e990b5df3de493b285303
               Have an account?{" "}
               <NextLink href="/login" passHref>
                 <Link variant="subtitle2" underline="hover">
