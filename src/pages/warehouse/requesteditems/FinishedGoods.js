@@ -23,12 +23,15 @@ import DoneIcon from '@mui/icons-material/Done';
 import waxios from '../../../components/wareHouseAxios';
 import CustomAlert from '../../../components/alert'
 import { useSnackbar } from "notistack";
+import Cookies from "js-cookie";
 
 const FinishedGoods = () => {
   const [data, setData] = useState([]);
   const [isSuccess, setIsSuccess] = useState('')
   const [alertMsg, setAlertMsg] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [user, setUser] = useState();
+
   const { enqueueSnackBar } = useSnackbar();
   const columns = [
     { title: "Name", field: "mat_requestname" },
@@ -60,6 +63,9 @@ const FinishedGoods = () => {
 
       })
 
+      setUser(JSON.parse(Cookies.get("user")));
+
+
     // fetch("https://versavvy.com/ERP_backend/wareHouse/showStoreRequestion")
     //   .then((resp) => resp.json())
     //   .then((resp) => {
@@ -84,16 +90,16 @@ const FinishedGoods = () => {
         } else {
           console.log(response);
           Router.push("/warehouse/requesteditems/FinishedGoods");
-          setIsSuccess('success');
-          setAlertMsg('Item Accepted')
+          // setIsSuccess('success');
+          // setAlertMsg('Item Accepted')
           enqueueSnackbar('Item Accepted', { variant: 'success' })
 
         }
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
         setDialogOpen(true)
       });
 
@@ -112,8 +118,8 @@ const FinishedGoods = () => {
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
       });
   }
   // const [finished, setFinished] = useState([]);
@@ -143,23 +149,33 @@ const FinishedGoods = () => {
             Raw Material stockList
           </Typography> */}
           <Card maxWidth="lg">
-            <Table
-              title="Finished Goods"
-              data={data}
-              columns={columns}
-              actions={[
-                rowData => ({
-                  icon: () => < DoneIcon sx={{ color: 'green' }} />,
-                  tooltip: 'Accpet ',
-                  onClick: () => (accept(rowData.id))
-                }),
-                rowData => ({
-                  icon: () => < CloseIcon sx={{ color: 'red' }} />,
-                  tooltip: 'Reject ',
-                  onClick: () => (decline(rowData.id))
-                })
-              ]}
-            />
+            {user && user.role === 'Super Admin' ? (
+
+              <Table
+                title="Finished Goods"
+                data={data}
+                columns={columns}
+                actions={[
+                  rowData => ({
+                    icon: () => < DoneIcon sx={{ color: 'green' }} />,
+                    tooltip: 'Accpet ',
+                    onClick: () => (accept(rowData.id))
+                  }),
+                  rowData => ({
+                    icon: () => < CloseIcon sx={{ color: 'red' }} />,
+                    tooltip: 'Reject ',
+                    onClick: () => (decline(rowData.id))
+                  })
+                ]}
+              />
+            ) : (
+              <Table
+                title="Finished Goods"
+                data={data}
+                columns={columns}
+                
+              />
+            )}
 
             {/* <Typography sx={{ mb: 3 }} variant="h4">
           Supplier

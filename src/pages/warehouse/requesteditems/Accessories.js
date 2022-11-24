@@ -25,12 +25,14 @@ import waxios from '../../../components/wareHouseAxios';
 import CustomAlert from '../../../components/alert'
 import Router from 'next/router'
 import { useSnackbar } from "notistack";
+import Cookies from "js-cookie";
 
 const Accessories = () => {
   const [data, setData] = useState([]);
   const [isSuccess, setIsSuccess] = useState('')
   const [alertMsg, setAlertMsg] = useState('')
   const [item, setItem] = useState();
+  const [user, setUser] = useState();
 
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -67,6 +69,8 @@ const Accessories = () => {
         console.log(error, "sdfgsdfgsdfgsdfg")
 
       })
+      setUser(JSON.parse(Cookies.get("user")));
+
   }, []);
 
   const [acc, setAcc] = useState([]);
@@ -84,8 +88,8 @@ const Accessories = () => {
         } else {
           console.log(response);
           Router.push("/warehouse/requesteditems/Accessories");
-          setIsSuccess('success');
-          setAlertMsg('Item Accepted')
+          // setIsSuccess('success');
+          // setAlertMsg('Item Accepted')
           enqueueSnackbar('Item Accepted', { variant: 'success' })
 
         }
@@ -93,7 +97,7 @@ const Accessories = () => {
       .catch(function (error) {
         console.log(error);
         setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
 
       });
 
@@ -114,7 +118,7 @@ const Accessories = () => {
       .catch(function (error) {
         console.log(error);
         setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
       });
 
   };
@@ -162,34 +166,36 @@ const Accessories = () => {
       >
         <Container
           maxWidth="ml">
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
-          <Card maxWidth="lg">
-            <Table
-              title="Accessories"
-              data={data}
-              columns={columns}
-              actions={[
-                (rowData) => ({
-                  icon: () => <DoneIcon sx={{ color: "green" }} />,
-                  tooltip: "Accpet ",
-                  onClick: () => accept(rowData.id),
-                }),
-                (rowData) => ({
-                  icon: () => <CloseIcon sx={{ color: "red" }} />,
-                  tooltip: "Reject ",
-                  onClick: () => decline(rowData.id),
-                }),
-              ]}
-            />
 
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
+          <Card maxWidth="lg">
+            {user && user.role === 'Super Admin' ? (
+
+              <Table
+                title="Accessories"
+                data={data}
+                columns={columns}
+                actions={[
+                  (rowData) => ({
+                    icon: () => <DoneIcon sx={{ color: "green" }} />,
+                    tooltip: "Accpet ",
+                    onClick: () => accept(rowData.id),
+                  }),
+                  (rowData) => ({
+                    icon: () => <CloseIcon sx={{ color: "red" }} />,
+                    tooltip: "Reject ",
+                    onClick: () => decline(rowData.id),
+                  }),
+                ]}
+              />
+            ):(
+              <Table
+                title="Accessories"
+                data={data}
+                columns={columns}
+                
+              />
+            )}
+
           </Card>
         </Container>
       </Box>

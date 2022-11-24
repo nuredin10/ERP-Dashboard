@@ -24,12 +24,15 @@ import Router from 'next/router'
 import waxios from '../../../components/wareHouseAxios'
 import { useSnackbar } from "notistack";
 import CustomAlert from '../../../components/alert'
+import Cookies from "js-cookie";
 
 const RawMaterial = () => {
   const [data, setData] = useState([]);
   const [isSuccess, setIsSuccess] = useState('')
   const [alertMsg, setAlertMsg] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [user, setUser] = useState();
+
   const { enqueueSnackbar } = useSnackbar();
   const columns = [
     { title: "Name", field: "mat_requestname" },
@@ -61,6 +64,8 @@ const RawMaterial = () => {
         console.log(error, "sdfgsdfgsdfgsdfg")
 
       })
+      setUser(JSON.parse(Cookies.get("user")));
+
   }, []);
 
   // const [rawmaterial, setRawmaterial] = useState([]);
@@ -83,16 +88,16 @@ const RawMaterial = () => {
         } else {
           console.log(response);
           Router.push("/warehouse/requesteditems/RawMaterial");
-          setIsSuccess('success');
-          setAlertMsg('Item Accepted')
+          // setIsSuccess('success');
+          // setAlertMsg('Item Accepted')
           enqueueSnackbar('Item Accepted', { variant: 'success' })
 
         }
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
         setDialogOpen(true);
       });
 
@@ -112,7 +117,7 @@ const RawMaterial = () => {
       .catch(function (error) {
         console.log(error);
         setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
       });
 
   }
@@ -130,41 +135,36 @@ const RawMaterial = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
-          <Card maxWidth="lg">
-            <Table
-              title="Raw Material requested"
-              data={data}
-              columns={columns}
-              // actions={[
-              //   rowData => ({
-              //     icon: () => <NextLink href={`/procurment/purchaserequest/rfq`}><NavigateNextIcon /></NextLink>,
-              //     tooltip: 'Edit ',
-              //     onClick:()=> (rowData)
-              //   })
-              // ]}
-              actions={[
-                rowData => ({
-                  icon: () => < DoneIcon sx={{ color: 'green' }} />,
-                  tooltip: 'Accpet ',
-                  onClick: () => (accept(rowData.id))
-                }),
-                rowData => ({
-                  icon: () => < CloseIcon sx={{ color: 'red' }} />,
-                  tooltip: 'Reject ',
-                  onClick: () => (decline(rowData.id))
-                })
-              ]}
-            />
 
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
+          <Card maxWidth="lg">
+            {user && user.role === 'Super Admin' ? (
+
+              <Table
+                title="Raw Material requested"
+                data={data}
+                columns={columns}
+                actions={[
+                  rowData => ({
+                    icon: () => < DoneIcon sx={{ color: 'green' }} />,
+                    tooltip: 'Accpet ',
+                    onClick: () => (accept(rowData.id))
+                  }),
+                  rowData => ({
+                    icon: () => < CloseIcon sx={{ color: 'red' }} />,
+                    tooltip: 'Reject ',
+                    onClick: () => (decline(rowData.id))
+                  })
+                ]}
+              />
+            ) : (
+              <Table
+                title="Raw Material requested"
+                data={data}
+                columns={columns}
+              
+              />
+            )}
+
           </Card>
         </Container>
       </Box>
