@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,21 +13,29 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 import authAxios from '../components/authAxios'
-
+import logo from '../../public/logo.svg'
+import axios from 'axios';
+import Alert from "@mui/material"
+import CustomAlert from '../components/alert';
+import AlertNew from '../components/AlertNew';
+import Snackbar from '@mui/material/Snackbar';
+// import Alert from '@Mui/material/Alert';
+// import {useRole} from '../lib/RoleContext'
+import {useUser} from '../lib/UserContext'
+import { useSnackbar } from 'notistack';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Proplast
+        Versavvy Media PLC, 2023
       </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {/* {new Date().getFullYear()} */}
+      {/* {'.'} */}
     </Typography>
   );
 }
@@ -36,35 +45,37 @@ const theme = createTheme();
 export default function SignIn() {
 
   const [incorrect, setIncorrect] = React.useState(false)
-
+  const [alertS, setAlertS] = useState(false)
+  const alertComponent = (<Alert severity='error'>Incorrect Username or Password</Alert>);
+  const { enqueueSnackbar } = useSnackbar();
+  const { user, setUser } = useUser();
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log(data)
-    authAxios.post('/login',{
+    authAxios.post('/login', {
+      // axios.post('http://localhost:42000/test', {
       email: data.get('email'),
       password: data.get('password'),
     })
-    .then((res)=>{
-      console.log(res)
-      Cookies.set('token', res.data.jwt)
-      Cookies.set("loggedIn", true)
-      Router.push('/dashboard')
-      // console.log(res)
-      // jwt.verify(token,'PROPLAST', (err, decoded) =>{
-      //   if (err) {
-      //     console.log(err)
-      //   } else {
-      //     console.log(decoded)
-      //   }
-      // })
-    })
-    .catch((res)=>{
-      console.log(res)
-      if(res.response.status == 403){
-        setIncorrect(true)
-      }
-    })
+      .then((res) => {
+        console.log(res)
+        Cookies.set('token', res.data.jwt)
+        Cookies.set("loggedIn", true);
+        enqueueSnackbar('Login Success', { variant: 'success' })
+        Router.push('/dashboard')
+
+      })
+      .catch((res) => {
+        console.log(res)
+        if (res.response.status == 403) {
+          enqueueSnackbar('Incorrect Email or Password', { variant: 'error' })
+          console.log('Incorrect');
+          setAlertS(true);
+
+        }
+      })
   };
 
   return (
@@ -96,9 +107,26 @@ export default function SignIn() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} src='logo.svg' size='small'>
-              
-            </Avatar>
+            {/* <Avatar sx={{ width: 100, height: 100 }} src='logo.svg'>
+            </Avatar> */}
+            <div className='py-6'>
+              <img
+                className='w-60'
+                src="logo2.svg" alt="Proplast Logo" />
+            </div>
+            {/* <Box
+              component="img"
+              sx={{
+                height: 100,
+                width: 100
+              }}
+              alt="Proplast Logo"
+              src="logo.svg"
+            /> */}
+
+            {/* <div> */}
+            {/* <img src='logo.svg' alt="Proplast logo" /> */}
+            {/* </div> */}
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
@@ -128,15 +156,17 @@ export default function SignIn() {
                 label="Remember me"
               />
               <Button
+                // color='primary'1
+               
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, height: 50, backgroundColor: '#5048E5' }}
               >
                 Sign In
               </Button>
               <Grid>
-              {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
+                {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
 
               </Grid>
               <Grid container>

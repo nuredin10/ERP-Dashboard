@@ -14,7 +14,7 @@ import {
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
-import axios from '../../components/axios';
+import saxios from '../../components/salesAxios';
 
 const Vender = () => {
   const [data, setData] = useState([]);
@@ -26,7 +26,7 @@ const Vender = () => {
   ];
   useEffect(() => {
 
-    axios.get('/salesModule/showCustomers')
+    saxios.get('/showCustomers')
     .then((res) =>{
       setData(res.data);
     })
@@ -49,6 +49,7 @@ const Vender = () => {
         }}
       >
         <Container maxWidth="ml">
+          <ToolBar title="customer" href="/sales/Customers/addCustomers" />
           <ToolBar title="customer" href="/sales/Customers/addCustomers" />
           <Card maxWidth="lg">
             <Table

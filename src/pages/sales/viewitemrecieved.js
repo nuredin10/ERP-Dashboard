@@ -6,25 +6,27 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import OrdersToolBar from "../../components/sales/salesViewItem/order-toolbar";
 import { OrderResults } from "../../components/sales/salesViewItem/order-results";
 import RightDrawer from "../../components/sales/salesViewItem/RightDrawer";
-import axios from '../../components/axios'
+import saxios from '../../components/salesAxios'
 
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [summery, setSummery] = useState([]);
   const [data, setData] = useState([]);
-  useEffect(() => {
 
-    axios.get('/salesModule/showAcceptedRequestions')
-    .then((res) =>{
+  useEffect(() => {
+    saxios.get('/showAcceptedRequestions')
+      .then((res) => {
       console.log(res.data, "Asdasdf")
-      setData(res.data)
-    })
+        setData(res.data);
+        console.log(res.data);
+      })
 
     // fetch("http://localhost:4000/showAcceptedRequestions")
     //   .then((resp) => resp.json())
     //   .then((resp) => setData(resp));
   }, []);
+  console.log(data)
 
   return (
     <>
@@ -35,13 +37,13 @@ const FinishedGoods = () => {
         <Container maxWidth={false}>
           <Box>
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
-            <OrderResults
+            {/* <OrderResults
               drawer={drawer}
               setDrawer={setDrawer}
               setSelectedOrder={setSelectedOrder}
               setSummery={setSummery}
               data={data}
-            />
+            /> */}
             <RightDrawer
               drawer={drawer}
               setDrawer={setDrawer}

@@ -3,18 +3,18 @@ import { createTheme } from '@mui/material';
 export const theme = createTheme({
   breakpoints: {
     values: {
-      xs: 0,
-      sm: 600,
-      md: 1000,
-      lg: 1200,
-      ml: 1600,
-      xl: 1920
-    }
+      xs: 350,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536
+   }
   },
   components: {
     MuiButton: {
       defaultProps: {
-        disableElevation: true
+        disableElevation: false,
       },
       styleOverrides: {
         root: {
@@ -40,11 +40,11 @@ export const theme = createTheme({
         }
       }
     },
-    MuiButtonBase: {
-      defaultProps: {
-        disableRipple: true
-      }
-    },
+    // MuiButtonBase: {
+    //   defaultProps: {
+    //     disableRipple: true
+    //   }
+    // },
     MuiCardContent: {
       styleOverrides: {
         root: {

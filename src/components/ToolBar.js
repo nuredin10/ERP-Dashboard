@@ -1,40 +1,40 @@
 import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    TextField,
-    InputAdornment,
-    SvgIcon,
-    Typography
-  } from '@mui/material';
-  import { Download as DownloadIcon } from '../icons/download';
-  import { Search as SearchIcon } from '../icons/search';
-  import { Upload as UploadIcon } from '../icons/upload';
-  import { AddButton } from './add-button';
-  import AddIcon from '@mui/icons-material/Add';
+  Box,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  InputAdornment,
+  SvgIcon,
+  Typography
+} from '@mui/material';
+import { Download as DownloadIcon } from '../icons/download';
+import { Search as SearchIcon } from '../icons/search';
+import { Upload as UploadIcon } from '../icons/upload';
+import { AddButton } from './add-button';
+import AddIcon from '@mui/icons-material/Add';
 
 const ToolBar = (props) => (
-    <Box {...props}>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          mt: -5,
-          mb: 4
-          // border: 1
-        }}
+  <Box {...props}>
+    <Box
+      sx={{
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        mt: -5,
+        mb: 4
+        // border: 1
+      }}
+    >
+      <Typography
+        sx={{ m: 1 }}
+        variant="h5"
       >
-        <Typography
-          sx={{ m: 1 }}
-          variant="h5"
-        >
-          {/* {props.title} */}
-        </Typography>
-        <Box sx={{ display: 'flex',width: 'auto' }}>
-          <Button
+        {/* {props.title} */}
+      </Typography>
+      <Box sx={{ display: 'flex', width: 'auto' }}>
+        {/* <Button
             startIcon={(<UploadIcon fontSize="small" />)}
             sx={{ mr: 3 }}
           >
@@ -45,14 +45,14 @@ const ToolBar = (props) => (
             sx={{ mr: 3 }}
           >
             Export
-          </Button>
-          <AddButton sx={{ mr: 3 }} 
-          icon={<AddIcon/>}
-href={props.href}
-title={props.title}/>
-        </Box>
+          </Button> */}
+        <AddButton sx={{ mr: 3 }}
+          icon={<AddIcon />}
+          href={props.href}
+          title={props.title} />
       </Box>
-      {/* <Box sx={{ mt: 3 }}>
+    </Box>
+    {/* <Box sx={{ mt: 3 }}>
         <Card>
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
@@ -77,8 +77,7 @@ title={props.title}/>
           </CardContent>
         </Card>
       </Box> */}
-    </Box>
-  );
+  </Box>
+);
 
-  export default ToolBar
-  
+export default ToolBar

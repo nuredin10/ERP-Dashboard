@@ -15,6 +15,7 @@ import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { Google as Google } from "../icons/google";
 import { Logo } from "./logo";
+import Image from 'next/image'
 import { NavItem } from "./nav-item";
 import { DropdownNavItem } from "./dropdown-nav-item";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -45,6 +46,11 @@ import StoreIcon from "@mui/icons-material/Store";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 import AddIcon from '@mui/icons-material/Add';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import PaymentIcon from '@mui/icons-material/Payment';
+
 const generalItems = [
   {
     href: "/dashboard",
@@ -56,11 +62,11 @@ const generalItems = [
     icon: <ShoppingBagIcon fontSize="small" />,
     title: "Finance",
   },
-  {
-    href: "/analytics",
-    icon: <BarChartIcon fontSize="small" />,
-    title: "Analytics",
-  },
+  // {
+  //   href: "/analytics",
+  //   icon: <BarChartIcon fontSize="small" />,
+  //   title: "Analytics",
+  // },
 ];
 
 const procurmentItems = [
@@ -69,11 +75,11 @@ const procurmentItems = [
     icon: <AddIcon fontSize="small" />,
     title: "Add Purchased Material",
   },
-  // {
-  //   href: "/procurment/purchaserequest",
-  //   icon: <UsersIcon fontSize="small" />,
-  //   title: "Purchase Request",
-  // },
+  {
+    href: "/procurment/requestedorders",
+    icon: <UsersIcon fontSize="small" />,
+    title: "Purchase Orders",
+  },
   // {
   //   href: "/procurment/paymentrequest",
   //   icon: <UsersIcon fontSize="small" />,
@@ -104,15 +110,25 @@ const wareHouseItems = [
   {
     href: "/warehouse/PurchaseOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Purchase Order",
+    title: "Purchase Request",
   },
 ];
 
 const production = [
   {
     href: "/production/ProductionOrder",
-    icon: <RawmaterialIcon fontSize="small" />,
+    icon: <PendingActionsIcon fontSize="small" />,
     title: "Production Order",
+  },
+  {
+    href: "/production/productionOngoing",
+    icon: <AutorenewIcon fontSize="small" />,
+    title: "Production Ongoing"
+  },
+  {
+    href: "/production/productionFinished",
+    icon: <CheckCircleOutlineIcon fontSize="small" />,
+    title: "Production Finished"
   },
   {
     href: "/production/addnewbatch",
@@ -121,7 +137,7 @@ const production = [
   },
   {
     href: "/production/viewbatch",
-    icon: <PurchaseOrderIcon fontSize="small" />,
+    icon: <ViewListIcon fontSize="small" />,
     title: "View Batch",
   },
   // {
@@ -131,14 +147,14 @@ const production = [
   // },
   {
     href: "/production/addproduct",
-    icon: <StoreIcon fontSize="small" />,
+    icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
-  {
-    href: "/production/viewallproducts",
-    icon: <ViewListIcon fontSize="small" />,
-    title: "View All Products",
-  },
+  // {
+  //   href: "/production/viewallproducts",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View All Products",
+  // },
 ];
 
 const sales = [
@@ -215,6 +231,38 @@ const RequestedItems = [
   },
 ];
 
+const RegisterUser = [
+  {
+    href: '/register',
+    icon: <UsersIcon fontSize="small" />,
+    title: 'Register a new User'
+  }
+]
+
+const Finance = [
+  {
+    href: '/finance/accountpayable',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Account Payable'
+  },
+  {
+    href: '/finance/accountrecieveable',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Account Recieved'
+  },
+  {
+    href: '/finance/pettycash',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Petty Cash'
+  },
+  {
+    href: '/finance/addpettycash',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Add Pettycash'
+  },
+
+]
+
 export const DashboardSidebar = (props) => {
   const [expanded, setExpanded] = useState(false);
   const { open, onClose } = props;
@@ -252,18 +300,17 @@ export const DashboardSidebar = (props) => {
   const [user, setUser] = useState({});
   useEffect(() => {
 
-      jwt.verify(token, "PROPLAST", (err, decoded) => {
-        if (err) {
-          console.log(err);
-        } else {
-          setUser(decoded);
-          console.log("asdcasdc")
-        }
-      });
-  },[]);
+    jwt.verify(token, "PROPLAST", (err, decoded) => {
+      if (err) {
+        console.log(err);
+      } else {
+        setUser(decoded);
+        console.log("asdcasdc")
+      }
+    });
+  }, []);
 
   const isSuperAdmin = user.role === "Super Admin" ? true : false;
-  
   const content = (
     <>
       <Box
@@ -273,16 +320,20 @@ export const DashboardSidebar = (props) => {
           height: "100%",
         }}
       >
+
         <div>
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5 }}>
             <NextLink href="/" passHref>
               <a>
-                <Logo
+                <Image src='/LOGOLIGHT1.svg' height="100" width="200" >
+
+                </Image>
+                {/* <Logo
                   sx={{
-                    height: 42,
-                    width: 42,
+                    
                   }}
-                />
+                  href='/logo.svg'
+                /> */}
               </a>
             </NextLink>
           </Box>
@@ -297,218 +348,239 @@ export const DashboardSidebar = (props) => {
           ))}
         </Box>
         <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+
         {isSuperAdmin ? (
           <>
-          <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">PROCURMENT</Typography>
-          {procurmentItems.map((item) => (
-            <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-            </>
-          ))}
-        </Box>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">WARE HOUSE</Typography>
-          <Box sx={{ marginTop: "2vh" }}>
-            <Accordion
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
-              sx={{
-                backgroundColor: "rgb(17, 24, 39)",
-                "&:before": {
-                  display: "none",
-                },
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <DropdownNavItem
-                  icon={<WarehouseIcon />}
-                  title={wareHouseItemsAccordion[0].title}
-                  sx={{ marginBottom: -2, marginTop: -2 }}
-                />
-              </AccordionSummary>
-              <AccordionDetails>
-                {StockListItems.map((item) => (
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                ))}
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-              sx={{
-                backgroundColor: "rgb(17, 24, 39)",
-                "&:before": {
-                  display: "none",
-                },
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1d-content"
-                id="panel1d-header"
-              >
-                <DropdownNavItem
-                  icon={<RequestedIcon />}
-                  title={wareHouseItemsAccordion[1].title}
-                  sx={{ marginBottom: -2, marginTop: -2 }}
-                />
-                {/* <Typography>Accordion 1</Typography> */}
-              </AccordionSummary>
-              <AccordionDetails>
-                {RequestedItems.map((item) => (
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                ))}
-              </AccordionDetails>
-            </Accordion>
-            <Box>
-              {wareHouseItems.map((item) => (
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">PROCURMENT</Typography>
+              {procurmentItems.map((item) => (
                 <>
-                  <NavItem
-                    sx={{ marginLeft: 1, maxWidth: " 90%" }}
-                    key={item.title}
-                    icon={item.icon}
-                    href={item.href}
-                    title={item.title}
-                  />
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
             </Box>
-          </Box>
-        </Box>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">PRODUCTION</Typography>
-          {production.map((item) => (
-            <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-            </>
-          ))}
-        </Box>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">SALES</Typography>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">WARE HOUSE</Typography>
+              <Box sx={{ marginTop: "2vh" }}>
+                <Accordion
+                  expanded={expanded === "panel1"}
+                  onChange={handleChange("panel1")}
+                  sx={{
+                    backgroundColor: "rgb(17, 24, 39)",
+                    "&:before": {
+                      display: "none",
+                    },
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                  >
+                    <DropdownNavItem
+                      icon={<WarehouseIcon />}
+                      title={wareHouseItemsAccordion[0].title}
+                      sx={{ marginBottom: -2, marginTop: -2 }}
+                    />
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {StockListItems.map((item) => (
+                      <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel2"}
+                  onChange={handleChange("panel2")}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                  sx={{
+                    backgroundColor: "rgb(17, 24, 39)",
+                    "&:before": {
+                      display: "none",
+                    },
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <DropdownNavItem
+                      icon={<RequestedIcon />}
+                      title={wareHouseItemsAccordion[1].title}
+                      sx={{ marginBottom: -2, marginTop: -2 }}
+                    />
+                    {/* <Typography>Accordion 1</Typography> */}
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {RequestedItems.map((item) => (
+                      <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+                <Box>
+                  {wareHouseItems.map((item) => (
+                    <>
+                      <NavItem
+                        sx={{ marginLeft: 1, maxWidth: " 90%" }}
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
+                    </>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">PRODUCTION</Typography>
+              {production.map((item) => (
+                <>
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">SALES</Typography>
 
-          {sales.map((item) => (
-            <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-            </>
-          ))}
-        </Box>
-        </>
-        ): user.role === 'Warehouse' ? (
-          <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">WARE HOUSE</Typography>
-          <Box sx={{ marginTop: "2vh" }}>
-            <Accordion
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
-              sx={{
-                backgroundColor: "rgb(17, 24, 39)",
-                "&:before": {
-                  display: "none",
-                },
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <DropdownNavItem
-                  icon={<WarehouseIcon />}
-                  title={wareHouseItemsAccordion[0].title}
-                  sx={{ marginBottom: -2, marginTop: -2 }}
-                />
-              </AccordionSummary>
-              <AccordionDetails>
-                {StockListItems.map((item) => (
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                ))}
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-              sx={{
-                backgroundColor: "rgb(17, 24, 39)",
-                "&:before": {
-                  display: "none",
-                },
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1d-content"
-                id="panel1d-header"
-              >
-                <DropdownNavItem
-                  icon={<RequestedIcon />}
-                  title={wareHouseItemsAccordion[1].title}
-                  sx={{ marginBottom: -2, marginTop: -2 }}
-                />
-                {/* <Typography>Accordion 1</Typography> */}
-              </AccordionSummary>
-              <AccordionDetails>
-                {RequestedItems.map((item) => (
-                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                ))}
-              </AccordionDetails>
-            </Accordion>
-            <Box>
-              {wareHouseItems.map((item) => (
+              {sales.map((item) => (
                 <>
-                  <NavItem
-                    sx={{ marginLeft: 1, maxWidth: " 90%" }}
-                    key={item.title}
-                    icon={item.icon}
-                    href={item.href}
-                    title={item.title}
-                  />
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
             </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">FINANCE</Typography>
+
+              {Finance.map((item) => (
+                <>
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">USER</Typography>
+
+              {RegisterUser.map((item) => (
+                <>
+                  <NavItem key={item.href} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+          </>
+        ) : user.role === 'Ware House' ? (
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">WARE HOUSE</Typography>
+            <Box sx={{ marginTop: "2vh" }}>
+              <Accordion
+                expanded={expanded === "panel1"}
+                onChange={handleChange("panel1")}
+                sx={{
+                  backgroundColor: "rgb(17, 24, 39)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                >
+                  <DropdownNavItem
+                    icon={<WarehouseIcon />}
+                    title={wareHouseItemsAccordion[0].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                </AccordionSummary>
+                <AccordionDetails>
+                  {StockListItems.map((item) => (
+                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                expanded={expanded === "panel2"}
+                onChange={handleChange("panel2")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(17, 24, 39)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<RequestedIcon />}
+                    title={wareHouseItemsAccordion[1].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {RequestedItems.map((item) => (
+                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              <Box>
+                {wareHouseItems.map((item) => (
+                  <>
+                    <NavItem
+                      sx={{ marginLeft: 1, maxWidth: " 90%" }}
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  </>
+                ))}
+              </Box>
+            </Box>
           </Box>
-        </Box>
         ) : user.role == 'Production' ? (
           <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">PRODUCTION</Typography>
-          {production.map((item) => (
-            <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-            </>
-          ))}
-        </Box>
+            <Typography variant="menuTitle">PRODUCTION</Typography>
+            {production.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
         ) : user.role === 'Sales' ? (
           <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">SALES</Typography>
+            <Typography variant="menuTitle">SALES</Typography>
 
-          {sales.map((item) => (
-            <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-            </>
-          ))}
-        </Box>
+            {sales.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
         ) : user.role === 'Procurment' ? (
           <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">PROCURMENT</Typography>
-          {procurmentItems.map((item) => (
-            <>
-              <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-            </>
-          ))}
-        </Box>
+            <Typography variant="menuTitle">PROCURMENT</Typography>
+            {procurmentItems.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
         ) : null}
-        
+
       </Box>
     </>
   );

@@ -17,7 +17,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import OrderList from "src/components/sales/salesProductList/orderdProductList";
-import axios from '../../components/axios';
+import saxios from '../../components/salesAxios';
 
 const SalesOrderList = () => {
   const [data, setData] = useState([]);
@@ -61,8 +61,9 @@ const SalesOrderList = () => {
   };
 
   useEffect(() => {
-    axios.get("/salesModule/showSalesOrder")
+    saxios.get("/showSalesOrder")
     .then((resp)=>{
+      console.log(resp)
       setData(resp.data)
     })
 
@@ -101,7 +102,12 @@ const SalesOrderList = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <OrderList OrderdId= {selectedData}  handleClose={handleClose} />
+                {
+                  selectedData ? (
+
+                    <OrderList OrderdId= {selectedData.unique_id}  handleClose={handleClose} />
+                  ) : null
+                }
               </Box>
             </Modal>
 

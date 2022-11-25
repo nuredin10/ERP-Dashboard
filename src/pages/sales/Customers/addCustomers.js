@@ -28,7 +28,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
-import axios from "../../../components/axios";
+import saxios from "../../../components/salesAxios";
 
 const AddSiv = () => {
   const [status, setStatus] = React.useState("");
@@ -56,7 +56,7 @@ const AddSiv = () => {
     //   body: JSON.stringify(user),
     // });
 
-    axios.post('/salesModule/addCustomers', user)
+    saxios.post('/salesModule/addCustomers', user)
     .then((res) =>{
       console.log(res.data);
     })

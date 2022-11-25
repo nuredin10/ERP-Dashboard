@@ -5,6 +5,11 @@ import {
   Button,
   Checkbox,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormHelperText,
   Link,
   TextField,
@@ -15,14 +20,19 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import axios from '../../../components/axios';
+import waxios from '../../../components/wareHouseAxios';
 import CustomAlert from '../../../components/alert'
+import { useSnackbar } from "notistack";
+import Cookies from "js-cookie";
 
 const FinishedGoods = () => {
   const [data, setData] = useState([]);
   const [isSuccess, setIsSuccess] = useState('')
   const [alertMsg, setAlertMsg] = useState('')
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [user, setUser] = useState();
 
+  const { enqueueSnackBar } = useSnackbar();
   const columns = [
     { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
@@ -33,19 +43,28 @@ const FinishedGoods = () => {
     { title: "Status", field: "mat_status" },
   ];
 
-  useEffect(() => {
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  }
+  const handleClose = () => {
+    setDialogOpen(false);
+  }
 
-    axios.get('/wareHouse/showStoreRequestion')
-      .then((resp)=>{
+  useEffect(() => {
+    waxios.get('/showStoreRequestion')
+      .then((resp) => {
         console.log(resp.data)
         const finishedData = resp.data.filter((finish) => finish.req_materialtype.includes("FIN"));
         const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
-        setData(pending);
+        setData(finishedData);
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.log(error, "sdfgsdfgsdfgsdfg")
 
       })
+
+      setUser(JSON.parse(Cookies.get("user")));
+
 
     // fetch("https://versavvy.com/ERP_backend/wareHouse/showStoreRequestion")
     //   .then((resp) => resp.json())
@@ -58,27 +77,36 @@ const FinishedGoods = () => {
   }, []);
 
 
-  const accept = async(id) => {
-    await axios.post('/wareHouse/responseStoreRequestion', {
+  const accept = (id) => {
+    waxios.post('/responseStoreRequestion', {
       id: id,
       status: "Accept"
     })
       .then(function (response) {
-        console.log(response);
-        Router.push("/warehouse/requesteditems/RawMaterial")
-        setIsSuccess('success');
-        setAlertMsg('Item Accepted')
+        if (response.data.message === "no_material") {
+          setItem(response.data.materials[0].accs_name);
+          setDialogOpen(true);
+
+        } else {
+          console.log(response);
+          Router.push("/warehouse/requesteditems/FinishedGoods");
+          // setIsSuccess('success');
+          // setAlertMsg('Item Accepted')
+          enqueueSnackbar('Item Accepted', { variant: 'success' })
+
+        }
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
+        setDialogOpen(true)
       });
-      
+
   }
 
-  const decline = async(id) => {
-    await axios.post('/wareHouse/responseStoreRequestion', {
+  const decline = async (id) => {
+    await waxios.post('/responseStoreRequestion', {
       id: id,
       status: "Decline"
     })
@@ -86,11 +114,12 @@ const FinishedGoods = () => {
         console.log(response);
         setIsSuccess('info');
         setAlertMsg('Item Rejected')
+        enqueueSnackBar('Item Rejected',{variant: 'warning'})
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
       });
   }
   // const [finished, setFinished] = useState([]);
@@ -120,23 +149,33 @@ const FinishedGoods = () => {
             Raw Material stockList
           </Typography> */}
           <Card maxWidth="lg">
-            <Table
-              title="Finished Goods"
-              data={data}
-              columns={columns}
-              actions={[
-                rowData => ({
-                  icon: () => < DoneIcon sx={{color: 'green'}}/>,
-                  tooltip: 'Accpet ',
-                  onClick: () => (accept(rowData.id))
-                }),
-                rowData => ({
-                  icon: () => < CloseIcon sx={{ color: 'red' }} />,
-                  tooltip: 'Reject ',
-                  onClick: () => (decline(rowData.id))
-                })
-              ]}
-            />
+            {user && user.role === 'Super Admin' ? (
+
+              <Table
+                title="Finished Goods"
+                data={data}
+                columns={columns}
+                actions={[
+                  rowData => ({
+                    icon: () => < DoneIcon sx={{ color: 'green' }} />,
+                    tooltip: 'Accpet ',
+                    onClick: () => (accept(rowData.id))
+                  }),
+                  rowData => ({
+                    icon: () => < CloseIcon sx={{ color: 'red' }} />,
+                    tooltip: 'Reject ',
+                    onClick: () => (decline(rowData.id))
+                  })
+                ]}
+              />
+            ) : (
+              <Table
+                title="Finished Goods"
+                data={data}
+                columns={columns}
+                
+              />
+            )}
 
             {/* <Typography sx={{ mb: 3 }} variant="h4">
           Supplier

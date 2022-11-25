@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import axios from "axios";
+import wareHouseAxios from '../wareHouseAxios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,8 +51,8 @@ export const OrderResults = (props) => {
 
   const orderOnClickHandler = (e, data) => {
   
-    axios
-      .post("http://localhost:59000/showSummeryByID", {
+    wareHouseAxios
+      .post("/showSummeryByID", {
         id: e.id,
         materialType: "ACCS",
       })
