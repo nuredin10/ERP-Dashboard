@@ -14,29 +14,30 @@ import {
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
-import axios from 'axios'
+import FAxios from '../../components/financeAxios'
 
 const PettyCash = () => {
   const [data, setData] = useState([]);
   const columns = [
-    { title: "Payable Name", field: "payable_name" },
-    { title: "Account Number", field: "payable_accountnum" },
-    { title: "Value", field: "payable_value" },
-    { title: "Person", field: "payable_person" },
-    { title: "First Date", field: "payable_firstdate" },
-    { title: "Last Date", field: "payable_lastdate" },
-    { title: "Status", field: "payable_status" },
+    { title: "To", field: "pay_for" },
+    { title: "Cash Amount", field: "cash_amount" },
+    { title: "Reason", field: "pay_reason" },
+    { title: "Prepared By", field: "accountatnt_name" },
+    { title: "Payed By", field: "payed_by" },
+    { title: "Checked By", field: "checked_by" },
+    { title: "Receipt Number ", field: "recitNum" },
   ];
   useEffect(() => {
 
-    axios.get('/showPettyCash')
+    FAxios.get('/showPettyCash')
     .then((res) =>{
+      console.log(res)
       setData(res.data);
     })
+    .catch((err) =>{
+      console.log(err)
+    })
 
-    // fetch("http://localhost:59000/showCustomers")
-    //   .then((resp) => resp.json())
-    //   .then((resp) => setData(resp));
   }, []);
 
   return (
