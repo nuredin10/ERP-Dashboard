@@ -14,7 +14,7 @@ import {
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
-import axios from 'axios'
+import FAxios from '../../components/financeAxios'
 
 const AccountPayable = () => {
   const [data, setData] = useState([]);
@@ -29,14 +29,15 @@ const AccountPayable = () => {
   ];
   useEffect(() => {
 
-    axios.get('/showaccountpayable')
+    FAxios.get('/showaccountpayable')
     .then((res) =>{
       setData(res.data);
+      console.log(res.data)
+    })
+    .catch((err) =>{
+      console.log(err)
     })
 
-    // fetch("http://localhost:59000/showCustomers")
-    //   .then((resp) => resp.json())
-    //   .then((resp) => setData(resp));
   }, []);
 
   return (

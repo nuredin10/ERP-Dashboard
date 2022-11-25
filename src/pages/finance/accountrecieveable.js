@@ -14,29 +14,29 @@ import {
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
-import axios from 'axios'
+import FAxios from '../../components/financeAxios'
 
 const AccountRecieveable = () => {
     const [data, setData] = useState([]);
     const columns = [
-        { title: "Payable Name", field: "payable_name" },
-        { title: "Account Number", field: "payable_accountnum" },
-        { title: "Value", field: "payable_value" },
-        { title: "Person", field: "payable_person" },
-        { title: "First Date", field: "payable_firstdate" },
-        { title: "Last Date", field: "payable_lastdate" },
-        { title: "Status", field: "payable_status" },
+        { title: "Name", field: "recevable_name" },
+        { title: "Tim Number", field: "recevable_tin" },
+        { title: "Amount", field: "recevable_amount" },
+        { title: "Start Date", field: "recivable_stdate" },
+        { title: "End Date", field: "recevable_endate" },
+        { title: "Status", field: "recevable_status" },
     ];
     useEffect(() => {
 
-        axios.get('/showaccountrecieveable')
+        FAxios.get('/showaccountRecivable')
             .then((res) => {
                 setData(res.data);
             })
+            .catch((err) =>{
+                console.log(err)
+            })
 
-        // fetch("http://localhost:59000/showCustomers")
-        //   .then((resp) => resp.json())
-        //   .then((resp) => setData(resp));
+
     }, []);
 
     return (
@@ -55,7 +55,7 @@ const AccountRecieveable = () => {
                     {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
                     <Card maxWidth="lg">
                         <Table
-                            title="Account Payable"
+                            title="Account Recieveable"
                             data={data}
                             columns={columns}
                         //   options={{
