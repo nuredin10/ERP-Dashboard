@@ -32,6 +32,9 @@ const RawMaterial = () => {
   const [alertMsg, setAlertMsg] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false);
   const [user, setUser] = useState();
+  const [item, setItem] = useState();
+
+
 
   const { enqueueSnackbar } = useSnackbar();
   const columns = [
@@ -82,8 +85,10 @@ const RawMaterial = () => {
     })
       .then(function (response) {
         if (response.data.message === "no_material") {
-          setItem(response.data.materials[0].accs_name);
+          setItem(response.data.materials[0].raw_name);
           setDialogOpen(true);
+
+          console.log(response)
 
         } else {
           console.log(response);
@@ -126,6 +131,34 @@ const RawMaterial = () => {
       <Head>
         <title>RawMaterial</title>
       </Head>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>
+          <h1>Item Unavailable</h1>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <div className="flex flex-row gap-1 items-end">
+              <h1 className="font-bold text-lg text-black">Item Name: </h1>
+              <p>{item && item}</p>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+          sx={{
+            backgroundColor: 'purple'
+          }}
+          onClick={()=>Router.push('/warehouse/PurchaseOrder')}
+          >Purchase</Button>
+          <Button>Cancel</Button>
+        </DialogActions>
+
+      </Dialog>
       {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
       <Box
         component="main"
