@@ -260,6 +260,11 @@ const Finance = [
     icon: <PaymentIcon fontSize="small" />,
     title: 'Add Pettycash'
   },
+  {
+    href: '/finance/assetmanagment',
+    icon: <PaymentIcon fontSize="small" />,
+    title: 'Asset Managment'
+  },
 
 ]
 
