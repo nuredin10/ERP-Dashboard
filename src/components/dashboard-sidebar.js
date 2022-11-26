@@ -110,7 +110,7 @@ const wareHouseItems = [
   {
     href: "/warehouse/PurchaseOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Purchase Request",
+    title: "Purchase Requisition",
   },
 ];
 

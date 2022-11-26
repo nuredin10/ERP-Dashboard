@@ -26,19 +26,65 @@ import Link from "@mui/material/Link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
+import { useForm } from "react-hook-form";
+import SAxios from "../../components/salesAxios";
+import { useSnackbar } from "notistack";
 
 const PurchaseOrder = () => {
   const [status, setStatus] = React.useState("");
+  const { register, handleSubmit, reset } = useForm();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [date, setDate] = useState();
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
 
+  try {
+    var user = JSON.parse(Cookies.get("user"));
+    console.log(user);
+  } catch (err) {
+    console.log("Error: ", err.message);
+  }
+
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day,mnth,date.getFullYear()].join("/");
+  }
+  
+
+  const onSubmit = (newForm) => {
+    const req = {
+      ...newForm,
+      material_requesti: user.userName,
+      department_requesti: "Ware House",
+      date : convert(date)
+    };
+
+    console.log(req);
+    SAxios.post("/requestPurchase", req)
+      .then((res) => {
+        console.log(res);
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
+      })
+      .catch((err) => {
+        console.log(err);
+
+        enqueueSnackbar("Something went wrong", { variant: "error" });
+      });
+  };
+
+  
+
   return (
     <>
       <Head>
-        <title>Purchase Order</title>
+        <title>Purchase Requisition</title>
       </Head>
       <Box
         component="main"
@@ -56,7 +102,7 @@ const PurchaseOrder = () => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ marginLeft: "-60%", marginBottom: "2%" }}>
+          {/* <Box sx={{ marginLeft: "-60%", marginBottom: "2%" }}>
             <Link
               href="/procurment/supplier"
               color="black"
@@ -66,67 +112,84 @@ const PurchaseOrder = () => {
             >
               <ArrowBackIcon /> purchase request
             </Link>
-          </Box>
-          <Card sx={{ width: "70%", padding: "2%" }}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={12}>
-                  <Typography variant="h6">Add Purchase Request</Typography>
+          </Box> */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Card sx={{ width: "70%", padding: "2%" }}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12} sm={12}>
+                    <Typography variant="h6">Add Purchase Requisition</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="material_name"
+                      label="Material Name"
+                      type="text"
+                      fullWidth
+                      {...register("material_name")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="materialId"
+                      label="Form Number"
+                      type="text"
+                      fullWidth
+                      {...register("materialId")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="materialQty"
+                      label="Quantity"
+                      type="text"
+                      fullWidth
+                      {...register("materialQty")}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <DesktopDatePicker
+                      label="Start Date"
+                      inputFormat="MM/dd/yyyy"
+                      value={date}
+                      format="DD-MM-YYYY"
+                      onChange={(newValue) => {
+                        // console.log(newValue);
+                        setDate(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          // name="start_dateTime"
+                          // {...register("start_dateTime")}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="reqStatus"
+                      label="Status"
+                      type="text"
+                      fullWidth
+                      {...register("reqStatus")}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                      Save
+                    </Button>
+                    <Button variant="outlined">Cancel</Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_requestname"
-                    label="Request Name"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item>
-                  {/* <DatePicker
-                    sx={{ maxWidth: 500 }}
-                    name="accs_date"
-                    label="Date"
-                    value={date}
-                    onChange={(e) => setStatus(e.target.value)}
-                  /> */}
-                  <DatePicker
-                    fullWidth
-                    label="Basic example"
-                    value={date}
-                    onChange={(newValue) => {
-                      setDate(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_requestdept"
-                    label="Department"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="mat_reqpersonid"
-                    label="Person ID"
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item>
-                  <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
-                    Save
-                  </Button>
-                  <Button variant="outlined">Cancel</Button>
-                </Grid>
-              </Grid>
-            </LocalizationProvider>
-          </Card>
+              </LocalizationProvider>
+            </Card>
+          </form>
         </Box>
       </Box>
     </>
