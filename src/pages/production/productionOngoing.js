@@ -97,7 +97,8 @@ const ProducitonOngoing = () => {
                 new_description: data.desc,
                 new_materialunit: data.material_unit,
                 new_remark: data.remark,
-                new_materialcode: data.material_code
+                new_materialcode: data.material_code,
+                new_status: "NEW"
             }).then((respo)=>{
                 console.log(respo)
             }
