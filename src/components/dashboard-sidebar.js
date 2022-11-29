@@ -15,7 +15,7 @@ import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { Google as Google } from "../icons/google";
 import { Logo } from "./logo";
-import Image from 'next/image'
+import Image from "next/image";
 import { NavItem } from "./nav-item";
 import { DropdownNavItem } from "./dropdown-nav-item";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -45,11 +45,11 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import StoreIcon from "@mui/icons-material/Store";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
-import AddIcon from '@mui/icons-material/Add';
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import PaymentIcon from '@mui/icons-material/Payment';
+import AddIcon from "@mui/icons-material/Add";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import PaymentIcon from "@mui/icons-material/Payment";
 
 const generalItems = [
   {
@@ -123,12 +123,12 @@ const production = [
   {
     href: "/production/productionOngoing",
     icon: <AutorenewIcon fontSize="small" />,
-    title: "Production Ongoing"
+    title: "Production Ongoing",
   },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
-    title: "Production Finished"
+    title: "Production Finished",
   },
   {
     href: "/production/addnewbatch",
@@ -145,8 +145,19 @@ const production = [
   //   icon: <PurchaseOrderIcon fontSize="small" />,
   //   title: "Add New Batch",
   // },
+  // {
+  //   href: "/production/addproduct",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Order Production",
+  // },
   {
-    href: "/production/addproduct",
+    href: "/production/OrderListGm",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Order List",
+  },
+
+  {
+    href: "/production/GMProductionOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
@@ -233,40 +244,39 @@ const RequestedItems = [
 
 const RegisterUser = [
   {
-    href: '/register',
+    href: "/register",
     icon: <UsersIcon fontSize="small" />,
-    title: 'Register a new User'
-  }
-]
+    title: "Register a new User",
+  },
+];
 
 const Finance = [
   {
-    href: '/finance/accountpayable',
+    href: "/finance/accountpayable",
     icon: <PaymentIcon fontSize="small" />,
-    title: 'Account Payable'
+    title: "Account Payable",
   },
   {
-    href: '/finance/accountrecieveable',
+    href: "/finance/accountrecieveable",
     icon: <PaymentIcon fontSize="small" />,
-    title: 'Account Recieved'
+    title: "Account Recieved",
   },
   {
-    href: '/finance/pettycash',
+    href: "/finance/pettycash",
     icon: <PaymentIcon fontSize="small" />,
-    title: 'Petty Cash'
+    title: "Petty Cash",
   },
   {
-    href: '/finance/addpettycash',
+    href: "/finance/addpettycash",
     icon: <PaymentIcon fontSize="small" />,
-    title: 'Add Pettycash'
+    title: "Add Pettycash",
   },
   {
-    href: '/finance/assetmanagment',
+    href: "/finance/assetmanagment",
     icon: <PaymentIcon fontSize="small" />,
-    title: 'Asset Managment'
+    title: "Asset Managment",
   },
-
-]
+];
 
 export const DashboardSidebar = (props) => {
   const [expanded, setExpanded] = useState(false);
@@ -304,13 +314,12 @@ export const DashboardSidebar = (props) => {
   const token = Cookies.get("token");
   const [user, setUser] = useState({});
   useEffect(() => {
-
     jwt.verify(token, "PROPLAST", (err, decoded) => {
       if (err) {
         console.log(err);
       } else {
         setUser(decoded);
-        console.log("asdcasdc")
+        console.log("asdcasdc");
       }
     });
   }, []);
@@ -325,14 +334,11 @@ export const DashboardSidebar = (props) => {
           height: "100%",
         }}
       >
-
         <div>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5 }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", pt: 5 }}>
             <NextLink href="/" passHref>
               <a>
-                <Image src='/LOGOLIGHT1.svg' height="100" width="200" >
-
-                </Image>
+                <Image src="/LOGOLIGHT1.svg" height="100" width="200"></Image>
                 {/* <Logo
                   sx={{
                     
@@ -391,7 +397,12 @@ export const DashboardSidebar = (props) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     {StockListItems.map((item) => (
-                      <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                      <NavItem
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
                     ))}
                   </AccordionDetails>
                 </Accordion>
@@ -421,7 +432,12 @@ export const DashboardSidebar = (props) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     {RequestedItems.map((item) => (
-                      <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                      <NavItem
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
                     ))}
                   </AccordionDetails>
                 </Accordion>
@@ -480,7 +496,7 @@ export const DashboardSidebar = (props) => {
               ))}
             </Box>
           </>
-        ) : user.role === 'Ware House' ? (
+        ) : user.role === "Ware House" ? (
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">WARE HOUSE</Typography>
             <Box sx={{ marginTop: "2vh" }}>
@@ -507,7 +523,12 @@ export const DashboardSidebar = (props) => {
                 </AccordionSummary>
                 <AccordionDetails>
                   {StockListItems.map((item) => (
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
                   ))}
                 </AccordionDetails>
               </Accordion>
@@ -537,7 +558,12 @@ export const DashboardSidebar = (props) => {
                 </AccordionSummary>
                 <AccordionDetails>
                   {RequestedItems.map((item) => (
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
                   ))}
                 </AccordionDetails>
               </Accordion>
@@ -556,7 +582,7 @@ export const DashboardSidebar = (props) => {
               </Box>
             </Box>
           </Box>
-        ) : user.role == 'Production' ? (
+        ) : user.role == "Production" ? (
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">PRODUCTION</Typography>
             {production.map((item) => (
@@ -565,7 +591,7 @@ export const DashboardSidebar = (props) => {
               </>
             ))}
           </Box>
-        ) : user.role === 'Sales' ? (
+        ) : user.role === "Sales" ? (
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">SALES</Typography>
 
@@ -575,7 +601,7 @@ export const DashboardSidebar = (props) => {
               </>
             ))}
           </Box>
-        ) : user.role === 'Procurment' ? (
+        ) : user.role === "Procurment" ? (
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">PROCURMENT</Typography>
             {procurmentItems.map((item) => (
@@ -585,7 +611,6 @@ export const DashboardSidebar = (props) => {
             ))}
           </Box>
         ) : null}
-
       </Box>
     </>
   );

@@ -9,6 +9,8 @@ import {
   Link,
   TextField,
   Card,
+  Modal,
+  Grid,
   Typography,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
@@ -19,6 +21,12 @@ import InfoIcon from "@mui/icons-material/Info";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
+  const [reason, setReason] = useState({});
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const columns = [
     { title: "Name", field: "recevable_name" },
     { title: "Tim Number", field: "recevable_tin" },
@@ -37,6 +45,43 @@ const AccountRecieveable = () => {
         console.log(err);
       });
   }, []);
+
+  const details = (id) => {
+    const req = {
+      id: id,
+    };
+    FAxios.post("/showReasonById", req)
+      .then((res) => {
+        console.log(res.data[0]);
+        setReason(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // console.log(id)
+    handleOpen();
+  };
+
+  const style = {
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    borderRadius: 1,
+    p: 4,
+    pb: 10,
+  };
+
+  const buttonstyle = {
+    position: "absolute",
+    mt: 20,
+    align: "right",
+    bottom: 10,
+    right: 10,
+  };
 
   return (
     <>
@@ -61,7 +106,7 @@ const AccountRecieveable = () => {
                 (rowData) => ({
                   icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
                   tooltip: "Details",
-                  onClick: () => details(rowData.reason_id),
+                  onClick: () => details(rowData.reasonID),
                 }),
               ]}
               //   options={{
@@ -77,6 +122,74 @@ const AccountRecieveable = () => {
               //   ]}
             />
           </Card>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Grid container spacing={3}>
+                <Grid item lg={12}>
+                  <Typography variant="h5" component="h2">
+                    Recieveable Reason
+                  </Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Description
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_desc}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Name
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_name}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Quantitty
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_quantity}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Specification
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_spec}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Type
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_type}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Unit
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_unit}</Typography>
+                </Grid>
+              </Grid>
+              <Button sx={buttonstyle} variant="contained">
+                Generate DO
+              </Button>
+            </Box>
+          </Modal>
         </Container>
       </Box>
     </>

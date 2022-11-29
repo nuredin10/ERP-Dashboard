@@ -45,6 +45,8 @@ const AccountPayable = () => {
       .catch((err) => {
         console.log(err);
       });
+      
+
   }, []);
 
   const details = (id) => {

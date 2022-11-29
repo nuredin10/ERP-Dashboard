@@ -93,12 +93,14 @@ const ProducitonOngoing = () => {
                 new_spec: data.spec,
                 new_quantity: data.quantity,
                 new_color: data.color,
-                personID: decoded.id,
+                personID: decoded.id ||"AK",
                 new_description: data.desc,
                 new_materialunit: data.material_unit,
                 new_remark: data.remark,
                 new_materialcode: data.material_code
-            }).then(
+            }).then((respo)=>{
+                console.log(respo)
+            }
             
             );
             setFinishModalOpen(false);

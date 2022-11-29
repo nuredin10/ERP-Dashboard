@@ -26,19 +26,29 @@ const AccountRecieveable = () => {
   const [type, setType] = useState('RAW')
   const handleChange = (event) => {
     setType(event.target.value);
+    FAxios.post("/showAssetByType", {materialType: type})
+      .then((res) => {
+        console.log(res.data)
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const columns = [
-    { title: "Name", field: "recevable_name" },
-    { title: "Tim Number", field: "recevable_tin" },
-    { title: "Amount", field: "recevable_amount" },
-    { title: "Start Date", field: "recivable_stdate" },
-    { title: "End Date", field: "recevable_endate" },
-    { title: "Status", field: "recevable_status" },
+    { title: "Name", field: "asset_name" },
+    { title: "Description", field: "asset_desc" },
+    { title: "Specification", field: "asset_spec" },
+    { title: "Quantity", field: "asset_quantity" },
+    { title: "Issued Date", field: "asset_date" },
+    { title: "Department", field: "department" },
+    { title: "Issued by", field: "personRequested" },
   ];
   useEffect(() => {
-    FAxios.get("/showaccountRecivable")
+    FAxios.get("/showAssetMang")
       .then((res) => {
+        console.log(res.data)
         setData(res.data);
       })
       .catch((err) => {

@@ -27,7 +27,7 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 // import productionWxios from "../../components/productionWxios";
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import productionWxios from "../../components/productionWxios";
 import CustomAlert from "src/components/alert";
 
@@ -69,96 +69,98 @@ const ViewBatch = () => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
 
-
     const productionStartHandler = (id) => {
       console.log("Production Started", id);
-      productionWxios.post('/startProduction', {
-        id: id,
-        status: 'PENDING',
-      })
+      productionWxios
+        .post("/startProduction", {
+          id: id,
+          status: "START",
+          userName: "AKLILE"
+        })
         .then(function (response) {
-          if (response.data.message === 'Started !') {
-            console.log('Production has been Started');
-            CustomAlert('success', 'Production has been started');
+          if (response.data.message === "Started !") {
+            console.log("Production has been Started");
+            CustomAlert("success", "Production has been started");
             Router.reload();
-          }
-          else if (response.data.message === 'update status error') {
-            console.log('update Server Error');
-          } else if (response.data.message === 'error making raw material request') {
-            console.log('Error making new request');
-          } else if (response.data.message === 'cant found the order to start') {
-            console.log('Cant find the order')
+          } else if (response.data.message === "update status error") {
+            console.log("update Server Error");
+          } else if (response.data.message === "error making raw material request") {
+            console.log("Error making new request");
+          } else if (response.data.message === "cant found the order to start") {
+            console.log("Cant find the order");
           }
         })
         .catch((error) => {
           console.log(error);
-        })
+        });
+    };
 
-    }
-
-    console.log(rows)
+    console.log(rows);
 
     return (
       <React.Fragment>
-        {
-          row.status == 'PENDING' && 
-        <>
-          <TableRow
-            sx={{ "& > *": { borderBottom: "unset" } }}>
-            <TableCell>
-              <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {row.fin_product}
-            </TableCell>
-            <TableCell align="right">{row.fin_spec}</TableCell>
-            <TableCell align="right">{row.est_westQuan}</TableCell>
-            <TableCell align="right">{row.est_finQuan}</TableCell>
-            <TableCell align="right">{row.status}</TableCell>
-            <TableCell>
-              <IconButton
-                aria-label="expand row" size="small" onClick={() => productionStartHandler(row.id)}>
-                <PlayCircleOutlineIcon style={{ color: 'primary.main' }} />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                <Box sx={{ margin: 1 }}>
-                  <Typography variant="h6" gutterBottom component="div">
-                    Raw Material Needed
-                  </Typography>
-                  <Table size="small" aria-label="purchases">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>mat_requestname</TableCell>
-                        <TableCell>mat_spec</TableCell>
-                        <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Desc</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {row.rowMaterialNeeded.map((matNeeded) => (
-                        <TableRow key={matNeeded.mat_requestname}>
-                          <TableCell component="th" scope="row">
-                            {matNeeded.mat_requestname}
-                          </TableCell>
-                          <TableCell>{matNeeded.mat_spec}</TableCell>
-                          <TableCell align="right">{matNeeded.mat_description}</TableCell>
-                          <TableCell align="right">{matNeeded.mat_quantity}</TableCell>
+        {row.status == "New" && (
+          <>
+            <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+              <TableCell>
+                <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                </IconButton>
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {row.fin_product}
+              </TableCell>
+              <TableCell align="right">{row.fin_spec}</TableCell>
+              <TableCell align="right">{row.est_westQuan}</TableCell>
+              <TableCell align="right">{row.est_finQuan}</TableCell>
+              <TableCell align="right">{row.status}</TableCell>
+              <TableCell>
+                <IconButton
+                  aria-label="expand row"
+                  size="small"
+                  onClick={() => productionStartHandler(row.id)}
+                >
+                  <PlayCircleOutlineIcon style={{ color: "primary.main" }} />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <Box sx={{ margin: 1 }}>
+                    <Typography variant="h6" gutterBottom component="div">
+                      Raw Material Needed
+                    </Typography>
+                    <Table size="small" aria-label="purchases">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>mat_requestname</TableCell>
+                          <TableCell>mat_spec</TableCell>
+                          <TableCell>mat_unit</TableCell>
+                          <TableCell align="right">Quantity</TableCell>
+                          <TableCell align="right">Desc</TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </Box>
-              </Collapse>
-            </TableCell>
-          </TableRow>
-        </>
-        }
+                      </TableHead>
+                      <TableBody>
+                        {row.rowMaterialNeeded.map((matNeeded) => (
+                          <TableRow key={matNeeded.mat_requestname}>
+                            <TableCell component="th" scope="row">
+                              {matNeeded.mat_requestname}
+                            </TableCell>
+                            <TableCell>{matNeeded.mat_spec}</TableCell>
+                            <TableCell>{matNeeded.mat_unit}</TableCell>
+                            <TableCell align="right">{matNeeded.mat_description}</TableCell>
+                            <TableCell align="right">{matNeeded.mat_quantity}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Box>
+                </Collapse>
+              </TableCell>
+            </TableRow>
+          </>
+        )}
       </React.Fragment>
     );
   }
