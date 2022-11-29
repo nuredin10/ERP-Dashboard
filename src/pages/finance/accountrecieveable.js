@@ -39,21 +39,36 @@ const AccountRecieveable = () => {
     FAxios.get("/showaccountRecivable")
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
+        console.log("show data", res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  const details = (id) => {
+  const GernerateDO = (sales, ID) => {
+    console.log("sales", sales);
+    console.log("ID", ID);
+    FAxios.post("/completeSalesOrder", {
+      salesID: sales,
+      ID: ID,
+    })
+      .then((respo) => {
+        console.log(respo);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const details = (id, salesIDs, IDS) => {
     const req = {
       id: id,
     };
     FAxios.post("/showReasonById", req)
       .then((res) => {
-        console.log(res.data[0]);
-        setReason(res.data[0]);
+        const allData = { ...res.data[0], ID: IDS, salesID: salesIDs };
+        console.log("reason", allData);
+        setReason(allData);
       })
       .catch((err) => {
         console.log(err);
@@ -106,7 +121,7 @@ const AccountRecieveable = () => {
                 (rowData) => ({
                   icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
                   tooltip: "Details",
-                  onClick: () => details(rowData.reasonID),
+                  onClick: () => details(rowData.reasonID, rowData.salesID, rowData.id),
                 }),
               ]}
               //   options={{
@@ -185,7 +200,11 @@ const AccountRecieveable = () => {
                   <Typography>{reason.material_unit}</Typography>
                 </Grid>
               </Grid>
-              <Button sx={buttonstyle} variant="contained">
+              <Button
+                sx={buttonstyle}
+                variant="contained"
+                onClick={GernerateDO(reason.salesID, reason.ID)}
+              >
                 Generate DO
               </Button>
             </Box>
