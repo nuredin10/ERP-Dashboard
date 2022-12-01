@@ -31,6 +31,7 @@ const FinishedGoods = () => {
   const [alertMsg, setAlertMsg] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [user, setUser] = useState();
+  const [item, setItem] = useState();
 
   const { enqueueSnackbar } = useSnackbar();
   const columns = [
