@@ -19,10 +19,12 @@ import DoneIcon from "@mui/icons-material/Done";
 import waxios from "../../components/wareHouseAxios";
 import Router from "next/router";
 import Cookies from "js-cookie";
+import { useSnackbar } from "notistack";
 
 const Recieving = () => {
   const [data, setData] = useState([]);
   const [user, setUser] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const columns = [
     { title: "Name", field: "new_name" },
@@ -50,11 +52,15 @@ const Recieving = () => {
         status: "Accept",
       })
       .then(function (response) {
+        enqueueSnackbar("Item Accepted", { variant: 'success' })
         Router.reload(window.location.pathname);
         console.log(response);
+
       })
       .catch(function (error) {
         console.log(error);
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
       });
   };
 
@@ -65,10 +71,14 @@ const Recieving = () => {
         status: "Decline",
       })
       .then(function (response) {
+        enqueueSnackbar("Item Declined", { variant: 'error' })
+
         Router.reload(window.location.pathname);
         console.log(response);
       })
       .catch(function (error) {
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
         console.log(error);
       });
   };

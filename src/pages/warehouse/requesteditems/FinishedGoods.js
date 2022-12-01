@@ -84,11 +84,11 @@ const FinishedGoods = () => {
       .then(function (response) {
         console.log(response);
         if (response.data.message === "no_material") {
-          setItem(response.data.materials[0].accs_name);
+          setItem(response.data.materials[0].fin_name);
           setDialogOpen(true);
         } else {
           console.log(response);
-          // Router.push("/warehouse/requesteditems/FinishedGoods");
+          Router.push("/warehouse/requesteditems/FinishedGoods");
           // setIsSuccess('success');
           // setAlertMsg('Item Accepted')
           enqueueSnackbar("Item Accepted", { variant: "success" });
@@ -130,6 +130,35 @@ const FinishedGoods = () => {
       <Head>
         <title>Finished Goods</title>
       </Head>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>
+          <h1>Item Unavailable</h1>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <div className="flex flex-row gap-1 items-end">
+              <h1 className="font-bold text-lg text-black">Item Name: </h1>
+              <p>{item && item}</p>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{
+              backgroundColor: "purple",
+            }}
+            onClick={() => Router.push("/warehouse/PurchaseOrder")}
+          >
+            Purchase
+          </Button>
+          <Button>Cancel</Button>
+        </DialogActions>
+      </Dialog>
       {isSuccess != "" ? (
         <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
       ) : null}

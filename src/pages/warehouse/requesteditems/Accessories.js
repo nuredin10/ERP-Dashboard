@@ -15,29 +15,27 @@ import {
   DialogTitle,
   Card,
   Typography,
-  Divider
+  Divider,
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
-import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
-import waxios from '../../../components/wareHouseAxios';
-import CustomAlert from '../../../components/alert'
-import Router from 'next/router'
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
+import waxios from "../../../components/wareHouseAxios";
+import CustomAlert from "../../../components/alert";
+import Router from "next/router";
 import { useSnackbar } from "notistack";
 import Cookies from "js-cookie";
 
 const Accessories = () => {
   const [data, setData] = useState([]);
-  const [isSuccess, setIsSuccess] = useState('')
-  const [alertMsg, setAlertMsg] = useState('')
+  const [isSuccess, setIsSuccess] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
   const [item, setItem] = useState();
   const [user, setUser] = useState();
 
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
-
-
 
   const columns = [
     { title: "Name", field: "mat_requestname" },
@@ -51,26 +49,24 @@ const Accessories = () => {
 
   const handleClickOpen = () => {
     setDialogOpen(true);
-  }
+  };
   const handleClose = () => {
     setDialogOpen(false);
-  }
-
+  };
 
   useEffect(() => {
-    waxios.get('/showStoreRequestion')
+    waxios
+      .get("/showStoreRequestion")
       .then((resp) => {
-        console.log(resp.data)
+        console.log(resp.data);
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
         const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
         setData(accessories);
       })
       .catch((error) => {
-        console.log(error, "sdfgsdfgsdfgsdfg")
-
-      })
-      setUser(JSON.parse(Cookies.get("user")));
-
+        console.log(error, "sdfgsdfgsdfgsdfg");
+      });
+    setUser(JSON.parse(Cookies.get("user")));
   }, []);
 
   const [acc, setAcc] = useState([]);
@@ -84,23 +80,19 @@ const Accessories = () => {
         if (response.data.message === "no_material") {
           setItem(response.data.materials[0].accs_name);
           setDialogOpen(true);
-
         } else {
           console.log(response);
           Router.push("/warehouse/requesteditems/Accessories");
           // setIsSuccess('success');
           // setAlertMsg('Item Accepted')
-          enqueueSnackbar('Item Accepted', { variant: 'success' })
-
+          enqueueSnackbar("Item Accepted", { variant: "success" });
         }
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        enqueueSnackbar('Something went wrong', { variant: 'error' })
-
+        setIsSuccess("error");
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       });
-
   };
 
   const decline = async (id) => {
@@ -111,16 +103,15 @@ const Accessories = () => {
       })
       .then(function (response) {
         console.log(response);
-        setIsSuccess('info');
-        setAlertMsg('Item Rejected')
-        enqueueSnackbar('Item Rejected', { variant: 'warning' });
+        setIsSuccess("info");
+        setAlertMsg("Item Rejected");
+        enqueueSnackbar("Item Rejected", { variant: "warning" });
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        enqueueSnackbar('Something went wrong', { variant: 'error' })
+        setIsSuccess("error");
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       });
-
   };
 
   return (
@@ -147,16 +138,19 @@ const Accessories = () => {
         </DialogContent>
         <DialogActions>
           <Button
-          sx={{
-            backgroundColor: 'purple'
-          }}
-          onClick={()=>Router.push('/warehouse/PurchaseOrder')}
-          >Purchase</Button>
+            sx={{
+              backgroundColor: "purple",
+            }}
+            onClick={() => Router.push("/warehouse/PurchaseOrder")}
+          >
+            Purchase
+          </Button>
           <Button>Cancel</Button>
         </DialogActions>
-
       </Dialog>
-      {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
+      {isSuccess != "" ? (
+        <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+      ) : null}
       <Box
         component="main"
         sx={{
@@ -164,12 +158,9 @@ const Accessories = () => {
           my: 12,
         }}
       >
-        <Container
-          maxWidth="ml">
-
+        <Container maxWidth="ml">
           <Card maxWidth="lg">
-            {user && user.role === 'Super Admin' ? (
-
+            {user && user.role === "Super Admin" ? (
               <Table
                 title="Accessories"
                 data={data}
@@ -187,15 +178,9 @@ const Accessories = () => {
                   }),
                 ]}
               />
-            ):(
-              <Table
-                title="Accessories"
-                data={data}
-                columns={columns}
-                
-              />
+            ) : (
+              <Table title="Accessories" data={data} columns={columns} />
             )}
-
           </Card>
         </Container>
       </Box>
