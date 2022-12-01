@@ -50,6 +50,9 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PaymentIcon from "@mui/icons-material/Payment";
+import AddCardIcon from '@mui/icons-material/AddCard';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 const generalItems = [
   {
@@ -258,7 +261,7 @@ const Finance = [
   },
   {
     href: "/finance/accountrecieveable",
-    icon: <PaymentIcon fontSize="small" />,
+    icon: <CreditScoreIcon fontSize="small" />,
     title: "Account Recieved",
   },
   {
@@ -268,12 +271,12 @@ const Finance = [
   },
   {
     href: "/finance/addpettycash",
-    icon: <PaymentIcon fontSize="small" />,
+    icon: <AddCardIcon fontSize="small" />,
     title: "Add Pettycash",
   },
   {
     href: "/finance/assetmanagment",
-    icon: <PaymentIcon fontSize="small" />,
+    icon: <AccountBalanceIcon fontSize="small" />,
     title: "Asset Managment",
   },
 ];

@@ -20,7 +20,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import PAxios from "../../components/productionWxios";
-import InfoIcon from "@mui/icons-material/Info";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useRouter } from "next/router";
 import Router from "next/router";
 
@@ -91,7 +91,7 @@ const GmOrderList = () => {
                   }}
                   actions={[
                     (rowData) => ({
-                      icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
+                      icon: () => <ArrowForwardIosIcon sx={{ color: "primary.main" }} />,
                       tooltip: "Details",
                       onClick: (e) =>
                         Router.push({
