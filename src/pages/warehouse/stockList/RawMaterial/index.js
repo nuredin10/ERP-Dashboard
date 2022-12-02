@@ -286,6 +286,8 @@ const FinishedGoods = () => {
           }}
           maxWidth='ml'>
           <Card maxWidth='lg'>
+            {data&&(
+
             <Table
               title='Raw Materials'
               data={data}
@@ -312,6 +314,7 @@ const FinishedGoods = () => {
             >
 
             </Table>
+            )}
           </Card>
         </Container>
 
