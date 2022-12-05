@@ -60,8 +60,8 @@ const Accessories = () => {
       .then((resp) => {
         console.log(resp.data)
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
-        const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
-        setData(pending);
+        // const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
+        setData(accessories);
       })
       .catch((error) => {
         console.log(error, "sdfgsdfgsdfgsdfg")

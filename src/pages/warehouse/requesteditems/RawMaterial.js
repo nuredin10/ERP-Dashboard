@@ -54,8 +54,8 @@ const RawMaterial = () => {
       .then((resp) => {
         console.log(resp.data)
         const rawMaterial = resp.data.filter((raw) => raw.req_materialtype.includes("RAW"));
-        const pending = rawMaterial.filter((pending) => pending.mat_status.includes("PENDING"));
-        setData(pending);
+        // const pending = rawMaterial.filter((pending) => pending.mat_status.includes("PENDING"));
+        setData(rawMaterial);
       })
       .catch((error) => {
         console.log(error, "sdfgsdfgsdfgsdfg")

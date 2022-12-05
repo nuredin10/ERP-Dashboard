@@ -52,8 +52,8 @@ const FinishedGoods = () => {
       .then((resp) => {
         console.log(resp.data)
         const finishedData = resp.data.filter((finish) => finish.req_materialtype.includes("FIN"));
-        const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
-        setData(pending);
+        // const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
+        setData(finishedData);
       })
       .catch((error) => {
         console.log(error, "sdfgsdfgsdfgsdfg")
