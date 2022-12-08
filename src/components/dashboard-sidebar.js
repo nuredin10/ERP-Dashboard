@@ -131,7 +131,7 @@ const production = [
   {
     href: "/production/productionOngoing",
     icon: <AutorenewIcon fontSize="small" />,
-    title: "Production Ongoing",,
+    title: "Production Ongoing",
   },
   {
     href: "/production/productionFinished",
