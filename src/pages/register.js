@@ -237,7 +237,7 @@ const Register = () => {
                   Sign In
                 </Link>
               </NextLink>
-            </Typography> */}
+            </Typography> 
           </form>
         </Container>
       </Box>
