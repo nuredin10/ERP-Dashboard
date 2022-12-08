@@ -23,6 +23,7 @@ import { useSnackbar } from "notistack";
 const Recieving = () => {
   const [data, setData] = useState([]);
   const [user, setUser] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const columns = [
     { title: "Name", field: "new_name" },
@@ -35,7 +36,6 @@ const Recieving = () => {
     { title: "Specification", field: "new_spec" },
     { title: "Value", field: "new_value" },
   ];
-  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
 
     waxios.get('/shownewPurchased')
@@ -53,13 +53,15 @@ const Recieving = () => {
       status: "Accept"
     })
       .then(function (response) {
+        enqueueSnackbar("Item Accepted", { variant: 'success' })
         Router.reload(window.location.pathname);
         console.log(response);
-        enqueueSnackbar('Accepted', { variant: 'success' });
 
       })
       .catch(function (error) {
         console.log(error);
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
       });
   }
 
@@ -69,11 +71,14 @@ const Recieving = () => {
       status: "Decline"
     })
       .then(function (response) {
+        enqueueSnackbar("Item Declined", { variant: 'error' })
+
         Router.reload(window.location.pathname);
         console.log(response);
-        enqueueSnackbar('Declined', { variant: 'success' })
       })
       .catch(function (error) {
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
         console.log(error);
       });
   }
@@ -90,14 +95,6 @@ const Recieving = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <ToolBar title="Recieving" href="/procurment/paymentrequest/add" /> */}
-
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
           <Card maxWidth="lg">
             {user && user.role === "Super Admin" ? (
               <Table
@@ -120,10 +117,6 @@ const Recieving = () => {
             ) : (
               <Table title="Recieving" data={data} columns={columns} />
             )}
-
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
           </Card>
         </Container>
       </Box>

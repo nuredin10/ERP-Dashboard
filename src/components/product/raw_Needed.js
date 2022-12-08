@@ -107,6 +107,17 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                     fullWidth
                   />
                 </Grid>
+                <Grid item xs={11} lg={2} sm={5} md={5}>
+                  <TextField
+                    required
+                    name="mat_unit"
+                    label="Measuring Unit"
+                    type="text"
+                    value={input.mat_unit}
+                    onChange={event => handleFormChange(index, event)}
+                    fullWidth
+                  />
+                </Grid>
                 <Grid item xs={1} lg={1} sm={1} md={1}>
                   <IconButton onClick={() => removeFields(index)}><RemoveIcon /></IconButton>
                 </Grid>

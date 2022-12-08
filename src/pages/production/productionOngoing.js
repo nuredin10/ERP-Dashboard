@@ -40,9 +40,12 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import productionWxios from "../../components/productionWxios";
 import CustomAlert from "src/components/alert";
 import PauseIcon from '@mui/icons-material/Pause';
+import { useSnackbar } from "notistack";
+
 const ProducitonOngoing = () => {
     const token = Cookies.get('token');
     const decoded = jwt.decode(token);
+    const { enqueueSnackbar } = useSnackbar();
 
     function createData(
         fin_product,
@@ -93,14 +96,20 @@ const ProducitonOngoing = () => {
                 new_spec: data.spec,
                 new_quantity: data.quantity,
                 new_color: data.color,
-                personID: decoded.id,
+                personID: decoded.id ||"AK",
                 new_description: data.desc,
                 new_materialunit: data.material_unit,
                 new_remark: data.remark,
-                new_materialcode: data.material_code
-            }).then(
-            
-            );
+                new_materialcode: data.material_code,
+                new_status: "NEW"
+            }).then((respo)=>{
+                enqueueSnackbar("Production Completed", { variant: 'success' })
+                console.log(respo)
+            })
+            .catch((err) =>{
+                console.log(err)
+                enqueueSnackbar('Something went wrong', { variant: 'error' })
+            })
             setFinishModalOpen(false);
         }
         const style = {

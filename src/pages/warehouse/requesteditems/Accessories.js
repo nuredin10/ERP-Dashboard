@@ -15,27 +15,27 @@ import {
   DialogTitle,
   Card,
   Typography,
-  Divider
+  Divider,
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
-import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
-import waxios from '../../../components/wareHouseAxios';
-import CustomAlert from '../../../components/alert'
-import Router from 'next/router'
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
+import waxios from "../../../components/wareHouseAxios";
+import CustomAlert from "../../../components/alert";
+import Router from "next/router";
 import { useSnackbar } from "notistack";
+import Cookies from "js-cookie";
 
 const Accessories = () => {
   const [data, setData] = useState([]);
-  const [isSuccess, setIsSuccess] = useState('')
-  const [alertMsg, setAlertMsg] = useState('')
+  const [isSuccess, setIsSuccess] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
   const [item, setItem] = useState();
+  const [user, setUser] = useState();
 
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
-
-
 
   const columns = [
     { title: "Name", field: "mat_requestname" },
@@ -49,24 +49,24 @@ const Accessories = () => {
 
   const handleClickOpen = () => {
     setDialogOpen(true);
-  }
+  };
   const handleClose = () => {
     setDialogOpen(false);
-  }
-
+  };
 
   useEffect(() => {
-    waxios.get('/showStoreRequestion')
+    waxios
+      .get("/showStoreRequestion")
       .then((resp) => {
-        console.log(resp.data)
+        console.log(resp.data);
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
         // const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
         setData(accessories);
       })
       .catch((error) => {
-        console.log(error, "sdfgsdfgsdfgsdfg")
-
-      })
+        console.log(error, "sdfgsdfgsdfgsdfg");
+      });
+    setUser(JSON.parse(Cookies.get("user")));
   }, []);
 
   const [acc, setAcc] = useState([]);
@@ -77,26 +77,22 @@ const Accessories = () => {
         status: "Accept",
       })
       .then(function (response) {
-        if (response.data.message === "no material in store please purchase these items") {
+        if (response.data.message === "no_material") {
           setItem(response.data.materials[0].accs_name);
           setDialogOpen(true);
-
         } else {
           console.log(response);
           Router.push("/warehouse/requesteditems/Accessories");
-          setIsSuccess('success');
-          setAlertMsg('Item Accepted')
-          enqueueSnackbar('Item Accepted', { variant: 'success' })
-
+          // setIsSuccess('success');
+          // setAlertMsg('Item Accepted')
+          enqueueSnackbar("Item Accepted", { variant: "success" });
         }
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
-
+        setIsSuccess("error");
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       });
-
   };
 
   const decline = async (id) => {
@@ -107,16 +103,15 @@ const Accessories = () => {
       })
       .then(function (response) {
         console.log(response);
-        setIsSuccess('info');
-        setAlertMsg('Item Rejected')
-        enqueueSnackbar('Item Rejected', { variant: 'warning' });
+        setIsSuccess("info");
+        setAlertMsg("Item Rejected");
+        enqueueSnackbar("Item Rejected", { variant: "warning" });
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        setIsSuccess("error");
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       });
-
   };
 
   return (
@@ -143,16 +138,19 @@ const Accessories = () => {
         </DialogContent>
         <DialogActions>
           <Button
-          sx={{
-            backgroundColor: 'purple'
-          }}
-          onClick={()=>Router.push('/warehouse/PurchaseOrder')}
-          >Purchase</Button>
+            sx={{
+              backgroundColor: "purple",
+            }}
+            onClick={() => Router.push("/warehouse/PurchaseOrder")}
+          >
+            Purchase
+          </Button>
           <Button>Cancel</Button>
         </DialogActions>
-
       </Dialog>
-      {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
+      {isSuccess != "" ? (
+        <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+      ) : null}
       <Box
         component="main"
         sx={{
@@ -160,36 +158,29 @@ const Accessories = () => {
           my: 12,
         }}
       >
-        <Container
-          maxWidth="ml">
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
+        <Container maxWidth="ml">
           <Card maxWidth="lg">
-            <Table
-              title="Accessories"
-              data={data}
-              columns={columns}
-              actions={[
-                (rowData) => ({
-                  icon: () => <DoneIcon sx={{ color: "green" }} />,
-                  tooltip: "Accpet ",
-                  onClick: () => accept(rowData.id),
-                }),
-                (rowData) => ({
-                  icon: () => <CloseIcon sx={{ color: "red" }} />,
-                  tooltip: "Reject ",
-                  onClick: () => decline(rowData.id),
-                }),
-              ]}
-            />
-
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
+            {user && user.role === "Super Admin" ? (
+              <Table
+                title="Accessories"
+                data={data}
+                columns={columns}
+                actions={[
+                  (rowData) => ({
+                    icon: () => <DoneIcon sx={{ color: "green" }} />,
+                    tooltip: "Accpet ",
+                    onClick: () => accept(rowData.id),
+                  }),
+                  (rowData) => ({
+                    icon: () => <CloseIcon sx={{ color: "red" }} />,
+                    tooltip: "Reject ",
+                    onClick: () => decline(rowData.id),
+                  }),
+                ]}
+              />
+            ) : (
+              <Table title="Accessories" data={data} columns={columns} />
+            )}
           </Card>
         </Container>
       </Box>

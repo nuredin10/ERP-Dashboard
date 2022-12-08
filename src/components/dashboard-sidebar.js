@@ -118,7 +118,7 @@ const wareHouseItems = [
   {
     href: "/warehouse/PurchaseOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Purchase Request",
+    title: "Purchase Requisition",
   },
 ];
 
@@ -131,12 +131,12 @@ const production = [
   {
     href: "/production/productionOngoing",
     icon: <AutorenewIcon fontSize="small" />,
-    title: "Production Ongoing",
+    title: "Production Ongoing",,
   },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
-    title: "Production Finished",
+    title: "Production Finished",,
   },
   {
     href: "/production/addnewbatch",
@@ -153,8 +153,19 @@ const production = [
   //   icon: <PurchaseOrderIcon fontSize="small" />,
   //   title: "Add New Batch",
   // },
+  // {
+  //   href: "/production/addproduct",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Order Production",
+  // },
   {
-    href: "/production/addproduct",
+    href: "/production/OrderListGm",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Order List",
+  },
+
+  {
+    href: "/production/GMProductionOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
@@ -307,7 +318,7 @@ export const DashboardSidebar = (props) => {
         console.log(err);
       } else {
         setUser(decoded);
-        console.log("asdcasdc");
+        console.log("asdcasdc");;
       }
     });
   }, []);

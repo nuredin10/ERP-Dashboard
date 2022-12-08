@@ -136,20 +136,6 @@ const Register = () => {
               value={formik.values.email}
               variant="outlined"
             />
-            <Select
-              fullWidth
-              variant="outlined"
-              value={oroles}
-              label="Role"
-              onChange={(e) => setOroles(e.target.value)}
-              placeholder="Sales"
-            >
-              <MenuItem value="Super Admin">Super Admin</MenuItem>
-              <MenuItem value="Sales">Sales</MenuItem>
-              <MenuItem value="Production">Production</MenuItem>
-              <MenuItem value="WareHouse">Ware House</MenuItem>
-              <MenuItem value="Finance">Finance</MenuItem>
-            </Select>
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
