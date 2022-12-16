@@ -40,10 +40,9 @@ const Accessories = () => {
   const columns = [
     { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
-    { title: "Department", field: "mat_requestdept" },
-    { title: "Person Id", field: "mat_reqpersonid" },
-    { title: "Description", field: "mat_description" },
     { title: "Quantity", field: "mat_quantity" },
+    { title: "UOM", field: "mat_unit" },
+    { title: "Person Id", field: "mat_reqpersonid" },
     { title: "Status", field: "mat_status" },
   ];
 
@@ -60,7 +59,7 @@ const Accessories = () => {
       .then((resp) => {
         console.log(resp.data);
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
-        // const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
+        const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
         setData(accessories);
       })
       .catch((error) => {

@@ -32,6 +32,7 @@ const RequestedOrders = () => {
 
     waxios.get('/showPurchaseRequested')
     .then((res) =>{
+      console.log(res.data)
       setData(res.data);
     })
 

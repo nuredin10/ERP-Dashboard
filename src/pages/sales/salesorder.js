@@ -32,6 +32,7 @@ import { useForm } from "react-hook-form";
 import Router from "next/router";
 import OrderInformation from "src/components/sales/orderInformation";
 import saxios from "../../components/salesAxios";
+import CButton from '../../components/Button'
 
 const style = {
   position: "absolute",
@@ -50,7 +51,10 @@ const style = {
 
 const SalesOrder = () => {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (e) => {
+    e.preventDefault();
+    setOpen(true);
+  }
   const handleClose = () => setOpen(false);
 
   const { register, handleSubmit, reset } = useForm();
@@ -212,10 +216,10 @@ const SalesOrder = () => {
                   <Grid item xs={6} sm={6} lg={6}>
                     <Typography variant="h7">Order Information</Typography>
                   </Grid>
-                  <Grid item xs={6} sm={6} lg={6}>
-                    <Button onClick={handleOpen} variant="contained">
+                  <Grid item>
+                    <CButton onClick={(e)=>handleOpen(e)}>
                       Add
-                    </Button>
+                    </CButton>
                   </Grid>
 
                   <Modal
@@ -243,10 +247,10 @@ const SalesOrder = () => {
                         label="Payment method"
                         onChange={handlePaymentChange}
                       >
-                        <MenuItem value={"Pending"}>Pending</MenuItem>
-                        <MenuItem value={"Half_Paied"}>Half Paied</MenuItem>
-                        <MenuItem value={"Paied"}>Paied</MenuItem>
-                        <MenuItem value={"Pending"}>Pending</MenuItem>
+                        <MenuItem value={"Pending"}>Advanced</MenuItem>
+                        <MenuItem value={"Half_Paied"}>Credit</MenuItem>
+                        <MenuItem value={"Paied"}>Cash payed</MenuItem>
+                        
                       </Select>
                     </FormControl>
                   </Grid>
@@ -296,9 +300,12 @@ const SalesOrder = () => {
                   </Grid>
 
                   <Grid item>
-                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                    <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Save
-                    </Button>
+                    </CButton>
+                  </Grid>
+                  <Grid item>
+
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>

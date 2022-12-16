@@ -35,17 +35,23 @@ const FinishedGoods = () => {
     console.log('You are on the server')
   }
   const columns = [
+    // { title: "Name", field: "finished_name" },
+    // { title: "Quantity", field: "finished_quantity" },
+    // { title: "Diameter", field: "finished_diameter" },
+    // { title: "Description", field: "finished_description" },
+    // { title: "Material Code", field: "finished_materialcode" },
+    // { title: "Specification", field: "finished_spec" },
+    // { title: "Material Unit", field: "finished_materialunit" },
+    // { title: "Value", field: "finished_value" },
+    // { title: "Reference Number", field: "finished_referncenum" },
+    // { title: "Date", field: "finished_date" },
+    // { title: "Remark", field: "finished_remark" },
+
     { title: "Name", field: "finished_name" },
     { title: "Quantity", field: "finished_quantity" },
-    { title: "Diameter", field: "finished_diameter" },
-    { title: "Description", field: "finished_description" },
     { title: "Material Code", field: "finished_materialcode" },
-    { title: "Specification", field: "finished_spec" },
     { title: "Material Unit", field: "finished_materialunit" },
-    { title: "Value", field: "finished_value" },
-    { title: "Reference Number", field: "finished_referncenum" },
     { title: "Date", field: "finished_date" },
-    { title: "Remark", field: "finished_remark" },
   ];
   useEffect(() => {
     waxios
@@ -62,7 +68,7 @@ const FinishedGoods = () => {
   return (
     <>
       <Head>
-        <title>Finished Goods</title>
+        <title>Finished Goods | Proplast</title>
       </Head>
       <Box
         component="main"

@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react'
 import Router from 'next/router'
+import LogoutIcon from '@mui/icons-material/Logout';
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3],
@@ -78,30 +79,30 @@ export const DashboardNavbar = (props) => {
           >
             <MenuIcon fontSize="small" />
           </IconButton>
-          <Tooltip title="Search">
+          {/* <Tooltip title="Search">
             <IconButton sx={{ ml: 1 }}>
               <SearchIcon fontSize="small" />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
           <Box sx={{ flexGrow: 1 }} />
-          <Tooltip title="Contacts">
+          {/* <Tooltip title="Contacts">
             <IconButton sx={{ ml: 1 }}>
               <UsersIcon fontSize="small" />
             </IconButton>
-          </Tooltip>
-          <Tooltip title="Notifications">
+          </Tooltip> */}
+          <Tooltip title="Logout">
             <IconButton sx={{ ml: 1 }} onClick={() => {
               Cookies.remove("loggedIn")
               Cookies.remove("token")
               Router.push('/')
             }}>
-              <Badge badgeContent={4} color="primary" variant="dot">
-                <BellIcon fontSize="small" />
-              </Badge>
+              {/* <Badge badgeContent={4} color="primary" variant="dot"> */}
+                <LogoutIcon fontSize="small" />
+              {/* </Badge> */}
             </IconButton>
           </Tooltip>
           {/* <Typography variant='h2' color='black'>{user.userName}</Typography> */}
-          <Avatar
+          {/* <Avatar
             sx={{
               height: 40,
               width: 40,
@@ -110,7 +111,7 @@ export const DashboardNavbar = (props) => {
             src="/static/images/avatars/avatar_1.png"
           >
             <UserCircleIcon fontSize="small" />
-          </Avatar>
+          </Avatar> */}
         </Toolbar>
       </DashboardNavbarRoot>
     </>

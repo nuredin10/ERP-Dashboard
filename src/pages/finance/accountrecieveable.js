@@ -203,7 +203,7 @@ const AccountRecieveable = () => {
               <Button
                 sx={buttonstyle}
                 variant="contained"
-                onClick={GernerateDO(reason.salesID, reason.ID)}
+                onClick={()=>GernerateDO(reason.salesID, reason.ID)}
               >
                 Generate DO
               </Button>

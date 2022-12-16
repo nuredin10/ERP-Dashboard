@@ -55,7 +55,7 @@ const SalesOrderList = () => {
   };
 
   const cartViwer = (rowData) => {
-    console.log(rowData);
+    // console.log(rowData);
     setselectedData(rowData);
     handleOpen();
   };
@@ -63,7 +63,7 @@ const SalesOrderList = () => {
   useEffect(() => {
     saxios.get("/showSalesOrder")
     .then((resp)=>{
-      console.log(resp)
+      // console.log(resp)
       setData(resp.data)
     })
 

@@ -38,10 +38,10 @@ const RawMaterial = () => {
   const columns = [
     { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
-    { title: "Department", field: "mat_requestdept" },
-    { title: "Person Id", field: "mat_reqpersonid" },
-    { title: "Description", field: "mat_description" },
     { title: "Quantity", field: "mat_quantity" },
+    { title: "UOM", field: "mat_unit" },
+    { title: "Person Id", field: "mat_reqpersonid" },
+    // { title: "Description", field: "mat_description" },
     { title: "Status", field: "mat_status" },
   ];
 
@@ -58,7 +58,7 @@ const RawMaterial = () => {
       .then((resp) => {
         console.log(resp.data);
         const rawMaterial = resp.data.filter((raw) => raw.req_materialtype.includes("RAW"));
-        // const pending = rawMaterial.filter((pending) => pending.mat_status.includes("PENDING"));
+        const pending = rawMaterial.filter((pending) => pending.mat_status.includes("PENDING"));
         setData(rawMaterial);
       })
       .catch((error) => {
@@ -81,11 +81,18 @@ const RawMaterial = () => {
         status: "Accept",
       })
       .then(function (response) {
-        console.log(response);
-        // Router.push("/requesteditems/RawMaterial")
-        setIsSuccess("success");
-        setAlertMsg("Item Accepted");
-        enqueueSnackbar("Item Accepted", { variant: "success" });
+        if (response.data.message === "no_material") {
+          setItem(response.data.materials[0].raw_name);
+          setDialogOpen(true);
+
+          console.log(response);
+        } else {
+          console.log(response);
+          Router.push("/warehouse/requesteditems/RawMaterial");
+          // setIsSuccess('success');
+          // setAlertMsg('Item Accepted')
+          enqueueSnackbar("Item Accepted", { variant: "success" });
+        }
       })
       .catch(function (error) {
         console.log(error);

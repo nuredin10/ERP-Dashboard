@@ -50,13 +50,13 @@ const MonthlyReport = () => {
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState();
 
-  const recievedcolumns = [
-    { title: "Date", field: "summery_date" },
-    { title: "Stock at Hand", field: "stockat_hand" },
-    { title: "Stock Recieved", field: "stock_recieved" },
-    { title: "Department Issued", field: "department_issued" },
-    { title: "stock at End", field: "stockat_end" },
-  ];
+  // const recievedcolumns = [
+  //   { title: "Date", field: "summery_date" },
+  //   { title: "Stock at Hand", field: "stockat_hand" },
+  //   { title: "Stock Recieved", field: "stock_recieved" },
+  //   { title: "Department Issued", field: "department_issued" },
+  //   { title: "stock at End", field: "stockat_end" },
+  // ];
   const issuedcolumns = [
     { title: "Date", field: "summery_date" },
     { title: "Stock at Hand", field: "stockat_hand" },
@@ -82,6 +82,7 @@ const MonthlyReport = () => {
         selectedYear: year,
       })
       .then(function (res) {
+        console.log(res,"mmmmmmmmmmmmmmmmmmm")
         res.data.map((eachData) => {
           eachData.summery_date = convert(eachData.summery_date)
         })
@@ -94,16 +95,16 @@ const MonthlyReport = () => {
       });
   }, [date[1], year]);
 
-  useEffect(() => {
-    setRecivedSummery([]);
-    setIssuedSummery([]);
-    data &&
-      data.map((e) => {
-        e.stock_issued == ""
-          ? setRecivedSummery((recievedSummery) => [...recievedSummery, e])
-          : setIssuedSummery((issuedSummery) => [...issuedSummery, e]);
-      });
-  }, [selectMonth, data]);
+  // useEffect(() => {
+  //   setRecivedSummery([]);
+  //   setIssuedSummery([]);
+  //   data &&
+  //     data.map((e) => {
+  //       e.stock_issued == ""
+  //         ? setRecivedSummery((recievedSummery) => [...recievedSummery, e])
+  //         : setIssuedSummery((issuedSummery) => [...issuedSummery, e]);
+  //     });
+  // }, [selectMonth, data]);
 
   // console.log("Hello");
   console.log("date-me-now", convert(date[0]));
@@ -229,7 +230,7 @@ const MonthlyReport = () => {
             <Card maxWidth="lg">
               <Table
                 title="Monthly Stock Issued Report"
-                data={issuedSummery}
+                data={data}
                 columns={issuedcolumns}
               />
             </Card>

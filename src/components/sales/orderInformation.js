@@ -26,7 +26,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 const OrderInformation = ({ setOrderInfo, handleClose }) => {
 
   const [inputFields, setInputFields] = useState([
-    { mat_requestname: '', mat_spec: '', mat_description: '', mat_quantity: '' }
+    { mat_requestname: '', mat_spec: '', mat_description: '', mat_quantity: '',mat_unit:'' }
   ])
 
   const handleFormChange = (index, event) => {
@@ -36,7 +36,7 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
   }
 
   const addFields = () => {
-    let newfield = { mat_requestname: '', mat_spec: '', mat_description: '', mat_quantity: '' }
+    let newfield = { mat_requestname: '', mat_spec: '', mat_description: '', mat_quantity: '',mat_unit: '' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -103,6 +103,17 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                     label="Quantity"
                     type="text"
                     value={input.mat_quantity}
+                    onChange={event => handleFormChange(index, event)}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={11} lg={2} sm={5} md={5}>
+                  <TextField
+                    required
+                    name="mat_unit"
+                    label="UOM"
+                    type="text"
+                    value={input.mat_unit}
                     onChange={event => handleFormChange(index, event)}
                     fullWidth
                   />

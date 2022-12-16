@@ -79,7 +79,7 @@ const MonthlyReport = () => {
       id: id,
       materialType: "FIN",
       selectedDate: { start: date[0], end: date[1] },
-      selectedYead: year
+      selectedYear: year
     })
       .then(function (res) {
         res.data.map((eachData) => {

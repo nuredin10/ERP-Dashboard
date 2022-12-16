@@ -35,6 +35,7 @@ import RawMaterialNeed from "src/components/product/raw_Needed";
 import axios from "axios";
 import CustomAlert from "../../components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
+import CButton from '../../components/Button'
 
 const style = {
   position: "absolute",
@@ -244,9 +245,9 @@ const BatchFile = () => {
                     <Typography variant="h7">Raw Material Needed</Typography>
                   </Grid>
                   <Grid item xs={6} sm={6} lg={6}>
-                    <Button onClick={handleOpen} variant="contained">
+                    <CButton onClick={handleOpen} >
                       Add
-                    </Button>
+                    </CButton>
                   </Grid>
 
                   <Grid item xs={12} sm={12}>
@@ -294,14 +295,15 @@ const BatchFile = () => {
                   </Modal>
 
                   <Grid item>
-                    <Button
+                    <CButton
                       onClick={handleDialogOpen}
-                      type="submit"
-                      sx={{ marginRight: "2rem" }}
-                      variant="contained"
+                     
                     >
                       Save
-                    </Button>
+                    </CButton>
+                  </Grid>
+                  <Grid item>
+
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>

@@ -36,6 +36,7 @@ import RawMaterialNeed from "src/components/product/raw_Needed";
 import CustomAlert from "src/components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 import { useRouter } from "next/router";
+import CButton from '../../components/Button'
 // import paxios from '../../'
 const style = {
   position: "absolute",
@@ -206,10 +207,13 @@ const ProductionOrderGM = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12} sm={12}>
-                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                  <Grid item >
+                    <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Make Order
-                    </Button>
+                    </CButton>
+                  </Grid>
+                  <Grid item>
+
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>

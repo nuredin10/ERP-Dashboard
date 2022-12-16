@@ -18,6 +18,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import waxios from "../../components/wareHouseAxios";
 import Router from "next/router";
+import Cookies from "js-cookie";
 import { useSnackbar } from "notistack";
 
 const Recieving = () => {
@@ -30,28 +31,28 @@ const Recieving = () => {
     { title: "Quantity", field: "new_quantity" },
     { title: "Description", field: "new_description" },
     { title: "Material Code", field: "new_materialcode" },
-    { title: "Material Type", field: "new_materialtype" },
+    // { title: "Material Type", field: "new_materialtype" },
     { title: "Material unit", field: "new_materialunit" },
-    { title: "refernce Number", field: "new_referncenum" },
-    { title: "Specification", field: "new_spec" },
-    { title: "Value", field: "new_value" },
+     { title: "Person", field: "new_person" },
+     { title: "Status", field: "new_status" },
+
+    // { title: "Specification", field: "new_spec" },
+    // { title: "Value", field: "new_value" },
   ];
   useEffect(() => {
-
-    waxios.get('/shownewPurchased')
-      .then((resp) => {
-        const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
-        setData(newPurchased);
-      })
+    waxios.get("/shownewPurchased").then((resp) => {
+      const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
+      setData(newPurchased);
+    });
 
     setUser(JSON.parse(Cookies.get("user")));
   }, []);
-
   const accept = async (id) => {
-    await waxios.post('/confirmPurchased', {
-      id: id,
-      status: "Accept"
-    })
+    await waxios
+      .post("/confirmPurchased", {
+        id: id,
+        status: "Accept",
+      })
       .then(function (response) {
         enqueueSnackbar("Item Accepted", { variant: 'success' })
         Router.reload(window.location.pathname);
@@ -63,16 +64,16 @@ const Recieving = () => {
         enqueueSnackbar('Something went wrong', { variant: 'error' })
 
       });
-  }
+  };
 
   const decline = async (id) => {
-    await waxios.post('/confirmPurchased', {
-      id: id,
-      status: "Decline"
-    })
+    await waxios
+      .post("/confirmPurchased", {
+        id: id,
+        status: "Decline",
+      })
       .then(function (response) {
         enqueueSnackbar("Item Declined", { variant: 'error' })
-
         Router.reload(window.location.pathname);
         console.log(response);
       })
@@ -81,7 +82,8 @@ const Recieving = () => {
 
         console.log(error);
       });
-  }
+  };
+ 
   return (
     <>
       <Head>

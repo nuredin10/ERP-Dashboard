@@ -14,7 +14,7 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
 import { DashboardLayout } from "../../../../components/dashboard-layout";
 import Table from "../../../../components/Table";
@@ -23,29 +23,62 @@ import waxios from "../../../../components/wareHouseAxios";
 
 const Summary = () => {
   const [data, setData] = useState([]);
-  const [type, setType] = useState('RAW')
+  const [type, setType] = useState("RAW");
   const handleChange = (event) => {
     setType(event.target.value);
   };
-  const columns = [
-    { title: "Material Type", field: "material_type" },
-    { title: "Date", field: "summery_date" },
-    { title: "Stock At Hand", field: "stockat_handion" },
-    { title: "Stock Recieved", field: "stock_recieved" },
-    { title: "Stock Issued", field: "stock_issued" },
-    { title: "Department Issued", field: "department_issued" },
-    { title: "Stock At End", field: "stockat_end" },
+  var columns;
 
-  ];
-  const req = {
-    materialType : type
+  if (type === "RAW") {
+    columns = [
+      { title: "Name", field: "raw_name" },
+      { title: "Material Type", field: "material_type" },
+      { title: "Description", field: "raw_description" },
+      { title: "Specification", field: "raw_spec" },
+      { title: "Date", field: "summery_date" },
+      { title: "Stock At Hand", field: "stockat_handion" },
+      { title: "Stock Recieved", field: "stock_recieved" },
+      { title: "Stock Issued", field: "stock_issued" },
+      { title: "Department Issued", field: "department_issued" },
+      { title: "Stock At End", field: "stockat_end" },
+    ];
+  } else if (type === "FIN") {
+    columns = [
+      { title: "Name", field: "finished_name" },
+      { title: "Material Type", field: "material_type" },
+      { title: "Description", field: "finished_description" },
+      { title: "Specification", field: "finished_spec" },
+      { title: "Date", field: "summery_date" },
+      { title: "Stock At Hand", field: "stockat_handion" },
+      { title: "Stock Recieved", field: "stock_recieved" },
+      { title: "Stock Issued", field: "stock_issued" },
+      { title: "Department Issued", field: "department_issued" },
+      { title: "Stock At End", field: "stockat_end" },
+    ];
+  } else{
+    columns = [
+      { title: "Name", field: "accs_name" },
+      { title: "Material Type", field: "material_type" },
+      { title: "Description", field: "accs_description" },
+      { title: "Specification", field: "accs_spec" },
+      { title: "Date", field: "summery_date" },
+      { title: "Stock At Hand", field: "stockat_handion" },
+      { title: "Stock Recieved", field: "stock_recieved" },
+      { title: "Stock Issued", field: "stock_issued" },
+      { title: "Department Issued", field: "department_issued" },
+      { title: "Stock At End", field: "stockat_end" },
+    ];
   }
+
+  const req = {
+    materialType: type,
+  };
   useEffect(() => {
     waxios
-      .post("/showAllByType",req)
+      .post("/showAllByType", req)
       .then((response) => {
         setData(response.data);
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch((response) => {
         console.log(response);
@@ -65,8 +98,8 @@ const Summary = () => {
       >
         <Container maxWidth="ml">
           <Grid Container spacing={3}>
-            <Grid item xg={4} lg={4} sm={12} sx={{mb:3}}>
-              <FormControl >
+            <Grid item xg={4} lg={4} sm={12} sx={{ mb: 3 }}>
+              <FormControl>
                 <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -75,9 +108,9 @@ const Summary = () => {
                   label="Age"
                   onChange={handleChange}
                 >
-                  <MenuItem value={'RAW'}>Raw Material</MenuItem>
-                  <MenuItem value={'ACCS'}>Accessories</MenuItem>
-                  <MenuItem value={'FIN'}>Finished Goods</MenuItem>
+                  <MenuItem value={"RAW"}>Raw Material</MenuItem>
+                  <MenuItem value={"ACCS"}>Accessories</MenuItem>
+                  <MenuItem value={"FIN"}>Finished Goods</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
