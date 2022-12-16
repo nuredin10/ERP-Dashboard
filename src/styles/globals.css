@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.pending-status{
+    background-color: rgb(33, 150, 243);
+}
+.complete-status{
+    background-color: rgb(20, 184, 166);
+}
+.reject-status{
+    background-color: rgb(209, 67, 67);
+}
+.canceld-status{
+    background-color: rgb(255, 176, 32);
+}
+
+.drawer-open{
+    width: 65%;
+}
+
+.drawer-close{
+    width: 100%;
+}
