@@ -269,6 +269,12 @@ const Finance = [
     icon: <CreditScoreIcon fontSize="small" />,
     title: "Account Recieved",
   },
+
+  {
+    href: "/finance/accountRecivableSales",
+    icon: <CreditScoreIcon fontSize="small" />,
+    title: "Sales Orders",
+  },
   {
     href: "/finance/pettycash",
     icon: <PaymentIcon fontSize="small" />,

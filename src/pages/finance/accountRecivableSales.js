@@ -18,6 +18,7 @@ import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import FAxios from "../../components/financeAxios";
 import InfoIcon from "@mui/icons-material/Info";
+import Router from "next/router";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
@@ -28,15 +29,14 @@ const AccountRecieveable = () => {
   const handleClose = () => setOpen(false);
 
   const columns = [
-    { title: "Name", field: "recevable_name" },
-    { title: "Tim Number", field: "recevable_tin" },
-    { title: "Amount", field: "recevable_amount" },
-    { title: "Start Date", field: "recivable_stdate" },
-    { title: "End Date", field: "recevable_endate" },
-    { title: "Status", field: "recevable_status" },
+    { title: "Date", field: "sales_date" },
+    { title: "ORDER REF", field: "salesId" },
+    { title: "Address", field: "customer_address" },
+    { title: "Total", field: "totalCash" },
+    { title: "Status", field: "status" },
   ];
   useEffect(() => {
-    FAxios.get("/showaccountRecivable")
+    FAxios.get("/shoesalesOrderProd")
       .then((res) => {
         setData(res.data);
         console.log("show data", res.data);
@@ -45,37 +45,6 @@ const AccountRecieveable = () => {
         console.log(err);
       });
   }, []);
-
-  const GernerateDO = (sales, ID) => {
-    console.log("sales", sales);
-    console.log("ID", ID);
-    FAxios.post("/completeSalesOrder", {
-      salesID: sales,
-      ID: ID,
-    })
-      .then((respo) => {
-        console.log(respo);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const details = (id, salesIDs, IDS) => {
-    const req = {
-      id: id,
-    };
-    FAxios.post("/showReasonById", req)
-      .then((res) => {
-        const allData = { ...res.data[0], ID: IDS, salesID: salesIDs };
-        console.log("reason", allData);
-        setReason(allData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // console.log(id)
-    handleOpen();
-  };
 
   const style = {
     position: "relative",
@@ -121,7 +90,14 @@ const AccountRecieveable = () => {
                 (rowData) => ({
                   icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
                   tooltip: "Details",
-                  onClick: () => details(rowData.reasonID, rowData.salesID, rowData.id),
+                  onClick: () => {
+                    Router.push({
+                      pathname: "/finance/materialSold",
+                      query: {
+                        id: rowData.id,
+                      },
+                    });
+                  },
                 }),
               ]}
               //   options={{
@@ -203,7 +179,7 @@ const AccountRecieveable = () => {
               <Button
                 sx={buttonstyle}
                 variant="contained"
-                onClick={()=>GernerateDO(reason.salesID, reason.ID)}
+                onClick={() => GernerateDO(reason.salesID, reason.ID)}
               >
                 Generate DO
               </Button>
