@@ -70,7 +70,7 @@ const MonthlyReport = () => {
 
   useEffect(() => {
     waxios.post("/showSummeryByMonth", {
-      id: router2.query,
+      id: router2.query.id,
       materialType: "RAW",
       selectedDate: { start: date[0], end: date[1] },
       selectedYear: year

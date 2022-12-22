@@ -173,6 +173,11 @@ const production = [
 
 const sales = [
   {
+    href: "/sales/salesproductionOrder",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Request production",
+  },
+  {
     href: "/sales/salesorderlist",
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",

@@ -24,14 +24,14 @@ import waxios from "../../../components/wareHouseAxios";
 import CustomAlert from "../../../components/alert";
 import { useSnackbar } from "notistack";
 import Cookies from "js-cookie";
+import Router from "next/router";
 
 const FinishedGoods = () => {
   const [data, setData] = useState([]);
-  const [isSuccess, setIsSuccess] = useState("");
-  const [alertMsg, setAlertMsg] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [user, setUser] = useState();
   const [item, setItem] = useState();
+  const [lowInStock, setLowInStock] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const columns = [
@@ -82,23 +82,28 @@ const FinishedGoods = () => {
         status: "Accept",
       })
       .then(function (response) {
-        console.log(response);
         if (response.data.message === "no_material") {
           setItem(response.data.materials[0].fin_name);
           setDialogOpen(true);
+        } else if (response.data.message === "Low in stock") {
+          setLowInStock(true);
+          setDialogOpen(true);
+          // setItem(response.data.materials[0].fin_name);
+          console.log("lowwwww");
         } else {
           console.log(response);
-          Router.push("/warehouse/requesteditems/FinishedGoods");
+          // Router.push("/warehouse/requesteditems/FinishedGoods");
           // setIsSuccess('success');
           // setAlertMsg('Item Accepted')
           enqueueSnackbar("Item Accepted", { variant: "success" });
         }
+        console.log(response.data.materials[0].fin_name);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log("eeeerrrrrrrrrrrrrr", error);
         enqueueSnackbar("Something went wrong", { variant: "error" });
 
-        setDialogOpen(true);
+        // setDialogOpen(true);
       });
   };
 
@@ -137,13 +142,19 @@ const FinishedGoods = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle>
-          <h1>Item Unavailable</h1>
+          {lowInStock ? <h1>Item Unavailable</h1> : <h1>Item Low In Stock</h1>}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
             <div className="flex flex-row gap-1 items-end">
-              <h1 className="font-bold text-lg text-black">Item Name: </h1>
-              <p>{item && item}</p>
+              {lowInStock ? (
+                <h1 className="font-bold text-lg text-black">Add more item to the stock</h1>
+              ) : (
+                <>
+                  <h1 className="font-bold text-lg text-black">Item Name: </h1>
+                  <p>{item && item}</p>
+                </>
+              )}
             </div>
           </DialogContentText>
         </DialogContent>
@@ -159,9 +170,9 @@ const FinishedGoods = () => {
           <Button>Cancel</Button>
         </DialogActions>
       </Dialog>
-      {isSuccess != "" ? (
+      {/* {isSuccess != "" ? (
         <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
-      ) : null}
+      ) : null} */}
       <Box
         component="main"
         sx={{

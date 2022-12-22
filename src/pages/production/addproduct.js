@@ -115,6 +115,7 @@ const ProductionOrder = () => {
         status: "New",
         start_dateTime: convert(startDate),
         end_dateTime: convert(endDate),
+        salesID: indata.salesID,
       };
     } else {
       newForm = {
@@ -124,8 +125,10 @@ const ProductionOrder = () => {
         start_dateTime: convert(startDate),
         end_dateTime: convert(endDate),
         status: "New",
+        salesID: indata.salesID,
       };
     }
+
     axios
       .post("/addProductionOrder", newForm)
       .then((res) => {
@@ -201,7 +204,7 @@ const ProductionOrder = () => {
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
-                        name="shift"
+                        name="final_desc"
                         label="Description"
                         type="text"
                         fullWidth
@@ -242,23 +245,23 @@ const ProductionOrder = () => {
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
-                        name="batch_mult"
+                        name="final_measureunit"
                         label="Measure Unit"
                         type="text"
                         fullWidth
                         value={indata.final_measureunit}
-                        {...register("batch_mult")}
+                        {...register("final_measureunit")}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
-                        name="production_line"
+                        name="final_color"
                         label="Final Color"
                         type="text"
                         value={indata.final_color}
                         fullWidth
-                        {...register("production_line")}
+                        {...register("final_color")}
                       />
                     </Grid>
                     {/* <Grid item>
