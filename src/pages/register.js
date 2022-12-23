@@ -57,7 +57,7 @@ const Register = () => {
         },
       };
       authAxois
-        .post("signup", data)
+        .post("/signup", data)
         .then((res) => {
           console.log(res);
           if (res.data.message === "signedup") {
