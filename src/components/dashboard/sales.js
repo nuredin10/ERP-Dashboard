@@ -13,7 +13,7 @@ export const Sales = (props) => {
 
   function fetchforGraph() {
     axios
-      .get("http://localhost:11000/salesTotalYearly")
+      .get("https://report.proplast.et/salesTotalYearly")
       .then((res) => {
         console.log(res.data);
         var localthisYear = [];
@@ -127,10 +127,10 @@ export const Sales = (props) => {
       <CardHeader
         action={
           <Button endIcon={<ArrowDropDownIcon fontSize="small" />} size="small">
-            Last 7 days
+            
           </Button>
         }
-        title="Latest Sales"
+        title="Yearly Sales Total"
       />
       <Divider />
       <CardContent>

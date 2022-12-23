@@ -1,23 +1,33 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
-import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import PhoneIcon from '@mui/icons-material/Phone';
-import TabletIcon from '@mui/icons-material/Tablet';
+import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme,Grid } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export const TrafficByDevice = (props) => {
   const theme = useTheme();
 
+  const [listtotal, setListTotal] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://report.proplast.et/donutgraph")
+      .then((res) => {
+        console.log("Donut", res.data)
+        setListTotal(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
+        data: listtotal,
         backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
+    labels: ['UPVC', 'PPR', 'HDPE', 'UPVC fittings', 'PPR Fitting', 'Condutes']
   };
 
   const options = {
@@ -44,28 +54,40 @@ export const TrafficByDevice = (props) => {
 
   const devices = [
     {
-      title: 'Desktop',
-      value: 63,
-      icon: LaptopMacIcon,
+      title: 'UPVC',
+      value: listtotal[0],
       color: '#3F51B5'
     },
     {
-      title: 'Tablet',
-      value: 15,
-      icon: TabletIcon,
+      title: 'PPR',
+      value: listtotal[1], 
       color: '#E53935'
     },
     {
-      title: 'Mobile',
-      value: 23,
-      icon: PhoneIcon,
+      title: 'HDPE',
+      value: listtotal[2],
       color: '#FB8C00'
+    },
+    {
+      title: 'UPVC fittings',
+      value: listtotal[3],
+      color: '#FB8C00'
+    },
+    {
+      title: 'PPR Fitting',
+      value: listtotal[4],
+      color: '#EBE5D8'
+    },
+    {
+      title: 'Condutes',
+      value: listtotal[5],
+      color: '#61482A'
     }
   ];
 
   return (
     <Card {...props}>
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Product Sales" />
       <Divider />
       <CardContent>
         <Box
@@ -86,20 +108,25 @@ export const TrafficByDevice = (props) => {
             pt: 2
           }}
         >
+          <Grid container>
+
           {devices.map(({
             color,
-            icon: Icon,
-            title,
+               title,
             value
           }) => (
-            <Box
+            <Grid
+              item
+              lg={4}
+              sm={4}
+              xs={4}
               key={title}
               sx={{
                 p: 1,
-                textAlign: 'center'
+                textAlign: 'center',
               }}
             >
-              <Icon color="action" />
+              
               <Typography
                 color="textPrimary"
                 variant="body1"
@@ -108,13 +135,14 @@ export const TrafficByDevice = (props) => {
               </Typography>
               <Typography
                 style={{ color }}
-                variant="h4"
+                variant="h5"
               >
                 {value}
                 %
               </Typography>
-            </Box>
+            </Grid>
           ))}
+          </Grid>
         </Box>
       </CardContent>
     </Card>

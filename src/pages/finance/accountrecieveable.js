@@ -28,15 +28,15 @@ const AccountRecieveable = () => {
   const handleClose = () => setOpen(false);
 
   const columns = [
-    { title: "Name", field: "recevable_name" },
-    { title: "Tim Number", field: "recevable_tin" },
-    { title: "Amount", field: "recevable_amount" },
-    { title: "Start Date", field: "recivable_stdate" },
-    { title: "End Date", field: "recevable_endate" },
-    { title: "Status", field: "recevable_status" },
+    { title: "Name", field: "customer_name" },
+    { title: "Tin Number", field: "customer_tin" },
+    { title: "Amount", field: "totalCash" },
+    { title: "Date", field: "sales_date" },
+    { title: "Advance Payment", field: "advances" },
+    { title: "Status", field: "status" },
   ];
   useEffect(() => {
-    FAxios.get("/showaccountRecivable")
+    FAxios.get("/shoesalesOrderProd")
       .then((res) => {
         setData(res.data);
         console.log("show data", res.data);
@@ -46,11 +46,9 @@ const AccountRecieveable = () => {
       });
   }, []);
 
-  const GernerateDO = (sales, ID) => {
-    console.log("sales", sales);
-    console.log("ID", ID);
-    FAxios.post("/completeSalesOrder", {
-      salesID: sales,
+  const GernerateDO = ( ID) => {
+   
+    FAxios.post("/completeRecibableSalesOrder", {
       ID: ID,
     })
       .then((respo) => {
@@ -60,19 +58,8 @@ const AccountRecieveable = () => {
         console.log(err);
       });
   };
-  const details = (id, salesIDs, IDS) => {
-    const req = {
-      id: id,
-    };
-    FAxios.post("/showReasonById", req)
-      .then((res) => {
-        const allData = { ...res.data[0], ID: IDS, salesID: salesIDs };
-        console.log("reason", allData);
-        setReason(allData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const details = (data) => {
+    setReason(data);
     // console.log(id)
     handleOpen();
   };
@@ -121,20 +108,9 @@ const AccountRecieveable = () => {
                 (rowData) => ({
                   icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
                   tooltip: "Details",
-                  onClick: () => details(rowData.reasonID, rowData.salesID, rowData.id),
+                  onClick: () => details(rowData),
                 }),
               ]}
-              //   options={{
-              //     actionsColumnIndex: -1,
-              //     selection: true,
-              //   }}
-              //   actions={[
-              //     {
-              //       tooltip: "Remove All Selected Users",
-              //       icon: "delete",
-              //       onClick: (evt, data) => alert("You want to delete " + data.length + " rows"),
-              //     },
-              //   ]}
             />
           </Card>
 
@@ -153,27 +129,28 @@ const AccountRecieveable = () => {
                 </Grid>
                 <Grid item lg={4}>
                   <Typography variant="h6" component="h2">
-                    Material Description
-                  </Typography>
-                </Grid>
-                <Grid item lg={7}>
-                  <Typography>{reason.material_desc}</Typography>
-                </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="h6" component="h2">
                     Material Name
                   </Typography>
                 </Grid>
                 <Grid item lg={7}>
-                  <Typography>{reason.material_name}</Typography>
+                  <Typography>{reason.product_orderd}</Typography>
                 </Grid>
                 <Grid item lg={4}>
                   <Typography variant="h6" component="h2">
-                    Material Quantitty
+                    Material Description
                   </Typography>
                 </Grid>
                 <Grid item lg={7}>
-                  <Typography>{reason.material_quantity}</Typography>
+                  <Typography>{reason.product_desc}</Typography>
+                </Grid>
+
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Quantity
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.total_product}</Typography>
                 </Grid>
                 <Grid item lg={4}>
                   <Typography variant="h6" component="h2">
@@ -181,31 +158,31 @@ const AccountRecieveable = () => {
                   </Typography>
                 </Grid>
                 <Grid item lg={7}>
-                  <Typography>{reason.material_spec}</Typography>
+                  <Typography>{reason.product_spec}</Typography>
                 </Grid>
                 <Grid item lg={4}>
                   <Typography variant="h6" component="h2">
-                    Material Type
+                    UOM
                   </Typography>
                 </Grid>
                 <Grid item lg={7}>
-                  <Typography>{reason.material_type}</Typography>
+                  <Typography>{reason.mou}</Typography>
                 </Grid>
                 <Grid item lg={4}>
                   <Typography variant="h6" component="h2">
-                    Material Unit
+                    Material Color
                   </Typography>
                 </Grid>
                 <Grid item lg={7}>
-                  <Typography>{reason.material_unit}</Typography>
+                  <Typography>{reason.product_color}</Typography>
                 </Grid>
               </Grid>
               <Button
                 sx={buttonstyle}
                 variant="contained"
-                onClick={()=>GernerateDO(reason.salesID, reason.ID)}
+                onClick={() => GernerateDO( reason.id)}
               >
-                Generate DO
+                Complete Order
               </Button>
             </Box>
           </Modal>

@@ -82,7 +82,7 @@ const MonthlyReport = () => {
         selectedYear: year,
       })
       .then(function (res) {
-        console.log(res,"mmmmmmmmmmmmmmmmmmm")
+      
         res.data.map((eachData) => {
           eachData.summery_date = convert(eachData.summery_date)
         })

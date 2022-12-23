@@ -346,6 +346,7 @@ export const DashboardSidebar = (props) => {
           display: "flex",
           flexDirection: "column",
           height: "100%",
+        //  backgroundColor: "#7F675B"
         }}
       >
         <div>
