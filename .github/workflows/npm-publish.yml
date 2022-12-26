@@ -20,4 +20,4 @@ jobs:
         source: .next/*
         target: /var/www/erp.proplast.et/html
     - name: Restart app
-      run: pm2 restart all
+      run: /home/sam/.nvm/versions/node/v16.18.0/bin/pm2 restart all
