@@ -17,7 +17,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        source: dist/*
+        source: .next/*
         target: /var/www/erp.proplast.et/deploy
     - name: Restart app
       run: pm2 restart all
