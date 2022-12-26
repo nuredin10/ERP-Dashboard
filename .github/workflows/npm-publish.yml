@@ -18,6 +18,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         source: dist/*
-        target: /var/www/erp.proplast.et/html
+        target: /var/www/erp.proplast.et/
     - name: Restart app
       run: pm2 restart all
