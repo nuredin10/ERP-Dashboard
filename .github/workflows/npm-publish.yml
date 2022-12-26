@@ -1,0 +1,23 @@
+name: Deploy Next.js App
+
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - name: Build app
+      run: npm run build
+    - name: Deploy app
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        source: dist/*
+        target: /var/www/erp.proplast.et/html
+    - name: Restart app
+      run: pm2 restart all
