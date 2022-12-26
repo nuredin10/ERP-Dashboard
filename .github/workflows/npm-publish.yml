@@ -18,6 +18,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         source: .next/*
-        target: /var/www/erp.proplast.et/deploy
+        target: /var/www/erp.proplast.et/html
     - name: Restart app
       run: pm2 restart all
