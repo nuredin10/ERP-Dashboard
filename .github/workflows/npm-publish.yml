@@ -19,5 +19,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         source: .next/*
         target: /var/www/erp.proplast.et/html
-    - name: Start app with pm2
+    - name: Install pm2
+      run: npm i -g pm2
+    - name: start pm2
       run: pm2 start index.js
