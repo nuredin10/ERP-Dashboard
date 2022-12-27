@@ -19,8 +19,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         source: .next/*
         target: /var/www/erp.proplast.et/html
-    - name: Add pm2 to PATH
-      env:
-       PATH: /home/sam/.nvm/versions/node/v16.18.0/bin/pm2:$PATH
     - name: Start app with pm2
       run: pm2 start index.js
