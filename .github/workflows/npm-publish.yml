@@ -22,4 +22,4 @@ jobs:
     - name: Install pm2
       run: npm i -g pm2
     - name: start pm2
-      run: pm2 start index.js
+      run: pm2 start npm --name "material-kit-react" -- start
