@@ -106,9 +106,9 @@ const FinishedGoods = () => {
           maxWidth="ml"
         >
           <Grid container spacing={3}>
-            <Grid item xg={3} lg={3} sm={3} sx={{ mb: 3 }}>
+            <Grid item xg={3} lg={3} sm={12} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">
-                SELECT OD
+                Select OD
               </Typography>
               <FormControl>
                 <InputLabel id="demo-simple-select-label">Select OD</InputLabel>
@@ -128,7 +128,7 @@ const FinishedGoods = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xg={3} lg={3} sm={3} sx={{ mb: 3 }}>
+            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">
                 Add OD
               </Typography>
@@ -143,7 +143,7 @@ const FinishedGoods = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xg={3} lg={3} sm={3} sx={{ mb: 3 }}>
+            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">
                 Add PPR
               </Typography>

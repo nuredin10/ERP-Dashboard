@@ -16,12 +16,14 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  IconButton
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import waxios from "../../../components/wareHouseAxios";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 // import Router from "next/router";
+import AddIcon from '@mui/icons-material/Add';
 import OrdersToolBar from "../../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../../components/rawMaterials/order-results";
 import RightDrawer from "../../../components/rawMaterials/RightDrawer";
@@ -109,8 +111,8 @@ const FinishedGoods = () => {
             Raw Material stockList
           </Typography> */}
 
-          <Grid Container spacing={3}>
-            <Grid item xg={4} lg={4} sm={12} sx={{ mb: 3 }}>
+          <Grid container spacing={3}>
+            <Grid item xg={3} lg={3} sm={12} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">
                 SELECT OD
               </Typography>
@@ -136,6 +138,36 @@ const FinishedGoods = () => {
                   <MenuItem value={"110mm"}>OD 110mm</MenuItem>
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xg={3} lg={3} sm={12} sx={{ mb: 3 }}>
+              <Typography sx={{ mb: 3 }} variant="h6">
+                Add OD
+              </Typography>
+              <Grid container>
+                <Grid item lg={6} sm={6} xg={6}>
+                  <TextField name="od" label="Add OD" type="text" />
+                </Grid>
+                <Grid item lg={6} sm={6} xg={6}>
+                  <IconButton size="large" sx={{ mt: 0.5,ml: 1}}>
+                    <AddIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xg={3} lg={3} sm={12} sx={{ mb: 3 }}>
+              <Typography sx={{ mb: 3 }} variant="h6">
+                Add PPR
+              </Typography>
+              <Grid container>
+                <Grid item lg={6} sm={6} xg={6}>
+                  <TextField name="ppr" label="Add PPR" type="text" />
+                </Grid>
+                <Grid item lg={6} sm={6} xg={6}>
+                  <IconButton size="large" sx={{ mt: 0.5,ml: 1}}>
+                    <AddIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
           <Card maxWidth="lg">
