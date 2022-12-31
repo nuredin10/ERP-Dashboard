@@ -20,7 +20,7 @@ import Router from 'next/router';
 import OrdersToolBar from "../../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../../components/rawMaterials/order-results";
 import RightDrawer from "../../../components/rawMaterials/RightDrawer";
-import Router from 'next/router';
+// import Router from 'next/router';
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
   const [data, setData] = useState([]);
