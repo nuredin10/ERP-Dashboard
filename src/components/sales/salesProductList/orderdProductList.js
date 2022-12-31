@@ -47,11 +47,12 @@ const OrderListInformation = ({ OrderdId, handleClose }) => {
         ID: OrderdId,
       })
       .then((resp) => {
-        console.log(res);
+        console.log(resp);
         setData(resp.data);
       })
       .catch((err) => console.log(err));
   }, []);
+
   return (
     <Box
       component="main"

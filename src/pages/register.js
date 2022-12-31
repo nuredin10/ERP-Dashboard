@@ -21,7 +21,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { MenuItem, Select } from "@material-ui/core";
 import { DashboardLayout } from "src/components/dashboard-layout";
 import { useSnackbar } from "notistack";
-
+import CButton from '../components/Button'
 const Register = () => {
   const router = useRouter();
   const [oroles, setOroles] = useState();
@@ -57,7 +57,7 @@ const Register = () => {
         },
       };
       authAxois
-        .post("signup", data)
+        .post("/signup", data)
         .then((res) => {
           console.log(res);
           if (res.data.message === "signedup") {
@@ -178,16 +178,17 @@ const Register = () => {
               <MenuItem value="Procument">Procument</MenuItem>
             </Select>
             <Box sx={{ py: 2 }}>
-              <Button
+              <CButton
                 // color="primary"
                 disabled={formik.isSubmitting}
                 fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
+                // size="large"
+                // type="submit"
+                // variant="contained"
+                
               >
                 Sign Up Now
-              </Button>
+              </CButton>
             </Box>
             {/* <Typography color="textSecondary" variant="body2">
               Have an account?{" "}

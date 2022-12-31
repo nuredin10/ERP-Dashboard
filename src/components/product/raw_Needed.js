@@ -85,6 +85,18 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                     fullWidth
                   />
                 </Grid>
+
+                <Grid item xs={12} lg={3} sm={6} md={6}>
+                  <TextField
+                    required
+                    name="mat_materialcode"
+                    label="material code"
+                    type="text"
+                    value={input.mat_materialcode}
+                    onChange={event => handleFormChange(index, event)}
+                    fullWidth
+                  />
+                </Grid>
                 <Grid item xs={12} lg={3} sm={6} md={6}>
                   <TextField
                     required

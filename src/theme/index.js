@@ -13,9 +13,9 @@ export const theme = createTheme({
   },
   components: {
     MuiButton: {
-      defaultProps: {
-        disableElevation: false,
-      },
+      // defaultProps: {
+      //   disableElevation: false,
+      // },
       styleOverrides: {
         root: {
           textTransform: 'none'
@@ -40,11 +40,11 @@ export const theme = createTheme({
         }
       }
     },
-    // MuiButtonBase: {
-    //   defaultProps: {
-    //     disableRipple: true
-    //   }
-    // },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true
+      }
+    },
     MuiCardContent: {
       styleOverrides: {
         root: {

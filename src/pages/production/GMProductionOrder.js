@@ -36,6 +36,7 @@ import RawMaterialNeed from "src/components/product/raw_Needed";
 import CustomAlert from "src/components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 import { useRouter } from "next/router";
+import CButton from "../../components/Button";
 // import paxios from '../../'
 const style = {
   position: "absolute",
@@ -135,33 +136,67 @@ const ProductionOrderGM = () => {
                     <Typography variant="h5">Add New Production Order</Typography>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <TextField
+                    {/* <TextField
                       required
                       name="fin_product"
                       label="Final Product"
                       type="text"
                       fullWidth
                       {...register("final_product")}
-                    />
+                    /> */}
+
+                    <TextField
+                      name="Final Product"
+                      label="Final Product"
+                      select
+                      defaultValue="RAW"
+                      onChange={(event) => handleFormChange(index, event)}
+                      fullWidth
+                      {...register("final_product")}
+                    >
+                      <MenuItem value="PPR PIPES">PPR PIPES</MenuItem>
+                      <MenuItem value="UPVC PIPES">UPVC PIPES</MenuItem>
+                      <MenuItem value="HDPE PIPES">HDPE PIPES</MenuItem>
+                      <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
+                      <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
+                      <MenuItem value="CONDUTES">CONDUTES</MenuItem>
+                    </TextField>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
                       name="final_color"
                       label="Product Color"
-                      type="text"
+                      select
+                      defaultValue="RAW"
+                      onChange={(event) => handleFormChange(index, event)}
                       fullWidth
                       {...register("final_color")}
+                    >
+                      <MenuItem value="GRAY">GRAY</MenuItem>
+                      <MenuItem value="BLACK">BLACK</MenuItem>
+                      <MenuItem value="ORANGE">ORANGE</MenuItem>
+                      <MenuItem value="White">WHITE</MenuItem>
+                      <MenuItem value="Green">GREEN</MenuItem>
+                    </TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="finished_diameter"
+                      label="Diameter(OD)"
+                      type="text"
+                      fullWidth
+                      {...register("finished_diameter")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="fin_spec"
-                      label="Specification"
+                      name="finished_materialcode"
+                      label="Material Code"
                       type="text"
                       fullWidth
-                      {...register("final_spec")}
+                      {...register("finished_materialcode")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -199,17 +234,19 @@ const ProductionOrderGM = () => {
                     <TextField
                       required
                       name="order_reciver"
-                      label="Order Reciver"
+                      label="Operator name"
                       type="text"
                       fullWidth
                       {...register("order_reciver")}
                     />
                   </Grid>
 
-                  <Grid item xs={12} sm={12}>
-                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                  <Grid item>
+                    <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Make Order
-                    </Button>
+                    </CButton>
+                  </Grid>
+                  <Grid item>
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>

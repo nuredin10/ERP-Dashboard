@@ -30,13 +30,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
+import axios from "../../components/productionWxios";
+// import axios from "axios";
 import RawMaterialNeed from "src/components/product/raw_Needed";
-// import axios from "../../components/axios";
-import axios from "axios";
-import CustomAlert from "../../components/alert";
+import CustomAlert from "src/components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
-import CButton from '../../components/Button'
-
+import { useRouter } from "next/router";
+import CButton from "../../components/Button";
+// import paxios from '../../'
 const style = {
   position: "absolute",
   top: "50%",
@@ -52,74 +53,61 @@ const style = {
   p: 4,
 };
 
-const BatchFile = () => {
+const salesProductionOrder = () => {
   const [open, setOpen] = React.useState(false);
+  const [startDate, setStartDate] = React.useState();
+  const [endDate, setEndDate] = React.useState();
+  const [customOrRegular, setCustomOrRegular] = React.useState("regular");
+  const [indata, setIndata] = React.useState();
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
-
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleDialogOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const { register, handleSubmit, reset } = useForm();
-  const [payment, setPayment] = useState();
+  const [payment, setPayment] = useState("");
   const [orderInfo, setOrderInfo] = useState([]);
+  const [regular, setRegular] = useState([]);
+  const [selectedRegualr, setSelectedRegular] = useState(0);
+
+  const router = useRouter();
+  const { id } = router.query;
 
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
 
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("/");
+  }
+
   var newForm;
-
-  const makeRequest = () => {
-    axios
-      .post("http://localhost:42000/addbatchformula", newForm)
-      .then(function (response) {
-        console.log(response);
-        setIsSuccess("success");
-        setAlertMsg("Saved Successfully");
-      })
-      .catch(function (error) {
-        console.log(error);
-        setIsSuccess("error");
-        setAlertMsg("Something went wrong");
-      });
-      handleDialogClose();
-  };
-
   const newRequest = (data) => {
-    newForm = {
-      ...data,
-      rawmat_list: JSON.stringify(orderInfo),
-    };
-    // console.log( newForm);
-    // axios
-    //   .post("http://localhost:42000/addbatchformula", newForm)
-    //   .then(function (response) {
-    //     console.log(response);
-    //     setIsSuccess("success");
-    //     setAlertMsg("Saved Successfully");
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //     setIsSuccess("error");
-    //     setAlertMsg("Something went wrong");
-    //   });
+    const newData = { ...data, payment };
+    console.log(data);
+    console.log("payment", newData);
+    axios
+      .post("/makesalesProductionOrder", newData)
+      .then((res) => {
+        console.log(res);
+        setIsSuccess("success");
+        setAlertMsg("Production Order Added Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSuccess("error");
+        setAlertMsg("Error Occured");
+      });
   };
 
   return (
     <>
       <Head>
-        <title>Batch File</title>
+        <title>Add Production Order</title>
       </Head>
       <Box
         component="main"
@@ -128,14 +116,11 @@ const BatchFile = () => {
           py: 8,
         }}
       >
-        <ConfirmDialog
-          dialogOpen={dialogOpen}
-          handleClose={handleDialogClose}
-          confirmAction={makeRequest}
-          title="Are you sure?"
-          message="Do you want to save this item?"
-        />
-
+        <Box sx={{ position: "absolute", width: "100%", top: "7%", right: "1%" }}>
+          {isSuccess != "" ? (
+            <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+          ) : null}
+        </Box>
         <Box
           sx={{
             width: "100%",
@@ -150,160 +135,173 @@ const BatchFile = () => {
               <form onSubmit={handleSubmit(newRequest)}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add New Batch File</Typography>
+                    <Typography variant="h5">Add customer detail</Typography>
                   </Grid>
-                  {isSuccess != "" ? (
-                    <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
-                  ) : null}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="finmat_prod"
-                      label="Finished Good"
+                      name="salesID"
+                      label="Sales ID"
                       type="text"
                       fullWidth
-                      {...register("finmat_prod")}
+                      {...register("salesID")}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="customer_name"
+                      label="Customer Name"
+                      type="text"
+                      fullWidth
+                      {...register("customer_name")}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="customer_address"
+                      label="Customer Address"
+                      type="text"
+                      fullWidth
+                      {...register("customer_address")}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="Tin_number"
+                      label="Tin number"
+                      type="text"
+                      fullWidth
+                      {...register("Tin_number")}
+                    />
+                  </Grid>
+
+                  <Grid item lg={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Payment Method</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={payment}
+                        label="Payment method"
+                        onChange={handlePaymentChange}
+                      >
+                        <MenuItem value={"Advanced"}>Advanced</MenuItem>
+                        <MenuItem value={"Credit"}>Credit</MenuItem>
+                        <MenuItem value={"Cash"}>Cash payed</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="cus_total"
+                      label="Payment Total"
+                      type="text"
+                      fullWidth
+                      {...register("cus_total")}
+                    />
+                  </Grid>
+
+                  {payment == "Advanced"?  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="cus_advance"
+                      label="Advance"
+                      type="text"
+                      fullWidth
+                      {...register("cus_advance")}
+                    />
+                  </Grid>: null}
+
+                  {/* =================product desciption====================  */}
+                  <Grid item xs={12} sm={12}>
+                    <Typography variant="h5">Add product detail</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="fin_product"
+                      label="Final Product"
+                      type="text"
+                      fullWidth
+                      {...register("final_product")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="finmat_spec"
+                      name="final_color"
+                      label="Product Color"
+                      type="text"
+                      fullWidth
+                      {...register("final_color")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="fin_spec"
                       label="Specification"
                       type="text"
                       fullWidth
-                      {...register("finmat_spec")}
+                      {...register("final_spec")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="prod_quan"
-                      label="Production Quantity"
+                      name="final_desc"
+                      label="Description"
                       type="text"
                       fullWidth
-                      {...register("prod_quan")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="prod_unit"
-                      label="Production unit"
-                      type="text"
-                      fullWidth
-                      {...register("prod_unit")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Add Factors</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="efficency"
-                      label="Efficency"
-                      type="text"
-                      fullWidth
-                      {...register("efficency")}
+                      {...register("final_desc")}
                     />
                   </Grid>
 
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="shift"
-                      label="Shift"
+                      name="final_quant"
+                      label="Quantity"
                       type="text"
                       fullWidth
-                      {...register("shift")}
+                      {...register("final_quant")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="timeneeded"
-                      label="Time Allocated"
+                      name="final_measureunit"
+                      label="Unit of measurement"
                       type="text"
                       fullWidth
-                      {...register("timeneeded")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="production_line"
-                      label="Production Line"
-                      type="text"
-                      fullWidth
-                      {...register("production_line")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Raw Material Needed</Typography>
-                  </Grid>
-                  <Grid item xs={6} sm={6} lg={6}>
-                    <CButton onClick={handleOpen} >
-                      Add
-                    </CButton>
-                  </Grid>
-
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Expected Waste</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="waste_name"
-                      label="Waste Name"
-                      type="text"
-                      fullWidth
-                      {...register("waste_name")}
+                      {...register("final_measureunit")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="waste_quan"
-                      label="Waste Quantity"
+                      name="order_reciver"
+                      label="Order Reciver"
                       type="text"
                       fullWidth
-                      {...register("waste_quan")}
+                      {...register("order_reciver")}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="waste_unit"
-                      label="Waste unit"
-                      type="text"
-                      fullWidth
-                      {...register("waste_unit")}
-                    />
-                  </Grid>
-                  <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                  >
-                    <Box sx={style}>
-                      <RawMaterialNeed setOrderInfo={setOrderInfo} handleClose={handleClose} />
-                    </Box>
-                  </Modal>
 
                   <Grid item>
-                    <CButton
-                      onClick={handleDialogOpen}
-                     
-                    >
-                      Save
+                    <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                      Make Order
                     </CButton>
                   </Grid>
                   <Grid item>
-
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>
@@ -316,6 +314,6 @@ const BatchFile = () => {
   );
 };
 
-BatchFile.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+salesProductionOrder.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default BatchFile;
+export default salesProductionOrder;

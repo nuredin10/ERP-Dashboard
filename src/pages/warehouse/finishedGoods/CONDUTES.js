@@ -12,14 +12,15 @@ import {
   Typography,
   Divider
 } from "@mui/material";
-import { DashboardLayout } from "../../../../components/dashboard-layout";
-import Table from "../../../../components/Table";
-import waxios from '../../../../components/wareHouseAxios'
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import Table from "../../../components/Table";
+import waxios from '../../../components/wareHouseAxios'
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import Router from 'next/router';
-import OrdersToolBar from "../../../../components/rawMaterials/order-toolbar";
-import { OrderResults } from "../../../../components/rawMaterials/order-results";
-import RightDrawer from "../../../../components/rawMaterials/RightDrawer";
+import OrdersToolBar from "../../../components/rawMaterials/order-toolbar";
+import { OrderResults } from "../../../components/rawMaterials/order-results";
+import RightDrawer from "../../../components/rawMaterials/RightDrawer";
+import Router from 'next/router';
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
   const [data, setData] = useState([]);
@@ -55,7 +56,9 @@ const FinishedGoods = () => {
   ];
   useEffect(() => {
     waxios
-      .get("/finishedMaterial")
+      .post("/finishedMaterialbyCat", {
+        Cat : "Condutes"
+      })
       .then((response) => {
         console.log(response.data, "ZSdc");
         setData(response.data);
@@ -96,7 +99,7 @@ const FinishedGoods = () => {
           </Typography> */}
           <Card maxWidth="lg">
             <Table
-              title="Finished Goods"
+              title="Condutes"
               data={data}
               columns={columns}
               actions={[
@@ -163,66 +166,3 @@ FinishedGoods.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default FinishedGoods;
 
-// import React, { useState, useEffect } from "react";
-// import Head from "next/head";
-// import { Box, Container, Typography, Grid, Divider } from "@mui/material";
-// import { DashboardLayout } from "../../../../components/dashboard-layout";
-
-// // import styles from '../styles/Home.module.css';
-// import OrdersToolBar from "../../../../components/order/order-toolbar";
-// import { OrderResults } from "../../../../components/order/order-results";
-// import RightDrawer from "../../../../components/order/RightDrawer";
-// import waxios from '../../../../components/wareHouseAxios'
-
-// const FinishedGoods = () => {
-//   const [drawer, setDrawer] = useState(false);
-//   const [selectedOrder, setSelectedOrder] = useState([]);
-//   const [summery, setSummery] = useState([]);
-//   const [data, setData] = useState([]);
-
-//   useEffect(() => {
-//     waxios.get("/finishedMaterial")
-//       .then((response)=>{
-//           console.log(response)
-//           setData(response.data)
-//         })
-//       .catch((response)=>{
-//         console.log(response)
-//       })
-//   }, []);
-
-//   // console.log(selectedOrder)
-
-//   return (
-//     <>
-//       <Head>
-//         <title>Orders | Material Kit</title>
-//       </Head>
-//       <Box component="main">
-//         <Container maxWidth={false}>
-//           <Box>
-//             <OrdersToolBar drawer={drawer}></OrdersToolBar>
-//             <OrderResults
-//               drawer={drawer}
-//               setDrawer={setDrawer}
-//               setSelectedOrder={setSelectedOrder}
-//               setSummery={setSummery}
-//               data={data}
-//             />
-            // <RightDrawer
-            //   drawer={drawer  }
-            //   setDrawer={setDrawer}
-            //   selectedOrder={selectedOrder}
-            //   summery={summery}
-            // />
-//             <Divider sx={{ borderColor: "gray", mt: 3 }} />
-//           </Box>
-//         </Container>
-//       </Box>
-//     </>
-//   );
-// };
-
-// FinishedGoods.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
-
-// export default FinishedGoods;

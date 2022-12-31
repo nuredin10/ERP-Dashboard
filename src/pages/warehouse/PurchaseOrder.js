@@ -30,8 +30,9 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
-import SAxios from "../../components/salesAxios";
+import WAxios from "../../components/wareHouseAxios";
 import { useSnackbar } from "notistack";
+import CButton from '../../components/Button'
 
 const PurchaseOrder = () => {
   const [status, setStatus] = React.useState("");
@@ -54,20 +55,19 @@ const PurchaseOrder = () => {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
-    return [day,mnth,date.getFullYear()].join("/");
+    return [day, mnth, date.getFullYear()].join("/");
   }
-  
 
   const onSubmit = (newForm) => {
     const req = {
       ...newForm,
       material_requesti: user.userName,
       department_requesti: "Ware House",
-      date : convert(date)
+      date: convert(date),
     };
 
     console.log(req);
-    SAxios.post("/requestPurchase", req)
+    WAxios.post("/requestPurchase", req)
       .then((res) => {
         console.log(res);
         enqueueSnackbar("Saved Successfully", { variant: "success" });
@@ -78,8 +78,6 @@ const PurchaseOrder = () => {
         enqueueSnackbar("Something went wrong", { variant: "error" });
       });
   };
-
-  
 
   return (
     <>
@@ -181,9 +179,12 @@ const PurchaseOrder = () => {
                     />
                   </Grid>
                   <Grid item>
-                    <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                    <CButton >
                       Save
-                    </Button>
+                    </CButton>
+                  </Grid>
+                  <Grid item>
+
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>

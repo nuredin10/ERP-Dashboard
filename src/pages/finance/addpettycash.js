@@ -21,7 +21,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useForm } from "react-hook-form";
 import FAxios from '../../components/financeAxios'
 import { useSnackbar } from "notistack";
-
+import CButton from '../../components/Button'
 const AddPettyCash = () => {
   const { register, handleSubmit, reset } = useForm();
 
@@ -108,9 +108,13 @@ const AddPettyCash = () => {
                   />
                 </Grid>
                 <Grid item>
-                  <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                  <CButton>
                     Save
-                  </Button>
+                  </CButton>
+
+                </Grid>
+                <Grid item>
+
                   <Button variant="outlined">Cancel</Button>
                 </Grid>
               </Grid>
