@@ -20,6 +20,7 @@ import { DashboardLayout } from "../../../../components/dashboard-layout";
 import Table from "../../../../components/Table";
 import ToolBar from "../../../../components/ToolBar";
 import waxios from "../../../../components/wareHouseAxios";
+import SummarizeIcon from "@mui/icons-material/Summarize";
 
 const Summary = () => {
   const [data, setData] = useState([]);
@@ -55,7 +56,7 @@ const Summary = () => {
       { title: "Department Issued", field: "department_issued" },
       { title: "Stock At End", field: "stockat_end" },
     ];
-  } else{
+  } else {
     columns = [
       { title: "Name", field: "accs_name" },
       { title: "Material Type", field: "material_type" },
@@ -105,7 +106,7 @@ const Summary = () => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={type}
-                  label="Age"
+                  label="type"
                   onChange={handleChange}
                 >
                   <MenuItem value={"RAW"}>Raw Material</MenuItem>
@@ -116,7 +117,24 @@ const Summary = () => {
             </Grid>
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
-                <Table title="Summary Report" data={data} columns={columns} />
+                <Table
+                  title="Summary Report"
+                  data={data}
+                  columns={columns}
+                  actions={[
+                    (rowData) => ({
+                      icon: () => <SummarizeIcon size="small" />,
+                      tooltip: "Summary",
+                      onClick: () => {
+                        // console.log(rowData)
+                        Router.push({
+                          pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
+                          query: { id: rowData.id },
+                        });
+                      },
+                    }),
+                  ]}
+                />
               </Card>
             </Grid>
           </Grid>

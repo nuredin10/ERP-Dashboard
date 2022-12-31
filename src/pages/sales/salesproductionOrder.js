@@ -135,7 +135,7 @@ const salesProductionOrder = () => {
               <form onSubmit={handleSubmit(newRequest)}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add customer detaile</Typography>
+                    <Typography variant="h5">Add customer detail</Typography>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -222,7 +222,7 @@ const salesProductionOrder = () => {
 
                   {/* =================product desciption====================  */}
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add product detaile</Typography>
+                    <Typography variant="h5">Add product detail</Typography>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField

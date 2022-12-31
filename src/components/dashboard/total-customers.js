@@ -29,7 +29,7 @@ export const TotalCustomers = (props) => {
   const [total, setTotal] = useState("");
   useEffect(() => {
     axios
-      .get("https://report.proplast.et/getuncollectedMoney")
+      .get("http://localhost:11000/getuncollectedMoney")
       .then((res) => {
         const formatedCash = nFormatter(res.data.Total);
         setTotal(formatedCash);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import {
   Box,
@@ -20,10 +20,14 @@ import FAxios from "../../components/financeAxios";
 import InfoIcon from "@mui/icons-material/Info";
 import Router from "next/router";
 
+import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
+import xlsx from "xlsx";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
+
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
   const [reason, setReason] = useState({});
-
+  const sheetRef = useRef();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -66,6 +70,16 @@ const AccountRecieveable = () => {
     bottom: 10,
     right: 10,
   };
+  const excel = () => {
+    const XLSX = xlsx;
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet(data);
+    utils.book_append_sheet(workbook, worksheet, "Report");
+    writeFileXLSX(workbook, "Report.xlsx");
+  };
+  const print = useReactToPrint({
+    content: () => sheetRef.current,
+  });
 
   return (
     <>
@@ -80,40 +94,61 @@ const AccountRecieveable = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
-          <Card maxWidth="lg">
-            <Table
-              title="Account Recieveable"
-              data={data}
-              columns={columns}
-              actions={[
-                (rowData) => ({
-                  icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
-                  tooltip: "Details",
-                  onClick: () => {
-                    Router.push({
-                      pathname: "/finance/materialSold",
-                      query: {
-                        id: rowData.id,
-                      },
-                    });
-                  },
-                }),
-              ]}
-              //   options={{
-              //     actionsColumnIndex: -1,
-              //     selection: true,
-              //   }}
-              //   actions={[
-              //     {
-              //       tooltip: "Remove All Selected Users",
-              //       icon: "delete",
-              //       onClick: (evt, data) => alert("You want to delete " + data.length + " rows"),
-              //     },
-              //   ]}
-            />
-          </Card>
+          <Grid
+            sx={{
+              marginLeft: 20,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "space-between",
+              justifyContent: "space-between",
+            }}
+          >
+            <Button onClick={excel} component="a" disableRipple variant="contained">
+              Excel
+            </Button>
 
+            <Button
+              onClick={print}
+              sx={{
+                ml: 5,
+              }}
+              component="a"
+              disableRipple
+              variant="contained"
+            >
+              Print
+            </Button>
+          </Grid>
+          <div>
+            <Card maxWidth="lg">
+              <Table
+                title="Account Recieveable"
+                data={data}
+                columns={columns}
+                actions={[
+                  (rowData) => ({
+                    icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
+                    tooltip: "Details",
+                    onClick: () => {
+                      Router.push({
+                        pathname: "/finance/materialSold",
+                        query: {
+                          id: rowData.id,
+                        },
+                      });
+                    },
+                  }),
+                ]}
+              
+              />
+
+              <div className="hidden">
+                <div ref={sheetRef}>
+                  <Table title="Account Recieveable" data={data} columns={columns} />
+                </div>
+              </div>
+            </Card>
+          </div>
           <Modal
             open={open}
             onClose={handleClose}

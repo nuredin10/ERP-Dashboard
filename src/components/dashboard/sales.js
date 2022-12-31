@@ -13,7 +13,7 @@ export const Sales = (props) => {
 
   function fetchforGraph() {
     axios
-      .get("https://report.proplast.et/salesTotalYearly")
+      .get("http://localhost:11000/salesTotalYearly")
       .then((res) => {
         console.log(res.data);
         var localthisYear = [];

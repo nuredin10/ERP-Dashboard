@@ -36,7 +36,7 @@ export const Budget = (props) => {
 
   useEffect(() => {
     axios
-      .get("https://report.proplast.et/getProfit")
+      .get("http://localhost:11000/getProfit")
       .then((res) => {
         var totalProfit = 0.0;
         console.log(res.data);

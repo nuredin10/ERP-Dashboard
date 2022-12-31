@@ -9,7 +9,7 @@ export const TrafficByDevice = (props) => {
   const [listtotal, setListTotal] = useState([]);
   useEffect(() => {
     axios
-      .get("https://report.proplast.et/donutgraph")
+      .get("http://localhost:11000/donutgraph")
       .then((res) => {
         console.log("Donut", res.data)
         setListTotal(res.data);

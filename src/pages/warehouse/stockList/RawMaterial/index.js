@@ -39,11 +39,12 @@ const FinishedGoods = () => {
     console.log("You are on the server");
   }
   const columns = [
-    { title: "Name", field: "raw_name" },
-    { title: "Quantity", field: "raw_quantity" },
-    { title: "Material Code", field: "raw_materialcode" },
-    { title: "Material Unit", field: "raw_materialunit" },
     { title: "Date", field: "raw_date" },
+    { title: "Name", field: "raw_name" },
+    { title: "Material Code", field: "raw_materialcode" },
+    { title: "Quantity", field: "raw_quantity" },
+    { title: "Material Unit", field: "raw_materialunit" },
+    
   ];
 
   useEffect(() => {

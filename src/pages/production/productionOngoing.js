@@ -30,6 +30,9 @@ import {
   Modal,
   Typography,
   Divider,
+  MenuItem,
+  Select,
+  FormGroup,
 } from "@mui/material";
 
 import { DashboardLayout } from "../../components/dashboard-layout";
@@ -47,29 +50,24 @@ const ProducitonOngoing = () => {
 
   function createData(
     fin_product,
-    fin_spec,
-    est_westQuan,
-    est_finQuan,
+    finished_diameter,
+    finished_materialcode,
+    fin_quan,
+    mesuring_unit,
+    final_color,
     status,
     id,
-    custom_batch_id,
     rowMaterialNeeded
   ) {
     return {
       fin_product,
-      fin_spec,
-      // est_finQuan,
-      est_westQuan,
-      est_finQuan,
+      finished_diameter,
+      finished_materialcode,
+      fin_quan,
+      mesuring_unit,
+      final_color,
       status,
       id,
-      // efficency,
-      // shift,
-      // production_line,
-      // waste_name,
-      // waste_quan,
-      // waste_unit,
-      custom_batch_id,
       rowMaterialNeeded,
     };
   }
@@ -77,7 +75,21 @@ const ProducitonOngoing = () => {
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = useState(false);
+    const [finname, setfinName] = useState("PPR PIPES");
+    const [spec, setSpec] = useState("");
+
     const [finishModalOpen, setFinishModalOpen] = useState(false);
+    const handleFormChange = (event) => {
+      setfinName(event.target.value);
+
+      console.log(event.target.value);
+      console.log(finname);
+    };
+
+    const handleFormChangeSpec = (event) => {
+      setSpec(event.target.value);
+      console.log(name);
+    };
     const {
       register,
       handleSubmit,
@@ -138,9 +150,10 @@ const ProducitonOngoing = () => {
               <TableCell component="th" scope="row">
                 {row.fin_product}
               </TableCell>
-              <TableCell align="right">{row.fin_spec}</TableCell>
-              <TableCell align="right">{row.est_westQuan}</TableCell>
-              <TableCell align="right">{row.est_finQuan}</TableCell>
+              <TableCell align="right">{row.fin_desc}</TableCell>
+              <TableCell align="right">{row.fin_quan}</TableCell>
+              <TableCell align="right">{row.mesuring_unit}</TableCell>
+              <TableCell align="right">{row.final_color}</TableCell>
               <TableCell align="right">{row.status}</TableCell>
               <TableCell align="right">
                 <IconButton
@@ -164,7 +177,25 @@ const ProducitonOngoing = () => {
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                       <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="grid grid-cols-3 gap-5">
-                          <TextField label="Name" variant="outlined" {...register("name")} />
+                          {/* <TextField label="Name" variant="outlined" {...register("name")} /> */}
+
+                          <TextField
+                            name="Final Product"
+                            label="Final Product"
+                            select
+                            onChange={handleFormChange}
+                            fullWidth
+                            value={finname}
+                            // {...register("name")}
+                          >
+                            <MenuItem value="PPR PIPES">PPR PIPES</MenuItem>
+                            <MenuItem value="UPVC PIPES">UPVC PIPES</MenuItem>
+                            <MenuItem value="HDPE PIPES">HDPE PIPES</MenuItem>
+                            <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
+                            <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
+                            <MenuItem value="CONDUTES">CONDUTES</MenuItem>,
+                          </TextField>
+
                           <TextField label="Spec" variant="outlined" {...register("spec")} />
                           <TextField
                             label="Quantity"
@@ -214,9 +245,10 @@ const ProducitonOngoing = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell>mat_requestname</TableCell>
-                          <TableCell>mat_spec</TableCell>
-                          <TableCell align="right">Quantity</TableCell>
+                          <TableCell>Material Code</TableCell>
                           <TableCell align="right">Desc</TableCell>
+                          <TableCell>mat_unit</TableCell>
+                          <TableCell align="right">Quantity</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -225,8 +257,9 @@ const ProducitonOngoing = () => {
                             <TableCell component="th" scope="row">
                               {matNeeded.mat_requestname}
                             </TableCell>
-                            <TableCell>{matNeeded.mat_spec}</TableCell>
+                            <TableCell>{matNeeded.mat_materialcode}</TableCell>
                             <TableCell align="right">{matNeeded.mat_description}</TableCell>
+                            <TableCell>{matNeeded.mat_unit}</TableCell>
                             <TableCell align="right">{matNeeded.mat_quantity}</TableCell>
                           </TableRow>
                         ))}
@@ -277,12 +310,19 @@ const ProducitonOngoing = () => {
     rows.push(
       createData(
         item.fin_product,
-        item.fin_spec,
-        item.est_westQuan,
-        item.est_finQuan,
+        item.finished_diameter,
+        item.finished_materialcode,
+        item.fin_quan,
+        item.mesuring_unit,
+        item.final_color,
         item.status,
         item.id,
-        item.custom_batch_id,
+
+        // item.shift,
+        // item.production_line,
+        // item.waste_name,
+        // item.waste_quan,
+        // item.waste_unit,
         item.rawmat_list ? JSON.parse(item.rawmat_list) : JSON.parse(item.raw_mat_needed)
       )
     );
@@ -305,12 +345,13 @@ const ProducitonOngoing = () => {
             <TableHead>
               <TableRow>
                 <TableCell />
-                <TableCell>Final Products</TableCell>
-                <TableCell align="right">Final Specification</TableCell>
-                <TableCell align="right">Estimated Final Quantity</TableCell>
-                <TableCell align="right">Estimated Waste Quantity</TableCell>
+                <TableCell>Final Product</TableCell>
+                <TableCell align="right">Diameter</TableCell>
+                <TableCell align="right">Material Code</TableCell>
+                <TableCell align="right">Final Quantity</TableCell>
+                <TableCell align="right">UOM</TableCell>
+                <TableCell align="right">Color</TableCell>
                 <TableCell align="right">Status</TableCell>
-                <TableCell align="right">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

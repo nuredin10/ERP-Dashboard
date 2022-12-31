@@ -43,12 +43,14 @@ const GmOrderList = () => {
 
   const columns = [
     { title: "Name", field: "final_product" },
-    { title: "Description", field: "final_desc" },
-    { title: "Specification", field: "final_spec" },
+    // { title: "Description", field: "final_desc" },
+    { title: "Material Diameter", field: "finished_diameter" },
+
+    { title: "Material Code", field: "finished_materialcode" },
     { title: "Quantity", field: "final_quant" },
     { title: "Measure Unit", field: "final_measureunit" },
     { title: "Color", field: "final_color" },
-    { title: "Order For", field: "order_reciver" },
+    { title: "Operator Name", field: "order_reciver" },
     { title: "Date Ordered", field: "order_date" },
     { title: "Status", field: "final_status" },
     // { title: "Action", field: "final_status" },
@@ -82,7 +84,7 @@ const GmOrderList = () => {
               <Card maxWidth="lg">
                 {/* <Table title="GM Production Order" data={data} columns={columns} actions={"true"} /> */}
                 <Table
-                  title="Account Payable"
+                  title="Production Order List"
                   data={data}
                   columns={columns}
                   options={{

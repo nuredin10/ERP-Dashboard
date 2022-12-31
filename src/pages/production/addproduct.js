@@ -116,6 +116,7 @@ const ProductionOrder = () => {
         start_dateTime: convert(startDate),
         end_dateTime: convert(endDate),
         salesID: indata.salesID,
+        GMID: indata.id
       };
     } else {
       newForm = {
@@ -126,6 +127,7 @@ const ProductionOrder = () => {
         end_dateTime: convert(endDate),
         status: "New",
         salesID: indata.salesID,
+        GMID: indata.id
       };
     }
 
@@ -178,6 +180,7 @@ const ProductionOrder = () => {
                     <Grid item xs={12} sm={12}>
                       <Typography variant="h5">Add New Production Order</Typography>
                     </Grid>
+
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
@@ -193,23 +196,23 @@ const ProductionOrder = () => {
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
-                        name="fin_spec"
-                        label="Specification"
+                        name="finished_materialcode"
+                        label="Material Code"
                         type="text"
                         fullWidth
-                        value={indata.final_spec}
-                        {...register("fin_spec")}
+                        value={indata.finished_materialcode}
+                        {...register("finished_materialcode")}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
-                        name="final_desc"
-                        label="Description"
+                        name="finished_diameter"
+                        label="Diameter"
                         type="text"
                         fullWidth
-                        value={indata.final_desc}
-                        {...register("shift")}
+                        value={indata.finished_diameter}
+                        {...register("finished_diameter")}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -224,24 +227,6 @@ const ProductionOrder = () => {
                       />
                     </Grid>
 
-                    {/* <Grid item lg={6} sm={12}>
-                      <DesktopDatePicker
-                        label="End Date"
-                        inputFormat="MM/dd/yyyy"
-                        value={endDate}
-                        onChange={(newValue) => {
-                          setEndDate(newValue);
-                        }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                            name="end_dateTime"
-                            {...register("end_dateTime")}
-                          />
-                        )}
-                      />
-                    </Grid> */}
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
@@ -264,22 +249,7 @@ const ProductionOrder = () => {
                         {...register("final_color")}
                       />
                     </Grid>
-                    {/* <Grid item>
-                      <Typography variant="h7">Custom or Regular</Typography>
-                    </Grid> */}
-                    {/* <Grid item xs={6} sm={6}>
-                      <InputLabel id="demo-simple-select-label">Custom or Regular</InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={customOrRegular}
-                        label="Custom or Regular"
-                        onChange={(event) => setCustomOrRegular(event.target.value)}
-                      >
-                        <MenuItem value={"custom"}>Custom</MenuItem>
-                        <MenuItem value={"regular"}>Regular</MenuItem>
-                      </Select>
-                    </Grid> */}
+                  
                     {customOrRegular === "custom" ? (
                       <>
                         <Grid item xs={12} sm={6}>
@@ -291,22 +261,13 @@ const ProductionOrder = () => {
                           <TextField
                             required
                             name="expected_fin_qty"
-                            label="Expected Final Quantity"
+                            label="FS NUMBER"
                             type="text"
                             fullWidth
-                            {...register("expected_fin_qty")}
+                            {...register("FS_NUMBER")}
                           />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            required
-                            name="expected_waste_quan"
-                            label="Expected Waste Quantity"
-                            type="text"
-                            fullWidth
-                            {...register("expected_waste_quan")}
-                          />
-                        </Grid>
+                     
 
                         <Modal
                           open={open}

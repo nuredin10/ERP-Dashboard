@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import { useRouter } from "next/router";
@@ -33,6 +33,7 @@ import OrdersToolBar from "../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../components/rawMaterials/order-results";
 import RightDrawer from "../../components/rawMaterials/RightDrawer";
 import Router from "next/router";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
 
 const FinishedGoods = () => {
   const router2 = useRouter();
@@ -40,6 +41,7 @@ const FinishedGoods = () => {
   const [data, setData] = useState([]);
   const [productdata, setproductData] = useState([]);
   const [profitData, setProfitData] = useState([]);
+  const sheetRef = useRef();
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -94,6 +96,10 @@ const FinishedGoods = () => {
       });
   }, []);
 
+  const print = useReactToPrint({
+    content: () => sheetRef.current,
+  });
+
   return (
     <>
       <Head>
@@ -116,7 +122,18 @@ const FinishedGoods = () => {
           }}
           maxWidth="ml"
         >
-          <Grid container spacing={3}>
+          <Button
+            onClick={print}
+            sx={{
+              ml: 5,
+            }}
+            component="a"
+            disableRipple
+            variant="contained"
+          >
+            Print
+          </Button>
+          <Grid container spacing={3} ref={sheetRef}>
             <Grid item sx={{ width: "100%" }}>
               <Typography variant="h5" sx={{ my: 2 }}>
                 Customer Information
