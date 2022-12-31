@@ -18,7 +18,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         source: .next/*
-        target: /var/www/erp.proplast.et/html
+        target: /home/sam/ERP-Dashboard
     - name: Install pm2
       run: npm i -g pm2
     - name: start pm2
