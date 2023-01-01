@@ -41,6 +41,7 @@
     "material-table": "^2.0.3",
     "mui-datatables": "^4.2.2",
     "next": "^12.3.1",
+    
     "nextjs-progressbar": "^0.0.14",
     "notistack": "^2.0.8",
     "nprogress": "^0.2.0",
