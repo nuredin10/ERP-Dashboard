@@ -67,6 +67,8 @@ const salesProductionOrder = () => {
 
   const { register, handleSubmit, reset } = useForm();
   const [payment, setPayment] = useState("");
+  const [MethodExe, setMethodExe] = useState("");
+
   const [orderInfo, setOrderInfo] = useState([]);
   const [regular, setRegular] = useState([]);
   const [selectedRegualr, setSelectedRegular] = useState(0);
@@ -76,6 +78,10 @@ const salesProductionOrder = () => {
 
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
+  };
+
+  const handleMethodChange = (newValue) => {
+    setMethodExe(newValue.target.value);
   };
 
   function convert(str) {
@@ -209,93 +215,180 @@ const salesProductionOrder = () => {
                     />
                   </Grid>
 
-                  {payment == "Advanced"?  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="cus_advance"
-                      label="Advance"
-                      type="text"
-                      fullWidth
-                      {...register("cus_advance")}
-                    />
-                  </Grid>: null}
+                  <Grid item lg={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Order For</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={MethodExe}
+                        label="Order To"
+                        onChange={handleMethodChange}
+                      >
+                        <MenuItem value={"Production"}>Production</MenuItem>
+                        <MenuItem value={"WareHouse"}>WareHouse</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
 
+                  {payment == "Advanced" ? (
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="cus_advance"
+                        label="Advance"
+                        type="text"
+                        fullWidth
+                        {...register("cus_advance")}
+                      />
+                    </Grid>
+                  ) : null}
                   {/* =================product desciption====================  */}
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add product detail</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="fin_product"
-                      label="Final Product"
-                      type="text"
-                      fullWidth
-                      {...register("final_product")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="final_color"
-                      label="Product Color"
-                      type="text"
-                      fullWidth
-                      {...register("final_color")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="fin_spec"
-                      label="Specification"
-                      type="text"
-                      fullWidth
-                      {...register("final_spec")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="final_desc"
-                      label="Description"
-                      type="text"
-                      fullWidth
-                      {...register("final_desc")}
-                    />
-                  </Grid>
+                  {MethodExe == "Production" ? (
+                    <>
+                      <Grid item xs={12} sm={12}>
+                        <Typography variant="h5">Add product detail</Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="fin_product"
+                          label="Final Product"
+                          type="text"
+                          fullWidth
+                          {...register("final_product")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_color"
+                          label="Product Color"
+                          type="text"
+                          fullWidth
+                          {...register("final_color")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="fin_spec"
+                          label="Specification"
+                          type="text"
+                          fullWidth
+                          {...register("final_spec")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_desc"
+                          label="Description"
+                          type="text"
+                          fullWidth
+                          {...register("final_desc")}
+                        />
+                      </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="final_quant"
-                      label="Quantity"
-                      type="text"
-                      fullWidth
-                      {...register("final_quant")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="final_measureunit"
-                      label="Unit of measurement"
-                      type="text"
-                      fullWidth
-                      {...register("final_measureunit")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="order_reciver"
-                      label="Order Reciver"
-                      type="text"
-                      fullWidth
-                      {...register("order_reciver")}
-                    />
-                  </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_quant"
+                          label="Quantity"
+                          type="text"
+                          fullWidth
+                          {...register("final_quant")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_measureunit"
+                          label="Unit of measurement"
+                          type="text"
+                          fullWidth
+                          {...register("final_measureunit")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="order_reciver"
+                          label="Order Reciver"
+                          type="text"
+                          fullWidth
+                          {...register("order_reciver")}
+                        />
+                      </Grid>
+                    </>
+                  ) : (
+                    <>
+                      <Grid item xs={12} sm={12}>
+                        <Typography variant="h5">Add product detail</Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="fin_product"
+                          label="Final Product"
+                          type="text"
+                          fullWidth
+                          {...register("final_product")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_color"
+                          label="Product Color"
+                          type="text"
+                          fullWidth
+                          {...register("final_color")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="fin_spec"
+                          label="Materials Code"
+                          type="text"
+                          fullWidth
+                          {...register("final_materialCode")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_desc"
+                          label="Diameter"
+                          type="text"
+                          fullWidth
+                          {...register("final_diameter")}
+                        />
+                      </Grid>
 
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_quant"
+                          label="Quantity"
+                          type="text"
+                          fullWidth
+                          {...register("final_quant")}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          required
+                          name="final_measureunit"
+                          label="Unit of measurement"
+                          type="text"
+                          fullWidth
+                          {...register("final_measureunit")}
+                        />
+                      </Grid>
+                    </>
+                  )}
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Make Order

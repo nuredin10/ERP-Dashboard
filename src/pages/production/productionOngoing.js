@@ -98,22 +98,25 @@ const ProducitonOngoing = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-      console.log(data);
-      console.log(row);
+      console.log("data", data);
+      console.log("row", row);
       productionWxios
         .post("/addProductProduced", {
           prodID: row.id,
-          new_name: data.name,
-          new_spec: data.spec,
+          new_name: row.fin_product,
+          new_color: row.final_color,
+          new_diameter: row.finished_diameter,
+          new_materialcode: row.finished_materialcode,
           new_quantity: data.quantity,
-          new_color: data.color,
-          personID: decoded.userName || "AK",
-          new_description: data.desc,
+          oldQuantity: row.fin_quan,
           new_materialunit: data.material_unit,
-          new_remark: data.remark,
-          new_materialcode: data.material_code,
           new_status: "NEW",
           salesID: row.custom_batch_id,
+          FSNumber: data.Fs_number,
+          // new_spec: data.spec,
+          personID: decoded.userName || "Production",
+          // new_description: data.desc,
+          // new_remark: data.remark,
         })
         .then((respo) => {
           enqueueSnackbar("Production Completed", { variant: "success" });
@@ -179,7 +182,7 @@ const ProducitonOngoing = () => {
                         <div className="grid grid-cols-3 gap-5">
                           {/* <TextField label="Name" variant="outlined" {...register("name")} /> */}
 
-                          <TextField
+                          {/* <TextField
                             name="Final Product"
                             label="Final Product"
                             select
@@ -196,25 +199,20 @@ const ProducitonOngoing = () => {
                             <MenuItem value="CONDUTES">CONDUTES</MenuItem>,
                           </TextField>
 
-                          <TextField label="Spec" variant="outlined" {...register("spec")} />
+                          <TextField label="Spec" variant="outlined" {...register("spec")} /> */}
                           <TextField
                             label="Quantity"
                             variant="outlined"
                             {...register("quantity")}
                           />
-                          <TextField label="Color" variant="outlined" {...register("color")} />
-                          <TextField label="Description" variant="outlined" {...register("desc")} />
+                          <TextField label="Fs Number" variant="outlined" {...register("Fs_number")} />
+                          {/* <TextField label="Description" variant="outlined" {...register("desc")} /> */}
                           <TextField
                             label="Material Unit"
                             variant="outlined"
                             {...register("material_unit")}
                           />
-                          <TextField label="Remark" variant="outlined" {...register("remark")} />
-                          <TextField
-                            label="Material Code"
-                            variant="outlined"
-                            {...register("material_code")}
-                          />
+                        
                         </div>
                         <Box sx={{ mt: 3 }}>
                           <Button
