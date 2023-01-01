@@ -35,6 +35,7 @@ const Recieving = () => {
     { title: "Specification", field: "new_spec" },
     { title: "Value", field: "new_value" },
   ];
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     waxios.get("/shownewPurchased").then((resp) => {
       const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
@@ -52,6 +53,8 @@ const Recieving = () => {
       .then(function (response) {
         Router.reload(window.location.pathname);
         console.log(response);
+        enqueueSnackbar('Accepted', { variant: 'success' });
+
       })
       .catch(function (error) {
         console.log(error);
@@ -67,6 +70,7 @@ const Recieving = () => {
       .then(function (response) {
         Router.reload(window.location.pathname);
         console.log(response);
+        enqueueSnackbar('Declined', { variant: 'success' })
       })
       .catch(function (error) {
         console.log(error);

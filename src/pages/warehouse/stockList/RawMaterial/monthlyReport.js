@@ -9,7 +9,7 @@ import {
   Select,
   FormGroup,
   Checkbox,
-  Box, 
+  Box,
   Button,
   Card,
   InputLabel,
@@ -17,7 +17,7 @@ import {
   Container,
   Typography,
   Grid,
-  DatePicker,
+
 } from "@mui/material";
 import { DashboardLayout } from '../../../../components/dashboard-layout';
 import Table from '../../../../components/Table'
@@ -29,23 +29,21 @@ import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
 import xlsx from 'xlsx';
 import { FormControlUnstyledContext } from '@mui/base';
 import ReactToPrint, { useReactToPrint } from 'react-to-print';
-
-// import * as cptable from 'xlsx/dist/xpexcel.full.mjs';
-// set_cptable(cptable);
+import { DateRangePicker } from '@mantine/dates';
 
 const MonthlyReport = () => {
   const [selectMonth, setSelectMonth] = useState('')
   const sheetRef = useRef();
-  // const id = 
   const handleMonthChange = (e) => {
     setSelectMonth(e.target.value)
   }
   const router = useRouter()
-  
+
   const router2 = useRouter();
   const { id } = router2.query;
 
   const [data, setData] = useState([]);
+  const [date, setDate] = useState([]);
 
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);
@@ -66,30 +64,21 @@ const MonthlyReport = () => {
     { title: "stock at End", field: "stockat_end" },
   ];
 
-  // const req = {
-  //   id: id,
-  //   materialType: "RAW",
-  //   selectedMonth: ""
-  // }
-  // console.log(req);
   useEffect(() => {
-    // console.log(req);
     waxios.post("/showSummeryByMonth", {
       id: id,
       materialType: "RAW",
-      selectedMonth: ""
+      selectedMonth: date
     })
       .then(function (res) {
         setData(res.data);
         console.log(res.data);
         console.log('Works');
-        // console.log("new req")
       })
       .catch(function (res) {
         console.log(res)
       })
-    // console.log(req)
-  }, [selectMonth]);
+  }, [date]);
 
   useEffect(() => {
     setRecivedSummery([])
@@ -99,27 +88,14 @@ const MonthlyReport = () => {
     })
   }, [selectMonth, data])
 
-
+  console.log(date);
   const excel = () => {
-    const data2 = [
-      {
-        'Date': '12-1201-12',
-        'Email': 'natty@gail.com',
-        'Name': 'Natnael Engeda'
-      },
-    ];
 
     const XLSX = xlsx;
     const workbook = utils.book_new();
-    const worksheet = utils.json_to_sheet(data2);
-    // console.log(worksheet)
+    const worksheet = utils.json_to_sheet(data);
     utils.book_append_sheet(workbook, worksheet, "Report");
     writeFileXLSX(workbook, "Report.xlsx");
-    // var table_elt = sheetRef;
-    // var workbook = XLSX.utils.table_to_book(table_elt);
-    // var ws = workbook.Sheets["Sheet1"];
-
-    // XLSX.writeFile(workbook, "Report.xlsb");
   }
   const print = useReactToPrint({
     content: () => sheetRef.current
@@ -164,32 +140,12 @@ const MonthlyReport = () => {
               <Typography variant="h6" sx={{ textAlign: "center" }}>Select Month</Typography>
             </Grid>
             <Grid item lg={2}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Job Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="JobType"
-                  value={selectMonth}
-                  label="Month"
-                  onChange={handleMonthChange}
-                >
-                  <MenuItem value="0">Janurary</MenuItem>
-                  <MenuItem value="1">February</MenuItem>
-                  <MenuItem value="2">March</MenuItem>
-                  <MenuItem value="3">April</MenuItem>
-                  <MenuItem value="4">May</MenuItem>
-                  <MenuItem value="5">June</MenuItem>
-                  <MenuItem value="6">July</MenuItem>
-                  <MenuItem value="7">August</MenuItem>
-                  <MenuItem value="8">September</MenuItem>
-                  <MenuItem value="9">October</MenuItem>
-                  <MenuItem value="10">Novermber</MenuItem>
-                  <MenuItem value="11">December</MenuItem>
-                </Select>
-              </FormControl>
+              <DateRangePicker
+                placeholder="Pick date"
+                onChange={setDate}
+              />
             </Grid>
+
             <Grid
               sx={{
                 marginLeft: 20,
@@ -226,13 +182,6 @@ const MonthlyReport = () => {
           <div
             ref={sheetRef}
           >
-            {/* <Card maxWidth="lg">
-              <Table
-                title='Monthly Stock Recieved Report'
-                data={recievedSummery}
-                columns={recievedcolumns}
-              />
-            </Card> */}
             <Card maxWidth="lg">
               <Table
                 title='Monthly Stock Issued Report'

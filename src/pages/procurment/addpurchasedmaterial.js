@@ -319,18 +319,19 @@ const Addpurchasedmaterial = () => {
                         value={input.new_materialtype}
                         onChange={(event) => handleFormChange(index, event)}
                       /> */}
-                      <Select
-                        label="Material Type"
+                      <TextField
                         name="new_materialtype"
-                        type="select"
+                        label="Material Type"
+                        placeholder="Material Type"
                         value={input.new_materialtype}
+                        select
                         defaultValue="RAW"
                         onChange={(event) => handleFormChange(index, event)}
                         fullWidth
                       >
                         <MenuItem value="RAW">RAW</MenuItem>
                         <MenuItem value="ACCS">ACCS</MenuItem>
-                      </Select>
+                      </TextField>
                     </Grid>
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
