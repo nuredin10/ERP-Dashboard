@@ -75,6 +75,7 @@ const procurmentItems = [
     title: "Purchase Orders",
   },
  
+ 
 ];
 
 const wareHouseItemsAccordion = [
@@ -139,11 +140,13 @@ const production = [
     title: "Production Finished",
   },
  
+ 
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
     title: "Order List",
   },
+
 
 
 ];
@@ -165,6 +168,7 @@ const GMproduction = [
     title: "Production Finished",
   },
   
+  
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
@@ -176,6 +180,7 @@ const GMproduction = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
+  
   
 ];
 
@@ -190,6 +195,7 @@ const sales = [
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",
   },
+ 
  
   {
     href: "/sales/vender",
@@ -206,6 +212,7 @@ const sales = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Summery",
   },
+ 
  
 ];
 
