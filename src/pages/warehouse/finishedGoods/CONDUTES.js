@@ -16,7 +16,6 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import waxios from '../../../components/wareHouseAxios'
 import SummarizeIcon from '@mui/icons-material/Summarize';
-import Router from 'next/router';
 import OrdersToolBar from "../../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../../components/rawMaterials/order-results";
 import RightDrawer from "../../../components/rawMaterials/RightDrawer";
@@ -36,28 +35,16 @@ const FinishedGoods = () => {
     console.log('You are on the server')
   }
   const columns = [
-    // { title: "Name", field: "finished_name" },
-    // { title: "Quantity", field: "finished_quantity" },
-    // { title: "Diameter", field: "finished_diameter" },
-    // { title: "Description", field: "finished_description" },
-    // { title: "Material Code", field: "finished_materialcode" },
-    // { title: "Specification", field: "finished_spec" },
-    // { title: "Material Unit", field: "finished_materialunit" },
-    // { title: "Value", field: "finished_value" },
-    // { title: "Reference Number", field: "finished_referncenum" },
-    // { title: "Date", field: "finished_date" },
-    // { title: "Remark", field: "finished_remark" },
-
-    { title: "Name", field: "finished_name" },
-    { title: "Quantity", field: "finished_quantity" },
-    { title: "Material Code", field: "finished_materialcode" },
-    { title: "Material Unit", field: "finished_materialunit" },
     { title: "Date", field: "finished_date" },
+    { title: "Description", field: "finished_diameter" },
+    { title: "Material Code", field: "finished_materialcode" },
+    { title: "Color", field: "color" },
+    { title: "Stock At Hand", field: "finished_quantity" },
   ];
   useEffect(() => {
     waxios
       .post("/finishedMaterialbyCat", {
-        Cat : "Condutes"
+        Cat : "Conduit"
       })
       .then((response) => {
         console.log(response.data, "ZSdc");

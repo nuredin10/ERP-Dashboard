@@ -154,12 +154,12 @@ const ProductionOrderGM = () => {
                       fullWidth
                       {...register("final_product")}
                     >
-                      <MenuItem value="PPR PIPES">PPR PIPES</MenuItem>
-                      <MenuItem value="UPVC PIPES">UPVC PIPES</MenuItem>
-                      <MenuItem value="HDPE PIPES">HDPE PIPES</MenuItem>
+                      <MenuItem value="PPR PIPE">PPR PIPES</MenuItem>
+                      <MenuItem value="UPVC PIPE">UPVC PIPES</MenuItem>
+                      <MenuItem value="HDPE PIPE">HDPE PIPES</MenuItem>
                       <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
                       <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
-                      <MenuItem value="CONDUTES">CONDUTES</MenuItem>
+                      <MenuItem value="Conduit">Conduit</MenuItem>
                     </TextField>
                   </Grid>
                   <Grid item xs={12} sm={6}>
