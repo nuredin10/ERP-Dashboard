@@ -60,16 +60,7 @@ const generalItems = [
     icon: <ChartBarIcon fontSize="small" />,
     title: "Dashboard",
   },
-  // {
-  //   href: "/finance",
-  //   icon: <ShoppingBagIcon fontSize="small" />,
-  //   title: "Finance",
-  // },
-  // {
-  //   href: "/analytics",
-  //   icon: <BarChartIcon fontSize="small" />,
-  //   title: "Analytics",
-  // },
+  
 ];
 
 const procurmentItems = [
@@ -83,11 +74,7 @@ const procurmentItems = [
     icon: <UsersIcon fontSize="small" />,
     title: "Purchase Orders",
   },
-  // {
-  //   href: "/procurment/paymentrequest",
-  //   icon: <UsersIcon fontSize="small" />,
-  //   title: "Payment Request",
-  // },
+ 
 ];
 
 const wareHouseItemsAccordion = [
@@ -99,14 +86,12 @@ const wareHouseItemsAccordion = [
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Finished Goods",
-    // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,
-    // endIconLess: <ExpandLessIcon fontSize="small"/>,
+   
   },
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Requested Items",
-    // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,
-    // endIconLess: <ExpandLessIcon fontSize="small"/>,
+
   },
 ];
 
@@ -148,37 +133,14 @@ const production = [
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
   },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/viewbatch",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View Batch",
-  // },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/addproduct",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Order Production",
-  // },
+ 
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
     title: "Order List",
   },
 
-  // {
-  //   href: "/production/viewallproducts",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View All Products",
-  // },
+
 ];
 
 const GMproduction = [
@@ -197,26 +159,7 @@ const GMproduction = [
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
   },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/viewbatch",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View Batch",
-  // },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/addproduct",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Order Production",
-  // },
+  
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
@@ -228,11 +171,7 @@ const GMproduction = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
-  // {
-  //   href: "/production/viewallproducts",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View All Products",
-  // },
+  
 ];
 
 const sales = [
@@ -246,11 +185,7 @@ const sales = [
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",
   },
-  // {
-  //   href: "/sales/viewitemrecieved",
-  //   icon: <RecievingIcon fontSize="small" />,
-  //   title: "View Item Recieved",
-  // },
+ 
   {
     href: "/sales/vender",
     icon: <ViewListIcon fontSize="small" />,
@@ -266,11 +201,7 @@ const sales = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Summery",
   },
-  // {
-  //   href: "/sales/salessummery",
-  //   icon: <SummarizeIcon fontSize="small" />,
-  //   title: "Sales Summery",
-  // },
+ 
 ];
 
 const StockListItems = [
