@@ -60,16 +60,7 @@ const generalItems = [
     icon: <ChartBarIcon fontSize="small" />,
     title: "Dashboard",
   },
-  // {
-  //   href: "/finance",
-  //   icon: <ShoppingBagIcon fontSize="small" />,
-  //   title: "Finance",
-  // },
-  // {
-  //   href: "/analytics",
-  //   icon: <BarChartIcon fontSize="small" />,
-  //   title: "Analytics",
-  // },
+  
 ];
 
 const procurmentItems = [
@@ -83,11 +74,7 @@ const procurmentItems = [
     icon: <UsersIcon fontSize="small" />,
     title: "Purchase Orders",
   },
-  // {
-  //   href: "/procurment/paymentrequest",
-  //   icon: <UsersIcon fontSize="small" />,
-  //   title: "Payment Request",
-  // },
+ 
 ];
 
 const wareHouseItemsAccordion = [
@@ -99,14 +86,17 @@ const wareHouseItemsAccordion = [
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Finished Goods",
-    // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,
-    // endIconLess: <ExpandLessIcon fontSize="small"/>,
+   
+  },
+  {
+    icon: <UsersIcon fontSize="small" />,
+    title: "Accessories",
+   
   },
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Requested Items",
-    // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,
-    // endIconLess: <ExpandLessIcon fontSize="small"/>,
+
   },
 ];
 
@@ -148,37 +138,14 @@ const production = [
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
   },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/viewbatch",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View Batch",
-  // },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/addproduct",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Order Production",
-  // },
+ 
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
     title: "Order List",
   },
 
-  // {
-  //   href: "/production/viewallproducts",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View All Products",
-  // },
+
 ];
 
 const GMproduction = [
@@ -187,26 +154,6 @@ const GMproduction = [
     icon: <PendingActionsIcon fontSize="small" />,
     title: "Production Order",
   },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/viewbatch",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View Batch",
-  // },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/addproduct",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Order Production",
-  // },
   {
     href: "/production/productionOngoing",
     icon: <AutorenewIcon fontSize="small" />,
@@ -217,41 +164,7 @@ const GMproduction = [
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
   },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/viewbatch",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View Batch",
-  // },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/addproduct",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Order Production",
-  // },
-  // {
-  //   href: "/production/viewbatch",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View Batch",
-  // },
-  // {
-  //   href: "/production/addnewbatch",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Add New Batch",
-  // },
-  // {
-  //   href: "/production/addproduct",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Order Production",
-  // },
+  
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
@@ -263,22 +176,8 @@ const GMproduction = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
-
-  // {
-  //   href: "/production/viewallproducts",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "View All Products",
-  // },
-];
-
-// const GMproduction = [
   
-//   // {
-//   //   href: "/production/viewallproducts",
-//   //   icon: <ViewListIcon fontSize="small" />,
-//   //   title: "View All Products",
-//   // },
-// ];
+];
 
 const sales = [
   {
@@ -291,11 +190,7 @@ const sales = [
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",
   },
-  // {
-  //   href: "/sales/viewitemrecieved",
-  //   icon: <RecievingIcon fontSize="small" />,
-  //   title: "View Item Recieved",
-  // },
+ 
   {
     href: "/sales/vender",
     icon: <ViewListIcon fontSize="small" />,
@@ -311,11 +206,7 @@ const sales = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Summery",
   },
-  // {
-  //   href: "/sales/salessummery",
-  //   icon: <SummarizeIcon fontSize="small" />,
-  //   title: "Sales Summery",
-  // },
+ 
 ];
 
 const StockListItems = [
@@ -394,6 +285,24 @@ const FinishedItems = [
   },
 ];
 
+const AccessoriesItems = [
+  {
+    href: "/warehouse/accessories/mechanical",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "Mechanical",
+  },
+  {
+    href: "/warehouse/accessories/electrical",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "Electrical",
+  },
+  {
+    href: "/warehouse/accessories/recycle",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "recycle",
+  },
+]
+
 const RegisterUser = [
   {
     href: "/register",
@@ -419,7 +328,6 @@ const Finance = [
     icon: <CreditScoreIcon fontSize="small" />,
     title: "Sales Orders",
   },
-
   {
     href: "/finance/pettycash",
     icon: <PaymentIcon fontSize="small" />,
@@ -600,10 +508,9 @@ export const DashboardSidebar = (props) => {
                     ))}
                   </AccordionDetails>
                 </Accordion>
-
                 <Accordion
-                  expanded={expanded === "panel2"}
-                  onChange={handleChange("panel2")}
+                  expanded={expanded === "panel3"}
+                  onChange={handleChange("panel3")}
                   aria-controls="panel1bh-content"
                   id="panel1bh-header"
                   sx={{
@@ -621,6 +528,41 @@ export const DashboardSidebar = (props) => {
                     <DropdownNavItem
                       icon={<RequestedIcon />}
                       title={wareHouseItemsAccordion[2].title}
+                      sx={{ marginBottom: -2, marginTop: -2 }}
+                    />
+                    {/* <Typography>Accordion 1</Typography> */}
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {AccessoriesItems.map((item) => (
+                      <NavItem
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel4"}
+                  onChange={handleChange("panel4")}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                  sx={{
+                    backgroundColor: "rgb(17, 24, 39)",
+                    "&:before": {
+                      display: "none",
+                    },
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <DropdownNavItem
+                      icon={<RequestedIcon />}
+                      title={wareHouseItemsAccordion[3].title}
                       sx={{ marginBottom: -2, marginTop: -2 }}
                     />
                     {/* <Typography>Accordion 1</Typography> */}
