@@ -1,35 +1,76 @@
-import { Bar } from 'react-chartjs-2';
-import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from '@mui/material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { Bar } from "react-chartjs-2";
+import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from "@mui/material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export const Sales = (props) => {
   const theme = useTheme();
 
+  const [thisYear, setthisYear] = useState([]);
+  const [lastYear, setlastYear] = useState([]);
+
+  function fetchforGraph() {
+    axios
+      .get("http://localhost:11000/salesTotalYearly")
+      .then((res) => {
+        console.log(res.data);
+        var localthisYear = [];
+        var locallastYear = [];
+
+        for (let singleAr of res.data) {
+          localthisYear.push(singleAr[0].current_year_month_total_cost);
+          locallastYear.push(singleAr[0].last_year_month_total_cost);
+        }
+        setthisYear(localthisYear);
+        setlastYear(locallastYear);
+
+        console.log(thisYear);
+      })
+      .catch((err) => console.log(err));
+  }
+  useEffect(() => {
+    fetchforGraph();
+  }, []);
+
   const data = {
     datasets: [
       {
-        backgroundColor: '#3F51B5',
+        backgroundColor: "#3F51B5",
         barPercentage: 0.5,
         barThickness: 12,
         borderRadius: 4,
-        categoryPercentage: 0.5,
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year',
-        maxBarThickness: 10
+        categoryPercentage: 50.5,
+        data: thisYear,
+        label: "This year",
+        maxBarThickness: 10,
       },
       {
-        backgroundColor: '#EEEEEE',
-        barPercentage: 0.5,
+        backgroundColor: "#EEEEEE",
+        barPercentage: 50.5,
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year',
-        maxBarThickness: 10
-      }
+        data: lastYear,
+        label: "Last year",
+        maxBarThickness: 10,
+      },
     ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug', '7 aug']
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
   };
 
   const options = {
@@ -42,20 +83,20 @@ export const Sales = (props) => {
     xAxes: [
       {
         ticks: {
-          fontColor: theme.palette.text.secondary
+          fontColor: theme.palette.text.secondary,
         },
         gridLines: {
           display: false,
-          drawBorder: false
-        }
-      }
+          drawBorder: false,
+        },
+      },
     ],
     yAxes: [
       {
         ticks: {
           fontColor: theme.palette.text.secondary,
-          beginAtZero: true,
-          min: 0
+          // beginAtZero: true,
+          // min: 0
         },
         gridLines: {
           borderDash: [2],
@@ -64,9 +105,9 @@ export const Sales = (props) => {
           drawBorder: false,
           zeroLineBorderDash: [2],
           zeroLineBorderDashOffset: [2],
-          zeroLineColor: theme.palette.divider
-        }
-      }
+          zeroLineColor: theme.palette.divider,
+        },
+      },
     ],
     tooltips: {
       backgroundColor: theme.palette.background.paper,
@@ -76,51 +117,41 @@ export const Sales = (props) => {
       enabled: true,
       footerFontColor: theme.palette.text.secondary,
       intersect: false,
-      mode: 'index',
-      titleFontColor: theme.palette.text.primary
-    }
+      mode: "index",
+      titleFontColor: theme.palette.text.primary,
+    },
   };
 
   return (
     <Card {...props}>
       <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon fontSize="small" />}
-            size="small"
-          >
-            Last 7 days
+        action={
+          <Button endIcon={<ArrowDropDownIcon fontSize="small" />} size="small">
+            
           </Button>
-        )}
-        title="Latest Sales"
+        }
+        title="Yearly Sales Total"
       />
       <Divider />
       <CardContent>
         <Box
           sx={{
             height: 400,
-            position: 'relative'
+            position: "relative",
           }}
         >
-          <Bar
-            data={data}
-            options={options}
-          />
+          <Bar data={data} options={options} />
         </Box>
       </CardContent>
       <Divider />
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          p: 2
+          display: "flex",
+          justifyContent: "flex-end",
+          p: 2,
         }}
       >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon fontSize="small" />}
-          size="small"
-        >
+        <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small">
           Overview
         </Button>
       </Box>

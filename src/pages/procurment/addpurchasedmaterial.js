@@ -24,29 +24,27 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useState, useEffect } from "react";
-import axios from "../../components/axios";
+import wareaxios from "../../components/wareHouseAxios";
 import CustomAlert from "../../components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 import { useUser } from "../../lib/UserContext";
-import Cookie from "js-cookie";
+import CButton from "../../components/Button";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
-
-  const {user, setUser} = useUser();
-
+  const { user, setUser } = useUser();
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
-
   const handleClose = () => {
     setDialogOpen(false);
   };
-
   const [inputFields, setInputFields] = useState([
     {
       new_name: "",
@@ -62,6 +60,7 @@ const Addpurchasedmaterial = () => {
       payable_name: "",
       payable_account: "",
       new_status: "NEW",
+      userName:Cookies.get("username"),
     },
   ]);
 
@@ -86,12 +85,13 @@ const Addpurchasedmaterial = () => {
       payable_name: "",
       payable_account: "",
       new_status: "NEW",
+      userName:Cookies.get("username"),
     };
     setIsSuccess("info");
     setInputFields([...inputFields, newfield]);
     setIsSuccess("info");
     setAlertMsg("item added");
-    enqueueSnackbar('Item Added', { variant: 'success' });
+    enqueueSnackbar("Item Added", { variant: "success" });
   };
 
   const removeFields = (index) => {
@@ -100,18 +100,21 @@ const Addpurchasedmaterial = () => {
     setInputFields(data);
     setIsSuccess("info");
     setAlertMsg("item removed");
-    enqueueSnackbar('Item Removed', { variant: 'warning' });
+    enqueueSnackbar("Item Removed", { variant: "warning" });
   };
 
   const submitHandler = () => {
     console.log(inputFields);
+    // inputFields.push({ userName: Cookies.get("user") });
+    // const addUser = {data: inputFields, userName: Cookies.get("user")};
+    // console.log(addUser);
     handleClose();
-    axios
+    wareaxios
       .post("/addnewPurchased", inputFields)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
-        enqueueSnackbar('Saved Successfully', { variant: 'success' });
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
         clearAllHandler();
         setAlertMsg("Saved Successfully");
       })
@@ -119,7 +122,7 @@ const Addpurchasedmaterial = () => {
         console.log(res);
         setIsSuccess("error");
         setAlertMsg("Something went wrong");
-        enqueueSnackbar('Something Wend Wrong', { variant: 'error' });
+        enqueueSnackbar("Something Wend Wrong", { variant: "error" });
       });
   };
 
@@ -138,47 +141,28 @@ const Addpurchasedmaterial = () => {
     width: "20%",
   };
 
-  const autocompleteData = {
-    "Name":
-      [
-        { label: 'The Shawshank Redemption' },
-        { label: 'The Godfather', year: 1972 },
-        { label: 'The Godfather: Part II', year: 1974 },
-        { label: 'The Dark Knight', year: 2008 },
-        { label: '12 Angry Men', year: 1957 },
-        { label: "Schindler's List", year: 1993 },
-        { label: 'Pulp Fiction', year: 1994 },
-        {
-          label: 'The Lord of the Rings: The Return of the King',
-          year: 2003,
-        },
-      ],
+  const token = Cookies.get("token");
 
+  useEffect(() => {
+    jwt.verify(token, "PROPLAST", (err, decoded) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(decoded);
+        // setuser(JSON.stringify(decoded.userName))
+        Cookies.set("username", decoded.userName);
+        // setUser(decoded);
+      }
+    });
 
-    "Quantitty": [
-      { label: 'Amadeus', year: 1984 },
-      { label: 'To Kill a Mockingbird', year: 1962 },
-      { label: 'Toy Story 3', year: 2010 },
-      { label: 'Logan', year: 2017 },
-      { label: 'Full Metal Jacket', year: 1987 },
-      { label: 'Dangal', year: 2016 },
-      { label: 'The Sting', year: 1973 },
-      { label: '2001: A Space Odyssey', year: 1968 },
-      { label: "Singin' in the Rain", year: 1952 },
-      { label: 'Toy Story', year: 1995 },
-      { label: 'Bicycle Thieves', year: 1948 },
-      { label: 'The Kid', year: 1921 },
-      { label: 'Inglourious Basterds', year: 2009 },
-      { label: 'Snatch', year: 2000 },
-      { label: '3 Idiots', year: 2009 },
-      { label: 'Monty Python and the Holy Grail', year: 1975 },
-    ]
-  }
+    // setUser(JSON.parse(Cookies.get("user")));
+    // setUserName(user.userName);
+  }, []);
 
   return (
     <>
       <Head>
-        <title>Sales Summery</title>
+        <title>Add Purchased Material | Proplast</title>
       </Head>
       <Box
         component="main"
@@ -196,7 +180,7 @@ const Addpurchasedmaterial = () => {
 
         <Grid container>
           <Grid item lg={6} md={12} sm={12} sx={{ m: 5 }}>
-            <Typography variant="h3">Add new Purchased Material</Typography>
+            <Typography variant="h3">Add new purchased material</Typography>
           </Grid>
 
           {isSuccess != "" ? (
@@ -218,8 +202,6 @@ const Addpurchasedmaterial = () => {
                       pb: 2,
                       pr: 4,
                       borderRadius: "10px",
-                      // display: 'grid'
-
                     }}
                   >
                     <Grid item sm={6} md={2} lg={3}>
@@ -311,14 +293,6 @@ const Addpurchasedmaterial = () => {
                       />
                     </Grid>
                     <Grid item sm={6} md={2} lg={3}>
-                      {/* <TextField
-                        required
-                        name="new_materialtype"
-                        label="Material Type"
-                        type="text"
-                        value={input.new_materialtype}
-                        onChange={(event) => handleFormChange(index, event)}
-                      /> */}
                       <TextField
                         name="new_materialtype"
                         label="Material Type"
@@ -381,15 +355,13 @@ const Addpurchasedmaterial = () => {
                   <AddIcon />
                 </IconButton>
               </Grid>
-              <Grid item lg={8}>
-                <Button
-                  type="submit"
-                  sx={{ marginRight: "2rem" }}
-                  onClick={handleClickOpen}
-                  variant="contained"
-                >
-                  Save
-                </Button>
+              {/* <Grid item lg={12} md={12} sm={12}>
+                <CButton onClick ={()=>console.log("Asdcasdc")}>asdc</CButton>
+              </Grid> */}
+              <Grid item>
+                <CButton onClick={handleClickOpen}>Save</CButton>
+              </Grid>
+              <Grid item>
                 <Button variant="outlined" onClick={handleClose}>
                   Clear All
                 </Button>

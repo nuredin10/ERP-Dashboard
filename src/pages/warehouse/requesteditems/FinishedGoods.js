@@ -18,47 +18,52 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
-import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
-import waxios from '../../../components/wareHouseAxios';
-import CustomAlert from '../../../components/alert'
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
+import waxios from "../../../components/wareHouseAxios";
+import CustomAlert from "../../../components/alert";
 import { useSnackbar } from "notistack";
+import Cookies from "js-cookie";
+import Router from "next/router";
 
 const FinishedGoods = () => {
   const [data, setData] = useState([]);
-  const [isSuccess, setIsSuccess] = useState('')
-  const [alertMsg, setAlertMsg] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { enqueueSnackBar } = useSnackbar();
+  const [user, setUser] = useState();
+  const [item, setItem] = useState();
+  const [lowInStock, setLowInStock] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
   const columns = [
     { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
-    { title: "Department", field: "mat_requestdept" },
-    { title: "Person Id", field: "mat_reqpersonid" },
-    { title: "Description", field: "mat_description" },
     { title: "Quantity", field: "mat_quantity" },
+    { title: "UOM", field: "mat_unit" },
+    { title: "Person Id", field: "mat_reqpersonid" },
     { title: "Status", field: "mat_status" },
   ];
 
   const handleClickOpen = () => {
     setDialogOpen(true);
-  }
+  };
   const handleClose = () => {
     setDialogOpen(false);
-  }
+  };
 
   useEffect(() => {
-    waxios.get('/showStoreRequestion')
+    waxios
+      .get("/showStoreRequestion")
       .then((resp) => {
-        console.log(resp.data)
+        console.log(resp.data);
         const finishedData = resp.data.filter((finish) => finish.req_materialtype.includes("FIN"));
-        const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
-        setData(pending);
+
+        setData(finishedData);
       })
       .catch((error) => {
-        console.log(error, "sdfgsdfgsdfgsdfg")
+        console.log(error, "sdfgsdfgsdfgsdfg");
+      });
 
-      })
+    setUser(JSON.parse(Cookies.get("user")));
 
     // fetch("https://versavvy.com/ERP_backend/wareHouse/showStoreRequestion")
     //   .then((resp) => resp.json())
@@ -70,45 +75,55 @@ const FinishedGoods = () => {
     //   });
   }, []);
 
-
   const accept = (id) => {
-    waxios.post('/responseStoreRequestion', {
-      id: id,
-      status: "Accept"
-    })
+    waxios
+      .post("/responseStoreRequestion", {
+        id: id,
+        status: "Accept",
+      })
       .then(function (response) {
-        console.log(response);
-        // Router.push("/requesteditems/RawMaterial")
-        setIsSuccess('success');
-        setAlertMsg('Request Accepted');
-        enqueueSnackBar('Request Accepted', { variant: 'success' })
+        if (response.data.message === "no_material") {
+          setItem(response.data.materials[0].fin_name);
+          setDialogOpen(true);
+        } else if (response.data.message === "Low in stock") {
+          setLowInStock(true);
+          setDialogOpen(true);
+          // setItem(response.data.materials[0].fin_name);
+          console.log("lowwwww");
+        } else {
+          console.log(response);
+          // Router.push("/warehouse/requesteditems/FinishedGoods");
+          // setIsSuccess('success');
+          // setAlertMsg('Item Accepted')
+          enqueueSnackbar("Item Accepted", { variant: "success" });
+        }
+        console.log(response.data.materials[0].fin_name);
       })
       .catch(function (error) {
-        console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
-        setDialogOpen(true)
-      });
+        console.log("eeeerrrrrrrrrrrrrr", error);
+        enqueueSnackbar("Something went wrong", { variant: "error" });
 
-  }
+        // setDialogOpen(true);
+      });
+  };
 
   const decline = async (id) => {
-    await waxios.post('/responseStoreRequestion', {
-      id: id,
-      status: "Decline"
-    })
+    await waxios
+      .post("/responseStoreRequestion", {
+        id: id,
+        status: "Decline",
+      })
       .then(function (response) {
         console.log(response);
-        setIsSuccess('info');
-        setAlertMsg('Item Rejected')
-        enqueueSnackBar('Item Rejected',{variant: 'warning'})
+        setIsSuccess("info");
+        setAlertMsg("Item Rejected");
+        enqueueSnackBar("Item Rejected", { variant: "warning" });
       })
       .catch(function (error) {
         console.log(error);
-        setIsSuccess('error')
-        setAlertMsg('Something went wrong')
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       });
-  }
+  };
   // const [finished, setFinished] = useState([]);
 
   // useEffect(()=>{
@@ -120,7 +135,44 @@ const FinishedGoods = () => {
       <Head>
         <title>Finished Goods</title>
       </Head>
-      {isSuccess != '' ? <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} /> : null}
+      <Dialog
+        open={dialogOpen}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>
+          {lowInStock ? <h1>Item Unavailable</h1> : <h1>Item Low In Stock</h1>}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <div className="flex flex-row gap-1 items-end">
+              {lowInStock ? (
+                <h1 className="font-bold text-lg text-black">Add more item to the stock</h1>
+              ) : (
+                <>
+                  <h1 className="font-bold text-lg text-black">Item Name: </h1>
+                  <p>{item && item}</p>
+                </>
+              )}
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{
+              backgroundColor: "purple",
+            }}
+            onClick={() => Router.push("/warehouse/PurchaseOrder")}
+          >
+            Purchase
+          </Button>
+          <Button>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      {/* {isSuccess != "" ? (
+        <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+      ) : null} */}
       <Box
         component="main"
         sx={{
@@ -136,23 +188,27 @@ const FinishedGoods = () => {
             Raw Material stockList
           </Typography> */}
           <Card maxWidth="lg">
-            <Table
-              title="Finished Goods"
-              data={data}
-              columns={columns}
-              actions={[
-                rowData => ({
-                  icon: () => < DoneIcon sx={{ color: 'green' }} />,
-                  tooltip: 'Accpet ',
-                  onClick: () => (accept(rowData.id))
-                }),
-                rowData => ({
-                  icon: () => < CloseIcon sx={{ color: 'red' }} />,
-                  tooltip: 'Reject ',
-                  onClick: () => (decline(rowData.id))
-                })
-              ]}
-            />
+            {user && user.role === "Super Admin" ? (
+              <Table
+                title="Finished Goods"
+                data={data}
+                columns={columns}
+                actions={[
+                  (rowData) => ({
+                    icon: () => <DoneIcon sx={{ color: "green" }} />,
+                    tooltip: "Accpet ",
+                    onClick: () => accept(rowData.id),
+                  }),
+                  (rowData) => ({
+                    icon: () => <CloseIcon sx={{ color: "red" }} />,
+                    tooltip: "Reject ",
+                    onClick: () => decline(rowData.id),
+                  }),
+                ]}
+              />
+            ) : (
+              <Table title="Finished Goods" data={data} columns={columns} />
+            )}
 
             {/* <Typography sx={{ mb: 3 }} variant="h4">
           Supplier

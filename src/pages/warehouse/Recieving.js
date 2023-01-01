@@ -19,23 +19,26 @@ import DoneIcon from "@mui/icons-material/Done";
 import waxios from "../../components/wareHouseAxios";
 import Router from "next/router";
 import Cookies from "js-cookie";
+import { useSnackbar } from "notistack";
 
 const Recieving = () => {
   const [data, setData] = useState([]);
   const [user, setUser] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const columns = [
     { title: "Name", field: "new_name" },
     { title: "Quantity", field: "new_quantity" },
     { title: "Description", field: "new_description" },
     { title: "Material Code", field: "new_materialcode" },
-    { title: "Material Type", field: "new_materialtype" },
+    // { title: "Material Type", field: "new_materialtype" },
     { title: "Material unit", field: "new_materialunit" },
-    { title: "refernce Number", field: "new_referncenum" },
-    { title: "Specification", field: "new_spec" },
-    { title: "Value", field: "new_value" },
+     { title: "Person", field: "new_person" },
+     { title: "Status", field: "new_status" },
+
+    // { title: "Specification", field: "new_spec" },
+    // { title: "Value", field: "new_value" },
   ];
-  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     waxios.get("/shownewPurchased").then((resp) => {
       const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
@@ -51,13 +54,15 @@ const Recieving = () => {
         status: "Accept",
       })
       .then(function (response) {
+        enqueueSnackbar("Item Accepted", { variant: 'success' })
         Router.reload(window.location.pathname);
         console.log(response);
-        enqueueSnackbar('Accepted', { variant: 'success' });
 
       })
       .catch(function (error) {
         console.log(error);
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
       });
   };
 
@@ -68,14 +73,17 @@ const Recieving = () => {
         status: "Decline",
       })
       .then(function (response) {
+        enqueueSnackbar("Item Declined", { variant: 'error' })
         Router.reload(window.location.pathname);
         console.log(response);
-        enqueueSnackbar('Declined', { variant: 'success' })
       })
       .catch(function (error) {
+        enqueueSnackbar('Something went wrong', { variant: 'error' })
+
         console.log(error);
       });
   };
+ 
   return (
     <>
       <Head>
@@ -89,14 +97,6 @@ const Recieving = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <ToolBar title="Recieving" href="/procurment/paymentrequest/add" /> */}
-
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
           <Card maxWidth="lg">
             {user && user.role === "Super Admin" ? (
               <Table
@@ -119,10 +119,6 @@ const Recieving = () => {
             ) : (
               <Table title="Recieving" data={data} columns={columns} />
             )}
-
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
           </Card>
         </Container>
       </Box>

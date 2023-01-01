@@ -1,39 +1,40 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react'
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import jwt from 'jsonwebtoken'
-import Cookies from 'js-cookie'
-import Router from 'next/router'
-import authAxios from '../components/authAxios'
-import logo from '../../public/logo.svg'
-import axios from 'axios';
-import Alert from "@mui/material"
-import CustomAlert from '../components/alert';
-import AlertNew from '../components/AlertNew';
-import Snackbar from '@mui/material/Snackbar';
+import * as React from "react";
+import { useEffect, useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
+import Router from "next/router";
+import authAxios from "../components/authAxios";
+import logo from "../../public/logo.svg";
+import axios from "axios";
+import Alert from "@mui/material";
+import CustomAlert from "../components/alert";
+import AlertNew from "../components/AlertNew";
+import Snackbar from "@mui/material/Snackbar";
 // import Alert from '@Mui/material/Alert';
 // import {useRole} from '../lib/RoleContext'
-import {useUser} from '../lib/UserContext'
-import { useSnackbar } from 'notistack';
+import { useUser } from "../lib/UserContext";
+import { useSnackbar } from "notistack";
+import CButton from "../components/signupButtons";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Versavvy Media PLC, 2023
-      </Link>{' '}
+        Versavvy Media PLC, 2022
+      </Link>{" "}
       {/* {new Date().getFullYear()} */}
       {/* {'.'} */}
     </Typography>
@@ -43,44 +44,41 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-
-  const [incorrect, setIncorrect] = React.useState(false)
-  const [alertS, setAlertS] = useState(false)
-  const alertComponent = (<Alert severity='error'>Incorrect Username or Password</Alert>);
+  const [incorrect, setIncorrect] = React.useState(false);
+  const [alertS, setAlertS] = useState(false);
+  const alertComponent = <Alert severity="error">Incorrect Username or Password</Alert>;
   const { enqueueSnackbar } = useSnackbar();
   const { user, setUser } = useUser();
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data)
-    authAxios.post('/login', {
-      // axios.post('http://localhost:42000/test', {
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+    console.log(data);
+    authAxios
+      .post("/login", {
+        email: data.get("email"),
+        password: data.get("password"),
+      })
       .then((res) => {
-        console.log(res)
-        Cookies.set('token', res.data.jwt)
+        console.log(res);
+        Cookies.set("token", res.data.jwt);
         Cookies.set("loggedIn", true);
-        enqueueSnackbar('Login Success', { variant: 'success' })
-        Router.push('/dashboard')
-
+        enqueueSnackbar("Login Success", { variant: "success" });
+        Router.push("/dashboard");
       })
       .catch((res) => {
-        console.log(res)
+        console.log(res);
         if (res.response.status == 403) {
-          enqueueSnackbar('Incorrect Email or Password', { variant: 'error' })
-          console.log('Incorrect');
+          enqueueSnackbar("Incorrect Email or Password", { variant: "error" });
+          console.log("Incorrect");
           setAlertS(true);
-
         }
-      })
+      });
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
           item
@@ -88,13 +86,13 @@ export default function SignIn() {
           sm={4}
           md={5}
           sx={{
-            backgroundImage: 'url(/proplast-side-image.jpg)',
-            backgroundRepeat: 'no-repeat',
+            backgroundImage: "url(/proplast-side-image.jpg)",
+            backgroundRepeat: "no-repeat",
             // border: '1px solid red',
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+              t.palette.mode === "light" ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         />
         <Grid item xs={12} sm={8} md={7} component={Paper} elevation={6} square>
@@ -102,17 +100,15 @@ export default function SignIn() {
             sx={{
               my: 8,
               mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             {/* <Avatar sx={{ width: 100, height: 100 }} src='logo.svg'>
             </Avatar> */}
-            <div className='py-6'>
-              <img
-                className='w-60'
-                src="logo2.svg" alt="Proplast Logo" />
+            <div className="py-6">
+              <img className="w-60" src="logo2.svg" alt="Proplast Logo" />
             </div>
             {/* <Box
               component="img"
@@ -155,25 +151,20 @@ export default function SignIn() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button
-                color='primary'
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2, height: 50 }}
-              >
-                Sign In
-              </Button>
               <Grid>
-                {incorrect && <Typography color='error'>Incorrect email or password</Typography>}
-
+                <CButton sx={{ marginRight: "2rem" }} variant="contained">
+                  Sign In
+                </CButton>
+              </Grid>
+              <Grid>
+                {incorrect && <Typography color="error">Incorrect email or password</Typography>}
               </Grid>
               <Grid container>
-                <Grid item xs>
+                {/* <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
-                </Grid>
+                </Grid> */}
                 {/* <Grid item>
                   <Link href="#" variant="body2">
                     {"Don't have an account? Sign Up"}

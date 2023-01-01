@@ -13,9 +13,9 @@ export const theme = createTheme({
   },
   components: {
     MuiButton: {
-      defaultProps: {
-        disableElevation: true
-      },
+      // defaultProps: {
+      //   disableElevation: false,
+      // },
       styleOverrides: {
         root: {
           textTransform: 'none'

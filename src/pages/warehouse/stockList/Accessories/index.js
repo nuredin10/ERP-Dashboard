@@ -49,7 +49,7 @@
 //         }}
 //       >
 //         <Container maxWidth="ml">
-//         <ToolBar title="SIV" 
+//         <ToolBar title="SIV"
 //         href="/warehouse/stockList/Accessories/addSiv"  />
 
 //           {/* <Typography
@@ -60,9 +60,9 @@
 //           </Typography> */}
 //           <Card maxWidth="lg">
 
-//         <Table 
-//           title='Accessories' 
-//           data={data} 
+//         <Table
+//           title='Accessories'
+//           data={data}
 //           columns={columns}
 //           options={{
 //             actionsColumnIndex: -1,
@@ -103,22 +103,19 @@
 
 // export default Accessories;
 
-
-
-
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import SummarizeIcon from '@mui/icons-material/Summarize';
+import SummarizeIcon from "@mui/icons-material/Summarize";
 import { DashboardLayout } from "../../../../components/dashboard-layout";
 
 // import styles from '../styles/Home.module.css';
 import OrdersToolBar from "../../../../components/Accessories/order-toolbar";
 import { OrderResults } from "../../../../components/Accessories/order-results";
 import RightDrawer from "../../../../components/Accessories/RightDrawer";
-import Router from 'next/router'
+import Router from "next/router";
 
 import Table from "../../../../components/Table";
-import waxios from '../../../../components/wareHouseAxios'
+import waxios from "../../../../components/wareHouseAxios";
 import {
   Box,
   Button,
@@ -129,7 +126,7 @@ import {
   TextField,
   Card,
   Typography,
-  Divider
+  Divider,
 } from "@mui/material";
 
 const Accessories = () => {
@@ -140,77 +137,79 @@ const Accessories = () => {
   const columns = [
     { title: "Name", field: "accs_name" },
     { title: "Quantity", field: "accs_quantity" },
-    { title: "Description", field: "accs_description" },
+    // { title: "Description", field: "accs_description" },
     { title: "Material Code", field: "accs_materialcode" },
-    { title: "Specification", field: "accs_spec" },
-    { title: "Material Unit", field: "accs_materialunit" },
-    { title: "Value", field: "accs_value" },
-    { title: "Reference Number", field: "accs_referncenum" },
+    // { title: "Specification", field: "accs_spec" },
+    { title: "UOM", field: "accs_materialunit" },
+    // { title: "Value", field: "accs_value" },
+    // { title: "Reference Number", field: "accs_referncenum" },
     { title: "Date", field: "accs_date" },
-    { title: "Remark", field: "accs_remark" },
-    { title: "Status", field: "acss_status" }
+    // { title: "Remark", field: "accs_remark" },
+    // { title: "Status", field: "acss_status" }
   ];
 
   useEffect(() => {
-    waxios.get("/accessory")
+    waxios
+      .get("/accessory")
       .then((response) => {
-        setData(response.data)
-        console.log(response.data)
+        setData(response.data);
+        console.log(response.data);
       })
       .catch((response) => {
-        console.log(response)
-      })
+        console.log(response);
+      });
   }, []);
   return (
     <>
       <Head>
-        <title>Orders | Material Kit</title>
+        <title>Accessories | Proplast</title>
       </Head>
       <Box component="main">
         <Container
           sx={{
             display: {
-              xs: 'none',
-              lg: 'block'
-            }
+              xs: "none",
+              lg: "block",
+            },
           }}
-          maxWidth='ml'>
-          <Card maxWidth='lg'>
+          maxWidth="ml"
+        >
+          <Card maxWidth="lg">
             <Table
-              title='Raw Materials'
+              title="Accessories"
               data={data}
               columns={columns}
               actions={[
                 (rowData) => ({
-                  icon: () => <SummarizeIcon size='small' />,
-                  tooltip: 'Summary',
+                  icon: () => <SummarizeIcon size="small" />,
+                  tooltip: "Summary",
                   onClick: () => {
                     Router.push({
                       pathname: "/warehouse/stockList/Accessories/monthlyReport",
-                      query: { id: rowData.id }
-                    })
-                  }
-                })
+                      query: { id: rowData.id },
+                    });
+                  },
+                }),
               ]}
               localization={{
                 header: {
-                  actions: "SUMMARY"
-                }
+                  actions: "SUMMARY",
+                },
               }}
-            >
-            </Table>
+            ></Table>
           </Card>
         </Container>
 
         <Container
           sx={{
             display: {
-              xs: 'block',
-              lg: 'none'
-            }
+              xs: "block",
+              lg: "none",
+            },
           }}
-          maxWidth={false}>
-          <Box >
+          maxWidth={false}
+        >
+          <Box>
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
             <OrderResults
               drawer={drawer}
@@ -236,4 +235,3 @@ const Accessories = () => {
 Accessories.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Accessories;
-

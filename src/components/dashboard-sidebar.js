@@ -15,7 +15,7 @@ import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { Google as Google } from "../icons/google";
 import { Logo } from "./logo";
-import Image from 'next/image'
+import Image from "next/image";
 import { NavItem } from "./nav-item";
 import { DropdownNavItem } from "./dropdown-nav-item";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -45,14 +45,14 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import StoreIcon from "@mui/icons-material/Store";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
-import AddIcon from '@mui/icons-material/Add';
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import PaymentIcon from '@mui/icons-material/Payment';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import AddCardIcon from '@mui/icons-material/AddCard';
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import AddIcon from "@mui/icons-material/Add";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import PaymentIcon from "@mui/icons-material/Payment";
+import AddCardIcon from "@mui/icons-material/AddCard";
+import CreditScoreIcon from "@mui/icons-material/CreditScore";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 
 const generalItems = [
   {
@@ -60,19 +60,11 @@ const generalItems = [
     icon: <ChartBarIcon fontSize="small" />,
     title: "Dashboard",
   },
-<<<<<<< HEAD
-  {
-    href: "/finance",
-    icon: <ShoppingBagIcon fontSize="small" />,
-    title: "Finance",
-  },
-=======
   // {
   //   href: "/finance",
   //   icon: <ShoppingBagIcon fontSize="small" />,
   //   title: "Finance",
   // },
->>>>>>> 52352464c561211e94489fe936b57966e7649b13
   // {
   //   href: "/analytics",
   //   icon: <BarChartIcon fontSize="small" />,
@@ -91,11 +83,6 @@ const procurmentItems = [
     icon: <UsersIcon fontSize="small" />,
     title: "Purchase Orders",
   },
-  {
-    href: "/procurment/declinedorders",
-    icon: <UserIcon fontSize="small" />,
-    title: "Declined Orders"
-  }
   // {
   //   href: "/procurment/paymentrequest",
   //   icon: <UsersIcon fontSize="small" />,
@@ -111,10 +98,25 @@ const wareHouseItemsAccordion = [
   },
   {
     icon: <UsersIcon fontSize="small" />,
+    title: "Finished Goods",
+    // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,
+    // endIconLess: <ExpandLessIcon fontSize="small"/>,
+  },
+  {
+    icon: <UsersIcon fontSize="small" />,
     title: "Requested Items",
     // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,
     // endIconLess: <ExpandLessIcon fontSize="small"/>,
   },
+];
+
+const finishedAccordion = [
+  {
+    icon: <Inventory2Icon fontSize="small" />,
+    // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,    // endIconLess: <ExpandLessIcon fontSize="small"/>,
+    title: "Stock List",
+  },
+
 ];
 
 const wareHouseItems = [
@@ -126,7 +128,7 @@ const wareHouseItems = [
   {
     href: "/warehouse/PurchaseOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Purchase Request",
+    title: "Purchase Requisition",
   },
 ];
 
@@ -139,33 +141,39 @@ const production = [
   {
     href: "/production/productionOngoing",
     icon: <AutorenewIcon fontSize="small" />,
-    title: "Production Ongoing"
+    title: "Production Ongoing",
   },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
-    title: "Production Finished"
-  },
-  {
-    href: "/production/addnewbatch",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Add New Batch",
-  },
-  {
-    href: "/production/viewbatch",
-    icon: <ViewListIcon fontSize="small" />,
-    title: "View Batch",
+    title: "Production Finished",
   },
   // {
   //   href: "/production/addnewbatch",
   //   icon: <PurchaseOrderIcon fontSize="small" />,
   //   title: "Add New Batch",
   // },
+  // {
+  //   href: "/production/viewbatch",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View Batch",
+  // },
+  // {
+  //   href: "/production/addnewbatch",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Add New Batch",
+  // },
+  // {
+  //   href: "/production/addproduct",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Order Production",
+  // },
   {
-    href: "/production/addproduct",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Add Production Order",
+    href: "/production/OrderListGm",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Order List",
   },
+
   // {
   //   href: "/production/viewallproducts",
   //   icon: <ViewListIcon fontSize="small" />,
@@ -173,17 +181,121 @@ const production = [
   // },
 ];
 
+const GMproduction = [
+  {
+    href: "/production/ProductionOrder",
+    icon: <PendingActionsIcon fontSize="small" />,
+    title: "Production Order",
+  },
+  // {
+  //   href: "/production/addnewbatch",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Add New Batch",
+  // },
+  // {
+  //   href: "/production/viewbatch",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View Batch",
+  // },
+  // {
+  //   href: "/production/addnewbatch",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Add New Batch",
+  // },
+  // {
+  //   href: "/production/addproduct",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Order Production",
+  // },
+  {
+    href: "/production/productionOngoing",
+    icon: <AutorenewIcon fontSize="small" />,
+    title: "Production Ongoing",
+  },
+  {
+    href: "/production/productionFinished",
+    icon: <CheckCircleOutlineIcon fontSize="small" />,
+    title: "Production Finished",
+  },
+  // {
+  //   href: "/production/addnewbatch",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Add New Batch",
+  // },
+  // {
+  //   href: "/production/viewbatch",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View Batch",
+  // },
+  // {
+  //   href: "/production/addnewbatch",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Add New Batch",
+  // },
+  // {
+  //   href: "/production/addproduct",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Order Production",
+  // },
+  // {
+  //   href: "/production/viewbatch",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View Batch",
+  // },
+  // {
+  //   href: "/production/addnewbatch",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Add New Batch",
+  // },
+  // {
+  //   href: "/production/addproduct",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Order Production",
+  // },
+  {
+    href: "/production/OrderListGm",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Order List",
+  },
+
+  {
+    href: "/production/GMProductionOrder",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Add Production Order",
+  },
+
+  // {
+  //   href: "/production/viewallproducts",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "View All Products",
+  // },
+];
+
+// const GMproduction = [
+  
+//   // {
+//   //   href: "/production/viewallproducts",
+//   //   icon: <ViewListIcon fontSize="small" />,
+//   //   title: "View All Products",
+//   // },
+// ];
+
 const sales = [
+  {
+    href: "/sales/salesproductionOrder",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Request production",
+  },
   {
     href: "/sales/salesorderlist",
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",
   },
-  {
-    href: "/sales/viewitemrecieved",
-    icon: <RecievingIcon fontSize="small" />,
-    title: "View Item Recieved",
-  },
+  // {
+  //   href: "/sales/viewitemrecieved",
+  //   icon: <RecievingIcon fontSize="small" />,
+  //   title: "View Item Recieved",
+  // },
   {
     href: "/sales/vender",
     icon: <ViewListIcon fontSize="small" />,
@@ -247,37 +359,83 @@ const RequestedItems = [
   },
 ];
 
+const FinishedItems = [
+  {
+    href: "/warehouse/finishedGoods/PPR_PIPES",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "PPR PIPES",
+  },
+  {
+    href: "/warehouse/finishedGoods/UPVC_PIPES",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "UPVC PIPES",
+  },
+  {
+    href: "/warehouse/finishedGoods/HDPE_PIPES",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "HDPE PIPES",
+  },
+  {
+    href: "/warehouse/finishedGoods/UPVC_FITTINGS",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "UPVC FITTINGS",
+  },
+
+  {
+    href: "/warehouse/finishedGoods/PPR_FITTINGS",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "PPR FITTINGS",
+  },
+
+  {
+    href: "/warehouse/finishedGoods/CONDUTES",
+    icon: <FinishedGoodsIcon fontSize="small" />,
+    title: "CONDUTES",
+  },
+];
+
 const RegisterUser = [
   {
-    href: '/register',
+    href: "/register",
     icon: <UsersIcon fontSize="small" />,
-    title: 'Register a new User'
-  }
-]
+    title: "Register a new User",
+  },
+];
 
 const Finance = [
   {
-    href: '/finance/accountpayable',
+    href: "/finance/accountpayable",
     icon: <PaymentIcon fontSize="small" />,
-    title: 'Account Payable'
+    title: "Account Payable",
   },
   {
-    href: '/finance/accountrecieveable',
+    href: "/finance/accountrecieveable",
     icon: <CreditScoreIcon fontSize="small" />,
-    title: 'Account Recieved'
-  },
-  {
-    href: '/finance/pettycash',
-    icon: <PaymentsIcon fontSize="small" />,
-    title: 'Petty Cash'
-  },
-  {
-    href: '/finance/addpettycash',
-    icon: <AddCardIcon fontSize="small" />,
-    title: 'Add Pettycash'
+    title: "Account Recieved",
   },
 
-]
+  {
+    href: "/finance/accountRecivableSales",
+    icon: <CreditScoreIcon fontSize="small" />,
+    title: "Sales Orders",
+  },
+
+  {
+    href: "/finance/pettycash",
+    icon: <PaymentIcon fontSize="small" />,
+    title: "Petty Cash",
+  },
+  {
+    href: "/finance/addpettycash",
+    icon: <AddCardIcon fontSize="small" />,
+    title: "Add Pettycash",
+  },
+  {
+    href: "/finance/assetmanagment",
+    icon: <AccountBalanceIcon fontSize="small" />,
+    title: "Asset Managment",
+  },
+];
 
 export const DashboardSidebar = (props) => {
   const [expanded, setExpanded] = useState(false);
@@ -302,6 +460,7 @@ export const DashboardSidebar = (props) => {
         onClose?.();
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.asPath]
   );
 
@@ -314,13 +473,12 @@ export const DashboardSidebar = (props) => {
   const token = Cookies.get("token");
   const [user, setUser] = useState({});
   useEffect(() => {
-
     jwt.verify(token, "PROPLAST", (err, decoded) => {
       if (err) {
         console.log(err);
       } else {
         setUser(decoded);
-        console.log("asdcasdc")
+        console.log("asdcasdc");
       }
     });
   }, []);
@@ -328,164 +486,50 @@ export const DashboardSidebar = (props) => {
   const isSuperAdmin = user.role === "Super Admin" ? true : false;
   const content = (
     <>
-      <div className="scrollbar-thin scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-700 scrollbar-thumb-rounded-full scrollbar-track-gray-400">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-          }}
-        >
-
-          <div>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pt: 5 }}>
-              <NextLink href="/" passHref>
-                <a>
-                  <Image src='/LOGOLIGHT1.svg' height="100" width="200" >
-
-                  </Image>
-                </a>
-              </NextLink>
-            </Box>
-          </div>
-          <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="menuTitle">GENERAL</Typography>
-            {generalItems.map((item) => (
-              <>
-                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-              </>
-            ))}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          //  backgroundColor: "#7F675B"
+        }}
+      >
+        <div>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", pt: 5 }}>
+            <NextLink href="/" passHref>
+              <a>
+                <Image src="/LOGOLIGHT1.svg" height="100" width="200"></Image>
+                {/* <Logo
+                  sx={{
+                    
+                  }}
+                  href='/logo.svg'
+                /> */}
+              </a>
+            </NextLink>
           </Box>
-          <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-
-          {isSuperAdmin ? (
-            <>
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="menuTitle">PROCURMENT</Typography>
-                {procurmentItems.map((item) => (
-                  <>
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                  </>
-                ))}
-              </Box>
-              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="menuTitle">WARE HOUSE</Typography>
-                <Box sx={{ marginTop: "2vh" }}>
-                  <Accordion
-                    expanded={expanded === "panel1"}
-                    onChange={handleChange("panel1")}
-                    sx={{
-                      backgroundColor: "rgb(17, 24, 39)",
-                      "&:before": {
-                        display: "none",
-                      },
-                    }}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1bh-content"
-                      id="panel1bh-header"
-                    >
-                      <DropdownNavItem
-                        icon={<WarehouseIcon />}
-                        title={wareHouseItemsAccordion[0].title}
-                        sx={{ marginBottom: -2, marginTop: -2 }}
-                      />
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      {StockListItems.map((item) => (
-                        <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                      ))}
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion
-                    expanded={expanded === "panel2"}
-                    onChange={handleChange("panel2")}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                    sx={{
-                      backgroundColor: "rgb(17, 24, 39)",
-                      "&:before": {
-                        display: "none",
-                      },
-                    }}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1d-content"
-                      id="panel1d-header"
-                    >
-                      <DropdownNavItem
-                        icon={<RequestedIcon />}
-                        title={wareHouseItemsAccordion[1].title}
-                        sx={{ marginBottom: -2, marginTop: -2 }}
-                      />
-                      {/* <Typography>Accordion 1</Typography> */}
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      {RequestedItems.map((item) => (
-                        <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                      ))}
-                    </AccordionDetails>
-                  </Accordion>
-                  <Box>
-                    {wareHouseItems.map((item) => (
-                      <>
-                        <NavItem
-                          sx={{ marginLeft: 1, maxWidth: " 90%" }}
-                          key={item.title}
-                          icon={item.icon}
-                          href={item.href}
-                          title={item.title}
-                        />
-                      </>
-                    ))}
-                  </Box>
-                </Box>
-              </Box>
-              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="menuTitle">PRODUCTION</Typography>
-                {production.map((item) => (
-                  <>
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                  </>
-                ))}
-              </Box>
-              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="menuTitle">SALES</Typography>
-
-                {sales.map((item) => (
-                  <>
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                  </>
-                ))}
-              </Box>
-              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="menuTitle">FINANCE</Typography>
-
-                {Finance.map((item) => (
-                  <>
-                    <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
-                  </>
-                ))}
-              </Box>
-              <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="menuTitle">USER</Typography>
-
-                {RegisterUser.map((item) => (
-                  <>
-                    <NavItem key={item.href} icon={item.icon} href={item.href} title={item.title} />
-                  </>
-                ))}
-              </Box>
-            </>
-          ) : user.role === 'Ware House' ? (
+        </div>
+        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+        {isSuperAdmin ? (
+          <>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">GENERAL</Typography>
+              {generalItems.map((item) => (
+                <>
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">PROCURMENT</Typography>
+              {procurmentItems.map((item) => (
+                <>
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">WARE HOUSE</Typography>
               <Box sx={{ marginTop: "2vh" }}>
@@ -512,7 +556,12 @@ export const DashboardSidebar = (props) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     {StockListItems.map((item) => (
-                      <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                      <NavItem
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
                     ))}
                   </AccordionDetails>
                 </Accordion>
@@ -541,8 +590,49 @@ export const DashboardSidebar = (props) => {
                     {/* <Typography>Accordion 1</Typography> */}
                   </AccordionSummary>
                   <AccordionDetails>
+                    {FinishedItems.map((item) => (
+                      <NavItem
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+
+                <Accordion
+                  expanded={expanded === "panel2"}
+                  onChange={handleChange("panel2")}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                  sx={{
+                    backgroundColor: "rgb(17, 24, 39)",
+                    "&:before": {
+                      display: "none",
+                    },
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <DropdownNavItem
+                      icon={<RequestedIcon />}
+                      title={wareHouseItemsAccordion[2].title}
+                      sx={{ marginBottom: -2, marginTop: -2 }}
+                    />
+                    {/* <Typography>Accordion 1</Typography> */}
+                  </AccordionSummary>
+                  <AccordionDetails>
                     {RequestedItems.map((item) => (
-                      <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                      <NavItem
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
                     ))}
                   </AccordionDetails>
                 </Accordion>
@@ -561,16 +651,16 @@ export const DashboardSidebar = (props) => {
                 </Box>
               </Box>
             </Box>
-          ) : user.role == 'Production' ? (
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">PRODUCTION</Typography>
-              {production.map((item) => (
+              {GMproduction.map((item) => (
                 <>
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
             </Box>
-          ) : user.role === 'Sales' ? (
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">SALES</Typography>
 
@@ -580,19 +670,188 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-          ) : user.role === 'Procurment' ? (
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="menuTitle">PROCURMENT</Typography>
-              {procurmentItems.map((item) => (
+              <Typography variant="menuTitle">FINANCE</Typography>
+
+              {Finance.map((item) => (
                 <>
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
             </Box>
-          ) : null}
+            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="menuTitle">USER</Typography>
 
-        </Box>
-      </div>
+              {RegisterUser.map((item) => (
+                <>
+                  <NavItem key={item.href} icon={item.icon} href={item.href} title={item.title} />
+                </>
+              ))}
+            </Box>
+          </>
+        ) : user.role === "Ware House" ? (
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">WARE HOUSE</Typography>
+            <Box sx={{ marginTop: "2vh" }}>
+              <Accordion
+                expanded={expanded === "panel1"}
+                onChange={handleChange("panel1")}
+                sx={{
+                  backgroundColor: "rgb(17, 24, 39)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                >
+                  <DropdownNavItem
+                    icon={<WarehouseIcon />}
+                    title={wareHouseItemsAccordion[0].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                </AccordionSummary>
+                <AccordionDetails>
+                  {StockListItems.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                expanded={expanded === "panel2"}
+                onChange={handleChange("panel2")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(17, 24, 39)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<RequestedIcon />}
+                    title={wareHouseItemsAccordion[1].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {FinishedItems.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              {/*  */}
+              <Accordion
+                expanded={expanded === "panel2"}
+                onChange={handleChange("panel2")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(17, 24, 39)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<RequestedIcon />}
+                    title={wareHouseItemsAccordion[2].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {RequestedItems.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              <Box>
+                {wareHouseItems.map((item) => (
+                  <>
+                    <NavItem
+                      sx={{ marginLeft: 1, maxWidth: " 90%" }}
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  </>
+                ))}
+              </Box>
+            </Box>
+          </Box>
+        ) : user.role == "Production" ? (
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">PRODUCTION</Typography>
+            {production.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
+        ) : user.role === "Sales" ? (
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">SALES</Typography>
+
+            {sales.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
+        ) : user.role === "Procurment" ? (
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">PROCURMENT</Typography>
+            {procurmentItems.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
+        ) : user.role === "Finance" ? (
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">Finance</Typography>
+            {Finance.map((item) => (
+              <>
+                <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+              </>
+            ))}
+          </Box>
+        ) : null}
+      </Box>
     </>
   );
 

@@ -21,7 +21,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { MenuItem, Select } from "@material-ui/core";
 import { DashboardLayout } from "src/components/dashboard-layout";
 import { useSnackbar } from "notistack";
-
+import CButton from '../components/Button'
 const Register = () => {
   const router = useRouter();
   const [oroles, setOroles] = useState();
@@ -57,7 +57,7 @@ const Register = () => {
         },
       };
       authAxois
-        .post("signup", data)
+        .post("/signup", data)
         .then((res) => {
           console.log(res);
           if (res.data.message === "signedup") {
@@ -134,20 +134,6 @@ const Register = () => {
               value={formik.values.email}
               variant="outlined"
             />
-            <Select
-              fullWidth
-              variant="outlined"
-              value={oroles}
-              label="Role"
-              onChange={(e) => setOroles(e.target.value)}
-              placeholder="Sales"
-            >
-              <MenuItem value="Super Admin">Super Admin</MenuItem>
-              <MenuItem value="Sales">Sales</MenuItem>
-              <MenuItem value="Production">Production</MenuItem>
-              <MenuItem value="WareHouse">Ware House</MenuItem>
-              <MenuItem value="Finance">Finance</MenuItem>
-            </Select>
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
@@ -192,16 +178,17 @@ const Register = () => {
               <MenuItem value="Procument">Procument</MenuItem>
             </Select>
             <Box sx={{ py: 2 }}>
-              <Button
+              <CButton
                 // color="primary"
                 disabled={formik.isSubmitting}
                 fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
+                // size="large"
+                // type="submit"
+                // variant="contained"
+                
               >
                 Sign Up Now
-              </Button>
+              </CButton>
             </Box>
             {/* <Typography color="textSecondary" variant="body2">
               Have an account?{" "}

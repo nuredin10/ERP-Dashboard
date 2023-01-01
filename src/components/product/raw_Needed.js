@@ -85,6 +85,18 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                     fullWidth
                   />
                 </Grid>
+
+                <Grid item xs={12} lg={3} sm={6} md={6}>
+                  <TextField
+                    required
+                    name="mat_materialcode"
+                    label="material code"
+                    type="text"
+                    value={input.mat_materialcode}
+                    onChange={event => handleFormChange(index, event)}
+                    fullWidth
+                  />
+                </Grid>
                 <Grid item xs={12} lg={3} sm={6} md={6}>
                   <TextField
                     required
@@ -103,6 +115,17 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                     label="Quantity"
                     type="text"
                     value={input.mat_quantity}
+                    onChange={event => handleFormChange(index, event)}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={11} lg={2} sm={5} md={5}>
+                  <TextField
+                    required
+                    name="mat_unit"
+                    label="Measuring Unit"
+                    type="text"
+                    value={input.mat_unit}
                     onChange={event => handleFormChange(index, event)}
                     fullWidth
                   />
