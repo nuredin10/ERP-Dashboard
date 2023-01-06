@@ -53,6 +53,7 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 
 const generalItems = [
   {
@@ -60,7 +61,6 @@ const generalItems = [
     icon: <ChartBarIcon fontSize="small" />,
     title: "Dashboard",
   },
-  
 ];
 
 const procurmentItems = [
@@ -74,8 +74,6 @@ const procurmentItems = [
     icon: <UsersIcon fontSize="small" />,
     title: "Purchase Orders",
   },
- 
- 
 ];
 
 const wareHouseItemsAccordion = [
@@ -87,17 +85,19 @@ const wareHouseItemsAccordion = [
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Finished Goods",
-   
   },
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Accessories",
-   
   },
   {
     icon: <UsersIcon fontSize="small" />,
     title: "Requested Items",
+  },
 
+  {
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Register Original Products",
   },
 ];
 
@@ -107,7 +107,6 @@ const finishedAccordion = [
     // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,    // endIconLess: <ExpandLessIcon fontSize="small"/>,
     title: "Stock List",
   },
-
 ];
 
 const wareHouseItems = [
@@ -115,6 +114,12 @@ const wareHouseItems = [
     href: "/warehouse/Recieving",
     icon: <RecievingIcon fontSize="small" />,
     title: "Recieving",
+  },
+
+  {
+    href: "/warehouse/accsRequestion",
+    icon: <RecievingIcon fontSize="small" />,
+    title: "Accessory Requisition",
   },
   {
     href: "/warehouse/PurchaseOrder",
@@ -124,31 +129,39 @@ const wareHouseItems = [
 ];
 
 const production = [
-  {
-    href: "/production/ProductionOrder",
-    icon: <PendingActionsIcon fontSize="small" />,
-    title: "Production Order",
-  },
+  // {
+  //   href: "/production/ProductionOrder",
+  //   icon: <PendingActionsIcon fontSize="small" />,
+  //   title: "Production Order",
+  // },
   {
     href: "/production/productionOngoing",
     icon: <AutorenewIcon fontSize="small" />,
-    title: "Production Ongoing",
+    title: "Production Approved",
   },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
   },
- 
- 
+
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
     title: "Order List",
   },
 
+  {
+    href: "/production/rawrequestList",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Requestion List",
+  },
 
-
+  {
+    href: "/production/requestrawmaterials",
+    icon: <AddIcon fontSize="small" />,
+    title: "Raw material Requestion",
+  },
 ];
 
 const GMproduction = [
@@ -160,15 +173,14 @@ const GMproduction = [
   {
     href: "/production/productionOngoing",
     icon: <AutorenewIcon fontSize="small" />,
-    title: "Production Ongoing",
+    title: "Production Approved",
   },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
   },
-  
-  
+
   {
     href: "/production/OrderListGm",
     icon: <ViewListIcon fontSize="small" />,
@@ -180,8 +192,18 @@ const GMproduction = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Add Production Order",
   },
-  
-  
+
+  {
+    href: "/production/rawrequestList",
+    icon: <AddIcon fontSize="small" />,
+    title: "Requestion List",
+  },
+
+  {
+    href: "/production/requestrawmaterials",
+    icon: <AddIcon fontSize="small" />,
+    title: "Raw material Requestion",
+  },
 ];
 
 const sales = [
@@ -195,8 +217,7 @@ const sales = [
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",
   },
- 
- 
+
   {
     href: "/sales/vender",
     icon: <ViewListIcon fontSize="small" />,
@@ -212,8 +233,6 @@ const sales = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Summery",
   },
- 
- 
 ];
 
 const StockListItems = [
@@ -288,7 +307,27 @@ const FinishedItems = [
   {
     href: "/warehouse/finishedGoods/CONDUTES",
     icon: <FinishedGoodsIcon fontSize="small" />,
-    title: "CONDUTES",
+    title: "CONDUITS",
+  },
+];
+
+const NewMaterial = [
+  {
+    href: "/warehouse/newMaterial/rawMaterials",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "New Raw Material",
+  },
+
+  {
+    href: "/warehouse/newMaterial/accessory",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "New Accessory",
+  },
+
+  {
+    href: "/warehouse/newMaterial/finishedGood",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "New Finished Good",
   },
 ];
 
@@ -306,9 +345,9 @@ const AccessoriesItems = [
   {
     href: "/warehouse/accessories/recycle",
     icon: <FinishedGoodsIcon fontSize="small" />,
-    title: "recycle",
+    title: "Consumable Goods",
   },
-]
+];
 
 const RegisterUser = [
   {
@@ -330,6 +369,11 @@ const Finance = [
     title: "Account Recieved",
   },
 
+  {
+    href: "/finance/batchandCost",
+    icon: <CreditScoreIcon fontSize="small" />,
+    title: "Production Cost",
+  },
   {
     href: "/finance/accountRecivableSales",
     icon: <CreditScoreIcon fontSize="small" />,
@@ -550,6 +594,7 @@ export const DashboardSidebar = (props) => {
                     ))}
                   </AccordionDetails>
                 </Accordion>
+
                 <Accordion
                   expanded={expanded === "panel4"}
                   onChange={handleChange("panel4")}
@@ -576,6 +621,41 @@ export const DashboardSidebar = (props) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     {RequestedItems.map((item) => (
+                      <NavItem
+                        key={item.title}
+                        icon={item.icon}
+                        href={item.href}
+                        title={item.title}
+                      />
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion
+                  expanded={expanded === "panel5"}
+                  onChange={handleChange("panel5")}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                  sx={{
+                    backgroundColor: "rgb(17, 24, 39)",
+                    "&:before": {
+                      display: "none",
+                    },
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <DropdownNavItem
+                      icon={<CreateNewFolderIcon />}
+                      title={wareHouseItemsAccordion[4].title}
+                      sx={{ marginBottom: -2, marginTop: -2 }}
+                    />
+                    {/* <Typography>Accordion 1</Typography> */}
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {NewMaterial.map((item) => (
                       <NavItem
                         key={item.title}
                         icon={item.icon}
@@ -642,7 +722,7 @@ export const DashboardSidebar = (props) => {
           </>
         ) : user.role === "Ware House" ? (
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="menuTitle">WARE HOUSE</Typography>
+            <Typography variant="menuTitle">WAREHOUSE</Typography>
             <Box sx={{ marginTop: "2vh" }}>
               <Accordion
                 expanded={expanded === "panel1"}

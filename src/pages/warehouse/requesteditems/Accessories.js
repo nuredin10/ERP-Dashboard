@@ -46,6 +46,13 @@ const Accessories = () => {
     { title: "Status", field: "mat_status" },
   ];
 
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
+
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
@@ -60,6 +67,9 @@ const Accessories = () => {
         console.log(resp.data);
         const accessories = resp.data.filter((acc) => acc.req_materialtype.includes("ACCS"));
         const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
+        accessories.map((eachData) => {
+          eachData.mat_requestdate = convert(eachData.mat_requestdate);
+        });
         setData(accessories);
       })
       .catch((error) => {

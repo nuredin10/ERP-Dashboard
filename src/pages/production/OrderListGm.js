@@ -20,7 +20,7 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import PAxios from "../../components/productionWxios";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useRouter } from "next/router";
 import Router from "next/router";
 
@@ -42,18 +42,15 @@ const GmOrderList = () => {
   };
 
   const columns = [
+    { title: "Date Ordered", field: "order_date" },
     { title: "Name", field: "final_product" },
-    // { title: "Description", field: "final_desc" },
     { title: "Material Diameter", field: "finished_diameter" },
-
     { title: "Material Code", field: "finished_materialcode" },
     { title: "Quantity", field: "final_quant" },
     { title: "Measure Unit", field: "final_measureunit" },
     { title: "Color", field: "final_color" },
     { title: "Operator Name", field: "order_reciver" },
-    { title: "Date Ordered", field: "order_date" },
     { title: "Status", field: "final_status" },
-    // { title: "Action", field: "final_status" },
   ];
   useEffect(() => {
     PAxios.get("/showOrderGM")
@@ -100,7 +97,7 @@ const GmOrderList = () => {
                           pathname: "/production/addproduct",
                           query: { id: rowData.id },
                         }),
-                      // console.log(e),
+                  
                     }),
                   ]}
                   localization={{

@@ -18,15 +18,22 @@ import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import FAxios from "../../components/financeAxios";
 import InfoIcon from "@mui/icons-material/Info";
+import { useForm } from "react-hook-form";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
   const [reason, setReason] = useState({});
-
+  const { register, handleSubmit, reset } = useForm();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   const columns = [
     { title: "Name", field: "customer_name" },
     { title: "Tin Number", field: "customer_tin" },
@@ -38,6 +45,9 @@ const AccountRecieveable = () => {
   useEffect(() => {
     FAxios.get("/shoesalesOrderProd")
       .then((res) => {
+        res.data.map((eachData) => {
+          eachData.sales_date = convert(eachData.sales_date);
+        });
         setData(res.data);
         console.log("show data", res.data);
       })
@@ -46,11 +56,10 @@ const AccountRecieveable = () => {
       });
   }, []);
 
-  const GernerateDO = ( ID) => {
-   
-    FAxios.post("/completeRecibableSalesOrder", {
-      ID: ID,
-    })
+  const onSubmit = (newForm) => {
+    console.log("Quan", { ...newForm });
+    const data = {};
+    FAxios.post("/completeRecibableSalesOrder", newForm)
       .then((respo) => {
         console.log(respo);
       })
@@ -58,6 +67,21 @@ const AccountRecieveable = () => {
         console.log(err);
       });
   };
+
+  // const GernerateDO = (ID, forms) => {
+  // console.log("ID", ID);
+  // console.log("Quan", forms);
+
+  // FAxios.post("/completeRecibableSalesOrder", {
+  //   ID: ID,
+  // })
+  //   .then((respo) => {
+  //     console.log(respo);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // };
   const details = (data) => {
     setReason(data);
     // console.log(id)
@@ -177,13 +201,39 @@ const AccountRecieveable = () => {
                   <Typography>{reason.product_color}</Typography>
                 </Grid>
               </Grid>
-              <Button
-                sx={buttonstyle}
-                variant="contained"
-                onClick={() => GernerateDO( reason.id)}
-              >
-                Complete Order
-              </Button>
+              {reason.status !== "Cash" ? (
+                <>
+                  {" "}
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <Grid container spacing={3} mt={3}>
+                      <Grid item lg={12}>
+                        <Typography variant="h6" component="h2">
+                          Payment Update
+                        </Typography>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            required
+                            name="remaining"
+                            label="Insert Payed Amount"
+                            type="text"
+                            fullWidth
+                            {...register("remaining")}
+                          />
+                          <TextField hidden type="hidden" value={reason.id} {...register("ID")} />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Button
+                      sx={buttonstyle}
+                      variant="outlined"
+                      type="submit"
+                      // onClick={() => GernerateDO(reason.id, newForm.remaining)}
+                    >
+                      Complete Order
+                    </Button>
+                  </form>
+                </>
+              ) : null}
             </Box>
           </Modal>
         </Container>

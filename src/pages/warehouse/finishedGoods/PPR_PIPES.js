@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import {
@@ -28,11 +27,16 @@ import AddIcon from "@mui/icons-material/Add";
 
 const Summary = () => {
   const [data, setData] = useState([]);
+  const [ods, setOd] = useState([]);
   const [type, setType] = useState("RAW");
   const handleChange = (event) => {
     setType(event.target.value);
   };
   var columns;
+
+  // const ods = [
+  //   "20mm","25mm", "32mm", "40mm", "50mm", "63mm"
+  // ]
 
   columns = [
     { title: "Date", field: "finished_date" },
@@ -41,15 +45,34 @@ const Summary = () => {
     { title: "Color", field: "color" },
     { title: "Stock At Hand", field: "finished_quantity" },
   ];
-
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   const req = {
     Cat: "PPR PIPE",
     Spec: type,
   };
+
+ 
   useEffect(() => {
+    waxios
+    .post("/diameterSelect", {Cat: "PPR PIPE"})
+    .then((response) => {
+     setOd(response.data)
+      console.log(response.data);
+    })
+    .catch((response) => {
+      console.log(response);
+    });
     waxios
       .post("/finishedMaterialbyCat", req)
       .then((response) => {
+        response.data.map((eachData) => {
+          eachData.finished_date = convert(eachData.finished_date);
+        });
         setData(response.data);
         console.log(response.data);
       })
@@ -84,6 +107,12 @@ const Summary = () => {
                   label="type"
                   onChange={handleChange}
                 >
+
+                  {/* {ods.forEach((od)=>{
+
+                    <MenuItem value={od.finished_description} >OD 20mm</MenuItem>
+                
+                  })} */}
                   <MenuItem value={"20mm"}>OD 20mm</MenuItem>
                   <MenuItem value={"25mm"}>OD 25mm</MenuItem>
                   <MenuItem value={"32mm"}>OD 32mm</MenuItem>

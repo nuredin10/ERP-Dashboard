@@ -204,15 +204,15 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import ToolBar from "../../../components/ToolBar";
 import waxios from "../../../components/wareHouseAxios";
 import SummarizeIcon from "@mui/icons-material/Summarize";
-import Router from 'next/router';
-import AddIcon from '@mui/icons-material/Add';
+import Router from "next/router";
+import AddIcon from "@mui/icons-material/Add";
 
 const Summary = () => {
   const [data, setData] = useState([]);
@@ -229,6 +229,12 @@ const Summary = () => {
     { title: "Color", field: "color" },
     { title: "Stock At Hand", field: "finished_quantity" },
   ];
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
 
   const req = {
     Cat: "PPR FITTINGS",
@@ -238,6 +244,9 @@ const Summary = () => {
     waxios
       .post("/finishedMaterialbyCat", req)
       .then((response) => {
+        response.data.map((eachData) => {
+          eachData.finished_date = convert(eachData.finished_date);
+        });
         setData(response.data);
         console.log(response.data);
       })
@@ -260,7 +269,7 @@ const Summary = () => {
         <Container maxWidth="ml">
           <Grid container spacing={3}>
             <Grid item xg={3} lg={3} sm={12} sx={{ mb: 3 }}>
-            <Typography sx={{ mb: 3 }} variant="h6">
+              <Typography sx={{ mb: 3 }} variant="h6">
                 Select Type
               </Typography>
               <FormControl>
@@ -290,7 +299,7 @@ const Summary = () => {
                   <TextField name="od" label="Add OD" type="text" />
                 </Grid>
                 <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5,ml: 1}}>
+                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
                     <AddIcon />
                   </IconButton>
                 </Grid>
@@ -305,7 +314,7 @@ const Summary = () => {
                   <TextField name="ppr" label="Add PPR" type="text" />
                 </Grid>
                 <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5,ml: 1}}>
+                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
                     <AddIcon />
                   </IconButton>
                 </Grid>

@@ -136,14 +136,7 @@ const ProductionOrderGM = () => {
                     <Typography variant="h5">Add New Production Order</Typography>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    {/* <TextField
-                      required
-                      name="fin_product"
-                      label="Final Product"
-                      type="text"
-                      fullWidth
-                      {...register("final_product")}
-                    /> */}
+                   
 
                     <TextField
                       name="Final Product"

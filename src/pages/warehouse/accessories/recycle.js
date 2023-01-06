@@ -34,21 +34,29 @@ const Recycle = () => {
   var columns;
 
   columns = [
-    { title: "Date", field: "finished_date" },
-    { title: "Description", field: "finished_diameter" },
-    { title: "Material Code", field: "finished_materialcode" },
-    { title: "Color", field: "color" },
-    { title: "Stock At Hand", field: "finished_quantity" },
+    { title: "Date", field: "accs_date" },
+    { title: "Material Name", field: "accs_name" },
+    { title: "Material Code", field: "accs_materialcode" },
+    { title: "Stock At Hand", field: "accs_quantity" },
   ];
 
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
+
   const req = {
-    Cat: "HDPE PIPES",
-    Spec: type,
+    Cat: "Consumable_goods",
   };
   useEffect(() => {
     waxios
-      .post("/finishedMaterialbyCat", req)
+      .post("/showAccCat", req)
       .then((response) => {
+        response.data.map((eachData) => {
+          eachData.accs_date = convert(eachData.accs_date);
+        });
         setData(response.data);
         console.log(response.data);
       })
@@ -70,31 +78,6 @@ const Recycle = () => {
       >
         <Container maxWidth="ml">
           <Grid container spacing={3}>
-            <Grid item xg={4} lg={4} sm={12} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Select Type
-              </Typography>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={type}
-                  label="type"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={"50mm"}>OD 20mm</MenuItem>
-                  <MenuItem value={"25mm"}>OD 25mm</MenuItem>
-                  <MenuItem value={"32mm"}>OD 32mm</MenuItem>
-                  <MenuItem value={"40mm"}>OD 40mm</MenuItem>
-                  <MenuItem value={"50mm"}>OD 50mm</MenuItem>
-                  <MenuItem value={"63mm"}>OD 63mm</MenuItem>
-                  <MenuItem value={"75mm"}>OD 75mm</MenuItem>
-                  <MenuItem value={"90mm"}>OD 90mm</MenuItem>
-                  <MenuItem value={"110mm"}>OD 110mm</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
             {/* <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">
                 Add OD
@@ -128,7 +111,7 @@ const Recycle = () => {
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
                 <Table
-                  title="Mechanical"
+                  title="Consumable"
                   data={data}
                   columns={columns}
                   actions={[
@@ -138,7 +121,7 @@ const Recycle = () => {
                       onClick: () => {
                         // console.log(rowData)
                         Router.push({
-                          pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
+                          pathname: "/warehouse/stockList/Accessories/monthlyReport",
                           query: { id: rowData.id },
                         });
                       },

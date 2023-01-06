@@ -9,118 +9,195 @@ import {
   Link,
   TextField,
   Card,
-  Typography,
   Modal,
+  Grid,
+  Typography,
 } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
-import OrderList from "src/components/sales/salesProductList/orderdProductList";
-import saxios from '../../components/salesAxios';
+import FAxios from "../../components/financeAxios";
+import InfoIcon from "@mui/icons-material/Info";
 
-const SalesOrderList = () => {
+const AccountRecieveable = () => {
   const [data, setData] = useState([]);
-  const [selectedData, setselectedData] = useState();
+  const [reason, setReason] = useState({});
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   const columns = [
-    { title: "Company Name", field: "company_name" },
+    { title: "Name", field: "customer_name" },
+    { title: "Tin Number", field: "Tin_number" },
+    { title: "Amount", field: "cus_total" },
     { title: "Date", field: "order_date" },
-    { title: "Customer Name", field: "customer_name" },
-    { title: "bussiness Name", field: "cus_bussinessName" },
-    { title: "customer phoneNum", field: "cus_phoneNum" },
-    { title: "email", field: "cus_email" },
-    { title: "ship contactName", field: "ship_contactName" },
-    { title: "Address1", field: "ship_address1" },
-    { title: "Address2", field: "ship_address2" },
-    { title: "TinNumber", field: "cust_tinNumber" },
+    { title: "Payment status", field: "payment" },
+    { title: "Payment Advance", field: "cus_advance" },
+    { title: "Status", field: "status" },
   ];
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    width: "70%",
-    transform: "translate(-50%, -50%)",
-    // width: 400,
-    height: "80%",
-    bgcolor: "background.paper",
-    borderRadius: '10px',
-    overflowY: 'scroll',
-    boxShadow: 24,
-    p: 4,
-  };
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
+  useEffect(() => {
+    FAxios.get("/showSalesOrder")
+      .then((resp) => {
+        console.log(resp);
+        resp.data.map((eachData) => {
+          eachData.order_date = convert(eachData.order_date);
+        });
+        setData(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  const cartViwer = (rowData) => {
-    // console.log(rowData);
-    setselectedData(rowData);
+  const GernerateDO = (ID) => {
+    FAxios.post("/acceptSalesOrder", {
+      ID: ID,
+    })
+      .then((respo) => {
+        console.log(respo);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const details = (data) => {
+    setReason(data);
+    // console.log(id)
     handleOpen();
   };
 
-  useEffect(() => {
-    saxios.get("/showSalesOrder")
-    .then((resp)=>{
-      // console.log(resp)
-      setData(resp.data)
-    })
+  const style = {
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    borderRadius: 1,
+    p: 4,
+    pb: 10,
+  };
 
-    // fetch("http://localhost:4000/showSalesOrder")
-    //   .then((resp) => resp.json())
-    //   .then((resp) => setData(resp));
-  }, []);
+  const buttonstyle = {
+    position: "absolute",
+    mt: 20,
+    align: "right",
+    bottom: 10,
+    right: 10,
+  };
+
   return (
-    <Box sx={{
-      width: '100%',
-      p: 5
-    }}>
+    <>
       <Head>
-        <title>Sales Order List</title>
+        <title>Sales Order | Proplast</title>
       </Head>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
         <Container maxWidth="ml">
-        
-          {/* <Card maxWidth="lg"> */}
+          {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
+          <Card maxWidth="lg">
             <Table
-              title="Sales Order List"
+              title="Sales Order"
               data={data}
               columns={columns}
               actions={[
                 (rowData) => ({
-                  icon: () => <ShoppingCartIcon></ShoppingCartIcon>,
-                  tooltip: "Edit ",
-                  onClick: () => cartViwer(rowData),
+                  icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
+                  tooltip: "Details",
+                  onClick: () => details(rowData),
                 }),
               ]}
             />
+          </Card>
 
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                {
-                  selectedData ? (
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Grid container spacing={3}>
+                <Grid item lg={12}>
+                  <Typography variant="h5" component="h2">
+                    Product Order
+                  </Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Name
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.final_product}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Color
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.final_color}</Typography>
+                </Grid>
 
-                    <OrderList OrderdId= {selectedData.unique_id}  handleClose={handleClose} />
-                  ) : null
-                }
-              </Box>
-            </Modal>
-
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
-          {/* </Card> */}
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Quantity
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.final_quant}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Specification
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.final_diameter}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Code
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.final_materialCode}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Color
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.final_color}</Typography>
+                </Grid>
+              </Grid>
+              <Button sx={buttonstyle} variant="contained" onClick={() => GernerateDO(reason.id)}>
+                Accept Order
+              </Button>
+            </Box>
+          </Modal>
         </Container>
-      
-    </Box>
+      </Box>
+    </>
   );
 };
 
-SalesOrderList.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AccountRecieveable.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default SalesOrderList;
+export default AccountRecieveable;

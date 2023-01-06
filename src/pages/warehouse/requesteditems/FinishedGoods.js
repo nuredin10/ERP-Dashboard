@@ -35,14 +35,20 @@ const FinishedGoods = () => {
 
   const { enqueueSnackbar } = useSnackbar();
   const columns = [
-    { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
+    { title: "Name", field: "mat_requestname" },
     { title: "Quantity", field: "mat_quantity" },
-    { title: "UOM", field: "mat_unit" },
+    { title: "Description", field: "mat_description" },
+    { title: "Color", field: "finished_Color" },
     { title: "Person Id", field: "mat_reqpersonid" },
     { title: "Status", field: "mat_status" },
   ];
-
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
@@ -56,7 +62,9 @@ const FinishedGoods = () => {
       .then((resp) => {
         console.log(resp.data);
         const finishedData = resp.data.filter((finish) => finish.req_materialtype.includes("FIN"));
-
+        finishedData.map((eachData) => {
+          eachData.mat_requestdate = convert(eachData.mat_requestdate);
+        });
         setData(finishedData);
       })
       .catch((error) => {

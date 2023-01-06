@@ -26,10 +26,14 @@ const AccountPayable = () => {
     { title: "Value", field: "payable_value" },
     { title: "Person", field: "payable_person" },
     { title: "First Date", field: "payable_firstdate" },
-    { title: "Last Date", field: "payable_lastdate" },
     { title: "Status", field: "payable_status" },
   ];
-
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   const [data, setData] = useState([]);
   const [reason, setReason] = useState({});
 
@@ -40,6 +44,9 @@ const AccountPayable = () => {
   useEffect(() => {
     FAxios.get("/showaccountpayable")
       .then((res) => {
+        res.data.map((eachData) => {
+          eachData.payable_firstdate = convert(eachData.payable_firstdate);
+        });
         setData(res.data);
       })
       .catch((err) => {

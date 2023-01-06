@@ -51,7 +51,12 @@ const RawMaterial = () => {
   const handleClose = () => {
     setDialogOpen(false);
   };
-
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   useEffect(() => {
     waxios
       .get("/showStoreRequestion")
@@ -59,6 +64,9 @@ const RawMaterial = () => {
         console.log(resp.data);
         const rawMaterial = resp.data.filter((raw) => raw.req_materialtype.includes("RAW"));
         const pending = rawMaterial.filter((pending) => pending.mat_status.includes("PENDING"));
+        // rawMaterial.map((eachData) => {
+        //   eachData.mat_requestdate = convert(eachData.mat_requestdate);
+        // });
         setData(rawMaterial);
       })
       .catch((error) => {
@@ -74,8 +82,8 @@ const RawMaterial = () => {
   //   // const raw = data.filter( (raw) => raw.req_materialtype.includes("RAW"))
   //   setRawmaterial(data)
   // },[])
-  const accept =  (id) => {
-     waxios
+  const accept = (id) => {
+    waxios
       .post("/responseStoreRequestion", {
         id: id,
         status: "Accept",
@@ -109,7 +117,7 @@ const RawMaterial = () => {
         status: "Decline",
       })
       .then(function (response) {
-        console.log(response,"scasdcasdc");
+        console.log(response, "scasdcasdc");
         setIsSuccess("info");
         setAlertMsg("Item Rejected");
         enqueueSnackbar("Item Rejected", { variant: "warning" });

@@ -40,7 +40,12 @@ const Summary = () => {
     { title: "Color", field: "color" },
     { title: "Stock At Hand", field: "finished_quantity" },
   ];
-
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   const req = {
     Cat: "HDPE PIPES",
     Spec: type,
@@ -49,6 +54,9 @@ const Summary = () => {
     waxios
       .post("/finishedMaterialbyCat", req)
       .then((response) => {
+        response.data.map((eachData) => {
+          eachData.finished_date = convert(eachData.finished_date);
+        });
         setData(response.data);
         console.log(response.data);
       })

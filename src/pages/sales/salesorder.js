@@ -30,10 +30,16 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
-import OrderInformation from "src/components/sales/orderInformation";
+import axios from "../../components/productionWxios";
+// import axios from "axios";
+import RawMaterialNeed from "src/components/product/raw_Needed";
+import CustomAlert from "src/components/alert";
+import ConfirmDialog from "src/components/confirmDialog ";
+import { useRouter } from "next/router";
+import CButton from "../../components/Button";
 import saxios from "../../components/salesAxios";
-import CButton from '../../components/Button'
 
+// import paxios from '../../'
 const style = {
   position: "absolute",
   top: "50%",
@@ -44,36 +50,56 @@ const style = {
   height: "80%",
   bgcolor: "background.paper",
   // border: "2px solid #000",
-  borderRadius: '10px',
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
 
-const SalesOrder = () => {
+const salesProductionOrder = () => {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = (e) => {
-    e.preventDefault();
-    setOpen(true);
-  }
+  const [startDate, setStartDate] = React.useState();
+  const [endDate, setEndDate] = React.useState();
+  const [customOrRegular, setCustomOrRegular] = React.useState("regular");
+  const [indata, setIndata] = React.useState();
+  const [isSuccess, setIsSuccess] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
+
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const { register, handleSubmit, reset } = useForm();
-  const [payment, setPayment] = useState();
+  const [payment, setPayment] = useState("");
+  const [MethodExe, setMethodExe] = useState("");
+
   const [orderInfo, setOrderInfo] = useState([]);
+  const [regular, setRegular] = useState([]);
+  const [selectedRegualr, setSelectedRegular] = useState(0);
+
+  const router = useRouter();
+  const { id } = router.query;
 
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
 
+  const handleMethodChange = (newValue) => {
+    setMethodExe(newValue.target.value);
+  };
+
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("/");
+  }
+
+  var newForm;
   const newRequest = (data) => {
-    const newForm = {
-      ...data,
-      payment_status: payment,
-      order_information: orderInfo,
-    };
-    console.log(newForm);
+    const newData = { ...data, payment };
+    console.log(data);
+    console.log("payment", newData);
     saxios
-      .post("/creatSalesOrder", newForm)
+      .post("/creatSalesOrder", newData)
       .then(function (response) {
         console.log(response);
         Router.push("/sales/salesorderlist");
@@ -86,7 +112,7 @@ const SalesOrder = () => {
   return (
     <>
       <Head>
-        <title>SalesOrder</title>
+        <title>Add Production Order</title>
       </Head>
       <Box
         component="main"
@@ -95,6 +121,11 @@ const SalesOrder = () => {
           py: 8,
         }}
       >
+        <Box sx={{ position: "absolute", width: "100%", top: "7%", right: "1%" }}>
+          {isSuccess != "" ? (
+            <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+          ) : null}
+        </Box>
         <Box
           sx={{
             width: "100%",
@@ -109,132 +140,50 @@ const SalesOrder = () => {
               <form onSubmit={handleSubmit(newRequest)}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Sales Order</Typography>
+                    <Typography variant="h5">Add customer detail</Typography>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="company_name"
-                      label="Company Name"
+                      name="salesID"
+                      label="Sales ID"
                       type="text"
                       fullWidth
-                      {...register("company_name")}
+                      {...register("salesID")}
                     />
                   </Grid>
 
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Customer Information/Account Information</Typography>
-                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
                       name="customer_name"
-                      label="Contact Name"
+                      label="Customer Name"
                       type="text"
                       fullWidth
                       {...register("customer_name")}
                     />
                   </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="cus_bussinessName"
-                      label="Business Name"
+                      name="customer_address"
+                      label="Customer Address"
                       type="text"
                       fullWidth
-                      {...register("cus_bussinessName")}
+                      {...register("customer_address")}
                     />
                   </Grid>
 
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="cus_phoneNum"
-                      label="Phone Number"
+                      name="Tin_number"
+                      label="Tin number"
                       type="text"
                       fullWidth
-                      {...register("cus_phoneNum")}
+                      {...register("Tin_number")}
                     />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="cus_email"
-                      label="Email Address"
-                      type="text"
-                      fullWidth
-                      {...register("cus_email")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Shipping Address</Typography>
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="ship_contactName"
-                      label="Contact Name"
-                      type="text"
-                      fullWidth
-                      {...register("ship_contactName")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="ship_address1"
-                      label="Address 1"
-                      type="text"
-                      fullWidth
-                      {...register("ship_address1")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="ship_address2"
-                      label="Address 2"
-                      type="text"
-                      fullWidth
-                      {...register("ship_address2")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="ship_city"
-                      label="City/State"
-                      type="text"
-                      fullWidth
-                      {...register("ship_city")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={6} sm={6} lg={6}>
-                    <Typography variant="h7">Order Information</Typography>
-                  </Grid>
-                  <Grid item>
-                    <CButton onClick={(e)=>handleOpen(e)}>
-                      Add
-                    </CButton>
-                  </Grid>
-
-                  <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                  >
-                    <Box sx={style}>
-                      <OrderInformation setOrderInfo={setOrderInfo} handleClose={handleClose} />
-                    </Box>
-                  </Modal>
-
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h7">Payment information</Typography>
                   </Grid>
 
                   <Grid item lg={12} sm={6}>
@@ -247,10 +196,9 @@ const SalesOrder = () => {
                         label="Payment method"
                         onChange={handlePaymentChange}
                       >
-                        <MenuItem value={"Pending"}>Advanced</MenuItem>
-                        <MenuItem value={"Half_Paied"}>Credit</MenuItem>
-                        <MenuItem value={"Paied"}>Cash payed</MenuItem>
-                        
+                        <MenuItem value={"Advanced"}>Advanced</MenuItem>
+                        <MenuItem value={"Credit"}>Credit</MenuItem>
+                        <MenuItem value={"Cash"}>Cash payed</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -258,54 +206,101 @@ const SalesOrder = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="Business_Name"
-                      label="Business Name"
+                      name="cus_total"
+                      label="Payment Total"
                       type="text"
                       fullWidth
-                      {...register("Business_Name")}
+                      {...register("cus_total")}
                     />
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Business_Tin"
-                      label="Tin Number"
-                      type="number"
-                      fullWidth
-                      {...register("Business_Tin")}
-                    />
-                  </Grid>
+                  {payment == "Advanced" ? (
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="cus_advance"
+                        label="Advance"
+                        type="text"
+                        fullWidth
+                        {...register("cus_advance")}
+                      />
+                    </Grid>
+                  ) : null}
+                  {/* =================product desciption====================  */}
 
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="total"
-                      label="Total Amount"
-                      type="number"
-                      fullWidth
-                      {...register("total")}
-                    />
-                  </Grid>
+                  <>
+                    <Grid item xs={12} sm={12}>
+                      <Typography variant="h5">Add product detail</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="fin_product"
+                        label="Final Product"
+                        type="text"
+                        fullWidth
+                        {...register("final_product")}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="final_color"
+                        label="Product Color"
+                        type="text"
+                        fullWidth
+                        {...register("final_color")}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="fin_spec"
+                        label="Materials Code"
+                        type="text"
+                        fullWidth
+                        {...register("final_materialCode")}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="final_desc"
+                        label="Diameter"
+                        type="text"
+                        fullWidth
+                        {...register("final_diameter")}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="leftPayable"
-                      label="Left to Pay"
-                      type="number"
-                      fullWidth
-                      {...register("leftPayable")}
-                    />
-                  </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="final_quant"
+                        label="Quantity"
+                        type="text"
+                        fullWidth
+                        {...register("final_quant")}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        name="final_measureunit"
+                        label="Unit of measurement"
+                        type="text"
+                        fullWidth
+                        {...register("final_measureunit")}
+                      />
+                    </Grid>
+                  </>
 
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
-                      Save
+                      Make Order
                     </CButton>
                   </Grid>
                   <Grid item>
-
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>
@@ -318,6 +313,6 @@ const SalesOrder = () => {
   );
 };
 
-SalesOrder.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+salesProductionOrder.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default SalesOrder;
+export default salesProductionOrder;

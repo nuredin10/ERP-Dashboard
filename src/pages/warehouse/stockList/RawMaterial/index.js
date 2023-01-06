@@ -44,13 +44,22 @@ const FinishedGoods = () => {
     { title: "Material Code", field: "raw_materialcode" },
     { title: "Quantity", field: "raw_quantity" },
     { title: "Material Unit", field: "raw_materialunit" },
-    
   ];
+
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
 
   useEffect(() => {
     waxios
       .get("/rawmaterials")
       .then((response) => {
+        response.data.map((eachData) => {
+          eachData.raw_date = convert(eachData.raw_date);
+        });
         setData(response.data);
       })
       .catch((response) => {
