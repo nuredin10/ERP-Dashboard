@@ -76,6 +76,14 @@ const procurmentItems = [
   },
 ];
 
+const financeAccordion = [
+  {
+    icon: <Inventory2Icon fontSize="small" />,
+    // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,    // endIconLess: <ExpandLessIcon fontSize="small"/>,
+    title: "Expense List",
+  },
+];
+
 const wareHouseItemsAccordion = [
   {
     icon: <Inventory2Icon fontSize="small" />,
@@ -328,6 +336,46 @@ const NewMaterial = [
     href: "/warehouse/newMaterial/finishedGood",
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "New Finished Good",
+  },
+];
+
+const showExpenseLists = [
+  {
+    href: "/finance/Expense/employeeFee",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Employee Fee",
+  },
+
+  {
+    href: "/warehouse/newMaterial/accessory",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Water Payment",
+  },
+
+  {
+    href: "/warehouse/newMaterial/finishedGood",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Electric Payment",
+  },
+  {
+    href: "/warehouse/newMaterial/finishedGood",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Phone Expense",
+  },
+  {
+    href: "/warehouse/newMaterial/finishedGood",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Fuel Expense",
+  },
+  {
+    href: "/warehouse/newMaterial/finishedGood",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Bank Loan Payment",
+  },
+  {
+    href: "/warehouse/newMaterial/finishedGood",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "Other Expense",
   },
 ];
 
@@ -702,7 +750,41 @@ export const DashboardSidebar = (props) => {
             <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">FINANCE</Typography>
-
+              <Accordion
+                expanded={expanded === "panel5"}
+                onChange={handleChange("panel5")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(17, 24, 39)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<CreateNewFolderIcon />}
+                    title={financeAccordion[0].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {showExpenseLists.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
               {Finance.map((item) => (
                 <>
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
@@ -873,6 +955,36 @@ export const DashboardSidebar = (props) => {
         ) : user.role === "Finance" ? (
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">Finance</Typography>
+            <Accordion
+              expanded={expanded === "panel5"}
+              onChange={handleChange("panel5")}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+              sx={{
+                backgroundColor: "rgb(17, 24, 39)",
+                "&:before": {
+                  display: "none",
+                },
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1d-content"
+                id="panel1d-header"
+              >
+                <DropdownNavItem
+                  icon={<CreateNewFolderIcon />}
+                  title={financeAccordion[0].title}
+                  sx={{ marginBottom: -2, marginTop: -2 }}
+                />
+                {/* <Typography>Accordion 1</Typography> */}
+              </AccordionSummary>
+              <AccordionDetails>
+                {showExpenseLists.map((item) => (
+                  <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
+                ))}
+              </AccordionDetails>
+            </Accordion>
             {Finance.map((item) => (
               <>
                 <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />

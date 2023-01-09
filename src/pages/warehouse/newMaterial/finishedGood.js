@@ -39,7 +39,7 @@ const PurchaseOrder = () => {
   const { register, handleSubmit, reset } = useForm();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [date, setDate] = useState();
+  const [date, setDate] = useState("UPVC PIPE");
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
@@ -126,7 +126,17 @@ const PurchaseOrder = () => {
                       <MenuItem value="PPR PIPE">PPR PIPE</MenuItem>
                     </TextField>
                   </Grid>
-                  <Grid item xs={12} sm={6} lg={3}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="finished_description"
+                      label="Material Description"
+                      type="text"
+                      fullWidth
+                      {...register("finished_description")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       required
                       name="finished_diameter"

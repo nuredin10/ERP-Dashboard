@@ -33,7 +33,7 @@ import Router from "next/router";
 import axios from "../../components/productionWxios";
 
 // import axios from "axios";
-import RawMaterialNeed from "src/components/product/raw_Needed";
+import AddBatchFormula from "src/components/product/addbatchFormula";
 import CustomAlert from "src/components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 import { useRouter } from "next/router";
@@ -276,7 +276,7 @@ const ProductionOrder = () => {
                           aria-describedby="modal-modal-description"
                         >
                           <Box sx={style}>
-                            <RawMaterialNeed
+                            <AddBatchFormula
                               setOrderInfo={setOrderInfo}
                               handleClose={handleClose}
                             />
