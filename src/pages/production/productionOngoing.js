@@ -266,9 +266,9 @@ const ProducitonOngoing = () => {
                         ))}
                       </TableBody>
                     </Table>
-                    <Table>
+                    {/* <Table>
                       <CButton>Edit Now</CButton>
-                    </Table>
+                    </Table> */}
                   </Box>
                 </Collapse>
               </TableCell>
