@@ -516,7 +516,7 @@ export const DashboardSidebar = (props) => {
             </NextLink>
           </Box>
         </div>
-        <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+        <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
         {isSuperAdmin ? (
           <>
             <Box sx={{ flexGrow: 1 }}>
@@ -527,7 +527,7 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">PROCURMENT</Typography>
               {procurmentItems.map((item) => (
@@ -536,7 +536,7 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">WARE HOUSE</Typography>
               <Box sx={{ marginTop: "2vh" }}>
@@ -544,7 +544,7 @@ export const DashboardSidebar = (props) => {
                   expanded={expanded === "panel1"}
                   onChange={handleChange("panel1")}
                   sx={{
-                    backgroundColor: "rgb(17, 24, 39)",
+                    backgroundColor: "rgb(38, 28, 16)",
                     "&:before": {
                       display: "none",
                     },
@@ -578,7 +578,7 @@ export const DashboardSidebar = (props) => {
                   aria-controls="panel1bh-content"
                   id="panel1bh-header"
                   sx={{
-                    backgroundColor: "rgb(17, 24, 39)",
+                    backgroundColor: "rgb(38, 28, 16)",
                     "&:before": {
                       display: "none",
                     },
@@ -613,7 +613,7 @@ export const DashboardSidebar = (props) => {
                   aria-controls="panel1bh-content"
                   id="panel1bh-header"
                   sx={{
-                    backgroundColor: "rgb(17, 24, 39)",
+                    backgroundColor: "rgb(38, 28, 16)",
                     "&:before": {
                       display: "none",
                     },
@@ -649,7 +649,7 @@ export const DashboardSidebar = (props) => {
                   aria-controls="panel1bh-content"
                   id="panel1bh-header"
                   sx={{
-                    backgroundColor: "rgb(17, 24, 39)",
+                    backgroundColor: "rgb(38, 28, 16)",
                     "&:before": {
                       display: "none",
                     },
@@ -684,7 +684,7 @@ export const DashboardSidebar = (props) => {
                   aria-controls="panel1bh-content"
                   id="panel1bh-header"
                   sx={{
-                    backgroundColor: "rgb(17, 24, 39)",
+                    backgroundColor: "rgb(38, 28, 16)",
                     "&:before": {
                       display: "none",
                     },
@@ -728,7 +728,7 @@ export const DashboardSidebar = (props) => {
                 </Box>
               </Box>
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">PRODUCTION</Typography>
               {GMproduction.map((item) => (
@@ -737,7 +737,7 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">SALES</Typography>
 
@@ -747,7 +747,7 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">FINANCE</Typography>
               <Accordion
@@ -756,7 +756,7 @@ export const DashboardSidebar = (props) => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 sx={{
-                  backgroundColor: "rgb(17, 24, 39)",
+                  backgroundColor: "rgb(38, 28, 16)",
                   "&:before": {
                     display: "none",
                   },
@@ -791,7 +791,7 @@ export const DashboardSidebar = (props) => {
                 </>
               ))}
             </Box>
-            <Divider sx={{ borderColor: "#2D3748", my: 3 }} />
+            <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="menuTitle">USER</Typography>
 
@@ -810,7 +810,7 @@ export const DashboardSidebar = (props) => {
                 expanded={expanded === "panel1"}
                 onChange={handleChange("panel1")}
                 sx={{
-                  backgroundColor: "rgb(17, 24, 39)",
+                  backgroundColor: "rgb(38, 28, 16)",
                   "&:before": {
                     display: "none",
                   },
@@ -844,7 +844,7 @@ export const DashboardSidebar = (props) => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 sx={{
-                  backgroundColor: "rgb(17, 24, 39)",
+                  backgroundColor: "rgb(38, 28, 16)",
                   "&:before": {
                     display: "none",
                   },
@@ -880,7 +880,7 @@ export const DashboardSidebar = (props) => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 sx={{
-                  backgroundColor: "rgb(17, 24, 39)",
+                  backgroundColor: "rgb(38, 28, 16)",
                   "&:before": {
                     display: "none",
                   },
@@ -961,7 +961,7 @@ export const DashboardSidebar = (props) => {
               aria-controls="panel1bh-content"
               id="panel1bh-header"
               sx={{
-                backgroundColor: "rgb(17, 24, 39)",
+                backgroundColor: "rgb(38, 28, 16)",
                 "&:before": {
                   display: "none",
                 },

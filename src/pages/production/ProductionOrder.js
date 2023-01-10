@@ -28,8 +28,10 @@ import {
 import { DashboardLayout } from "../../components/dashboard-layout";
 // import productionWxios from "../../components/productionWxios";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import DeleteIcon from "@material-ui/icons/Delete";
 import productionWxios from "../../components/productionWxios";
 import CustomAlert from "src/components/alert";
+import { TableViewCol } from "mui-datatables";
 
 const ViewBatch = () => {
   function createData(
@@ -114,23 +116,33 @@ const ViewBatch = () => {
                   size="small"
                   onClick={() => productionStartHandler(row.id)}
                 >
-                  <PlayCircleOutlineIcon style={{ color: "primary.main" }} />
+                  <PlayCircleOutlineIcon style={{ color: "primary.main"  }} />
+                </IconButton>
+              </TableCell>
+              <TableCell >
+                <IconButton aria-label="expand row" size="small">
+                  <DeleteIcon style={{ color: "#FF000A" , marginLeft: "-3rem" }} />
                 </IconButton>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                  <Box sx={{ margin: 1 }}>
-                    <Typography variant="h6" gutterBottom component="div">
-                      Raw Material Needed
-                    </Typography>
+                  <Typography
+                    className="text-xl text-[#61482A] font-bold mt-10 mb-10"
+                    variant="h6"
+                    gutterBottom
+                    component="div"
+                  >
+                    Raw Material Needed
+                  </Typography>
+                  <Box sx={{ margin: 1, display: "flex", gap: "2rem" }}>
                     <Table size="small" aria-label="purchases">
                       <TableHead>
                         <TableRow>
                           <TableCell>mat_requestname</TableCell>
                           <TableCell>Material Code</TableCell>
-                          <TableCell align="right">Desc</TableCell>
+
                           <TableCell>mat_unit</TableCell>
                           <TableCell align="right">Quantity</TableCell>
                         </TableRow>
@@ -142,12 +154,26 @@ const ViewBatch = () => {
                               {matNeeded.mat_requestname}
                             </TableCell>
                             <TableCell>{matNeeded.mat_materialcode}</TableCell>
-                            <TableCell align="right">{matNeeded.mat_description}</TableCell>
+
                             <TableCell>{matNeeded.mat_unit}</TableCell>
                             <TableCell align="right">{matNeeded.mat_quantity}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
+                    </Table>
+                    <Table className="bg-[#EBE5D8] rounded-xl h-[20rem] w-[45%]">
+                      <Typography className="text-xl text-[#61482A] font-bold p-5">
+                        {" "}
+                        Production Cost{" "}
+                      </Typography>
+                      <Box className="text-sm text-[#61482A] grid grid-cols-2 gap-4 font-bold p-5">
+                        <h3 className="mt-5 "> Raw Materials: </h3>
+                        <p className="mt-5 text-right "> 1000</p>
+                        <h3 className="mt-5"> 15% (Other Cost):</h3>
+                        <p className="mt-5 text-right"> 100 ETB</p>
+                        <h3 className="mt-5"> Production Cost:</h3>
+                        <p className="mt-5 text-right"> 1000</p>
+                      </Box>
                     </Table>
                   </Box>
                 </Collapse>

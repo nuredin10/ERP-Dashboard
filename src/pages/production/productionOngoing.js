@@ -205,14 +205,17 @@ const ProducitonOngoing = () => {
                             variant="outlined"
                             {...register("quantity")}
                           />
-                          <TextField label="Fs Number" variant="outlined" {...register("Fs_number")} />
+                          <TextField
+                            label="Fs Number"
+                            variant="outlined"
+                            {...register("Fs_number")}
+                          />
                           {/* <TextField label="Description" variant="outlined" {...register("desc")} /> */}
                           <TextField
                             label="Material Unit"
                             variant="outlined"
                             {...register("material_unit")}
                           />
-                        
                         </div>
                         <Box sx={{ mt: 3 }}>
                           <Button
@@ -235,10 +238,10 @@ const ProducitonOngoing = () => {
             <TableRow>
               <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                  <Box sx={{ margin: 1 }}>
-                    <Typography variant="h6" gutterBottom component="div">
-                      Raw Material Needed
-                    </Typography>
+                  <Typography variant="h6" gutterBottom component="div">
+                    Raw Material Needed
+                  </Typography>
+                  <Box sx={{ margin: 1, display: "flex", gap: "2rem" }}>
                     <Table size="small" aria-label="purchases">
                       <TableHead>
                         <TableRow>
@@ -262,6 +265,9 @@ const ProducitonOngoing = () => {
                           </TableRow>
                         ))}
                       </TableBody>
+                    </Table>
+                    <Table>
+                      <CButton>Edit Now</CButton>
                     </Table>
                   </Box>
                 </Collapse>

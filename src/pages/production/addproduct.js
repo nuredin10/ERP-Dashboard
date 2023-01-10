@@ -19,6 +19,7 @@ import {
   Grid,
   DatePicker,
   Modal,
+  Paper,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
@@ -37,6 +38,8 @@ import AddBatchFormula from "src/components/product/addbatchFormula";
 import CustomAlert from "src/components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
 import { useRouter } from "next/router";
+import { makeStyles } from "@material-ui/core/styles";
+
 // import paxios from '../../'
 const style = {
   position: "absolute",
@@ -52,6 +55,20 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    width: "65%",
+    top: "10%",
+    left: "20%",
+
+    backgroundColor: theme.palette.background.paper,
+    // boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    height: "75%", // fixed height
+    overflow: "scroll", // scrollable
+  },
+}));
 
 const ProductionOrder = () => {
   const [open, setOpen] = React.useState(false);
@@ -76,6 +93,7 @@ const ProductionOrder = () => {
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
+  const classes = useStyles();
 
   useEffect(() => {
     axios
@@ -116,7 +134,7 @@ const ProductionOrder = () => {
         start_dateTime: convert(startDate),
         end_dateTime: convert(endDate),
         salesID: indata.salesID,
-        GMID: indata.id
+        GMID: indata.id,
       };
     } else {
       newForm = {
@@ -127,7 +145,7 @@ const ProductionOrder = () => {
         end_dateTime: convert(endDate),
         status: "New",
         salesID: indata.salesID,
-        GMID: indata.id
+        GMID: indata.id,
       };
     }
 
@@ -249,11 +267,14 @@ const ProductionOrder = () => {
                         {...register("final_color")}
                       />
                     </Grid>
-                  
+
                     {customOrRegular === "custom" ? (
                       <>
                         <Grid item xs={12} sm={6}>
-                          <Button onClick={handleOpen} variant="outlined">
+                          <Button
+                            className="w-40 bg-[#61482A]  text-white font-bold text-md hover:shadow-lg hover:bg-[#EBE5D8] hover:text-[#61482A]"
+                            onClick={handleOpen}
+                          >
                             Add
                           </Button>
                         </Grid>
@@ -267,20 +288,19 @@ const ProductionOrder = () => {
                             {...register("FS_NUMBER")}
                           />
                         </Grid>
-                     
 
                         <Modal
                           open={open}
                           onClose={handleClose}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
+                          aria-labelledby="scrollable-modal-title"
+                          aria-describedby="scrollable-modal-description"
                         >
-                          <Box sx={style}>
+                          <Paper className={classes.paper}>
                             <AddBatchFormula
                               setOrderInfo={setOrderInfo}
                               handleClose={handleClose}
                             />
-                          </Box>
+                          </Paper>
                         </Modal>
                       </>
                     ) : (
@@ -312,10 +332,16 @@ const ProductionOrder = () => {
                     )}
 
                     <Grid item xs={12} sm={12}>
-                      <Button type="submit" sx={{ marginRight: "2rem" }} variant="contained">
+                      <Button
+                        className="w-40 bg-[#EBE5D8]  text-[#61482A] font-bold text-md hover:shadow-lg hover:bg-[#61482A] hover:text-white"
+                        type="submit"
+                        sx={{ marginRight: "2rem" }}
+                      >
                         Save
                       </Button>
-                      <Button variant="outlined">Cancel</Button>
+                      <Button className="w-40 bg-[#61482A]  text-white font-bold text-md hover:shadow-lg hover:bg-[#EBE5D8] hover:text-[#61482A]">
+                        Cancel
+                      </Button>
                     </Grid>
                   </Grid>
                 </form>

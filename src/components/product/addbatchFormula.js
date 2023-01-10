@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Modal, Paper } from "@material-ui/core";
 import Head from "next/head";
 import {
   FormControl,
@@ -23,7 +24,6 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import axios from "../productionWxios";
-
 
 const OrderInformation = ({ setOrderInfo, handleClose }) => {
   const [inputFields, setInputFields] = useState([
@@ -54,9 +54,18 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
   };
   useEffect(() => {
     axios
-      .get("/rawmaterials")
+      .get("/rawmaterialsforBatch")
       .then((res) => {
-        // setInputFields(res.data);
+        const transformedData = res.data.map((item) => {
+          const {
+            raw_name: mat_requestname,
+            raw_materialcode: mat_materialcode,
+            raw_materialunit: mat_unit,
+            ...rest
+          } = item;
+          return { mat_requestname, mat_materialcode, mat_unit, ...rest };
+        });
+        setInputFields(transformedData);
         console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -64,23 +73,34 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
 
   return (
     <Box
-      sx={{
-        width: "100%",
-        p: 5,
-      }}
+      sx={
+        {
+          // width: "100%",
+          // p: 0.1,
+          // position: 'absolute',
+          // border: '2px solid #000',
+          // height: '80%',
+          // overflow: 'scroll'
+        }
+      }
     >
-      <Grid container spacing={3}>
+      <div>
+        {" "}
+        <h2 className="text-3xl text-[#61482A] font-bold mb-10">Add Batch Formula</h2>
+      </div>
+      <Grid container spacing={0.5}>
         {inputFields.map((input, index) => {
           return (
             <>
               <Grid item xs={12} lg={3} sm={6} md={6}>
                 <TextField
+                
                   required
+                  size="small"
+                  variant="standard"
                   name="mat_requestname"
-                  label="Raw material Name "
-                  type="text"
                   value={input.mat_requestname}
-                  onChange={(event) => handleFormChange(index, event)}
+                  // onChange={(event) => handleFormChange(index, event)}
                   fullWidth
                 />
               </Grid>
@@ -89,10 +109,11 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                 <TextField
                   required
                   name="mat_materialcode"
-                  label="material code"
+                  size="small"
+                  variant="standard"
                   type="text"
                   value={input.mat_materialcode}
-                  onChange={(event) => handleFormChange(index, event)}
+                  // onChange={(event) => handleFormChange(index, event)}
                   fullWidth
                 />
               </Grid>
@@ -102,6 +123,7 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                   required
                   name="mat_unit"
                   label="UOM"
+                  size="small"
                   type="text"
                   value={input.mat_unit}
                   onChange={(event) => handleFormChange(index, event)}
@@ -112,29 +134,36 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
                 <TextField
                   required
                   name="mat_quantity"
+                  size="small"
                   label="Quantity"
                   type="text"
+                  // defaultvalue={"-"}
                   value={input.mat_quantity}
                   onChange={(event) => handleFormChange(index, event)}
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={1} lg={1} sm={1} md={1}>
+              {/* <Grid item xs={1} lg={1} sm={1} md={1}>
                 <IconButton onClick={() => removeFields(index)}>
                   <RemoveIcon />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </>
           );
         })}
-        <Grid item lg={12} md={12} sm={12}>
+        {/* <Grid item lg={12} md={12} sm={12}>
           <IconButton type="submit" onClick={addFields} size="large">
             <AddIcon />
           </IconButton>
-        </Grid>
+        </Grid> */}
 
         <Grid item lg={12} md={12} sm={12}>
-          <Button type="submit" variant="contained" onClick={submitHandler}>
+          <Button
+            className="w-40 bg-[#61482A]  text-white font-bold text-md hover:shadow-lg hover:bg-[#EBE5D8] hover:text-[#61482A]"
+            type="submit"
+            variant="contained"
+            onClick={submitHandler}
+          >
             Submit
           </Button>
         </Grid>
