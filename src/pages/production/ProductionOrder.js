@@ -45,7 +45,14 @@ const ViewBatch = () => {
     final_color,
     status,
     id,
-    rowMaterialNeeded
+    rowMaterialNeeded,
+    rawtotalCost,
+    finishedWVat,
+    finished_mass,
+    other_cost,
+    oneFinCost,
+    GMID,
+    batchID
   ) {
     return {
       fin_product,
@@ -57,6 +64,13 @@ const ViewBatch = () => {
       status,
       id,
       rowMaterialNeeded,
+      rawtotalCost,
+      finishedWVat,
+      finished_mass,
+      other_cost,
+      oneFinCost,
+      GMID,
+      batchID,
     };
   }
 
@@ -127,20 +141,16 @@ const ViewBatch = () => {
                     onClick={() => {
                       console.log(row.id);
                       productionWxios
-                        .delete("/deleteRow", {
-                          id: row.id,
+                        .post("/deleteProductionOrderRow", {
+                          id: row.batchID,
+                          GM: row.GMID,
                         })
                         .then(function (response) {
-                          if (response.data.msg == "sucess") {
-                            enqueueSnackbar("Deleted Success", {
-                              variant: "succes",
-                            });
-                            Router.reload();
-                          } else {
-                            enqueueSnackbar("Delete Error", {
-                              variant: "error",
-                            });
-                          }
+                          enqueueSnackbar("Deleted Success", {
+                            variant: "succes",
+                          });
+                          console.log(response);
+                          // Router.reload();
                         })
                         .catch((error) => {
                           console.log(error);
@@ -193,12 +203,46 @@ const ViewBatch = () => {
                         Production Cost{" "}
                       </Typography>
                       <Box className="text-sm text-[#61482A] grid grid-cols-2 gap-4 font-bold p-5">
-                        <h3 className="mt-5 "> Raw Materials: </h3>
-                        <p className="mt-5 text-right "> 1000</p>
+                        <h3 className="mt-5 "> Total Raw Material Cost: </h3>
+                        <p className="mt-5 text-right ">
+                          {" "}
+                          {parseFloat(row.rawtotalCost)
+                            .toFixed(2)
+                            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
+                          ETB
+                        </p>
+                        <h3 className="mt-5 "> cost of 1KG:</h3>
+                        <p className="mt-5 text-right ">
+                          {" "}
+                          {parseFloat(row.oneFinCost)
+                            .toFixed(2)
+                            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
+                          ETB
+                        </p>
+                        <h3 className="mt-5 "> mass of finished Good:</h3>
+                        <p className="mt-5 text-right ">
+                          {" "}
+                          {parseFloat(row.finished_mass)
+                            .toFixed(2)
+                            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
+                          KG
+                        </p>
                         <h3 className="mt-5"> 15% (Other Cost):</h3>
-                        <p className="mt-5 text-right"> 100 ETB</p>
+                        <p className="mt-5 text-right">
+                          {" "}
+                          {parseFloat(row.other_cost)
+                            .toFixed(2)
+                            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
+                          ETB
+                        </p>
                         <h3 className="mt-5"> Production Cost:</h3>
-                        <p className="mt-5 text-right"> 1000</p>
+                        <p className="mt-5 text-right">
+                          {" "}
+                          {parseFloat(row.finishedWVat)
+                            .toFixed(2)
+                            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
+                          ETB
+                        </p>
                       </Box>
                     </Table>
                   </Box>
@@ -256,7 +300,14 @@ const ViewBatch = () => {
         item.final_color,
         item.status,
         item.id,
-        item.rawmat_list ? JSON.parse(item.rawmat_list) : JSON.parse(item.raw_mat_needed)
+        item.rawmat_list ? JSON.parse(item.rawmat_list) : JSON.parse(item.raw_mat_needed),
+        item.total_raw_cost,
+        item.finishedWVat,
+        item.finished_mass,
+        item.other_cost,
+        item.oneFinCost,
+        item.GmID,
+        item.custom_batch_id
       )
     );
   });

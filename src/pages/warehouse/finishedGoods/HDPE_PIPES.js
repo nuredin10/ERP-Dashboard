@@ -50,7 +50,19 @@ const Summary = () => {
     Cat: "HDPE PIPES",
     Spec: type,
   };
+  const [col, setCol] = useState([]);
   useEffect(() => {
+    waxios
+      .post("/diameterSelect", { Cat: "HDPE PIPES" })
+      .then((result) => {
+        // try2 = result.data;
+        setCol(result.data);
+        // setOd(result.data);
+        // console.log("NOW", try2);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     waxios
       .post("/finishedMaterialbyCat", req)
       .then((response) => {
@@ -77,9 +89,9 @@ const Summary = () => {
         }}
       >
         <Container maxWidth="ml">
-        <Typography className="text-[#61482A] mb-10" variant="h5" >
-              Finished Good HCPE PIPES
-            </Typography>
+          <Typography className="text-[#61482A] mb-10" variant="h5">
+            Finished Good HCPE PIPES
+          </Typography>
           <Grid container spacing={3}>
             <Grid item xg={4} lg={4} sm={12} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">

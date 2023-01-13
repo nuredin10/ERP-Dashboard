@@ -35,24 +35,16 @@ const Summary = () => {
       Cat: "PPR PIPE",
       Spec: type,
     };
-    waxios
-      .post("/finishedMaterialbyCat", req)
-      .then((response) => {
-        response.data.map((eachData) => {
-          eachData.finished_date = convert(eachData.finished_date);
-        });
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((response) => {
-        console.log(response);
-      });
   };
   var columns;
 
   // const ods = [
   //   "20mm","25mm", "32mm", "40mm", "50mm", "63mm"
   // ]
+  const req = {
+    Cat: "PPR PIPE",
+    Spec: type,
+  };
 
   columns = [
     { title: "Date", field: "finished_date" },
@@ -82,6 +74,19 @@ const Summary = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    waxios
+      .post("/finishedMaterialbyCat", req)
+      .then((response) => {
+        response.data.map((eachData) => {
+          eachData.finished_date = convert(eachData.finished_date);
+        });
+        setData(response.data);
+        console.log(response.data);
+      })
+      .catch((response) => {
+        console.log(response);
+      });
   }, [type]);
   return (
     <>
@@ -96,9 +101,9 @@ const Summary = () => {
         }}
       >
         <Container maxWidth="ml">
-        <Typography className="text-[#61482A] mb-10" variant="h5" >
-              Finished Good PPR PIPES
-            </Typography>
+          <Typography className="text-[#61482A] mb-10" variant="h5">
+            Finished Good PPR PIPES
+          </Typography>
           <Grid container spacing={3}>
             <Grid item xg={4} lg={4} sm={12} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">

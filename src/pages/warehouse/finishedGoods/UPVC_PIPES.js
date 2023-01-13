@@ -235,7 +235,19 @@ const Summary = () => {
     Cat: "UPVC PIPE",
     Spec: type,
   };
+  const [col, setCol] = useState([]);
   useEffect(() => {
+    waxios
+    .post("/diameterSelect", { Cat: "PPR PIPE" })
+    .then((result) => {
+      // try2 = result.data;
+      setCol(result.data);
+      // setOd(result.data);
+      // console.log("NOW", try2);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
     waxios
       .post("/finishedMaterialbyCat", req)
       .then((response) => {

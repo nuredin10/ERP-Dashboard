@@ -235,12 +235,23 @@ const Summary = () => {
       day = ("0" + date.getDate()).slice(-2);
     return [day, mnth, date.getFullYear()].join("-");
   }
-
+  const [col, setCol] = useState([]);
   const req = {
     Cat: "PPR FITTINGS",
     Spec: type,
   };
   useEffect(() => {
+    waxios
+    .post("/diameterSelect", { Cat: "PPR FITTINGS" })
+    .then((result) => {
+      // try2 = result.data;
+      setCol(result.data);
+      // setOd(result.data);
+      // console.log("NOW", try2);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
     waxios
       .post("/finishedMaterialbyCat", req)
       .then((response) => {
