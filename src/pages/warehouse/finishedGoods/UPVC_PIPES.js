@@ -262,6 +262,9 @@ const Summary = () => {
         }}
       >
         <Container maxWidth="ml">
+        <Typography className="text-[#61482A] mb-10" variant="h5" >
+              Finished Good UPVC PIPES
+            </Typography>
           <Grid container spacing={3}>
             <Grid item xg={4} lg={4} sm={12} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">

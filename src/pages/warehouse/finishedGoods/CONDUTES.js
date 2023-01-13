@@ -78,6 +78,7 @@ const FinishedGoods = () => {
           py: 8,
         }}
       >
+     
         <Container
           sx={{
             display: {
@@ -96,6 +97,9 @@ const FinishedGoods = () => {
           >
             Raw Material stockList
           </Typography> */}
+                  <Typography className="text-[#61482A] mb-5" variant="h5" >
+              Finished Good CONDUITS
+            </Typography>
           <Card maxWidth="lg">
             <Table
               title="CONDUITS"
@@ -136,6 +140,7 @@ const FinishedGoods = () => {
           maxWidth={false}
         >
           <Box>
+            
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
             <OrderResults
               drawer={drawer}
