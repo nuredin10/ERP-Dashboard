@@ -68,13 +68,14 @@ const Summary = () => {
     return [day, mnth, date.getFullYear()].join("-");
   }
   const try2 = [];
+  const [col, setCol] = useState([]);
 
   useEffect(() => {
     waxios
       .post("/diameterSelect", { Cat: "PPR PIPE" })
       .then((result) => {
         try2 = result.data;
-
+        setCol(result.data);
         setOd(result.data);
         console.log("NOW", try2);
       })
@@ -104,14 +105,17 @@ const Summary = () => {
                 <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
-              
                   value={type}
                   label="type"
                   onChange={handleChange}
                 >
-                  {try2.map((od) => (
-                    <MenuItem value={od.finished_description}>OD 20mm</MenuItem>
-                  ))}
+                  {col && console.log("TRY 2", col)}
+                  {col &&
+                    col.map((od) => (
+                      <MenuItem value={od.finished_description}>
+                        OD {od.finished_description}
+                      </MenuItem>
+                    ))}
                   {/* <MenuItem value={"20mm"}>OD 20mm</MenuItem>
                   <MenuItem value={"25mm"}>OD 25mm</MenuItem>
                   <MenuItem value={"32mm"}>OD 32mm</MenuItem>

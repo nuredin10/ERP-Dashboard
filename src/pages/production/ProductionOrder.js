@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Head from "next/head";
 import Router from "next/router";
+import { useSnackbar } from "notistack";
 import {
   Box,
   Button,
@@ -34,6 +35,7 @@ import CustomAlert from "src/components/alert";
 import { TableViewCol } from "mui-datatables";
 
 const ViewBatch = () => {
+  const { enqueueSnackbar } = useSnackbar();
   function createData(
     fin_product,
     finished_diameter,
@@ -116,12 +118,36 @@ const ViewBatch = () => {
                   size="small"
                   onClick={() => productionStartHandler(row.id)}
                 >
-                  <PlayCircleOutlineIcon style={{ color: "primary.main"  }} />
+                  <PlayCircleOutlineIcon style={{ color: "primary.main" }} />
                 </IconButton>
               </TableCell>
-              <TableCell >
+              <TableCell>
                 <IconButton aria-label="expand row" size="small">
-                  <DeleteIcon style={{ color: "#FF000A" , marginLeft: "-3rem" }} />
+                  <DeleteIcon
+                    onClick={() => {
+                      console.log(row.id);
+                      productionWxios
+                        .delete("/deleteRow", {
+                          id: row.id,
+                        })
+                        .then(function (response) {
+                          if (response.data.msg == "sucess") {
+                            enqueueSnackbar("Deleted Success", {
+                              variant: "succes",
+                            });
+                            Router.reload();
+                          } else {
+                            enqueueSnackbar("Delete Error", {
+                              variant: "error",
+                            });
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }}
+                    style={{ color: "#FF000A", marginLeft: "-3rem" }}
+                  />
                 </IconButton>
               </TableCell>
             </TableRow>
