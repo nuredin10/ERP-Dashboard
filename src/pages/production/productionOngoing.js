@@ -18,6 +18,10 @@ import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
+import axios from "../../components/productionWxios";
+import AddBatchFormula from "src/components/product/addbatchFormula";
+import { useRouter } from "next/router";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   Button,
@@ -36,14 +40,53 @@ import {
 } from "@mui/material";
 
 import { DashboardLayout } from "../../components/dashboard-layout";
-
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import productionWxios from "../../components/productionWxios";
 import CustomAlert from "src/components/alert";
 import PauseIcon from "@mui/icons-material/Pause";
 import { useSnackbar } from "notistack";
+import CButton from "../../components/Button";
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    width: "65%",
+    top: "10%",
+    left: "20%",
 
+    backgroundColor: theme.palette.background.paper,
+    // boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    height: "75%", // fixed height
+    overflow: "scroll", // scrollable
+  },
+}));
+const handleOpen = () => setOpen(true);
 const ProducitonOngoing = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const [customOrRegular, setCustomOrRegular] = React.useState("custom");
+  const [indata, setIndata] = useState();
+  const router = useRouter();
+  const { id } = router.query;
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [orderInfo, setOrderInfo] = useState([]);
+
+  const classes = useStyles();
+
+  useEffect(() => {
+    axios
+      .get("/showbatchformula")
+      .then((res) => {
+        setRegular(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    // console.log("Id", id);
+  }, []);
   const token = Cookies.get("token");
   const decoded = jwt.decode(token);
   const { enqueueSnackbar } = useSnackbar();
@@ -70,6 +113,12 @@ const ProducitonOngoing = () => {
       id,
       rowMaterialNeeded,
     };
+  }
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("/");
   }
 
   function Row(props) {
@@ -139,6 +188,46 @@ const ProducitonOngoing = () => {
       borderRadius: 1,
       boxShadow: 10,
       p: 4,
+    };
+    var newForm;
+    const newRequest = (data) => {
+      if (customOrRegular === "regular") {
+        newForm = {
+          ...data,
+          batch_id: selectedRegualr,
+          custom_regular: customOrRegular,
+          status: "New",
+          start_dateTime: convert(startDate),
+          end_dateTime: convert(endDate),
+          salesID: indata.salesID,
+          GMID: indata.id,
+        };
+      } else {
+        newForm = {
+          ...data,
+          raw_needed: JSON.stringify(orderInfo),
+          custom_regular: customOrRegular,
+          start_dateTime: convert(startDate),
+          end_dateTime: convert(endDate),
+          status: "New",
+          salesID: indata.salesID,
+          GMID: indata.id,
+        };
+      }
+
+      axios
+        .post("/addProductionOrder", newForm)
+        .then((res) => {
+          console.log(res);
+          setIsSuccess("success");
+          setAlertMsg("Production Order Added Successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsSuccess("error");
+          setAlertMsg("Error Occured");
+        });
+      console.log(newForm);
     };
     return (
       <React.Fragment>
@@ -266,9 +355,30 @@ const ProducitonOngoing = () => {
                         ))}
                       </TableBody>
                     </Table>
-                    {/* <Table>
-                      <CButton>Edit Now</CButton>
-                    </Table> */}
+                    <Table>
+                      <Box>
+                        <Button
+                          className="w-40 bg-[#61482A]  text-white font-bold text-md hover:shadow-lg hover:bg-[#EBE5D8] hover:text-[#61482A]"
+                          onClick={handleOpen}
+                        >
+                          Add
+                        </Button>
+
+                        <Modal
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby="scrollable-modal-title"
+                          aria-describedby="scrollable-modal-description"
+                        >
+                          <Paper className={classes.paper}>
+                            <AddBatchFormula
+                              setOrderInfo={setOrderInfo}
+                              handleClose={handleClose}
+                            />
+                          </Paper>
+                        </Modal>
+                      </Box>
+                    </Table>
                   </Box>
                 </Collapse>
               </TableCell>

@@ -55,9 +55,10 @@ const RequestedOrders = () => {
       >
         <Container maxWidth="ml">
           {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
+          <Typography className="text-[#61482A]" variant="h4">Purchased Order</Typography>
           <Card maxWidth="lg">
             <Table
-              title="Purchase Orders"
+       
               data={data}
               columns={columns}
             //   options={{

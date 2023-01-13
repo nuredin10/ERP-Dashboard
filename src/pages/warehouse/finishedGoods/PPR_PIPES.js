@@ -31,6 +31,22 @@ const Summary = () => {
   const [type, setType] = useState("RAW");
   const handleChange = (event) => {
     setType(event.target.value);
+    const req = {
+      Cat: "PPR PIPE",
+      Spec: type,
+    };
+    waxios
+      .post("/finishedMaterialbyCat", req)
+      .then((response) => {
+        response.data.map((eachData) => {
+          eachData.finished_date = convert(eachData.finished_date);
+        });
+        setData(response.data);
+        console.log(response.data);
+      })
+      .catch((response) => {
+        console.log(response);
+      });
   };
   var columns;
 
@@ -51,33 +67,19 @@ const Summary = () => {
       day = ("0" + date.getDate()).slice(-2);
     return [day, mnth, date.getFullYear()].join("-");
   }
-  const req = {
-    Cat: "PPR PIPE",
-    Spec: type,
-  };
+  const try2 = [];
 
- 
   useEffect(() => {
     waxios
-    .post("/diameterSelect", {Cat: "PPR PIPE"})
-    .then((response) => {
-     setOd(response.data)
-      console.log(response.data);
-    })
-    .catch((response) => {
-      console.log(response);
-    });
-    waxios
-      .post("/finishedMaterialbyCat", req)
-      .then((response) => {
-        response.data.map((eachData) => {
-          eachData.finished_date = convert(eachData.finished_date);
-        });
-        setData(response.data);
-        console.log(response.data);
+      .post("/diameterSelect", { Cat: "PPR PIPE" })
+      .then((result) => {
+        try2 = result.data;
+
+        setOd(result.data);
+        console.log("NOW", try2);
       })
-      .catch((response) => {
-        console.log(response);
+      .catch((error) => {
+        console.log(error);
       });
   }, [type]);
   return (
@@ -98,27 +100,24 @@ const Summary = () => {
               <Typography sx={{ mb: 3 }} variant="h6">
                 Select Type
               </Typography>
-              <FormControl>
+              <FormControl className="w-40">
                 <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+              
                   value={type}
                   label="type"
                   onChange={handleChange}
                 >
-
-                  {/* {ods.forEach((od)=>{
-
-                    <MenuItem value={od.finished_description} >OD 20mm</MenuItem>
-                
-                  })} */}
-                  <MenuItem value={"20mm"}>OD 20mm</MenuItem>
+                  {try2.map((od) => (
+                    <MenuItem value={od.finished_description}>OD 20mm</MenuItem>
+                  ))}
+                  {/* <MenuItem value={"20mm"}>OD 20mm</MenuItem>
                   <MenuItem value={"25mm"}>OD 25mm</MenuItem>
                   <MenuItem value={"32mm"}>OD 32mm</MenuItem>
                   <MenuItem value={"40mm"}>OD 40mm</MenuItem>
                   <MenuItem value={"50mm"}>OD 50mm</MenuItem>
-                  <MenuItem value={"63mm"}>OD 63mm</MenuItem>
+                  <MenuItem value={"63mm"}>OD 63mm</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -155,7 +154,7 @@ const Summary = () => {
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
                 <Table
-                  title="UPVC PIPES"
+                  title="PPR PIPES"
                   data={data}
                   columns={columns}
                   actions={[

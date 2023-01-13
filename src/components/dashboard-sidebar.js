@@ -67,6 +67,23 @@ const procurmentItems = [
   {
     href: "/procurment/addpurchasedmaterial",
     icon: <AddIcon fontSize="small" />,
+    title: "Add Purchased Raw Material",
+  },
+  {
+    href: "/procurment/addacssmaterial",
+    icon: <AddIcon fontSize="small" />,
+    title: "Add Purchased Accessories",
+  },
+  {
+    href: "/procurment/requestedorders",
+    icon: <UsersIcon fontSize="small" />,
+    title: "Purchase Orders",
+  },
+];
+const procurmentItems2 = [
+  {
+    href: "/procurment/addacssmaterial",
+    icon: <AddIcon fontSize="small" />,
     title: "Add Purchased Material",
   },
   {
@@ -535,6 +552,7 @@ export const DashboardSidebar = (props) => {
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
+              
             </Box>
             <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>
