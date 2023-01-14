@@ -47,13 +47,13 @@ const Vender = () => {
       >
         <Container maxWidth="ml">
         <Typography className="text-[#61482A]" variant="h4">
-            Add Employee Expense
+            Add Fuel Expense
           </Typography>
-          <ToolBar title="Add Employee Expense" href="/finance/Expense/addExpense" />
+          <ToolBar title="Add  Add Fuel Expense" href="/finance/Expense/addExpense" />
 
           <Card maxWidth="lg">
             <Table
-              title="Employee Expense List"
+              title=" Add Fuel Expense List"
               data={data}
               columns={columns}
               options={{

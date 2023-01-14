@@ -364,33 +364,33 @@ const showExpenseLists = [
   },
 
   {
-    href: "/warehouse/newMaterial/accessory",
+    href: "/finance/Expense/waterBill",
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "Water Payment",
   },
 
   {
-    href: "/warehouse/newMaterial/finishedGood",
+    href: "/finance/Expense/electricPayment",
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "Electric Payment",
   },
   {
-    href: "/warehouse/newMaterial/finishedGood",
+    href: "/finance/Expense/phoneExpense",
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "Phone Expense",
   },
   {
-    href: "/warehouse/newMaterial/finishedGood",
+    href: "/finance/Expense/fuelExpense",
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "Fuel Expense",
   },
   {
-    href: "/warehouse/newMaterial/finishedGood",
+    href: "/finance/Expense/bankloanPayment",
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "Bank Loan Payment",
   },
   {
-    href: "/warehouse/newMaterial/finishedGood",
+    href: "/finance/Expense/otherExpense",
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "Other Expense",
   },
@@ -552,7 +552,6 @@ export const DashboardSidebar = (props) => {
                   <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
                 </>
               ))}
-              
             </Box>
             <Divider sx={{ borderColor: "#F8F7F4", opacity: ".2", my: 3 }} />
             <Box sx={{ flexGrow: 1 }}>

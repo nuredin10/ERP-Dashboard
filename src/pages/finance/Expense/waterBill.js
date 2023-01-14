@@ -11,10 +11,10 @@ import {
   Card,
   Typography,
 } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import Table from "../../components/Table";
-import ToolBar from "../../components/ToolBar";
-import saxios from '../../components/salesAxios';
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import Table from "../../../components/Table";
+import ToolBar from "../../../components/ToolBar";
+import saxios from "../../../components/salesAxios";
 
 const Vender = () => {
   const [data, setData] = useState([]);
@@ -25,21 +25,15 @@ const Vender = () => {
     { title: "Address", field: "customer_address" },
   ];
   useEffect(() => {
-
-    saxios.get('/showCustomers')
-    .then((res) =>{
+    saxios.get("/showCustomers").then((res) => {
       setData(res.data);
-    })
-
-    // fetch("http://localhost:59000/showCustomers")
-    //   .then((resp) => resp.json())
-    //   .then((resp) => setData(resp));
+    });
   }, []);
 
   return (
     <>
       <Head>
-        <title>customers</title>
+        <title>Employee Expense</title>
       </Head>
       <Box
         component="main"
@@ -49,11 +43,14 @@ const Vender = () => {
         }}
       >
         <Container maxWidth="ml">
-          <ToolBar title="customer" href="/sales/Customers/addCustomers" />
-          {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
+          <Typography className="text-[#61482A]" variant="h4">
+            Add Water Bill Expense
+          </Typography>
+          <ToolBar title="Add Water Bill Expense" href="/finance/Expense/addExpense" />
+
           <Card maxWidth="lg">
             <Table
-              title="Customers List"
+              title="Water Bill Expense List"
               data={data}
               columns={columns}
               options={{

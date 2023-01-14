@@ -14,7 +14,7 @@ import {
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import ToolBar from "../../../components/ToolBar";
-import saxios from '../../../components/salesAxios';
+import saxios from "../../../components/salesAxios";
 
 const Vender = () => {
   const [data, setData] = useState([]);
@@ -25,18 +25,15 @@ const Vender = () => {
     { title: "Address", field: "customer_address" },
   ];
   useEffect(() => {
-
-    saxios.get('/showCustomers')
-    .then((res) =>{
+    saxios.get("/showCustomers").then((res) => {
       setData(res.data);
-    })
-
+    });
   }, []);
 
   return (
     <>
       <Head>
-        <title>Employee Expense</title>
+        <title>Bank Loan Payment</title>
       </Head>
       <Box
         component="main"
@@ -46,14 +43,14 @@ const Vender = () => {
         }}
       >
         <Container maxWidth="ml">
-        <Typography className="text-[#61482A]" variant="h4">
-            Add Employee Expense
+          <Typography className="text-[#61482A]" variant="h4">
+            Add Bank Loan Payment
           </Typography>
-          <ToolBar title="Add Employee Expense" href="/finance/Expense/addExpense" />
+          <ToolBar title="Add Bank Loan Payment" href="/finance/Expense/addExpense" />
 
           <Card maxWidth="lg">
             <Table
-              title="Employee Expense List"
+              title="Bank Loan Payment List"
               data={data}
               columns={columns}
               options={{
