@@ -78,7 +78,7 @@ const ProducitonOngoing = () => {
     axios
       .get("/showbatchformula")
       .then((res) => {
-        setRegular(res.data);
+        // setRegular(res.data);
         console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -149,32 +149,34 @@ const ProducitonOngoing = () => {
     const onSubmit = (data) => {
       console.log("data", data);
       console.log("row", row);
-      productionWxios
-        .post("/addProductProduced", {
-          prodID: row.id,
-          new_name: row.fin_product,
-          new_color: row.final_color,
-          new_diameter: row.finished_diameter,
-          new_materialcode: row.finished_materialcode,
-          new_quantity: data.quantity,
-          oldQuantity: row.fin_quan,
-          new_materialunit: data.material_unit,
-          new_status: "NEW",
-          salesID: row.custom_batch_id,
-          FSNumber: data.Fs_number,
-          // new_spec: data.spec,
-          personID: decoded.userName || "Production",
-          // new_description: data.desc,
-          // new_remark: data.remark,
-        })
-        .then((respo) => {
-          enqueueSnackbar("Production Completed", { variant: "success" });
-          console.log(respo);
-        })
-        .catch((err) => {
-          console.log(err);
-          enqueueSnackbar("Something went wrong", { variant: "error" });
-        });
+      // productionWxios
+      //   .post("/addProductProduced", {
+      //     prodID: row.id,
+      //     new_name: row.fin_product,
+      //     new_color: row.final_color,
+      //     new_diameter: row.finished_diameter,
+      //     new_materialcode: row.finished_materialcode,
+      //     new_quantity: data.quantity,
+      //     oldQuantity: row.fin_quan,
+      //     new_materialunit: data.material_unit,
+      //     new_status: "NEW",
+      //     salesID: row.custom_batch_id,
+      //     FSNumber: data.Fs_number,
+      //     // new_spec: data.spec,
+      //     personID: decoded.userName || "Production",
+      //     // new_description: data.desc,
+      //     new_remark: data.Production_reasons,
+      //     waste_quantity: data.waste_quantity,
+      //     waste_unit: data.Wmaterial_unit
+      //   })
+      //   .then((respo) => {
+      //     enqueueSnackbar("Production Completed", { variant: "success" });
+      //     console.log(respo);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     enqueueSnackbar("Something went wrong", { variant: "error" });
+      //   });
       setFinishModalOpen(false);
     };
     const style = {
@@ -271,26 +273,8 @@ const ProducitonOngoing = () => {
                         <div className="grid grid-cols-3 gap-5">
                           {/* <TextField label="Name" variant="outlined" {...register("name")} /> */}
 
-                          {/* <TextField
-                            name="Final Product"
-                            label="Final Product"
-                            select
-                            onChange={handleFormChange}
-                            fullWidth
-                            value={finname}
-                            // {...register("name")}
-                          >
-                            <MenuItem value="PPR PIPES">PPR PIPES</MenuItem>
-                            <MenuItem value="UPVC PIPES">UPVC PIPES</MenuItem>
-                            <MenuItem value="HDPE PIPES">HDPE PIPES</MenuItem>
-                            <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
-                            <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
-                            <MenuItem value="CONDUTES">CONDUTES</MenuItem>,
-                          </TextField>
-
-                          <TextField label="Spec" variant="outlined" {...register("spec")} /> */}
                           <TextField
-                            label="Quantity"
+                            label="Produced Quantity"
                             variant="outlined"
                             {...register("quantity")}
                           />
@@ -301,9 +285,27 @@ const ProducitonOngoing = () => {
                           />
                           {/* <TextField label="Description" variant="outlined" {...register("desc")} /> */}
                           <TextField
-                            label="Material Unit"
+                            label="Produced UOM"
                             variant="outlined"
                             {...register("material_unit")}
+                          />
+
+                          <TextField
+                            label="Waste Quantity"
+                            variant="outlined"
+                            {...register("waste_quantity")}
+                          />
+
+                          <TextField
+                            label="Waste UOM"
+                            variant="outlined"
+                            {...register("Wmaterial_unit")}
+                          />
+
+                          <TextField
+                            label="Remark"
+                            variant="outlined"
+                            {...register("Production_reasons")}
                           />
                         </div>
                         <Box sx={{ mt: 3 }}>
