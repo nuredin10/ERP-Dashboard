@@ -19,7 +19,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
 import axios from "../../components/productionWxios";
-import AddBatchFormula from "src/components/product/addbatchFormula";
+import EditBatchFormula from "src/components/product/editbatchFormula";
 import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -60,19 +60,18 @@ const useStyles = makeStyles((theme) => ({
     overflow: "scroll", // scrollable
   },
 }));
-const handleOpen = () => setOpen(true);
+
 const ProducitonOngoing = () => {
   const [open, setOpen] = React.useState(false);
-
+  const [nopen, setNOpen] = React.useState(false);
   const [customOrRegular, setCustomOrRegular] = React.useState("custom");
   const [indata, setIndata] = useState();
   const router = useRouter();
   const { id } = router.query;
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [orderInfo, setOrderInfo] = useState([]);
-
   const classes = useStyles();
+  const handleNOpen = () => setNOpen(true);
+  const handleClose = () => setNOpen(false);
 
   useEffect(() => {
     axios
@@ -123,7 +122,7 @@ const ProducitonOngoing = () => {
 
   function Row(props) {
     const { row } = props;
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [finname, setfinName] = useState("PPR PIPES");
     const [spec, setSpec] = useState("");
 
@@ -257,6 +256,7 @@ const ProducitonOngoing = () => {
                 >
                   <DoneAllIcon style={{ color: "green" }} />
                 </IconButton>
+
                 <Modal
                   open={finishModalOpen}
                   onClose={() => setFinishModalOpen(false)}
@@ -309,14 +309,18 @@ const ProducitonOngoing = () => {
                           />
                         </div>
                         <Box sx={{ mt: 3 }}>
-                          <Button
+                          <CButton
                             sx={{ mr: 3 }}
                             type="submit"
                             variant="contained" /* className="py-4 px-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg hover:shadwo-lg" */
                           >
                             Complete
-                          </Button>
-                          <Button variant="outlined" onClick={() => setFinishModalOpen(false)}>
+                          </CButton>
+                          <Button
+                            className="w-40 ml-5  font-bold text-sm hover:shadow-lg  hover:bg-[#61482A]  hover:text-white"
+                            variant="outlined"
+                            onClick={() => setFinishModalOpen(false)}
+                          >
                             Cancel
                           </Button>
                         </Box>
@@ -361,21 +365,23 @@ const ProducitonOngoing = () => {
                       <Box>
                         <Button
                           className="w-40 bg-[#61482A]  text-white font-bold text-md hover:shadow-lg hover:bg-[#EBE5D8] hover:text-[#61482A]"
-                          onClick={handleOpen}
+                          // onClick={() => setNOpen(true)}
+                          onClick={handleNOpen}
                         >
                           Add
                         </Button>
 
                         <Modal
-                          open={open}
+                          open={nopen}
                           onClose={handleClose}
                           aria-labelledby="scrollable-modal-title"
                           aria-describedby="scrollable-modal-description"
                         >
                           <Paper className={classes.paper}>
-                            <AddBatchFormula
+                            <EditBatchFormula
                               setOrderInfo={setOrderInfo}
                               handleClose={handleClose}
+                              setRawmaterial={row.rowMaterialNeeded}
                             />
                           </Paper>
                         </Modal>
