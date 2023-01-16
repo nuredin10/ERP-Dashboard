@@ -100,6 +100,7 @@ const ProducitonOngoing = () => {
     final_color,
     status,
     id,
+    batchID,
     rowMaterialNeeded
   ) {
     return {
@@ -111,6 +112,7 @@ const ProducitonOngoing = () => {
       final_color,
       status,
       id,
+      batchID,
       rowMaterialNeeded,
     };
   }
@@ -149,34 +151,35 @@ const ProducitonOngoing = () => {
     const onSubmit = (data) => {
       console.log("data", data);
       console.log("row", row);
-      // productionWxios
-      //   .post("/addProductProduced", {
-      //     prodID: row.id,
-      //     new_name: row.fin_product,
-      //     new_color: row.final_color,
-      //     new_diameter: row.finished_diameter,
-      //     new_materialcode: row.finished_materialcode,
-      //     new_quantity: data.quantity,
-      //     oldQuantity: row.fin_quan,
-      //     new_materialunit: data.material_unit,
-      //     new_status: "NEW",
-      //     salesID: row.custom_batch_id,
-      //     FSNumber: data.Fs_number,
-      //     // new_spec: data.spec,
-      //     personID: decoded.userName || "Production",
-      //     // new_description: data.desc,
-      //     new_remark: data.Production_reasons,
-      //     waste_quantity: data.waste_quantity,
-      //     waste_unit: data.Wmaterial_unit
-      //   })
-      //   .then((respo) => {
-      //     enqueueSnackbar("Production Completed", { variant: "success" });
-      //     console.log(respo);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     enqueueSnackbar("Something went wrong", { variant: "error" });
-      //   });
+      productionWxios
+        .post("/addProductProduced", {
+          prodID: row.id,
+          new_name: row.fin_product,
+          new_color: row.final_color,
+          new_diameter: row.finished_diameter,
+          new_materialcode: row.finished_materialcode,
+          new_quantity: data.quantity,
+          oldQuantity: row.fin_quan,
+          new_materialunit: data.material_unit,
+          new_status: "NEW",
+          salesID: row.custom_batch_id,
+          FSNumber: data.Fs_number,
+          // new_spec: data.spec,
+          personID: decoded.userName || "Production",
+          // new_description: data.desc,
+          new_remark: data.Production_reasons,
+          waste_quantity: data.waste_quantity,
+          waste_unit: data.Wmaterial_unit,
+          batchID: row.batchID,
+        })
+        .then((respo) => {
+          enqueueSnackbar("Production Completed", { variant: "success" });
+          console.log(respo);
+        })
+        .catch((err) => {
+          console.log(err);
+          enqueueSnackbar("Something went wrong", { variant: "error" });
+        });
       setFinishModalOpen(false);
     };
     const style = {
@@ -244,9 +247,10 @@ const ProducitonOngoing = () => {
               <TableCell component="th" scope="row">
                 {row.fin_product}
               </TableCell>
-              <TableCell align="right">{row.fin_desc}</TableCell>
-              <TableCell align="right">{row.fin_quan}</TableCell>
+              <TableCell align="right">{row.finished_diameter}</TableCell>
+              <TableCell align="right">{row.finished_materialcode}</TableCell>
               <TableCell align="right">{row.mesuring_unit}</TableCell>
+              <TableCell align="right">{row.fin_quan}</TableCell>
               <TableCell align="right">{row.final_color}</TableCell>
               <TableCell align="right">{row.status}</TableCell>
               <TableCell align="right">
@@ -433,6 +437,7 @@ const ProducitonOngoing = () => {
         item.final_color,
         item.status,
         item.id,
+        item.custom_batch_id,
 
         // item.shift,
         // item.production_line,
