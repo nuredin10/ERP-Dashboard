@@ -28,6 +28,7 @@ export const AddButton = (props) => {
             startIcon={icon}
             disableRipple
             variant='contained'
+            className="hover:text-[#61482A] hover:bg-[#EBE5D8]"
             // sx={{
             //   backgroundColor: 'primary',
             //   borderRadius: 1,

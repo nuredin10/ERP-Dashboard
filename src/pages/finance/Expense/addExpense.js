@@ -103,7 +103,7 @@ const ProductionOrderGM = () => {
   return (
     <>
       <Head>
-        <title>Add Production Order</title>
+        <title>Add Employee Fee </title>
       </Head>
       <Box
         component="main"
@@ -131,9 +131,9 @@ const ProductionOrderGM = () => {
               <form onSubmit={handleSubmit(newRequest)}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add New Production Order</Typography>
+                    <Typography variant="h5">Add Employee Fee Detail</Typography>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  {/* <Grid item xs={12} sm={6}>
                    
 
                     <TextField
@@ -169,12 +169,12 @@ const ProductionOrderGM = () => {
                       <MenuItem value="White">WHITE</MenuItem>
                       <MenuItem value="Green">GREEN</MenuItem>
                     </TextField>
-                  </Grid>
+                  </Grid> */}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="finished_diameter"
-                      label="Diameter(OD)"
+                      name="Employee Name"
+                      label="Employee Name"
                       type="text"
                       fullWidth
                       {...register("finished_diameter")}
@@ -183,8 +183,8 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="finished_materialcode"
-                      label="Material Code"
+                      name="Employee Title"
+                      label="Employee Title"
                       type="text"
                       fullWidth
                       {...register("finished_materialcode")}
@@ -193,8 +193,8 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="final_desc"
-                      label="Description"
+                      name="Employee Salary"
+                      label="Employee Salary"
                       type="text"
                       fullWidth
                       {...register("final_desc")}
@@ -211,7 +211,7 @@ const ProductionOrderGM = () => {
                       {...register("final_quant")}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  {/* <Grid item xs={12} sm={6}>
                     <TextField
                       required
                       name="final_measureunit"
@@ -220,8 +220,8 @@ const ProductionOrderGM = () => {
                       fullWidth
                       {...register("final_measureunit")}
                     />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
+                  </Grid> */}
+                  {/* <Grid item xs={12} sm={6}>
                     <TextField
                       required
                       name="order_reciver"
@@ -230,15 +230,15 @@ const ProductionOrderGM = () => {
                       fullWidth
                       {...register("order_reciver")}
                     />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
-                      Make Order
+                     Add
                     </CButton>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined">Cancel</Button>
+                    <Button className="w-40 " variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>
               </form>

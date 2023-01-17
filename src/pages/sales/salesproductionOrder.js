@@ -32,6 +32,7 @@ import { useForm } from "react-hook-form";
 import Router from "next/router";
 import axios from "../../components/productionWxios";
 // import axios from "axios";
+// import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import RawMaterialNeed from "src/components/product/raw_Needed";
 import CustomAlert from "src/components/alert";
 import ConfirmDialog from "src/components/confirmDialog ";
@@ -204,6 +205,10 @@ const salesProductionOrder = () => {
                     </FormControl>
                   </Grid>
 
+                  {/* <Grid item xs={12} sm={6}>
+                    <FormLabel className="text-btnColor text-md font-bold">Select Date</FormLabel>
+                    <SingleDatepicker name="date-input" date={date} onDateChange={setDate} />
+                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -213,7 +218,7 @@ const salesProductionOrder = () => {
                       fullWidth
                       {...register("cus_total")}
                     />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item lg={12} sm={6}>
                     <FormControl fullWidth>
