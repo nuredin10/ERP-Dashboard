@@ -46,7 +46,7 @@ const Vender = () => {
           <Typography className="text-[#61482A]" variant="h4">
             Add Bank Loan Payment
           </Typography>
-          <ToolBar title="Add Bank Loan Payment" href="/finance/Expense/addExpense" />
+          <ToolBar title="Add Bank Loan Payment" href="/finance/Expense/addBank" />
 
           <Card maxWidth="lg">
             <Table

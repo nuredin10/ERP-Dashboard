@@ -46,7 +46,7 @@ const Vender = () => {
           <Typography className="text-[#61482A]" variant="h4">
             Add Water Bill Expense
           </Typography>
-          <ToolBar title="Add Water Bill Expense" href="/finance/Expense/addExpense" />
+          <ToolBar title="Add Water Bill Expense" href="/finance/Expense/addWaterbill" />
 
           <Card maxWidth="lg">
             <Table
