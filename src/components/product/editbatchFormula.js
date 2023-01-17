@@ -25,11 +25,11 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import axios from "../productionWxios";
 
-const OrderInformation = ({ setOrderInfo, handleClose }) => {
+const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
   const [inputFields, setInputFields] = useState([
     { mat_requestname: "", mat_materialcode: "", mat_unit: "", mat_quantity: "" },
   ]);
-  // const [rawmaterial, setRawmaterial] = React.useState();
+  const [batchMaterial, setbatchMaterial] = useState();
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -48,31 +48,96 @@ const OrderInformation = ({ setOrderInfo, handleClose }) => {
     data.splice(index, 1);
     setInputFields(data);
   };
-  const setRawmaterial = (data) => {
-    console.log("Amazing", data);
-  };
+  // const setRawmaterial = (data) => {
+  //   setbatchMaterial(data);
+  //   console.log("Amazing", data);
+  // };
+
+  // Incomming data {
+  //   fin_product: 'UPVC PIPE',
+  //   finished_materialcode: 'PN4',
+  //   finished_diameter: '50*1.5',
+  //   fin_quan: '900',
+  //   final_measureunit: 'PC',   this
+  //   final_color: 'GRAY',
+  //   FS_NUMBER: 'sf27',
+  //   raw_needed: '[{"mat_requestname":"PVC Resin","mat_materialcode":"URM-1A","mat_unit":"KG","mat_quantity":"90"},{"mat_requestname":"CACO3","mat_materialcode":"URM-2","mat_unit":"KG","mat_quantity":"99"},{"mat_requestname":"Stabilizer","mat_materialcode":"URM-3","mat_unit":"KG","mat_quantity":"13"},{"mat_requestname":"CPE 135","mat_materialcode":"URM-4","mat_unit":"KG","mat_quantity":"25"},{"mat_requestname":"Lubricant 1801 SA","mat_materialcode":"URM-5","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Lubricant PE WAX","mat_materialcode":"URM-7","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Processing Aid TIO2 ","mat_materialcode":"URM-8","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Carbon Black","mat_materialcode":"URM-9","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"PVC Granule","mat_materialcode":"GRM-1","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Polypropylene(PPR)","mat_materialcode":"PRM-1","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Green Master Bach","mat_materialcode":"PRM-2","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"White Master Bach","mat_materialcode":"PRM-3","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Black Master Bach","mat_materialcode":"PRM-4","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Light Red Master Bach","mat_materialcode":"PRM-5","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Blue Master Bach","mat_materialcode":"PRM-6","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"PVC Resin","mat_materialcode":"URM-1","mat_unit":"KG","mat_quantity":"-"}]',
+  //   custom_regular: 'custom',
+  //   start_dateTime: 'aN/aN/NaN',
+  //   end_dateTime: 'aN/aN/NaN',
+  //   status: 'New',
+  //   salesID: '',
+  //   GMID: 27
+  // }
+
+  //   batchID
+  // :
+  // "lcuj58ey9q1jxvou8i9"
+  // fin_product
+  // :
+  // "UPVC PIPE"
+  // fin_quan
+  // :
+  // "854"
+  // final_color
+  // :
+  // "GRAY"
+  // finished_diameter
+  // :
+  // "50*1.5"
+  // finished_materialcode
+  // :
+  // "PN4"
+  // id
+  // :
+  // 61
+  // mesuring_unit
+  // :
+  // "PC"
+  // rowMaterialNeeded
+  // :
+  // (16) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+  // status
+  // :
+  // "STARTED"
 
   const submitHandler = () => {
-    setOrderInfo(inputFields);
-    handleClose();
+    setRawmaterial.rowMaterialNeeded = inputFields;
+    setRawmaterial.rowMaterialNeeded = inputFields;
+    setRawmaterial.status = "New";
+    const newForm = {
+      ...setRawmaterial,
+      final_measureunit: setRawmaterial.mesuring_unit,
+      raw_needed: JSON.stringify(setRawmaterial.rowMaterialNeeded),
+      custom_regular: "custom",
+      start_dateTime: "aN/aN/NaN",
+      end_dateTime: "aN/aN/NaN",
+      salesID: "",
+      GMID: setRawmaterial.GmID,
+      FS_NUMBER: " ",
+    };
+
+    axios
+      .post("/addProductionOrder", newForm)
+      .then(async (res) => {
+        console.log(res);
+        await axios.post("/editBatch", newForm),
+          then((respo) => {
+            console.log(respo);
+          }).catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSuccess("error");
+        setAlertMsg("Error Occured");
+      });
   };
   useEffect(() => {
-    axios
-      .get("/rawmaterialsforBatch")
-      .then((res) => {
-        const transformedData = res.data.map((item) => {
-          const {
-            raw_name: mat_requestname,
-            raw_materialcode: mat_materialcode,
-            raw_materialunit: mat_unit,
-            ...rest
-          } = item;
-          return { mat_requestname, mat_materialcode, mat_unit, ...rest };
-        });
-        setInputFields(transformedData);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    setbatchMaterial(setRawmaterial);
+    setInputFields(setRawmaterial.rowMaterialNeeded);
+    console.log("YES", setRawmaterial);
   }, []);
 
   return (

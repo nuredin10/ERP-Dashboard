@@ -211,14 +211,7 @@ const ViewBatch = () => {
                             .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
                           ETB
                         </p>
-                        <h3 className="mt-5 "> cost of 1KG:</h3>
-                        <p className="mt-5 text-right ">
-                          {" "}
-                          {parseFloat(row.oneFinCost)
-                            .toFixed(2)
-                            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
-                          ETB
-                        </p>
+
                         <h3 className="mt-5 "> mass of finished Good:</h3>
                         <p className="mt-5 text-right ">
                           {" "}
@@ -226,6 +219,14 @@ const ViewBatch = () => {
                             .toFixed(2)
                             .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
                           KG
+                        </p>
+                        <h3 className="mt-5 "> cost of 1 Product:</h3>
+                        <p className="mt-5 text-right ">
+                          {" "}
+                          {parseFloat(row.oneFinCost)
+                            .toFixed(2)
+                            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
+                          ETB
                         </p>
                         <h3 className="mt-5"> 15% (Other Cost):</h3>
                         <p className="mt-5 text-right">

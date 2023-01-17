@@ -100,6 +100,7 @@ const ProducitonOngoing = () => {
     status,
     id,
     batchID,
+    GmID,
     rowMaterialNeeded
   ) {
     return {
@@ -112,6 +113,7 @@ const ProducitonOngoing = () => {
       status,
       id,
       batchID,
+      GmID,
       rowMaterialNeeded,
     };
   }
@@ -234,12 +236,9 @@ const ProducitonOngoing = () => {
       console.log(newForm);
     };
     return (
-      
       <React.Fragment>
-     
         {row.status == "STARTED" && (
           <>
-        
             <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
               <TableCell>
                 <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
@@ -375,7 +374,7 @@ const ProducitonOngoing = () => {
                           // onClick={() => setNOpen(true)}
                           onClick={handleNOpen}
                         >
-                          Add
+                          Edit
                         </Button>
 
                         <Modal
@@ -388,7 +387,7 @@ const ProducitonOngoing = () => {
                             <EditBatchFormula
                               setOrderInfo={setOrderInfo}
                               handleClose={handleClose}
-                              setRawmaterial={row.rowMaterialNeeded}
+                              setRawmaterial={row}
                             />
                           </Paper>
                         </Modal>
@@ -447,6 +446,7 @@ const ProducitonOngoing = () => {
         item.status,
         item.id,
         item.custom_batch_id,
+        item.GmID,
 
         // item.shift,
         // item.production_line,
