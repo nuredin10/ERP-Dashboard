@@ -46,7 +46,7 @@ const Vender = () => {
           <Typography className="text-[#61482A]" variant="h4">
             Add Electric Expense
           </Typography>
-          <ToolBar title="Add Electric Expense" href="/finance/Expense/addExpense" />
+          <ToolBar title="Add Electric Expense" href="/finance/Expense/addElectric" />
 
           <Card maxWidth="lg">
             <Table

@@ -103,7 +103,7 @@ const ProductionOrderGM = () => {
   return (
     <>
       <Head>
-        <title>Add Employee Fee </title>
+        <title> Add Electric Bill Expense</title>
       </Head>
       <Box
         component="main"
@@ -131,7 +131,7 @@ const ProductionOrderGM = () => {
               <form onSubmit={handleSubmit(newRequest)}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add Employee Fee Detail</Typography>
+                    <Typography variant="h5">Add Electric Bill Expense</Typography>
                   </Grid>
                   {/* <Grid item xs={12} sm={6}>
                    
@@ -179,22 +179,25 @@ const ProductionOrderGM = () => {
                       withAsterisk
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}></Grid>
+                  <Grid item xs={12} sm={6}>
+                 
+                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="Employee Name"
-                      label="Employee Name"
+                      name="Electric Bill Reference Number"
+                      label="Electric Bill Reference Number"
                       type="text"
                       fullWidth
                       {...register("finished_diameter")}
                     />
                   </Grid>
+                  
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="Employee Title"
-                      label="Employee Title"
+                      name="Electric Bill Type"
+                      label="Electric Bill Type"
                       type="text"
                       fullWidth
                       {...register("finished_materialcode")}
@@ -203,14 +206,26 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="Employee Salary"
-                      label="Employee Salary"
+                      name="Electric Bill Price"
+                      label="Electric Bill Price"
                       type="text"
                       fullWidth
                       {...register("final_desc")}
                     />
                   </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                    
+                      name="Desription"
+                      label="Desription"
+                      type="text"
+                      fullWidth
+                      {...register("finished_materialcode")}
+                    />
+                  </Grid>
+             
 
+                
                   {/* <Grid item xs={12} sm={6}>
                     <TextField
                       required

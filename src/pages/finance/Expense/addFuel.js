@@ -131,7 +131,7 @@ const ProductionOrderGM = () => {
               <form onSubmit={handleSubmit(newRequest)}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add Employee Fee Detail</Typography>
+                    <Typography variant="h5">Add Fuel Expense</Typography>
                   </Grid>
                   {/* <Grid item xs={12} sm={6}>
                    
