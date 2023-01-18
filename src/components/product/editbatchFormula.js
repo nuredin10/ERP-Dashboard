@@ -182,6 +182,9 @@ const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
           >
             Submit
           </Button>
+          <Button className="w-40 ml-10 g-5 " onClick={()=>handleClose()} variant="outlined">
+            Cancel
+          </Button>
         </Grid>
       </Grid>
     </Box>

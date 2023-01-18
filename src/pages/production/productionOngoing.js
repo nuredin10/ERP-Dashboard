@@ -270,6 +270,7 @@ const ProducitonOngoing = () => {
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={style}>
+                    
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                       <h1>Production Report</h1>
                     </Typography>

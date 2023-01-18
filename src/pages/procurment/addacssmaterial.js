@@ -32,7 +32,7 @@ import { useUser } from "../../lib/UserContext";
 import CButton from "../../components/Button";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
-
+import { DatePicker } from "@mantine/dates";
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
@@ -221,6 +221,18 @@ const Addpurchasedmaterial = () => {
                         <MenuItem value="ACCS">ACCS</MenuItem>
                       </TextField>
                     </Grid> */}
+                    <Grid item sm={6} md={2} lg={3}>
+                      <DatePicker
+                        sx={{ paddingbottom: "1rem" }}
+                        required
+                        placeholder="Pick date"
+                        label="Select Date"
+                        withAsterisk
+                      />
+                    </Grid>
+                    <Grid item sm={6} md={2} lg={3}></Grid>
+                    <Grid item sm={6} md={2} lg={3}></Grid>
+                    <Grid item sm={6} md={2} lg={3}></Grid>
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         required
