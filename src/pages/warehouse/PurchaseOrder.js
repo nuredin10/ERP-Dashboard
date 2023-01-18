@@ -18,7 +18,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
@@ -32,14 +32,17 @@ import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import WAxios from "../../components/wareHouseAxios";
 import { useSnackbar } from "notistack";
-import CButton from '../../components/Button'
-
+import CButton from "../../components/Button";
+import { DatePicker } from "@mantine/dates";
 const PurchaseOrder = () => {
   const [status, setStatus] = React.useState("");
   const { register, handleSubmit, reset } = useForm();
   const { enqueueSnackbar } = useSnackbar();
 
   const [date, setDate] = useState();
+  const [datev, setDatev] = useState(new Date());
+  const [value, onChange] = useState(new Date());
+
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
@@ -59,11 +62,12 @@ const PurchaseOrder = () => {
   }
 
   const onSubmit = (newForm) => {
+    console.log(datev);
     const req = {
       ...newForm,
       material_requesti: user.userName,
       department_requesti: "Ware House",
-      date: convert(date),
+      date: datev,
     };
 
     console.log(req);
@@ -149,7 +153,17 @@ const PurchaseOrder = () => {
                     />
                   </Grid>
                   <Grid item>
-                    <DesktopDatePicker
+                    <DatePicker
+                      sx={{ paddingbottom: "1rem" }}
+                      required
+                      placeholder="Pick date"
+                      label="Select Date"
+                      withAsterisk
+                      value={datev}
+                      onChange={setDatev}
+                    />
+                    {/* <DatePicker value={value} onChange={onChange} /> */}
+                    {/* <DesktopDatePicker
                       label="Start Date"
                       inputFormat="MM/dd/yyyy"
                       value={date}
@@ -166,7 +180,7 @@ const PurchaseOrder = () => {
                           // {...register("start_dateTime")}
                         />
                       )}
-                    />
+                    /> */}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -179,12 +193,9 @@ const PurchaseOrder = () => {
                     />
                   </Grid>
                   <Grid item>
-                    <CButton >
-                      Save
-                    </CButton>
+                    <CButton>Save</CButton>
                   </Grid>
                   <Grid item>
-
                     <Button variant="outlined">Cancel</Button>
                   </Grid>
                 </Grid>

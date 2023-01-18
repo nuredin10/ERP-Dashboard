@@ -101,7 +101,7 @@ const Summary = () => {
         }}
       >
         <Container maxWidth="ml">
-          <Typography className="text-[#61482A] mb-10" variant="h5">
+          <Typography className="text-[#61482A] mb-16" variant="h5">
             Finished Good PPR PIPES
           </Typography>
           <Grid container spacing={3}>

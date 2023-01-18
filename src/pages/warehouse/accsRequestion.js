@@ -18,7 +18,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
@@ -33,7 +33,7 @@ import { useForm } from "react-hook-form";
 import WAxios from "../../components/wareHouseAxios";
 import { useSnackbar } from "notistack";
 import CButton from "../../components/Button";
-
+import { DatePicker } from "@mantine/dates";
 const PurchaseOrder = () => {
   const [status, setStatus] = React.useState("");
   const { register, handleSubmit, reset } = useForm();
@@ -105,6 +105,18 @@ const PurchaseOrder = () => {
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Add Accessories Requisition</Typography>
                   </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <DatePicker
+                      sx={{ paddingbottom: "1rem" }}
+                      required
+                      placeholder="Pick date"
+                      label="Select Date"
+                      withAsterisk
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required

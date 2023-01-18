@@ -32,7 +32,7 @@ import { useUser } from "../../lib/UserContext";
 import CButton from "../../components/Button";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
-
+import { DatePicker } from "@mantine/dates";
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
@@ -60,7 +60,7 @@ const Addpurchasedmaterial = () => {
       payable_name: "",
       payable_account: "",
       new_status: "NEW",
-      userName:Cookies.get("username"),
+      userName: Cookies.get("username"),
     },
   ]);
 
@@ -85,7 +85,7 @@ const Addpurchasedmaterial = () => {
       payable_name: "",
       payable_account: "",
       new_status: "NEW",
-      userName:Cookies.get("username"),
+      userName: Cookies.get("username"),
     };
     setIsSuccess("info");
     setInputFields([...inputFields, newfield]);
@@ -180,7 +180,9 @@ const Addpurchasedmaterial = () => {
 
         <Grid container>
           <Grid item lg={6} md={12} sm={12} sx={{ m: 5 }}>
-            <Typography className="text-[#61482A]" variant="h4">Add New Purchased Raw Material</Typography>
+            <Typography className="text-[#61482A]" variant="h4">
+              Add New Purchased Raw Material
+            </Typography>
           </Grid>
 
           {isSuccess != "" ? (
@@ -190,7 +192,6 @@ const Addpurchasedmaterial = () => {
             <Grid container spacing={4}>
               {inputFields.map((input, index) => {
                 return (
-                  
                   <Grid
                     container
                     spacing={2}
@@ -205,7 +206,7 @@ const Addpurchasedmaterial = () => {
                       borderRadius: "10px",
                     }}
                   >
-                         {/* <Grid item sm={6} md={2} lg={3}>
+                    {/* <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         name="new_materialtype"
                         label="Material Type"
@@ -220,6 +221,18 @@ const Addpurchasedmaterial = () => {
                         <MenuItem value="ACCS">ACCS</MenuItem>
                       </TextField>
                     </Grid> */}
+                    <Grid item sm={6} md={2} lg={3}>
+                      <DatePicker
+                        sx={{ paddingbottom: "1rem" }}
+                        required
+                        placeholder="Pick date"
+                        label="Select Date"
+                        withAsterisk
+                      />
+                    </Grid>
+                    <Grid item sm={6} md={2} lg={3}></Grid>
+                    <Grid item sm={6} md={2} lg={3}></Grid>
+                    <Grid item sm={6} md={2} lg={3}></Grid>
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         required
@@ -320,7 +333,7 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
-               
+
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         fullWidth
@@ -358,7 +371,7 @@ const Addpurchasedmaterial = () => {
 
                     <Grid item xs={1} lg={2} sm={1} md={1} sx={{ mt: "2%", ml: "2%" }}>
                       <IconButton onClick={() => removeFields(index)}>
-                     <p className="text-lg "> Remove Item </p> <RemoveIcon />
+                        <p className="text-lg "> Remove Item </p> <RemoveIcon />
                       </IconButton>
                     </Grid>
                   </Grid>
@@ -366,7 +379,7 @@ const Addpurchasedmaterial = () => {
               })}
               <Grid item lg={12} md={12} sm={12}>
                 <IconButton type="submit" onClick={addFields} size="large">
-                <p className="text-lg ml-5 mr-2">  Add New Material</p>  <AddIcon />
+                  <p className="text-lg ml-5 mr-2"> Add New Material</p> <AddIcon />
                 </IconButton>
               </Grid>
               {/* <Grid item lg={12} md={12} sm={12}>
