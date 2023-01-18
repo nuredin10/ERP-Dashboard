@@ -48,58 +48,7 @@ const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
     data.splice(index, 1);
     setInputFields(data);
   };
-  // const setRawmaterial = (data) => {
-  //   setbatchMaterial(data);
-  //   console.log("Amazing", data);
-  // };
 
-  // Incomming data {
-  //   fin_product: 'UPVC PIPE',
-  //   finished_materialcode: 'PN4',
-  //   finished_diameter: '50*1.5',
-  //   fin_quan: '900',
-  //   final_measureunit: 'PC',   this
-  //   final_color: 'GRAY',
-  //   FS_NUMBER: 'sf27',
-  //   raw_needed: '[{"mat_requestname":"PVC Resin","mat_materialcode":"URM-1A","mat_unit":"KG","mat_quantity":"90"},{"mat_requestname":"CACO3","mat_materialcode":"URM-2","mat_unit":"KG","mat_quantity":"99"},{"mat_requestname":"Stabilizer","mat_materialcode":"URM-3","mat_unit":"KG","mat_quantity":"13"},{"mat_requestname":"CPE 135","mat_materialcode":"URM-4","mat_unit":"KG","mat_quantity":"25"},{"mat_requestname":"Lubricant 1801 SA","mat_materialcode":"URM-5","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Lubricant PE WAX","mat_materialcode":"URM-7","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Processing Aid TIO2 ","mat_materialcode":"URM-8","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Carbon Black","mat_materialcode":"URM-9","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"PVC Granule","mat_materialcode":"GRM-1","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Polypropylene(PPR)","mat_materialcode":"PRM-1","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Green Master Bach","mat_materialcode":"PRM-2","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"White Master Bach","mat_materialcode":"PRM-3","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Black Master Bach","mat_materialcode":"PRM-4","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Light Red Master Bach","mat_materialcode":"PRM-5","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"Blue Master Bach","mat_materialcode":"PRM-6","mat_unit":"KG","mat_quantity":"-"},{"mat_requestname":"PVC Resin","mat_materialcode":"URM-1","mat_unit":"KG","mat_quantity":"-"}]',
-  //   custom_regular: 'custom',
-  //   start_dateTime: 'aN/aN/NaN',
-  //   end_dateTime: 'aN/aN/NaN',
-  //   status: 'New',
-  //   salesID: '',
-  //   GMID: 27
-  // }
-
-  //   batchID
-  // :
-  // "lcuj58ey9q1jxvou8i9"
-  // fin_product
-  // :
-  // "UPVC PIPE"
-  // fin_quan
-  // :
-  // "854"
-  // final_color
-  // :
-  // "GRAY"
-  // finished_diameter
-  // :
-  // "50*1.5"
-  // finished_materialcode
-  // :
-  // "PN4"
-  // id
-  // :
-  // 61
-  // mesuring_unit
-  // :
-  // "PC"
-  // rowMaterialNeeded
-  // :
-  // (16) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-  // status
-  // :
-  // "STARTED"
 
   const submitHandler = () => {
     setRawmaterial.rowMaterialNeeded = inputFields;
@@ -130,8 +79,7 @@ const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
       })
       .catch((err) => {
         console.log(err);
-        setIsSuccess("error");
-        setAlertMsg("Error Occured");
+  
       });
   };
   useEffect(() => {

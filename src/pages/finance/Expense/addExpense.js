@@ -68,6 +68,8 @@ const ProductionOrderGM = () => {
   const [orderInfo, setOrderInfo] = useState([]);
   const [regular, setRegular] = useState([]);
   const [selectedRegualr, setSelectedRegular] = useState(0);
+  const [datepick, setDatePick] = useState();
+  const [value, onChange] = useState(new Date());
 
   const router = useRouter();
   const { id } = router.query;
@@ -86,8 +88,21 @@ const ProductionOrderGM = () => {
   var newForm;
   const newRequest = (data) => {
     console.log(data);
+    const dataAll = {
+      date_expense: datepick,
+      Item_description: data.Employee_Name,
+      uom: " ",
+      unit_price: "",
+      total_price: data.Employe_salary,
+      fs_number: data.Fs_number,
+      purchase_department: "Finance",
+      remark: data.Remark,
+      catagory: "EMPLOYEE",
+      addtional_info: "",
+      expense_quantity: "",
+    };
     axios
-      .post("/addproductionGM", data)
+      .post("/addExpense", dataAll)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
@@ -133,43 +148,7 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h5">Add Employee Fee Detail</Typography>
                   </Grid>
-                  {/* <Grid item xs={12} sm={6}>
-                   
-
-                    <TextField
-                      name="Final Product"
-                      label="Final Product"
-                      select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
-                      fullWidth
-                      {...register("final_product")}
-                    >
-                      <MenuItem value="PPR PIPE">PPR PIPES</MenuItem>
-                      <MenuItem value="UPVC PIPE">UPVC PIPES</MenuItem>
-                      <MenuItem value="HDPE PIPE">HDPE PIPES</MenuItem>
-                      <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
-                      <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
-                      <MenuItem value="Conduit">Conduit</MenuItem>
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="final_color"
-                      label="Product Color"
-                      select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
-                      fullWidth
-                      {...register("final_color")}
-                    >
-                      <MenuItem value="GRAY">GRAY</MenuItem>
-                      <MenuItem value="BLACK">BLACK</MenuItem>
-                      <MenuItem value="ORANGE">ORANGE</MenuItem>
-                      <MenuItem value="White">WHITE</MenuItem>
-                      <MenuItem value="Green">GREEN</MenuItem>
-                    </TextField>
-                  </Grid> */}
+          
                   <Grid item xs={12} sm={6}>
                     <DatePicker
                       sx={{ paddingbottom: "1rem" }}
@@ -177,6 +156,8 @@ const ProductionOrderGM = () => {
                       placeholder="Pick date"
                       label="Select Date"
                       withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}></Grid>
@@ -187,17 +168,17 @@ const ProductionOrderGM = () => {
                       label="Employee Name"
                       type="text"
                       fullWidth
-                      {...register("finished_diameter")}
+                      {...register("Employee_Name")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="Employee Title"
-                      label="Employee Title"
+                      name="FS Number"
+                      label="FS Number"
                       type="text"
                       fullWidth
-                      {...register("finished_materialcode")}
+                      {...register("Fs_number")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -207,30 +188,21 @@ const ProductionOrderGM = () => {
                       label="Employee Salary"
                       type="text"
                       fullWidth
-                      {...register("final_desc")}
+                      {...register("Employe_salary")}
                     />
                   </Grid>
 
-                  {/* <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="final_measureunit"
-                      label="Unit of measurement"
+                      name="Remark"
+                      label="Remark"
                       type="text"
                       fullWidth
-                      {...register("final_measureunit")}
+                      {...register("Remark")}
                     />
-                  </Grid> */}
-                  {/* <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="order_reciver"
-                      label="Operator name"
-                      type="text"
-                      fullWidth
-                      {...register("order_reciver")}
-                    />
-                  </Grid> */}
+                  </Grid>
+   
 
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">

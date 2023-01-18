@@ -68,6 +68,8 @@ const ProductionOrderGM = () => {
   const [orderInfo, setOrderInfo] = useState([]);
   const [regular, setRegular] = useState([]);
   const [selectedRegualr, setSelectedRegular] = useState(0);
+  const [value, onChange] = useState(new Date());
+  const [datepick, setDatePick] = useState();
 
   const router = useRouter();
   const { id } = router.query;
@@ -85,9 +87,23 @@ const ProductionOrderGM = () => {
 
   var newForm;
   const newRequest = (data) => {
+    const dataAll = {
+      date_expense: datepick,
+      Item_description: "Water Bill Payment",
+      uom: " ",
+      unit_price: "",
+      total_price: data.wat_Payment,
+      fs_number: data.Fs_number,
+      purchase_department: "Finance",
+      remark: data.Remark,
+      catagory: "WATER",
+      addtional_info: "",
+      expense_quantity: "",
+    };
+
     console.log(data);
     axios
-      .post("/addproductionGM", data)
+      .post("/addExpense", dataAll)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
@@ -133,43 +149,6 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h5">Add Water Bill Expense</Typography>
                   </Grid>
-                  {/* <Grid item xs={12} sm={6}>
-                   
-
-                    <TextField
-                      name="Final Product"
-                      label="Final Product"
-                      select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
-                      fullWidth
-                      {...register("final_product")}
-                    >
-                      <MenuItem value="PPR PIPE">PPR PIPES</MenuItem>
-                      <MenuItem value="UPVC PIPE">UPVC PIPES</MenuItem>
-                      <MenuItem value="HDPE PIPE">HDPE PIPES</MenuItem>
-                      <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
-                      <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
-                      <MenuItem value="Conduit">Conduit</MenuItem>
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="final_color"
-                      label="Product Color"
-                      select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
-                      fullWidth
-                      {...register("final_color")}
-                    >
-                      <MenuItem value="GRAY">GRAY</MenuItem>
-                      <MenuItem value="BLACK">BLACK</MenuItem>
-                      <MenuItem value="ORANGE">ORANGE</MenuItem>
-                      <MenuItem value="White">WHITE</MenuItem>
-                      <MenuItem value="Green">GREEN</MenuItem>
-                    </TextField>
-                  </Grid> */}
                   <Grid item xs={12} sm={6}>
                     <DatePicker
                       sx={{ paddingbottom: "1rem" }}
@@ -177,11 +156,11 @@ const ProductionOrderGM = () => {
                       placeholder="Pick date"
                       label="Select Date"
                       withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                 
-                  </Grid>
+                  <Grid item xs={12} sm={6}></Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -189,20 +168,10 @@ const ProductionOrderGM = () => {
                       label="Water Bill Reference Number"
                       type="text"
                       fullWidth
-                      {...register("finished_diameter")}
+                      {...register("Fs_number")}
                     />
                   </Grid>
-                  
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Water Bill Type"
-                      label="Water Bill Type"
-                      type="text"
-                      fullWidth
-                      {...register("finished_materialcode")}
-                    />
-                  </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -210,42 +179,20 @@ const ProductionOrderGM = () => {
                       label="Water Bill Price"
                       type="text"
                       fullWidth
-                      {...register("final_desc")}
+                      {...register("wat_Payment")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                    
-                      name="Desription"
-                      label="Desription"
+                      name="Remark"
+                      label="Remark"
                       type="text"
                       fullWidth
-                      {...register("finished_materialcode")}
+                      {...register("Remark")}
                     />
                   </Grid>
-             
 
-                
-                  {/* <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="final_measureunit"
-                      label="Unit of measurement"
-                      type="text"
-                      fullWidth
-                      {...register("final_measureunit")}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="order_reciver"
-                      label="Operator name"
-                      type="text"
-                      fullWidth
-                      {...register("order_reciver")}
-                    />
-                  </Grid> */}
+                 
 
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">

@@ -68,9 +68,11 @@ const ProductionOrderGM = () => {
   const [orderInfo, setOrderInfo] = useState([]);
   const [regular, setRegular] = useState([]);
   const [selectedRegualr, setSelectedRegular] = useState(0);
-
+ 
   const router = useRouter();
   const { id } = router.query;
+  const [datepick, setDatePick] = useState();
+  const [value, onChange] = useState(new Date());
 
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
@@ -83,15 +85,39 @@ const ProductionOrderGM = () => {
     return [day, mnth, date.getFullYear()].join("/");
   }
 
+  // data.date_expense || today,
+  // data.Item_description || "-",
+  // data.uom || "-",
+  // data.unit_price || "0",
+  // data.total_price || "0",
+  // data.fs_number || "-",
+  // data.purchase_department || "Finance",
+  // data.remark || "-",
+  // data.catagory || "Others",
+  // data.addtional_info || "-",
+  // data.expense_quantity || "1",
+
   var newForm;
   const newRequest = (data) => {
-    console.log(data);
+    const dataAll = {
+      date_expense: datepick,
+      Item_description: data.Bank_name,
+      uom: " ",
+      unit_price: "",
+      total_price: data.Loan_payment,
+      fs_number: data.Fs_number,
+      purchase_department: "Finance",
+      remark: data.Remark,
+      catagory: "BANK_LOAN",
+      addtional_info: "",
+      expense_quantity: "",
+    };
     axios
-      .post("/addproductionGM", data)
+      .post("/addExpense", dataAll)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
-        setAlertMsg("Production Order Added Successfully");
+        setAlertMsg("Expense added");
       })
       .catch((err) => {
         console.log(err);
@@ -133,43 +159,6 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h5">Add Bank Loan Expense</Typography>
                   </Grid>
-                  {/* <Grid item xs={12} sm={6}>
-                   
-
-                    <TextField
-                      name="Final Product"
-                      label="Final Product"
-                      select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
-                      fullWidth
-                      {...register("final_product")}
-                    >
-                      <MenuItem value="PPR PIPE">PPR PIPES</MenuItem>
-                      <MenuItem value="UPVC PIPE">UPVC PIPES</MenuItem>
-                      <MenuItem value="HDPE PIPE">HDPE PIPES</MenuItem>
-                      <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
-                      <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
-                      <MenuItem value="Conduit">Conduit</MenuItem>
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="final_color"
-                      label="Product Color"
-                      select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
-                      fullWidth
-                      {...register("final_color")}
-                    >
-                      <MenuItem value="GRAY">GRAY</MenuItem>
-                      <MenuItem value="BLACK">BLACK</MenuItem>
-                      <MenuItem value="ORANGE">ORANGE</MenuItem>
-                      <MenuItem value="White">WHITE</MenuItem>
-                      <MenuItem value="Green">GREEN</MenuItem>
-                    </TextField>
-                  </Grid> */}
                   <Grid item xs={12} sm={6}>
                     <DatePicker
                       sx={{ paddingbottom: "1rem" }}
@@ -177,11 +166,11 @@ const ProductionOrderGM = () => {
                       placeholder="Pick date"
                       label="Loan Payment Date"
                       withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                 
-                  </Grid>
+                  <Grid item xs={12} sm={6}></Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -189,10 +178,10 @@ const ProductionOrderGM = () => {
                       label="Loan Payment Reference Number"
                       type="text"
                       fullWidth
-                      {...register("finished_diameter")}
+                      {...register("Fs_number")}
                     />
                   </Grid>
-                  
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -200,19 +189,10 @@ const ProductionOrderGM = () => {
                       label="Bank Name"
                       type="text"
                       fullWidth
-                      {...register("finished_materialcode")}
+                      {...register("Bank_name")}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="Loan Amount"
-                      label="Loan Amount  "
-                      type="text"
-                      fullWidth
-                      {...register("final_desc")}
-                    />
-                  </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -220,52 +200,19 @@ const ProductionOrderGM = () => {
                       label="Loan Payment Amount"
                       type="text"
                       fullWidth
-                      {...register("final_desc")}
+                      {...register("Loan_payment")}
                     />
                   </Grid>
+          
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
-                      name=" Loan Paid Method"
-                      label=" Loan Paid Method"
+                      name="Remark"
+                      label="Remark"
                       type="text"
                       fullWidth
-                      {...register("final_desc")}
+                      {...register("Remark")}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                    
-                      name="Desription"
-                      label="Desription"
-                      type="text"
-                      fullWidth
-                      {...register("finished_materialcode")}
-                    />
-                  </Grid>
-             
-
-                
-                  {/* <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="final_measureunit"
-                      label="Unit of measurement"
-                      type="text"
-                      fullWidth
-                      {...register("final_measureunit")}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="order_reciver"
-                      label="Operator name"
-                      type="text"
-                      fullWidth
-                      {...register("order_reciver")}
-                    />
-                  </Grid> */}
 
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
