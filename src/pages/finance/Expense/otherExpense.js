@@ -14,23 +14,29 @@ import {
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import ToolBar from "../../../components/ToolBar";
-import saxios from '../../../components/salesAxios';
+import saxios from "../../../components/salesAxios";
 
 const Vender = () => {
   const [data, setData] = useState([]);
   const columns = [
-    { title: "Customer Name", field: "customer_name" },
-    { title: "Phone Number", field: "customer_phone" },
-    { title: "Delivery Mode", field: "delivery_mode" },
-    { title: "Address", field: "customer_address" },
+    { title: "Date", field: "date_expense" },
+    { title: "Description", field: "Item_description" },
+    { title: "UOM", field: "uom" },
+    { title: "Quantity", field: "expense_qunatity" },
+    { title: "Unit Price", field: "unit_price" },
+    { title: "Total Price", field: "total_price" },
+    { title: "Departemnt", field: "purchase_department" },
+    { title: "FS Number", field: "fs_number" },
+    { title: "remark", field: "remark" },
   ];
   useEffect(() => {
-
-    saxios.get('/showCustomers')
-    .then((res) =>{
-      setData(res.data);
-    })
-
+    saxios
+      .post("/showExpense", {
+        Cat: "OTHER",
+      })
+      .then((res) => {
+        setData(res.data);
+      });
   }, []);
 
   return (
@@ -46,7 +52,7 @@ const Vender = () => {
         }}
       >
         <Container maxWidth="ml">
-        <Typography className="text-[#61482A]" variant="h4">
+          <Typography className="text-[#61482A]" variant="h4">
             Add Other Expense
           </Typography>
           <ToolBar title="Add Other Expense" href="/finance/Expense/addOther" />

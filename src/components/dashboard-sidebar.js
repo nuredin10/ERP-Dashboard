@@ -394,6 +394,11 @@ const showExpenseLists = [
     icon: <CreateNewFolderIcon fontSize="small" />,
     title: "Other Expense",
   },
+  {
+    href: "/finance/Expense/allExpense",
+    icon: <CreateNewFolderIcon fontSize="small" />,
+    title: "All Expense",
+  },
 ];
 
 const AccessoriesItems = [
