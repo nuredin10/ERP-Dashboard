@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import {
   Box,
@@ -9,45 +9,82 @@ import {
   Link,
   TextField,
   Card,
-  Typography,
+  Modal,
   Grid,
+  Typography,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
-import axios from "axios";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { useForm } from "react-hook-form";
-import FAxios from '../../components/financeAxios'
-import { useSnackbar } from "notistack";
-import CButton from '../../components/Button'
-const AddPettyCash = () => {
-  const { register, handleSubmit, reset } = useForm();
+import FAxios from "../../components/financeAxios";
+import InfoIcon from "@mui/icons-material/Info";
+import Router from "next/router";
 
-  const { enqueueSnackbar } = useSnackbar();
+import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
+import xlsx from "xlsx";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
 
+const AccountRecieveable = () => {
+  const [data, setData] = useState([]);
+  const [reason, setReason] = useState({});
+  const sheetRef = useRef();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const onSubmit = (newForm) => {
-    console.log(newForm);
-    FAxios.post('/addPettyCash',newForm)
-    .then((res)=>{
-      console.log(res)
-      enqueueSnackbar(res.data.message, { variant: 'success' })
+  const columns = [
+    { title: "Date", field: "sales_date" },
+    { title: "ORDER REF", field: "salesId" },
+    { title: "Address", field: "customer_address" },
+    { title: "Total", field: "totalCash" },
+    { title: "profit", field: "profit" },
+  ];
+  useEffect(() => {
+    FAxios.get("/showsalesProfit")
+      .then((res) => {
+        setData(res.data);
+        console.log("show data", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-    })
-    .catch((err) =>{
-      console.log(err)
-
-      enqueueSnackbar('Something went wrong', { variant: 'error' })
-
-    })
+  const style = {
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    borderRadius: 1,
+    p: 4,
+    pb: 10,
   };
+
+  const buttonstyle = {
+    position: "absolute",
+    mt: 20,
+    align: "right",
+    bottom: 10,
+    right: 10,
+  };
+  const excel = () => {
+    const XLSX = xlsx;
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet(data);
+    utils.book_append_sheet(workbook, worksheet, "Report");
+    writeFileXLSX(workbook, "Report.xlsx");
+  };
+  const print = useReactToPrint({
+    content: () => sheetRef.current,
+  });
 
   return (
     <>
       <Head>
-        <title>Add Petty Cash | Proplast</title>
+        <title>Account Recieveable | Proplast</title>
       </Head>
       <Box
         component="main"
@@ -56,76 +93,139 @@ const AddPettyCash = () => {
           py: 8,
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Card sx={{ width: "70%", padding: "2%" }}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={12}>
-                  <Typography variant="h6">Add Petty Cash</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="pay_for" label="To" type="text" fullWidth 
-                  {...register('pay_for')}/>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="cash_amount" label="Cash Amount" type="text" fullWidth {...register("cash_amount")}/>
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                  <TextField required name="pay_reason" label="Reason" type="text" fullWidth {...register("pay_reason")}/>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="accountatnt_name"
-                    label="Prepared By"
-                    type="text"
-                    fullWidth
-                    {...register("accountatnt_name")}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="payed_by" label="Payed By" type="text" fullWidth {...register("payed_by")}/>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required name="checked_by" label="Checked By" type="text" fullWidth {...register("checked_by")}/>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    name="recitNum"
-                    label="Receipt Number"
-                    type="text"
-                    fullWidth
-                    {...register("recitNum")}
-                  />
-                </Grid>
-                <Grid item>
-                  <CButton>
-                    Save
-                  </CButton>
+        <Container maxWidth="ml">
+          <Grid
+            sx={{
+              marginLeft: 20,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "space-between",
+              justifyContent: "space-between",
+            }}
+          >
+            <Button onClick={excel} component="a" disableRipple variant="contained">
+              Excel
+            </Button>
 
-                </Grid>
-                <Grid item>
+            <Button
+              onClick={print}
+              sx={{
+                ml: 5,
+              }}
+              component="a"
+              disableRipple
+              variant="contained"
+            >
+              Print
+            </Button>
+          </Grid>
+          <div>
+            <Card maxWidth="lg">
+              <Table
+                title="Account Recieveable"
+                data={data}
+                columns={columns}
+                actions={[
+                  (rowData) => ({
+                    icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
+                    tooltip: "Details",
+                    onClick: () => {
+                      Router.push({
+                        pathname: "/finance/materialSold",
+                        query: {
+                          id: rowData.SID,
+                          PID: rowData.producedId,
+                        },
+                      });
+                    },
+                  }),
+                ]}
+              />
 
-                  <Button variant="outlined">Cancel</Button>
+              <div className="hidden">
+                <div ref={sheetRef}>
+                  <Table title="Account Recieveable" data={data} columns={columns} />
+                </div>
+              </div>
+            </Card>
+          </div>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Grid container spacing={3}>
+                <Grid item lg={12}>
+                  <Typography variant="h5" component="h2">
+                    Recieveable Reason
+                  </Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Description
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_desc}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Name
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_name}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Quantitty
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_quantity}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Specification
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_spec}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Type
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_type}</Typography>
+                </Grid>
+                <Grid item lg={4}>
+                  <Typography variant="h6" component="h2">
+                    Material Unit
+                  </Typography>
+                </Grid>
+                <Grid item lg={7}>
+                  <Typography>{reason.material_unit}</Typography>
                 </Grid>
               </Grid>
-            </form>
-          </Card>
-        </Box>
+              <Button
+                sx={buttonstyle}
+                variant="contained"
+                onClick={() => GernerateDO(reason.salesID, reason.ID)}
+              >
+                Generate DO
+              </Button>
+            </Box>
+          </Modal>
+        </Container>
       </Box>
     </>
   );
 };
 
-AddPettyCash.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AccountRecieveable.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default AddPettyCash;
+export default AccountRecieveable;

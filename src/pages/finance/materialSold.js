@@ -3,6 +3,7 @@ import Head from "next/head";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import { useRouter } from "next/router";
 import axios from "axios";
+import productionWxios from "../../components/productionWxios";
 // import styles from '../styles/Home.module.css';
 // import Table from "../../components/Table";
 import SummarizeIcon from "@mui/icons-material/Summarize";
@@ -39,13 +40,27 @@ const FinishedGoods = () => {
   const router2 = useRouter();
   const { id } = router2.query;
   const [data, setData] = useState([]);
+  const [productName, setProductName] = useState("");
+  const [ProductQuntity, setProductQuntity] = useState("");
+  const [totalSales, setTotalSales] = useState("");
+
   const [productdata, setproductData] = useState([]);
   const [profitData, setProfitData] = useState([]);
+  const [profit, setProfit] = useState();
+
   const sheetRef = useRef();
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === "dark" ? "#fff" : "#61482A",
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.common.white,
+    width: "40",
+  }));
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#7F675B",
+      backgroundColor: "#61482A",
       color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -71,16 +86,20 @@ const FinishedGoods = () => {
     { title: "Date", field: "raw_date" },
   ];
 
-  useEffect(() => {
-    axios
-      .post("https://report.proplast.et/shoesalesOrderProdById", { ID: id })
+  useEffect(async () => {
+    console.log(id);
+    await productionWxios
+      .post("/shoesalesOrderProdById", { ID: id })
       .then((response) => {
-        console.log(response.data[0].salesId);
+        console.log(response.data);
         setData(response.data);
-
-        axios
-          .post("https://report.proplast.et/selectproductionCost", {
-            salesID: response.data[0].salesId,
+        setProductName(response.data[0].product_orderd);
+        setProductQuntity(response.data[0].total_product);
+        setTotalSales(response.data[0].totalCash);
+        setProfit(response.data[0].profit);
+        productionWxios
+          .post("/selectproductionCost", {
+            ProdID: response.data[0].producedId,
           })
           .then((response2) => {
             console.log(response2);
@@ -134,7 +153,7 @@ const FinishedGoods = () => {
             Print
           </Button>
           <Grid container spacing={3} ref={sheetRef}>
-            <Grid item sx={{ width: "100%" }}>
+            <Grid item sx={{ width: "80%" }}>
               <Typography variant="h5" sx={{ my: 2 }}>
                 Customer Information
               </Typography>
@@ -171,7 +190,7 @@ const FinishedGoods = () => {
               </Card>
             </Grid>
 
-            <Grid item sx={{ width: "100%" }}>
+            <Grid item sx={{ width: "80%" }}>
               <Typography variant="h5" sx={{ my: 2 }}>
                 Order Information
               </Typography>
@@ -187,6 +206,7 @@ const FinishedGoods = () => {
                           <StyledTableCell align="left">UOM</StyledTableCell>
                           <StyledTableCell align="left">Product Description</StyledTableCell>
                           <StyledTableCell align="left">Product Specification</StyledTableCell>
+                          <StyledTableCell align="left">Product Color</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -197,6 +217,7 @@ const FinishedGoods = () => {
                             <StyledTableCell align="left">{row.mou}</StyledTableCell>
                             <StyledTableCell align="left">{row.product_desc}</StyledTableCell>
                             <StyledTableCell align="left">{row.product_spec}</StyledTableCell>
+                            <StyledTableCell align="left">{row.product_color}</StyledTableCell>
                           </StyledTableRow>
                         ))}
                       </TableBody>
@@ -206,7 +227,7 @@ const FinishedGoods = () => {
               </Card>
             </Grid>
 
-            <Grid item sx={{ width: "100%" }}>
+            <Grid item sx={{ width: "80%" }}>
               <Typography variant="h5" sx={{ my: 2 }}>
                 Raw Materials
               </Typography>
@@ -220,7 +241,7 @@ const FinishedGoods = () => {
                           <StyledTableCell align="left">Raw Material Name</StyledTableCell>
                           <StyledTableCell align="left">Qty</StyledTableCell>
                           <StyledTableCell align="left">UOM</StyledTableCell>
-                          <StyledTableCell align="left">Product Description</StyledTableCell>
+                          <StyledTableCell align="left">Product Material Code</StyledTableCell>
                           <StyledTableCell align="left">Value Per Gram</StyledTableCell>
                           <StyledTableCell align="left">Total</StyledTableCell>
                         </TableRow>
@@ -228,12 +249,12 @@ const FinishedGoods = () => {
                       <TableBody>
                         {productdata.map((row) => (
                           <StyledTableRow key={row.name}>
-                            <StyledTableCell align="left">{row.mat_requestname}</StyledTableCell>
-                            <StyledTableCell align="left">{row.mat_quantity}</StyledTableCell>
+                            <StyledTableCell align="left">{row.raw_name}</StyledTableCell>
+                            <StyledTableCell align="left">{row.each_quantity}</StyledTableCell>
                             <StyledTableCell align="left">{row.mat_unit}</StyledTableCell>
-                            <StyledTableCell align="left">{row.mat_description}</StyledTableCell>
-                            <StyledTableCell align="left">{row.value}</StyledTableCell>
-                            <StyledTableCell align="left">{row.totalcost}</StyledTableCell>
+                            <StyledTableCell align="left">{row.raw_materialcode}</StyledTableCell>
+                            <StyledTableCell align="left">{row.each_value}</StyledTableCell>
+                            <StyledTableCell align="left">{row.each_total}</StyledTableCell>
                           </StyledTableRow>
                         ))}
                       </TableBody>
@@ -243,49 +264,83 @@ const FinishedGoods = () => {
               </Card>
             </Grid>
 
-            <Grid item sx={{ width: "100%" }}>
+            <Grid item sx={{ width: "50%", mb: 5 }}>
               <Typography variant="h5" sx={{ my: 2 }}>
                 Finance Report
               </Typography>
 
-              <Card maxWidth="lg">
-                {profitData && (
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 400 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell align="left">Finished Good Mass</StyledTableCell>
-                          <StyledTableCell align="left">Total Raw Material Cost</StyledTableCell>
-                          <StyledTableCell align="left">Other Costs(15%)</StyledTableCell>
-                          <StyledTableCell align="left">
-                            Raw Material Cost Per Production
-                          </StyledTableCell>
-                          <StyledTableCell align="left">Sales Order Qty</StyledTableCell>
-                          <StyledTableCell align="left">Total Sales</StyledTableCell>
-                          <StyledTableCell align="left">Profit</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <StyledTableRow>
-                          <StyledTableCell align="left">{profitData.finGoodMass}</StyledTableCell>
-                          <StyledTableCell align="left">
-                            {profitData.totalcostofRawMaterials}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">{profitData.otherCosts}</StyledTableCell>
-                          <StyledTableCell align="left">
-                            {profitData.production_cost}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {profitData.qtyorderdProduct}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">{profitData.total_sales}</StyledTableCell>
-                          <StyledTableCell align="left">{profitData.profit}</StyledTableCell>
-                        </StyledTableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                )}
-              </Card>
+              {data && (
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, mt: 5 }}>
+                  <Grid item xs={6}>
+                    <Item>Total rawmaterial Weight</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profitData.total_mass} KG</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Total Rawmaterial Cost</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profitData.total_raw_cost} ETB</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>1 KG Rawmaterial Cost</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profitData.oneKgCost} ETB</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Mass of 1 {productName}</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profitData.finished_mass} KG</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Cost of 1 {productName}</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profitData.oneFinCost} ETB</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Other Cost</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profitData.other_cost} ETB</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Total Cost </Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profitData.finishedWVat} ETB</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Total Sales</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{totalSales} ETB </Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Quantity Sold</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{ProductQuntity} PCS</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Production Cost * Quantity Orderd</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>
+                      {parseFloat(profitData.finishedWVat) * parseFloat(ProductQuntity)} ETB
+                    </Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>Profit</Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>{profit} ETB</Item>
+                  </Grid>
+                </Grid>
+              )}
             </Grid>
           </Grid>
         </Container>

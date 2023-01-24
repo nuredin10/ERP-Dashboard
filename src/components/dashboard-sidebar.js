@@ -442,22 +442,22 @@ const Finance = [
   {
     href: "/finance/batchandCost",
     icon: <CreditScoreIcon fontSize="small" />,
-    title: "Production Cost",
+    title: "Approved Production Cost",
   },
   {
     href: "/finance/accountRecivableSales",
     icon: <CreditScoreIcon fontSize="small" />,
-    title: "Sales Orders",
+    title: "Sales List",
   },
   {
     href: "/finance/pettycash",
     icon: <PaymentIcon fontSize="small" />,
-    title: "Petty Cash",
+    title: "Generate Profit",
   },
   {
     href: "/finance/addpettycash",
-    icon: <AddCardIcon fontSize="small" />,
-    title: "Add Pettycash",
+    icon: <PaymentIcon fontSize="small" />,
+    title: "Sales With Profit",
   },
   {
     href: "/finance/assetmanagment",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import {
   Box,
@@ -9,41 +9,105 @@ import {
   Link,
   TextField,
   Card,
+  Modal,
+  Grid,
   Typography,
+  Radio,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
-import FAxios from '../../components/financeAxios'
+import FAxios from "../../components/financeAxios";
+import InfoIcon from "@mui/icons-material/Info";
+import Router from "next/router";
+import { useForm } from "react-hook-form";
+import CButton from "../../components/Button";
+import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
+import xlsx from "xlsx";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
-const PettyCash = () => {
+const AccountRecieveable = () => {
+  const { register, handleSubmit, reset } = useForm();
   const [data, setData] = useState([]);
+  const [selectedID, setselectedID] = useState();
+  const [vat, setVat] = useState();
+  const [reason, setReason] = useState({});
+  const sheetRef = useRef();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const onSubmit = (newForm) => {
+    console.log(newForm);
+    FAxios.post("/generateProfit", {
+      salesID: selectedID,
+      costId: newForm.BatchId,
+      VAT: newForm.VAT,
+    }).then((respo) => {
+      console.log(respo);
+    });
+  };
+  const handleChange = (vats) => {
+    console.log(vats);
+    setVat(vats);
+  };
+
   const columns = [
-    { title: "To", field: "pay_for" },
-    { title: "Cash Amount", field: "cash_amount" },
-    { title: "Reason", field: "pay_reason" },
-    { title: "Prepared By", field: "accountatnt_name" },
-    { title: "Payed By", field: "payed_by" },
-    { title: "Checked By", field: "checked_by" },
-    { title: "Receipt Number ", field: "RecitNum" },
+    { title: "Date", field: "sales_date" },
+    { title: "ORDER REF", field: "salesId" },
+    { title: "Address", field: "customer_address" },
+    { title: "Total", field: "totalCash" },
+    { title: "Status", field: "status" },
   ];
   useEffect(() => {
-
-    FAxios.get('/showPettyCash')
-    .then((res) =>{
-      console.log(res)
-      setData(res.data);
-    })
-    .catch((err) =>{
-      console.log(err)
-    })
-
+    FAxios.get("/showsalesOrderprofit")
+      .then((res) => {
+        setData(res.data);
+        console.log("show data", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
+
+  const style = {
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    borderRadius: 1,
+    p: 4,
+    pb: 10,
+  };
+
+  const buttonstyle = {
+    position: "absolute",
+    mt: 20,
+    align: "right",
+    bottom: 10,
+    right: 10,
+  };
+  const excel = () => {
+    const XLSX = xlsx;
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet(data);
+    utils.book_append_sheet(workbook, worksheet, "Report");
+    writeFileXLSX(workbook, "Report.xlsx");
+  };
+  const print = useReactToPrint({
+    content: () => sheetRef.current,
+  });
 
   return (
     <>
       <Head>
-        <title>Petty Cash | Proplast</title>
+        <title>Sales | Proplast</title>
       </Head>
       <Box
         component="main"
@@ -53,31 +117,132 @@ const PettyCash = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
-          <Card maxWidth="lg">
-            <Table
-              title="Petty Cash"
-              data={data}
-              columns={columns}
-            //   options={{
-            //     actionsColumnIndex: -1,
-            //     selection: true,
-            //   }}
-            //   actions={[
-            //     {
-            //       tooltip: "Remove All Selected Users",
-            //       icon: "delete",
-            //       onClick: (evt, data) => alert("You want to delete " + data.length + " rows"),
-            //     },
-            //   ]}
-            />
-          </Card>
+          <Grid
+            sx={{
+              marginLeft: 20,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "space-between",
+              justifyContent: "space-between",
+            }}
+          >
+            {/* <Button onClick={excel} component="a" disableRipple variant="contained">
+              Excel
+            </Button> */}
+
+            {/* <Button
+              onClick={print}
+              sx={{
+                ml: 5,
+              }}
+              component="a"
+              disableRipple
+              variant="contained"
+            >
+              Print
+            </Button> */}
+          </Grid>
+          <div>
+            <Card maxWidth="lg">
+              <Table
+                title="Generate Profit"
+                data={data}
+                columns={columns}
+                actions={[
+                  (rowData) => ({
+                    icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
+                    tooltip: "Details",
+                    onClick: () => {
+                      setOpen(true);
+                      setselectedID(rowData.id);
+                    },
+                  }),
+                ]}
+              />
+
+              <div className="hidden">
+                <div ref={sheetRef}>
+                  <Table title="Account Recieveable" data={data} columns={columns} />
+                </div>
+              </div>
+            </Card>
+          </div>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={3}>
+                  <Grid item lg={12}>
+                    <Typography variant="h5" component="h2">
+                      Generate Profit
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Typography variant="h6" component="h2">
+                      Batch ID
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={7}>
+                    <TextField
+                      required
+                      name="BatchId"
+                      label="Batch ID"
+                      type="text"
+                      fullWidth
+                      {...register("BatchId")}
+                    />
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Typography variant="h6" component="h2">
+                      VAT
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={7}>
+                    <TextField
+                      required
+                      name="VAT"
+                      label="VAT"
+                      type="text"
+                      fullWidth
+                      {...register("VAT")}
+                    />
+                    {/* <FormControl>
+                      <FormLabel id="demo-radio-buttons-group-label">VAT</FormLabel>
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="0"
+                        name="radio-buttons-group"
+                        onChange={handleChange(value)}
+                      >
+                        <FormControlLabel value="0" control={<Radio />} label="Without VAT" />
+                        <FormControlLabel value="1" control={<Radio />} label="With VAT" />
+                      </RadioGroup>
+                    </FormControl> */}
+                  </Grid>
+                </Grid>
+                <Grid item lg={7}>
+                  <CButton
+                    sx={buttonstyle}
+                    variant="contained"
+                    type="submit"
+                    // onClick={() => GernerateDO(reason.salesID, reason.ID)}
+                  >
+                    Generate DO
+                  </CButton>
+                </Grid>
+              </form>
+            </Box>
+          </Modal>
         </Container>
       </Box>
     </>
   );
 };
 
-PettyCash.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AccountRecieveable.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default PettyCash;
+export default AccountRecieveable;
