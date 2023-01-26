@@ -257,6 +257,10 @@ const Summary = () => {
       .then((response) => {
         response.data.map((eachData) => {
           eachData.finished_date = convert(eachData.finished_date);
+          eachData.finished_quantity =
+          eachData.finished_quantity !== ""
+            ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
+            : "";
         });
         setData(response.data);
         console.log(response.data);
@@ -286,7 +290,7 @@ const Summary = () => {
               <Typography sx={{ mb: 3 }} variant="h6">
                 Select Type
               </Typography>
-              <FormControl>
+              <FormControl className="w-40">
                 <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -295,44 +299,21 @@ const Summary = () => {
                   label="type"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"Elbow"}>PPR Elbow</MenuItem>
+                    {col && console.log("TRY 2", col)}
+                  {col &&
+                    col.map((od) => (
+                      <MenuItem value={od.finished_description}>
+                        {od.finished_description}
+                      </MenuItem>
+                    ))}
+                  {/* <MenuItem value={"Elbow"}>PPR Elbow</MenuItem>
                   <MenuItem value={"Socket"}>PPR Socket</MenuItem>
                   <MenuItem value={"Reducer"}>PPR Reducer</MenuItem>
                   <MenuItem value={"Tee"}>PPR Tee</MenuItem>
                   <MenuItem value={"Tap"}>PPR Tap</MenuItem>
-                  <MenuItem value={"4-way connector"}>PPR 4-way connector</MenuItem>
+                  <MenuItem value={"4-way connector"}>PPR 4-way connector</MenuItem> */}
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add OD
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="od" label="Add OD" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add PPR
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="ppr" label="Add PPR" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
             </Grid>
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
@@ -348,7 +329,7 @@ const Summary = () => {
                         // console.log(rowData)
                         Router.push({
                           pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
-                          query: { id: rowData.id },
+                          query: { id: rowData.id, products: rowData.finished_diameter },
                         });
                       },
                     }),

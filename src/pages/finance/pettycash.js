@@ -231,7 +231,7 @@ const AccountRecieveable = () => {
                     type="submit"
                     // onClick={() => GernerateDO(reason.salesID, reason.ID)}
                   >
-                    Generate DO
+                    Generate Profit
                   </CButton>
                 </Grid>
               </form>

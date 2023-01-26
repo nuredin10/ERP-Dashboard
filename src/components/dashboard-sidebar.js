@@ -107,12 +107,13 @@ const wareHouseItemsAccordion = [
     // endIcon: isExpand ? <ExpandMoreIcon fontSize="small"/> : <ExpandLessIcon fontSize="small"/>,    // endIconLess: <ExpandLessIcon fontSize="small"/>,
     title: "Stock List",
   },
+
   {
-    icon: <UsersIcon fontSize="small" />,
+    icon: <FinishedGoodsIcon fontSize="small" />,
     title: "Finished Goods",
   },
   {
-    icon: <UsersIcon fontSize="small" />,
+    icon: <AccessoriesIcon fontSize="small" />,
     title: "Accessories",
   },
   {
@@ -135,6 +136,11 @@ const finishedAccordion = [
 ];
 
 const wareHouseItems = [
+  {
+    href: "/warehouse/stockList/RawMaterial",
+    icon: <RawmaterialIcon fontSize="small" />,
+    title: "Raw Material",
+  },
   {
     href: "/warehouse/Recieving",
     icon: <RecievingIcon fontSize="small" />,
@@ -404,17 +410,17 @@ const showExpenseLists = [
 const AccessoriesItems = [
   {
     href: "/warehouse/accessories/mechanical",
-    icon: <FinishedGoodsIcon fontSize="small" />,
+    icon: <AccessoriesIcon fontSize="small" />,
     title: "Mechanical",
   },
   {
     href: "/warehouse/accessories/electrical",
-    icon: <FinishedGoodsIcon fontSize="small" />,
+    icon: <AccessoriesIcon fontSize="small" />,
     title: "Electrical",
   },
   {
     href: "/warehouse/accessories/recycle",
-    icon: <FinishedGoodsIcon fontSize="small" />,
+    icon: <AccessoriesIcon fontSize="small" />,
     title: "Consumable Goods",
   },
 ];
@@ -612,7 +618,7 @@ export const DashboardSidebar = (props) => {
                     id="panel1d-header"
                   >
                     <DropdownNavItem
-                      icon={<RequestedIcon />}
+                      icon={<FinishedGoodsIcon />}
                       title={wareHouseItemsAccordion[1].title}
                       sx={{ marginBottom: -2, marginTop: -2 }}
                     />
@@ -647,7 +653,7 @@ export const DashboardSidebar = (props) => {
                     id="panel1d-header"
                   >
                     <DropdownNavItem
-                      icon={<RequestedIcon />}
+                      icon={<AccessoriesIcon />}
                       title={wareHouseItemsAccordion[2].title}
                       sx={{ marginBottom: -2, marginTop: -2 }}
                     />
@@ -878,7 +884,7 @@ export const DashboardSidebar = (props) => {
                   id="panel1d-header"
                 >
                   <DropdownNavItem
-                    icon={<RequestedIcon />}
+                    icon={<FinishedGoodsIcon />}
                     title={wareHouseItemsAccordion[1].title}
                     sx={{ marginBottom: -2, marginTop: -2 }}
                   />

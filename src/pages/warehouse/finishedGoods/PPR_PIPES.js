@@ -25,6 +25,8 @@ import SummarizeIcon from "@mui/icons-material/Summarize";
 import Router from "next/router";
 import AddIcon from "@mui/icons-material/Add";
 
+
+
 const Summary = () => {
   const [data, setData] = useState([]);
   const [ods, setOd] = useState([]);
@@ -37,10 +39,6 @@ const Summary = () => {
     };
   };
   var columns;
-
-  // const ods = [
-  //   "20mm","25mm", "32mm", "40mm", "50mm", "63mm"
-  // ]
   const req = {
     Cat: "PPR PIPE",
     Spec: type,
@@ -53,6 +51,7 @@ const Summary = () => {
     { title: "Color", field: "color" },
     { title: "Stock At Hand", field: "finished_quantity" },
   ];
+
   function convert(str) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -80,6 +79,10 @@ const Summary = () => {
       .then((response) => {
         response.data.map((eachData) => {
           eachData.finished_date = convert(eachData.finished_date);
+          eachData.finished_quantity =
+          eachData.finished_quantity !== ""
+            ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
+            : "";
         });
         setData(response.data);
         console.log(response.data);
@@ -124,45 +127,11 @@ const Summary = () => {
                         OD {od.finished_description}
                       </MenuItem>
                     ))}
-                  {/* <MenuItem value={"20mm"}>OD 20mm</MenuItem>
-                  <MenuItem value={"25mm"}>OD 25mm</MenuItem>
-                  <MenuItem value={"32mm"}>OD 32mm</MenuItem>
-                  <MenuItem value={"40mm"}>OD 40mm</MenuItem>
-                  <MenuItem value={"50mm"}>OD 50mm</MenuItem>
-                  <MenuItem value={"63mm"}>OD 63mm</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add OD
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="od" label="Add OD" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add PPR
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="ppr" label="Add PPR" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
+
+       
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
                 <Table
@@ -177,7 +146,7 @@ const Summary = () => {
                         // console.log(rowData)
                         Router.push({
                           pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
-                          query: { id: rowData.id },
+                          query: { id: rowData.id, products: rowData.finished_diameter },
                         });
                       },
                     }),

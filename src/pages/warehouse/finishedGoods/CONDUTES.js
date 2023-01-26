@@ -19,7 +19,7 @@ import SummarizeIcon from "@mui/icons-material/Summarize";
 import OrdersToolBar from "../../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../../components/rawMaterials/order-results";
 import RightDrawer from "../../../components/rawMaterials/RightDrawer";
-import Router from 'next/router';
+import Router from "next/router";
 const FinishedGoods = () => {
   const [drawer, setDrawer] = useState(false);
   const [data, setData] = useState([]);
@@ -57,6 +57,10 @@ const FinishedGoods = () => {
       .then((response) => {
         response.data.map((eachData) => {
           eachData.finished_date = convert(eachData.finished_date);
+          eachData.finished_quantity =
+            eachData.finished_quantity !== ""
+              ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
+              : "";
         });
         console.log(response.data, "ZSdc");
         setData(response.data);
@@ -78,7 +82,6 @@ const FinishedGoods = () => {
           py: 8,
         }}
       >
-     
         <Container
           sx={{
             display: {
@@ -88,18 +91,9 @@ const FinishedGoods = () => {
           }}
           maxWidth="ml"
         >
-          {/* <ToolBar title="SIV"
-        href="/warehouse/stockList/FinishedGoods/addSiv" /> */}
-
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
-                  <Typography className="text-[#61482A] mb-5" variant="h5" >
-              Finished Good CONDUITS
-            </Typography>
+          <Typography className="text-[#61482A] mb-5" variant="h5">
+            Finished Good CONDUITS
+          </Typography>
           <Card maxWidth="lg">
             <Table
               title="CONDUITS"
@@ -113,7 +107,7 @@ const FinishedGoods = () => {
                     // console.log(rowData)
                     Router.push({
                       pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
-                      query: { id: rowData.id },
+                      query: { id: rowData.id, products: rowData.finished_diameter },
                     });
                   },
                 }),
@@ -124,10 +118,6 @@ const FinishedGoods = () => {
                 },
               }}
             />
-
-            {/* <Typography sx={{ mb: 3 }} variant="h4">
-          Supplier
-        </Typography> */}
           </Card>
         </Container>
         <Container
@@ -140,7 +130,6 @@ const FinishedGoods = () => {
           maxWidth={false}
         >
           <Box>
-            
             <OrdersToolBar drawer={drawer}></OrdersToolBar>
             <OrderResults
               drawer={drawer}

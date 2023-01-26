@@ -240,6 +240,7 @@ const Summary = () => {
     Cat: "UPVC FITTINGS",
     Spec: type,
   };
+  const try2 = [];
   const [col, setCol] = useState([]);
   useEffect(() => {
     waxios
@@ -258,6 +259,10 @@ const Summary = () => {
       .then((response) => {
         response.data.map((eachData) => {
           eachData.finished_date = convert(eachData.finished_date);
+          eachData.finished_quantity =
+          eachData.finished_quantity !== ""
+            ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
+            : "";
         });
         setData(response.data);
         console.log(response.data);
@@ -287,7 +292,7 @@ const Summary = () => {
               <Typography sx={{ mb: 3 }} variant="h6">
                 SELECT Type
               </Typography>
-              <FormControl>
+              <FormControl className="w-40">
                 <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -296,44 +301,21 @@ const Summary = () => {
                   label="type"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"Elbow 90"}>Elbow 90</MenuItem>
+                  {col && console.log("TRY 2", col)}
+                  {col &&
+                    col.map((od) => (
+                      <MenuItem value={od.finished_description}>
+                        {od.finished_description}
+                      </MenuItem>
+                    ))}
+                  {/* <MenuItem value={"Elbow 90"}>Elbow 90</MenuItem>
                   <MenuItem value={"Elbow 45"}>Elbow 45</MenuItem>
                   <MenuItem value={"Y-branch"}>Y-branch</MenuItem>
                   <MenuItem value={"Socket"}>Socket</MenuItem>
                   <MenuItem value={"Reducer"}>Reducer</MenuItem>
-                  <MenuItem value={"Tee"}>Tee</MenuItem>
+                  <MenuItem value={"Tee"}>Tee</MenuItem> */}
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add OD
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="od" label="Add OD" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add PPR
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="ppr" label="Add PPR" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
             </Grid>
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
@@ -349,7 +331,7 @@ const Summary = () => {
                         // console.log(rowData)
                         Router.push({
                           pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
-                          query: { id: rowData.id },
+                          query: { id: rowData.id, products: rowData.finished_diameter },
                         });
                       },
                     }),

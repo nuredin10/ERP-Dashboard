@@ -35,13 +35,21 @@ import Cookies from "js-cookie";
 import { DatePicker } from "@mantine/dates";
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
+  const [Spec, setSpec] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const { enqueueSnackbar } = useSnackbar();
+  const [datepick, setDatePick] = useState();
   const [dialogOpen, setDialogOpen] = useState(false);
   const { user, setUser } = useUser();
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
+
+  const handleFormChangeSpec = (spec_data) => {
+    setSpec(spec_data);
+    console.log(spec_data);
+  };
+
   const handleClose = () => {
     setDialogOpen(false);
   };
@@ -51,16 +59,17 @@ const Addpurchasedmaterial = () => {
       new_quantity: "",
       new_materialunit: "",
       new_materialcode: "",
-      new_spec: "",
+      new_spec: Spec,
       new_description: "",
       new_value: "",
       new_referncenum: "",
-      new_materialtype: "",
+      new_materialtype: "ACCS",
       new_remark: "",
       payable_name: "",
       payable_account: "",
       new_status: "NEW",
       userName: Cookies.get("username"),
+      new_date: "",
     },
   ]);
 
@@ -71,16 +80,17 @@ const Addpurchasedmaterial = () => {
   };
 
   const addFields = () => {
+    console.log(Spec)
     let newfield = {
       new_name: "",
       new_quantity: "",
       new_materialunit: "",
       new_materialcode: "",
-      new_spec: "",
+      new_spec: Spec,
       new_description: "",
       new_value: "",
       new_referncenum: "",
-      new_materialtype: "",
+      new_materialtype: "ACCS",
       new_remark: "",
       payable_name: "",
       payable_account: "",
@@ -105,25 +115,26 @@ const Addpurchasedmaterial = () => {
 
   const submitHandler = () => {
     console.log(inputFields);
-    // inputFields.push({ userName: Cookies.get("user") });
-    // const addUser = {data: inputFields, userName: Cookies.get("user")};
-    // console.log(addUser);
+    inputFields.map((eachData) => {
+      eachData.new_date = datepick.toString();
+    });
+    console.log("Catagory", Spec);
     handleClose();
-    wareaxios
-      .post("/addnewPurchased", inputFields)
-      .then((res) => {
-        console.log(res);
-        setIsSuccess("success");
-        enqueueSnackbar("Saved Successfully", { variant: "success" });
-        clearAllHandler();
-        setAlertMsg("Saved Successfully");
-      })
-      .catch((res) => {
-        console.log(res);
-        setIsSuccess("error");
-        setAlertMsg("Something went wrong");
-        enqueueSnackbar("Something Wend Wrong", { variant: "error" });
-      });
+    // wareaxios
+    //   .post("/addnewPurchased", inputFields)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setIsSuccess("success");
+    //     enqueueSnackbar("Saved Successfully", { variant: "success" });
+    //     clearAllHandler();
+    //     setAlertMsg("Saved Successfully");
+    //   })
+    //   .catch((res) => {
+    //     console.log(res);
+    //     setIsSuccess("error");
+    //     setAlertMsg("Something went wrong");
+    //     enqueueSnackbar("Something Wend Wrong", { variant: "error" });
+    //   });
   };
 
   const clearAllHandler = () => {
@@ -149,14 +160,9 @@ const Addpurchasedmaterial = () => {
         console.log(err);
       } else {
         console.log(decoded);
-        // setuser(JSON.stringify(decoded.userName))
         Cookies.set("username", decoded.userName);
-        // setUser(decoded);
       }
     });
-
-    // setUser(JSON.parse(Cookies.get("user")));
-    // setUserName(user.userName);
   }, []);
 
   return (
@@ -206,21 +212,6 @@ const Addpurchasedmaterial = () => {
                       borderRadius: "10px",
                     }}
                   >
-                    {/* <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        name="new_materialtype"
-                        label="Material Type"
-                        placeholder="Material Type"
-                        value={input.new_materialtype}
-                        select
-                        defaultValue="RAW"
-                        onChange={(event) => handleFormChange(index, event)}
-                        fullWidth
-                      >
-                        <MenuItem value="RAW">RAW</MenuItem>
-                        <MenuItem value="ACCS">ACCS</MenuItem>
-                      </TextField>
-                    </Grid> */}
                     <Grid item sm={6} md={2} lg={3}>
                       <DatePicker
                         sx={{ paddingbottom: "1rem" }}
@@ -228,6 +219,8 @@ const Addpurchasedmaterial = () => {
                         placeholder="Pick date"
                         label="Select Date"
                         withAsterisk
+                        value={datepick}
+                        onChange={setDatePick}
                       />
                     </Grid>
                     <Grid item sm={6} md={2} lg={3}></Grid>
@@ -290,27 +283,31 @@ const Addpurchasedmaterial = () => {
                       />
                     </Grid>
                     <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="new_spec"
+                      {/* <TextField
+                         fullWidth
+                         required
+                         name="new_spec"
                         label="Specification"
-                        type="text"
+                         type="text"
                         value={input.new_spec}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
-                    {/* <Grid item sm={6} md={2} lg={3}>
+                         onChange={(event) => handleFormChange(index, event)}
+                       /> */}
+
                       <TextField
-                        required
-                        name="new_description"
-                        label="Description"
-                        type="text"
-                        value={input.new_description}
-                        onChange={(event) => handleFormChange(index, event)}
+                        name="new_spec"
+                        label="Material Specification"
+                        placeholder="Material Specification"
+                        select
+                        defaultValue="Electrical"
+                        onChange={(event) => handleFormChangeSpec(event.target.value)}
                         fullWidth
-                      />
-                    </Grid> */}
+                      >
+                        <MenuItem value="Electrical">Electrical</MenuItem>
+                        <MenuItem value="Mechanical">Mechanical</MenuItem>
+                        <MenuItem value="Consumable_goods">Consumable goods</MenuItem>
+                      </TextField>
+                    </Grid>
+
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         fullWidth

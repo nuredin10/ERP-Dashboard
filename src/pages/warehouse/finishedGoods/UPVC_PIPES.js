@@ -238,21 +238,25 @@ const Summary = () => {
   const [col, setCol] = useState([]);
   useEffect(() => {
     waxios
-    .post("/diameterSelect", { Cat: "PPR PIPE" })
-    .then((result) => {
-      // try2 = result.data;
-      setCol(result.data);
-      // setOd(result.data);
-      // console.log("NOW", try2);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .post("/diameterSelect", { Cat: "UPVC PIPE" })
+      .then((result) => {
+        // try2 = result.data;
+        setCol(result.data);
+        // setOd(result.data);
+        // console.log("NOW", try2);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     waxios
       .post("/finishedMaterialbyCat", req)
       .then((response) => {
         response.data.map((eachData) => {
           eachData.finished_date = convert(eachData.finished_date);
+          eachData.finished_quantity =
+          eachData.finished_quantity !== ""
+            ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
+            : "";
         });
         setData(response.data);
         console.log(response.data);
@@ -274,15 +278,15 @@ const Summary = () => {
         }}
       >
         <Container maxWidth="ml">
-        <Typography className="text-[#61482A] mb-10" variant="h5" >
-              Finished Good UPVC PIPES
-            </Typography>
+          <Typography className="text-[#61482A] mb-10" variant="h5">
+            Finished Good UPVC PIPES
+          </Typography>
           <Grid container spacing={3}>
             <Grid item xg={4} lg={4} sm={12} sx={{ mb: 3 }}>
               <Typography sx={{ mb: 3 }} variant="h6">
                 Select Type
               </Typography>
-              <FormControl>
+              <FormControl className="w-40">
                 <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -291,10 +295,17 @@ const Summary = () => {
                   label="type"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"50mm"}>OD 50mm</MenuItem>
+                  {col && console.log("TRY 2", col)}
+                  {col &&
+                    col.map((od) => (
+                      <MenuItem value={od.finished_description}>
+                        OD {od.finished_description}
+                      </MenuItem>
+                    ))}
+                  {/* <MenuItem value={"50mm"}>OD 50mm</MenuItem>
                   <MenuItem value={"75mm"}>OD 75mm</MenuItem>
                   <MenuItem value={"110mm"}>OD 110mm</MenuItem>
-                  <MenuItem value={"160mm"}>OD 160mm</MenuItem>
+                  <MenuItem value={"160mm"}>OD 160mm</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -342,7 +353,7 @@ const Summary = () => {
                         // console.log(rowData)
                         Router.push({
                           pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
-                          query: { id: rowData.id },
+                          query: { id: rowData.id, products: rowData.finished_diameter },
                         });
                       },
                     }),

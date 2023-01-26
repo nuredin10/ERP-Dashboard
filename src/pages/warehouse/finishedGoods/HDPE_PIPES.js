@@ -58,7 +58,7 @@ const Summary = () => {
         // try2 = result.data;
         setCol(result.data);
         // setOd(result.data);
-        // console.log("NOW", try2);
+        console.log("NOW", result.data );
       })
       .catch((error) => {
         console.log(error);
@@ -68,6 +68,10 @@ const Summary = () => {
       .then((response) => {
         response.data.map((eachData) => {
           eachData.finished_date = convert(eachData.finished_date);
+          eachData.finished_quantity =
+          eachData.finished_quantity !== ""
+            ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
+            : "";
         });
         setData(response.data);
         console.log(response.data);
@@ -97,7 +101,7 @@ const Summary = () => {
               <Typography sx={{ mb: 3 }} variant="h6">
                 Select Type
               </Typography>
-              <FormControl>
+              <FormControl className="w-40">
                 <InputLabel id="demo-simple-select-label">Select Type</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -106,7 +110,12 @@ const Summary = () => {
                   label="type"
                   onChange={handleChange}
                 >
-                  <MenuItem value={"50mm"}>OD 20mm</MenuItem>
+                  {col && console.log("TRY 2", col)}
+                  {col &&
+                    col.map((od) => (
+                      <MenuItem value={od.finished_description}>{od.finished_description}</MenuItem>
+                    ))}
+                  {/* <MenuItem value={"50mm"}>OD 20mm</MenuItem>
                   <MenuItem value={"25mm"}>OD 25mm</MenuItem>
                   <MenuItem value={"32mm"}>OD 32mm</MenuItem>
                   <MenuItem value={"40mm"}>OD 40mm</MenuItem>
@@ -114,39 +123,9 @@ const Summary = () => {
                   <MenuItem value={"63mm"}>OD 63mm</MenuItem>
                   <MenuItem value={"75mm"}>OD 75mm</MenuItem>
                   <MenuItem value={"90mm"}>OD 90mm</MenuItem>
-                  <MenuItem value={"110mm"}>OD 110mm</MenuItem>
+                  <MenuItem value={"110mm"}>OD 110mm</MenuItem> */}
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add OD
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="od" label="Add OD" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add PPR
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="ppr" label="Add HDPE PIPES" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
             </Grid>
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
@@ -162,7 +141,7 @@ const Summary = () => {
                         // console.log(rowData)
                         Router.push({
                           pathname: "/warehouse/stockList/FinishedGoods/monthlyReport",
-                          query: { id: rowData.id },
+                          query: { id: rowData.idm, products: rowData.finished_diameter },
                         });
                       },
                     }),

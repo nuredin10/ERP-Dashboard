@@ -58,10 +58,12 @@ const Dashboard = () => {
               <Link href="/dashboard/uncollected">
                 <TotalCustomers />
               </Link>
-            </Grid>                       
-             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <Expense sx={{ height: "100%" }} />
-            </Grid> 
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <Link href="/dashboard/Expenses">
+                <Expense sx={{ height: "100%" }} />
+              </Link>
+            </Grid>
             <Grid item lg={8} md={12} xl={9} xs={12}>
               <Sales />
             </Grid>

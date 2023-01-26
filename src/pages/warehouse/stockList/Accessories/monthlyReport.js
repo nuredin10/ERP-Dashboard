@@ -59,11 +59,11 @@ const MonthlyReport = () => {
   // ];
   const issuedcolumns = [
     { title: "Date", field: "summery_date" },
-    { title: "Stock at Hand", field: "stockat_hand" },
-    { title: "Stock Issued", field: "stock_issued" },
     { title: "Stock Recieved", field: "stock_recieved" },
-    { title: "Department Issued", field: "department_issued" },
-    { title: "stock at End", field: "stockat_end" },
+    { title: "Stock Issued", field: "stock_issued" },
+    { title: "stock at hand", field: "stockat_end" },
+    { title: "Fs Number", field: "fs_number" },
+    { title: "Department", field: "department_issued" },
   ];
   function convert(str) {
     var date = new Date(str),
@@ -82,10 +82,26 @@ const MonthlyReport = () => {
         selectedYear: year,
       })
       .then(function (res) {
-      
         res.data.map((eachData) => {
-          eachData.summery_date = convert(eachData.summery_date)
-        })
+          eachData.summery_date = convert(eachData.summery_date);
+          eachData.stockat_hand =
+            eachData.stockat_hand !== ""
+              ? parseFloat(eachData.stockat_hand).toLocaleString("en-US")
+              : "";
+          eachData.stock_issued =
+            eachData.stock_issued !== ""
+              ? parseFloat(eachData.stock_issued).toLocaleString("en-US")
+              : "";
+          eachData.stock_recieved =
+            eachData.stock_recieved !== ""
+              ? parseFloat(eachData.stock_recieved).toLocaleString("en-US")
+              : "";
+
+          eachData.stockat_end =
+            eachData.stockat_end !== ""
+              ? parseFloat(eachData.stockat_end).toLocaleString("en-US")
+              : "";
+        });
         setData(res.data);
         console.log(res.data);
         console.log("Works");
@@ -184,17 +200,39 @@ const MonthlyReport = () => {
                 select
                 onChange={(e) => setYear(e.target.value)}
               >
-                <MenuItem key={1} value="2019">2019</MenuItem>
-                <MenuItem key={2} value="2020">2020</MenuItem>
-                <MenuItem key={3} value="2021">2021</MenuItem>
-                <MenuItem key={4} value="2022">2022</MenuItem>
-                <MenuItem key={5} value="2024">2023</MenuItem>
-                <MenuItem key={6} value="2025">2025</MenuItem>
-                <MenuItem key={7} value="2026">2026</MenuItem>
-                <MenuItem key={8} value="2027">2027</MenuItem>
-                <MenuItem key={9} value="2028">2028</MenuItem>
-                <MenuItem key={10} value="2029">2029</MenuItem>
-                <MenuItem key={11} value="2030">2030</MenuItem>
+                <MenuItem key={1} value="2019">
+                  2019
+                </MenuItem>
+                <MenuItem key={2} value="2020">
+                  2020
+                </MenuItem>
+                <MenuItem key={3} value="2021">
+                  2021
+                </MenuItem>
+                <MenuItem key={4} value="2022">
+                  2022
+                </MenuItem>
+                <MenuItem key={5} value="2024">
+                  2023
+                </MenuItem>
+                <MenuItem key={6} value="2025">
+                  2025
+                </MenuItem>
+                <MenuItem key={7} value="2026">
+                  2026
+                </MenuItem>
+                <MenuItem key={8} value="2027">
+                  2027
+                </MenuItem>
+                <MenuItem key={9} value="2028">
+                  2028
+                </MenuItem>
+                <MenuItem key={10} value="2029">
+                  2029
+                </MenuItem>
+                <MenuItem key={11} value="2030">
+                  2030
+                </MenuItem>
               </TextField>
             </Grid>
             <Grid
@@ -228,11 +266,7 @@ const MonthlyReport = () => {
         <Container maxWidth="ml">
           <div ref={sheetRef}>
             <Card maxWidth="lg">
-              <Table
-                title="Monthly Stock Issued Report"
-                data={data}
-                columns={issuedcolumns}
-              />
+              <Table title="Monthly Stock Issued Report" data={data} columns={issuedcolumns} />
             </Card>
           </div>
         </Container>

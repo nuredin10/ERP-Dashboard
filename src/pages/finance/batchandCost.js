@@ -113,9 +113,8 @@ const ViewBatch = () => {
                     onClick={() => {
                       console.log(row.id);
                       productionWxios
-                        .post("/deleteProductionOrderRow", {
-                          id: row.batchID,
-                          GM: row.GMID,
+                        .post("/deleteCostSummery", {
+                          cost_id: row.cost_id,
                         })
                         .then(function (response) {
                           enqueueSnackbar("Deleted Success", {

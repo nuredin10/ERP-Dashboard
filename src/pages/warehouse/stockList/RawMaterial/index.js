@@ -59,6 +59,7 @@ const FinishedGoods = () => {
       .then((response) => {
         response.data.map((eachData) => {
           eachData.raw_date = convert(eachData.raw_date);
+          eachData.raw_quantity = parseFloat(eachData.raw_quantity).toLocaleString("en-US");
         });
         setData(response.data);
       })
@@ -104,6 +105,7 @@ const FinishedGoods = () => {
                         pathname: "/warehouse/stockList/RawMaterial/monthlyReport",
                         query: {
                           id: rowData.id,
+                          products: rowData.raw_name,
                         },
                       });
                     },

@@ -40,6 +40,8 @@ const MonthlyReport = () => {
   };
 
   const router2 = useRouter();
+  const titleMade = router2.query.products + " stock movement report";
+  const rID = router2.query.id;
   // const { id } = router2.query;
   // var nowYead = new
   const [data, setData] = useState([]);
@@ -55,7 +57,6 @@ const MonthlyReport = () => {
     { title: "Stock Issued", field: "stock_issued" },
     { title: "stock at hand", field: "stockat_end" },
     { title: "Fs Number", field: "fs_number" },
-
     { title: "Department", field: "department_issued" },
   ];
   function convert(str) {
@@ -77,6 +78,20 @@ const MonthlyReport = () => {
         console.log("response", res.data);
         res.data.map((eachData) => {
           eachData.summery_date = convert(eachData.summery_date);
+          eachData.stock_recieved =
+            eachData.stock_recieved !== ""
+              ? parseFloat(eachData.stock_recieved).toLocaleString("en-US")
+              : "";
+
+          eachData.stockat_end =
+            eachData.stockat_end !== ""
+              ? parseFloat(eachData.stockat_end).toLocaleString("en-US")
+              : "";
+
+          eachData.stock_issued =
+            eachData.stock_issued !== ""
+              ? parseFloat(eachData.stock_issued).toLocaleString("en-US")
+              : "";
         });
         setData(res.data);
         console.log(res.data);
@@ -87,14 +102,6 @@ const MonthlyReport = () => {
       });
   }, [date[1], year]);
 
-  // useEffect(() => {
-  //   setRecivedSummery([])
-  //   setIssuedSummery([])
-  //   data &&
-  //     data.map((e) => {
-  //       e.stock_issued == "" ? setRecivedSummery((recievedSummery) => [...recievedSummery, e]) : setIssuedSummery((issuedSummery) => [...issuedSummery, e])
-  //     })
-  // }, [selectMonth, data])
   const excel = () => {
     const XLSX = xlsx;
     const workbook = utils.book_new();
@@ -236,7 +243,7 @@ const MonthlyReport = () => {
         <Container maxWidth="ml">
           <div ref={sheetRef}>
             <Card maxWidth="lg">
-              <Table title="Stock movement report" data={data} columns={issuedcolumns} />
+              <Table title={titleMade} data={data} columns={issuedcolumns} />
             </Card>
           </div>
         </Container>

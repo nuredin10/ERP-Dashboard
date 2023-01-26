@@ -56,6 +56,10 @@ const Recycle = () => {
       .then((response) => {
         response.data.map((eachData) => {
           eachData.accs_date = convert(eachData.accs_date);
+          eachData.accs_quantity =
+            eachData.accs_quantity !== ""
+              ? parseFloat(eachData.accs_quantity).toLocaleString("en-US")
+              : "";
         });
         setData(response.data);
         console.log(response.data);

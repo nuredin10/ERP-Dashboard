@@ -38,6 +38,7 @@ const Addpurchasedmaterial = () => {
   const [alertMsg, setAlertMsg] = useState("");
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [datepick, setDatePick] = useState();
   const { user, setUser } = useUser();
   const handleClickOpen = () => {
     setDialogOpen(true);
@@ -55,12 +56,13 @@ const Addpurchasedmaterial = () => {
       new_description: "",
       new_value: "",
       new_referncenum: "",
-      new_materialtype: "",
+      new_materialtype: "RAW",
       new_remark: "",
       payable_name: "",
       payable_account: "",
       new_status: "NEW",
       userName: Cookies.get("username"),
+      new_date: datepick,
     },
   ]);
 
@@ -80,7 +82,7 @@ const Addpurchasedmaterial = () => {
       new_description: "",
       new_value: "",
       new_referncenum: "",
-      new_materialtype: "",
+      new_materialtype: "RAW",
       new_remark: "",
       payable_name: "",
       payable_account: "",
@@ -104,7 +106,11 @@ const Addpurchasedmaterial = () => {
   };
 
   const submitHandler = () => {
+    inputFields.map((eachData) => {
+      eachData.new_date = datepick.toString();
+    });
     console.log(inputFields);
+    // Tue Jan 31 2023 00:00:00 GMT+0300 (East Africa Time)
     // inputFields.push({ userName: Cookies.get("user") });
     // const addUser = {data: inputFields, userName: Cookies.get("user")};
     // console.log(addUser);
@@ -149,14 +155,9 @@ const Addpurchasedmaterial = () => {
         console.log(err);
       } else {
         console.log(decoded);
-        // setuser(JSON.stringify(decoded.userName))
         Cookies.set("username", decoded.userName);
-        // setUser(decoded);
       }
     });
-
-    // setUser(JSON.parse(Cookies.get("user")));
-    // setUserName(user.userName);
   }, []);
 
   return (
@@ -228,6 +229,8 @@ const Addpurchasedmaterial = () => {
                         placeholder="Pick date"
                         label="Select Date"
                         withAsterisk
+                        value={datepick}
+                        onChange={setDatePick}
                       />
                     </Grid>
                     <Grid item sm={6} md={2} lg={3}></Grid>

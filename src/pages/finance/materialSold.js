@@ -7,6 +7,7 @@ import productionWxios from "../../components/productionWxios";
 // import styles from '../styles/Home.module.css';
 // import Table from "../../components/Table";
 import SummarizeIcon from "@mui/icons-material/Summarize";
+import CButton from "../../components/Button";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -23,13 +24,15 @@ import {
   Container,
   FormHelperText,
   Link,
-  TextField,
   Card,
+  TextField,
+  Modal,
   Typography,
   Divider,
   hexToRgb,
   Grid,
 } from "@mui/material";
+import { useForm } from "react-hook-form";
 import OrdersToolBar from "../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../components/rawMaterials/order-results";
 import RightDrawer from "../../components/rawMaterials/RightDrawer";
@@ -43,10 +46,47 @@ const FinishedGoods = () => {
   const [productName, setProductName] = useState("");
   const [ProductQuntity, setProductQuntity] = useState("");
   const [totalSales, setTotalSales] = useState("");
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [productdata, setproductData] = useState([]);
   const [profitData, setProfitData] = useState([]);
   const [profit, setProfit] = useState();
+  const { register, handleSubmit, reset } = useForm();
+
+  const onSubmit = (newForm) => {
+    console.log(newForm);
+    productionWxios
+      .post("/updateProfit", {
+        salesID: data[0].SID,
+        costId: newForm.BatchId,
+        VAT: newForm.VAT,
+        ProfitID: data[0].id,
+      })
+      .then((respo) => {
+        console.log(respo);
+      });
+  };
+  const style = {
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    borderRadius: 1,
+    p: 4,
+    pb: 10,
+  };
+
+  const buttonstyle = {
+    position: "absolute",
+    mt: 20,
+    align: "right",
+    bottom: 10,
+    right: 10,
+  };
 
   const sheetRef = useRef();
   const Item = styled(Paper)(({ theme }) => ({
@@ -151,6 +191,17 @@ const FinishedGoods = () => {
             variant="contained"
           >
             Print
+          </Button>
+          <Button
+            onClick={() => setOpen(true)}
+            sx={{
+              ml: 5,
+            }}
+            component="a"
+            disableRipple
+            variant="contained"
+          >
+            Change Batch
           </Button>
           <Grid container spacing={3} ref={sheetRef}>
             <Grid item sx={{ width: "80%" }}>
@@ -343,6 +394,76 @@ const FinishedGoods = () => {
               )}
             </Grid>
           </Grid>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={3}>
+                  <Grid item lg={12}>
+                    <Typography variant="h5" component="h2">
+                      Generate Profit
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Typography variant="h6" component="h2">
+                      Batch ID
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={7}>
+                    <TextField
+                      required
+                      name="BatchId"
+                      label="Batch ID"
+                      type="text"
+                      fullWidth
+                      {...register("BatchId")}
+                    />
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Typography variant="h6" component="h2">
+                      VAT
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={7}>
+                    <TextField
+                      required
+                      name="VAT"
+                      label="VAT"
+                      type="text"
+                      fullWidth
+                      {...register("VAT")}
+                    />
+                    {/* <FormControl>
+                      <FormLabel id="demo-radio-buttons-group-label">VAT</FormLabel>
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="0"
+                        name="radio-buttons-group"
+                        onChange={handleChange(value)}
+                      >
+                        <FormControlLabel value="0" control={<Radio />} label="Without VAT" />
+                        <FormControlLabel value="1" control={<Radio />} label="With VAT" />
+                      </RadioGroup>
+                    </FormControl> */}
+                  </Grid>
+                </Grid>
+                <Grid item lg={7}>
+                  <CButton
+                    sx={buttonstyle}
+                    variant="contained"
+                    type="submit"
+                    // onClick={() => GernerateDO(reason.salesID, reason.ID)}
+                  >
+                    Generate Profit
+                  </CButton>
+                </Grid>
+              </form>
+            </Box>
+          </Modal>
         </Container>
       </Box>
     </>

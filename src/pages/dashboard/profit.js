@@ -16,18 +16,30 @@ import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import saxios from "../../components/salesAxios";
 
-const Profit  = () => {
+const Profit = () => {
   const [data, setData] = useState([]);
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   const columns = [
-    { title: "Date", field: "salesID" },
+    { title: "Date", field: "sales_date" },
     { title: "Sales Num", field: "salesId" },
-    { title: "Total Production Cost", field: "production_cost" },
+    { title: "Customer Name", field: "customer_name" },
     { title: "Total Sales", field: "total_sales" },
     { title: "Profit", field: "profit" },
   ];
   useEffect(() => {
     saxios.get("/getprofitDetail").then((res) => {
       console.log("reso", res.data);
+      res.data.map((eachData) => {
+        eachData.sales_date = convert(eachData.sales_date);
+        eachData.total_sales = parseFloat(eachData.total_sales).toLocaleString("en-US");
+        eachData.profit = parseFloat(eachData.profit).toLocaleString("en-US");
+
+      });
       setData(res.data);
     });
   }, []);
@@ -45,11 +57,11 @@ const Profit  = () => {
         }}
       >
         <Container maxWidth="ml">
-          <ToolBar title="More Detail" href="/finance/accountRecivableSales" />
-        
+          <ToolBar title="More Detail" href="/finance/addpettycash" />
+
           <Card maxWidth="lg">
             <Table
-              title="Profit  Sales List"
+              title="Profit Sales List"
               data={data}
               columns={columns}
               options={{
@@ -64,6 +76,6 @@ const Profit  = () => {
   );
 };
 
-Profit .getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Profit.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
-export default Profit ;
+export default Profit;
