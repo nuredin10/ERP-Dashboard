@@ -29,13 +29,13 @@ import { useForm } from "react-hook-form";
 import Router from "next/router";
 import axios from "../../../components/productionWxios";
 // import axios from "axios";
-import RawMaterialNeed from "src/components/product/raw_Needed";
+
 import CustomAlert from "src/components/alert";
-import ConfirmDialog from "src/components/confirmDialog ";
+
 import { useRouter } from "next/router";
 import CButton from "../../../components/Button";
 import { DatePicker } from "@mantine/dates";
-// import paxios from '../../'
+import { useSnackbar } from "notistack";
 const style = {
   position: "absolute",
   top: "50%",
@@ -62,7 +62,6 @@ const ProductionOrderGM = () => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const { register, handleSubmit, reset } = useForm();
   const [payment, setPayment] = useState();
   const [orderInfo, setOrderInfo] = useState([]);
@@ -70,7 +69,7 @@ const ProductionOrderGM = () => {
   const [selectedRegualr, setSelectedRegular] = useState(0);
   const [value, onChange] = useState(new Date());
   const [datepick, setDatePick] = useState();
-
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { id } = router.query;
 
@@ -105,14 +104,10 @@ const ProductionOrderGM = () => {
     axios
       .post("/addExpense", dataAll)
       .then((res) => {
-        console.log(res);
-        setIsSuccess("success");
-        setAlertMsg("Production Order Added Successfully");
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
       })
       .catch((err) => {
-        console.log(err);
-        setIsSuccess("error");
-        setAlertMsg("Error Occured");
+        enqueueSnackbar("Error Occured", { variant: "error" });
       });
   };
 
@@ -191,8 +186,6 @@ const ProductionOrderGM = () => {
                       {...register("Remark")}
                     />
                   </Grid>
-
-                 
 
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">

@@ -78,10 +78,12 @@ const MonthlyReport = () => {
         console.log("response", res.data);
         res.data.map((eachData) => {
           eachData.date_expense = convert(eachData.date_expense);
+          eachData.total_price =
+            eachData.total_price !== ""
+              ? parseFloat(eachData.total_price).toLocaleString("en-US")
+              : "";
         });
         setData(res.data);
-        console.log(res.data);
-        console.log("Works");
       })
       .catch(function (res) {
         console.log(res);

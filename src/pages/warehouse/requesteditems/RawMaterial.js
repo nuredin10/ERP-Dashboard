@@ -33,15 +33,16 @@ const RawMaterial = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [user, setUser] = useState();
   const [item, setItem] = useState();
+  
 
   const { enqueueSnackbar } = useSnackbar();
   const columns = [
-    { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
-    { title: "Quantity", field: "mat_quantity" },
+    { title: "Name", field: "mat_requestname" },
     { title: "UOM", field: "mat_unit" },
-    { title: "Person Id", field: "mat_reqpersonid" },
-    // { title: "Description", field: "mat_description" },
+    { title: "Quantity", field: "mat_quantity" },
+    { title: "Material Code", field: "mat_materialcode" },
+    { title: "Department", field: "mat_reqpersonid" },
     { title: "Status", field: "mat_status" },
   ];
 
@@ -61,12 +62,12 @@ const RawMaterial = () => {
     waxios
       .get("/showStoreRequestion")
       .then((resp) => {
-        console.log(resp.data);
         const rawMaterial = resp.data.filter((raw) => raw.req_materialtype.includes("RAW"));
         const pending = rawMaterial.filter((pending) => pending.mat_status.includes("PENDING"));
-        // rawMaterial.map((eachData) => {
-        //   eachData.mat_requestdate = convert(eachData.mat_requestdate);
-        // });
+        rawMaterial.map((eachData) => {
+          eachData.mat_requestdate = convert(eachData.mat_requestdate);
+          eachData.mat_quantity = parseFloat(eachData.mat_quantity).toLocaleString("en-US");
+        });
         setData(rawMaterial);
       })
       .catch((error) => {
@@ -74,14 +75,6 @@ const RawMaterial = () => {
       });
     setUser(JSON.parse(Cookies.get("user")));
   }, []);
-
-  // const [rawmaterial, setRawmaterial] = useState([]);
-  // console.log(data)
-
-  // useEffect(()=>{
-  //   // const raw = data.filter( (raw) => raw.req_materialtype.includes("RAW"))
-  //   setRawmaterial(data)
-  // },[])
   const accept = (id) => {
     waxios
       .post("/responseStoreRequestion", {

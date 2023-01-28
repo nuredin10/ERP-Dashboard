@@ -26,22 +26,31 @@ const Recieving = () => {
   const [user, setUser] = useState();
   const { enqueueSnackbar } = useSnackbar();
 
-  const columns = [
-    { title: "Name", field: "new_name" },
-    { title: "Quantity", field: "new_quantity" },
-    { title: "Description", field: "new_description" },
-    { title: "Material Code", field: "new_materialcode" },
-    // { title: "Material Type", field: "new_materialtype" },
-    { title: "Material unit", field: "new_materialunit" },
-     { title: "Person", field: "new_person" },
-     { title: "Status", field: "new_status" },
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
 
-    // { title: "Specification", field: "new_spec" },
-    // { title: "Value", field: "new_value" },
+  const columns = [
+    { title: "Date", field: "new_date" },
+    { title: "Name", field: "new_name" },
+    { title: "UOM", field: "new_materialunit" },
+    { title: "Quantity", field: "new_quantity" },
+    { title: "Material Code", field: "new_materialcode" },
+    { title: "Description", field: "new_description" },
+    { title: "COLOR", field: "new_color" },
+    { title: "Person", field: "new_person" },
+    { title: "Status", field: "new_status" },
   ];
   useEffect(() => {
     waxios.get("/shownewPurchased").then((resp) => {
       const newPurchased = resp.data.filter((res) => res.new_status.includes("NEW"));
+      newPurchased.map((eachData) => {
+        eachData.new_date = convert(eachData.new_date);
+        eachData.new_quantity = parseFloat(eachData.new_quantity).toLocaleString("en-US");
+      });
       setData(newPurchased);
     });
 
@@ -54,15 +63,13 @@ const Recieving = () => {
         status: "Accept",
       })
       .then(function (response) {
-        enqueueSnackbar("Item Accepted", { variant: 'success' })
+        enqueueSnackbar("Item Accepted", { variant: "success" });
         Router.reload(window.location.pathname);
         console.log(response);
-
       })
       .catch(function (error) {
         console.log(error);
-        enqueueSnackbar('Something went wrong', { variant: 'error' })
-
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       });
   };
 
@@ -73,17 +80,17 @@ const Recieving = () => {
         status: "Decline",
       })
       .then(function (response) {
-        enqueueSnackbar("Item Declined", { variant: 'error' })
+        enqueueSnackbar("Item Declined", { variant: "error" });
         Router.reload(window.location.pathname);
         console.log(response);
       })
       .catch(function (error) {
-        enqueueSnackbar('Something went wrong', { variant: 'error' })
+        enqueueSnackbar("Something went wrong", { variant: "error" });
 
         console.log(error);
       });
   };
- 
+
   return (
     <>
       <Head>

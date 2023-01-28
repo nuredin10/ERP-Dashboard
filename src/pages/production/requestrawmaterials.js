@@ -32,13 +32,14 @@ import { useUser } from "../../lib/UserContext";
 import CButton from "../../components/Button";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
+import { DatePicker } from "@mantine/dates";
 
 const Addpurchasedmaterial = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const [fsNumber, setFsNumber] = useState("");
   const [batchNumber, setBatchNumber] = useState("");
-
+  const [datepick, setDatePick] = useState();
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
   const { user, setUser } = useUser();
@@ -50,11 +51,10 @@ const Addpurchasedmaterial = () => {
   };
   const [inputFields, setInputFields] = useState([
     {
-      new_name: "",
-      new_quantity: "",
-      new_materialunit: "",
-      new_materialcode: "",
-      new_materialtype: "RAW",
+      mat_requestname: "",
+      mat_quantity: "",
+      mat_unit: "",
+      mat_materialcode: "",
       new_status: "NEW",
       userName: Cookies.get("username"),
     },
@@ -80,7 +80,6 @@ const Addpurchasedmaterial = () => {
       new_quantity: "",
       new_materialunit: "",
       new_materialcode: "",
-      new_materialtype: "RAW",
       new_status: "NEW",
       userName: Cookies.get("username"),
     };
@@ -104,14 +103,21 @@ const Addpurchasedmaterial = () => {
     console.log("Inputfields", inputFields);
     console.log("BatchID", batchNumber);
     console.log("Fs number", fsNumber);
-    const allTogether = [inputFields, batchNumber, fsNumber];
-    console.log("FAll", allTogether);
+    const allTogether = [inputFields, batchNumber, fsNumber, datepick];
+    inputFields.map((eachData) => {
+      (eachData.mat_date = datepick.toString()),
+        (eachData.req_materialtype = "RAW"),
+        (eachData.BatchID = batchNumber),
+        (eachData.FsNumber = fsNumber);
+    });
+    console.log("FAll", inputFields);
+
     // inputFields.push({ userName: Cookies.get("user") });
     // const addUser = {data: inputFields, userName: Cookies.get("user")};
     // console.log(addUser);
     handleClose();
     wareaxios
-      .post("/rawmaterialRequest", allTogether)
+      .post("/rawmaterialRequest", inputFields)
       .then((res) => {
         console.log(res);
         setIsSuccess("success");
@@ -209,6 +215,17 @@ const Addpurchasedmaterial = () => {
                   fullWidth
                 />
               </Grid>
+              <Grid>
+                <DatePicker
+                  sx={{ paddingbottom: "1rem" }}
+                  required
+                  placeholder="Pick date"
+                  label="Select Date"
+                  withAsterisk
+                  value={datepick}
+                  onChange={setDatePick}
+                />
+              </Grid>
             </Grid>
           </Grid>
 
@@ -233,10 +250,10 @@ const Addpurchasedmaterial = () => {
                     <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         required
-                        name="new_name"
+                        name="mat_requestname"
                         label="Name"
                         type="text"
-                        value={input.new_name}
+                        value={input.mat_requestname}
                         onChange={(event) => handleFormChange(index, event)}
                         fullWidth
                       />
@@ -245,10 +262,10 @@ const Addpurchasedmaterial = () => {
                       <TextField
                         fullWidth
                         required
-                        name="new_materialcode"
+                        name="mat_materialcode"
                         label="MaterialCode"
                         type="text"
-                        value={input.new_materialcode}
+                        value={input.mat_materialcode}
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
@@ -256,10 +273,10 @@ const Addpurchasedmaterial = () => {
                       <TextField
                         fullWidth
                         required
-                        name="new_quantity"
+                        name="mat_quantity"
                         label="Quantity"
                         type="text"
-                        value={input.new_quantity}
+                        value={input.mat_quantity}
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>
@@ -267,10 +284,10 @@ const Addpurchasedmaterial = () => {
                       <TextField
                         fullWidth
                         required
-                        name="new_materialunit"
-                        label="Material Unit"
+                        name="mat_unit"
+                        label="UOM"
                         type="text"
-                        value={input.new_materialunit}
+                        value={input.mat_unit}
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid>

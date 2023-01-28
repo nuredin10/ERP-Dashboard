@@ -239,9 +239,9 @@ const GMproduction = [
 
 const sales = [
   {
-    href: "/sales/salesproductionOrder",
+    href: "/dashboard/uncollected",
     icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Request production",
+    title: "Uncollected Sales",
   },
   {
     href: "/sales/salesorderlist",
@@ -259,11 +259,11 @@ const sales = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Order",
   },
-  {
-    href: "/sales/salessummery",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Sales Summery",
-  },
+  // {
+  //   href: "/sales/salessummery",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Sales Summery",
+  // },
 ];
 
 const StockListItems = [

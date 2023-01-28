@@ -33,6 +33,7 @@ import {
   Grid,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useSnackbar } from "notistack";
 import OrdersToolBar from "../../components/rawMaterials/order-toolbar";
 import { OrderResults } from "../../components/rawMaterials/order-results";
 import RightDrawer from "../../components/rawMaterials/RightDrawer";
@@ -42,10 +43,13 @@ import ReactToPrint, { useReactToPrint } from "react-to-print";
 const FinishedGoods = () => {
   const router2 = useRouter();
   const { id } = router2.query;
+  const [ids, setid] = useState(router2.query);
   const [data, setData] = useState([]);
   const [productName, setProductName] = useState("");
   const [ProductQuntity, setProductQuntity] = useState("");
   const [totalSales, setTotalSales] = useState("");
+
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -65,6 +69,11 @@ const FinishedGoods = () => {
       })
       .then((respo) => {
         console.log(respo);
+        enqueueSnackbar("Updated successfully", { variant: "success" });
+        router2.push("/finance/pettycash");
+      })
+      .catch((err) => {
+        enqueueSnackbar("Something went wrong check Batch ID", { variant: "error" });
       });
   };
   const style = {
@@ -127,32 +136,35 @@ const FinishedGoods = () => {
   ];
 
   useEffect(async () => {
-    console.log(id);
-    await productionWxios
-      .post("/shoesalesOrderProdById", { ID: id })
-      .then((response) => {
-        console.log(response.data);
-        setData(response.data);
-        setProductName(response.data[0].product_orderd);
-        setProductQuntity(response.data[0].total_product);
-        setTotalSales(response.data[0].totalCash);
-        setProfit(response.data[0].profit);
-        productionWxios
-          .post("/selectproductionCost", {
-            ProdID: response.data[0].producedId,
-          })
-          .then((response2) => {
-            console.log(response2);
-            setproductData(response2.data);
-            setProfitData(response2.data[0]);
-          })
-          .catch((response) => {
-            console.log(response);
-          });
-      })
-      .catch((response) => {
-        console.log(response);
-      });
+    if (!id) {
+      router2.push("/finance/addpettycash");
+    } else {
+      await productionWxios
+        .post("/shoesalesOrderProdById", { ID: id })
+        .then((response) => {
+          console.log(response.data);
+          setData(response.data);
+          setProductName(response.data[0].product_orderd);
+          setProductQuntity(response.data[0].total_product);
+          setTotalSales(response.data[0].totalCash);
+          setProfit(response.data[0].profit);
+          productionWxios
+            .post("/selectproductionCost", {
+              ProdID: response.data[0].producedId,
+            })
+            .then((response2) => {
+              console.log(response2);
+              setproductData(response2.data);
+              setProfitData(response2.data[0]);
+            })
+            .catch((response) => {
+              console.log(response);
+            });
+        })
+        .catch((response) => {
+          console.log(response);
+        });
+    }
   }, []);
 
   const print = useReactToPrint({
@@ -381,7 +393,10 @@ const FinishedGoods = () => {
                   </Grid>
                   <Grid item xs={6}>
                     <Item>
-                      {parseFloat(profitData.finishedWVat) * parseFloat(ProductQuntity)} ETB
+                      {(parseFloat(profitData.finishedWVat) * parseFloat(ProductQuntity)).toFixed(
+                        "2"
+                      )}{" "}
+                      ETB
                     </Item>
                   </Grid>
                   <Grid item xs={6}>
@@ -469,6 +484,12 @@ const FinishedGoods = () => {
     </>
   );
 };
+
+// FinishedGoods.getInitialProps = async ({ query }) => {
+//   // get the id from the query
+//   const { id } = query;
+//   return { id };
+// };
 
 FinishedGoods.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 

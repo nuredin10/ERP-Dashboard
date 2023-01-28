@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Table from "../../components/Table";
-import ToolBar from "../../components/ToolBar";
 import FAxios from "../../components/financeAxios";
 import InfoIcon from "@mui/icons-material/Info";
 import Router from "next/router";
@@ -25,10 +24,8 @@ import CButton from "../../components/Button";
 import { read, set_cptable, writeFileXLSX, utils } from "xlsx";
 import xlsx from "xlsx";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import { useSnackbar } from "notistack";
+
 
 const AccountRecieveable = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -38,6 +35,7 @@ const AccountRecieveable = () => {
   const [reason, setReason] = useState({});
   const sheetRef = useRef();
   const [open, setOpen] = React.useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const onSubmit = (newForm) => {
@@ -46,9 +44,14 @@ const AccountRecieveable = () => {
       salesID: selectedID,
       costId: newForm.BatchId,
       VAT: newForm.VAT,
-    }).then((respo) => {
-      console.log(respo);
-    });
+    })
+      .then((respo) => {
+        enqueueSnackbar("Saved Generated", { variant: "success" });
+        Router.reload();
+      })
+      .catch((err) => {
+        enqueueSnackbar("Error Check the Batch ID", { variant: "error" });
+      });
   };
   const handleChange = (vats) => {
     console.log(vats);
@@ -65,6 +68,11 @@ const AccountRecieveable = () => {
   useEffect(() => {
     FAxios.get("/showsalesOrderprofit")
       .then((res) => {
+        res.data.map((eachData) => {
+          eachData.sales_date = convert(eachData.sales_date);
+          eachData.totalCash =
+            eachData.totalCash !== "" ? parseFloat(eachData.totalCash).toLocaleString("en-US") : "";
+        });
         setData(res.data);
         console.log("show data", res.data);
       })
@@ -125,23 +133,7 @@ const AccountRecieveable = () => {
               alignItems: "space-between",
               justifyContent: "space-between",
             }}
-          >
-            {/* <Button onClick={excel} component="a" disableRipple variant="contained">
-              Excel
-            </Button> */}
-
-            {/* <Button
-              onClick={print}
-              sx={{
-                ml: 5,
-              }}
-              component="a"
-              disableRipple
-              variant="contained"
-            >
-              Print
-            </Button> */}
-          </Grid>
+          ></Grid>
           <div>
             <Card maxWidth="lg">
               <Table
@@ -210,27 +202,10 @@ const AccountRecieveable = () => {
                       fullWidth
                       {...register("VAT")}
                     />
-                    {/* <FormControl>
-                      <FormLabel id="demo-radio-buttons-group-label">VAT</FormLabel>
-                      <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue="0"
-                        name="radio-buttons-group"
-                        onChange={handleChange(value)}
-                      >
-                        <FormControlLabel value="0" control={<Radio />} label="Without VAT" />
-                        <FormControlLabel value="1" control={<Radio />} label="With VAT" />
-                      </RadioGroup>
-                    </FormControl> */}
                   </Grid>
                 </Grid>
                 <Grid item lg={7}>
-                  <CButton
-                    sx={buttonstyle}
-                    variant="contained"
-                    type="submit"
-                    // onClick={() => GernerateDO(reason.salesID, reason.ID)}
-                  >
+                  <CButton sx={buttonstyle} variant="contained" type="submit">
                     Generate Profit
                   </CButton>
                 </Grid>

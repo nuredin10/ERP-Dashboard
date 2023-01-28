@@ -18,16 +18,15 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DatePicker } from "@mantine/dates";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 
 // import ToolBar from "../../components/ToolBar";
-import Link from "@mui/material/Link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import jwt from "jsonwebtoken";
+
+
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import WAxios from "../../../components/wareHouseAxios";
@@ -40,6 +39,7 @@ const PurchaseOrder = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [date, setDate] = useState();
+  const [datepick, setDatePick] = useState();
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
@@ -62,12 +62,8 @@ const PurchaseOrder = () => {
     const req = {
       ...newForm,
       material_requesti: user.userName,
+      raw_date: datepick.toString(),
     };
-    const handleFormChange = (spec_data) => {
-      setDate(spec_data);
-      console.log(spec_data);
-    };
-  
 
     WAxios.post("/addnewrawmaterials", req)
       .then((res) => {
@@ -108,6 +104,17 @@ const PurchaseOrder = () => {
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Add New Raw Materials</Typography>
+                  </Grid>
+                  <Grid item sm={6} md={2} lg={3}>
+                    <DatePicker
+                      sx={{ paddingbottom: "1rem" }}
+                      required
+                      placeholder="Pick date"
+                      label="Select Date"
+                      withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField

@@ -14,7 +14,10 @@ import {
 import { DashboardLayout } from "../../../components/dashboard-layout";
 import Table from "../../../components/Table";
 import ToolBar from "../../../components/ToolBar";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { useSnackbar } from "notistack";
 import saxios from "../../../components/salesAxios";
+import Router from "next/router";
 
 const Vender = () => {
   const [data, setData] = useState([]);
@@ -29,12 +32,34 @@ const Vender = () => {
     { title: "FS Number", field: "fs_number" },
     { title: "remark", field: "remark" },
   ];
+  const { enqueueSnackbar } = useSnackbar();
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   useEffect(() => {
     saxios
       .post("/showExpense", {
         Cat: "OTHER",
       })
       .then((res) => {
+        res.data.map((eachData) => {
+          eachData.date_expense = convert(eachData.date_expense);
+          eachData.total_price =
+            eachData.total_price !== ""
+              ? parseFloat(eachData.total_price).toLocaleString("en-US")
+              : "";
+          eachData.unit_price =
+            eachData.unit_price !== ""
+              ? parseFloat(eachData.unit_price).toLocaleString("en-US")
+              : "";
+          eachData.expense_qunatity =
+            eachData.expense_qunatity !== ""
+              ? parseFloat(eachData.expense_qunatity).toLocaleString("en-US")
+              : "";
+        });
         setData(res.data);
       });
   }, []);
@@ -67,11 +92,22 @@ const Vender = () => {
                 selection: true,
               }}
               actions={[
-                {
-                  tooltip: "Remove All Selected Users",
-                  icon: "delete",
-                  onClick: (evt, data) => alert("You want to delete " + data.length + " rows"),
-                },
+                (rowData) => ({
+                  icon: () => <RemoveCircleOutlineIcon size="small" />,
+                  tooltip: "Remove",
+                  onClick: () => {
+                    console.log(rowData);
+                    saxios
+                      .post("/deleteExpense", {
+                        ID: rowData.id,
+                      })
+                      .then((res) => {
+                        enqueueSnackbar("Deleted Successfully", { variant: "success" });
+                        console.log(res.data);
+                        Router.reload();
+                      });
+                  },
+                }),
               ]}
             />
           </Card>

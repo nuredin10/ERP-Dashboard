@@ -18,20 +18,23 @@ import Table from "../../components/Table";
 import ToolBar from "../../components/ToolBar";
 import FAxios from "../../components/financeAxios";
 import InfoIcon from "@mui/icons-material/Info";
+import { useSnackbar } from "notistack";
+import CButton from "../../components/Button";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
   const [reason, setReason] = useState({});
+  const { enqueueSnackbar } = useSnackbar();
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const columns = [
+    { title: "Date", field: "order_date" },
     { title: "Name", field: "customer_name" },
     { title: "Tin Number", field: "Tin_number" },
     { title: "Amount", field: "cus_total" },
-    { title: "Date", field: "order_date" },
     { title: "Payment status", field: "payment" },
     { title: "Payment Advance", field: "cus_advance" },
     { title: "Status", field: "status" },
@@ -63,14 +66,16 @@ const AccountRecieveable = () => {
     })
       .then((respo) => {
         console.log(respo);
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
       })
       .catch((err) => {
         console.log(err);
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       });
   };
   const details = (data) => {
     setReason(data);
-    // console.log(id)
+    console.log(reason);
     handleOpen();
   };
 
@@ -187,9 +192,13 @@ const AccountRecieveable = () => {
                   <Typography>{reason.final_color}</Typography>
                 </Grid>
               </Grid>
-              <Button sx={buttonstyle} variant="contained" onClick={() => GernerateDO(reason.id)}>
-                Accept Order
-              </Button>
+              {reason.status !== "Accepted" ? (
+                <Button sx={buttonstyle} variant="outlined" onClick={() => GernerateDO(reason.id)}>
+                  Accept Order
+                </Button>
+              ) : (
+                <></>
+              )}
             </Box>
           </Modal>
         </Container>

@@ -38,7 +38,7 @@ const PurchaseOrder = () => {
   const [status, setStatus] = React.useState("");
   const { register, handleSubmit, reset } = useForm();
   const { enqueueSnackbar } = useSnackbar();
-
+  const [datepick, setDatePick] = useState();
   const [date, setDate] = useState();
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -62,6 +62,7 @@ const PurchaseOrder = () => {
     const req = {
       ...newForm,
       material_requesti: user.userName,
+      requestDate: datepick.toString(),
     };
 
     console.log(req);
@@ -113,10 +114,11 @@ const PurchaseOrder = () => {
                       placeholder="Pick date"
                       label="Select Date"
                       withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    </Grid>
+                  <Grid item xs={12} sm={6}></Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -130,31 +132,11 @@ const PurchaseOrder = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="materialId"
-                      label="Fs Number"
-                      type="text"
-                      fullWidth
-                      {...register("Fs_Number")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
                       name="materialQty"
                       label="Quantity"
                       type="text"
                       fullWidth
                       {...register("materialQty")}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="reqStatus"
-                      label="Status"
-                      type="text"
-                      fullWidth
-                      {...register("reqStatus")}
                     />
                   </Grid>
 
@@ -195,7 +177,7 @@ const PurchaseOrder = () => {
                     <TextField
                       required
                       name="FS_number"
-                      label="MOU"
+                      label="FS_number"
                       type="text"
                       fullWidth
                       {...register("FS_number")}

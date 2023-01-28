@@ -35,15 +35,29 @@ const AccountRecieveable = () => {
   const columns = [
     { title: "Date", field: "sales_date" },
     { title: "ORDER REF", field: "salesId" },
+    { title: "Customer Name", field: "customer_name" },
     { title: "Address", field: "customer_address" },
     { title: "Total", field: "totalCash" },
     { title: "profit", field: "profit" },
   ];
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("/");
+  }
+
   useEffect(() => {
     FAxios.get("/showsalesProfit")
       .then((res) => {
+        res.data.map((eachData) => {
+          eachData.sales_date = convert(eachData.sales_date);
+          eachData.totalCash =
+            eachData.totalCash !== "" ? parseFloat(eachData.totalCash).toLocaleString("en-US") : "";
+          eachData.profit =
+            eachData.profit !== "" ? parseFloat(eachData.profit).toLocaleString("en-US") : "";
+        });
         setData(res.data);
-        console.log("show data", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -122,7 +136,7 @@ const AccountRecieveable = () => {
           <div>
             <Card maxWidth="lg">
               <Table
-                title="Account Recieveable"
+                title="Sales With Profit"
                 data={data}
                 columns={columns}
                 actions={[

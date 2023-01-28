@@ -18,7 +18,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DatePicker } from "@mantine/dates";
 import { DashboardLayout } from "../../../components/dashboard-layout";
 
 // import ToolBar from "../../components/ToolBar";
@@ -38,6 +38,7 @@ const PurchaseOrder = () => {
   const [status, setStatus] = React.useState("");
   const { register, handleSubmit, reset } = useForm();
   const { enqueueSnackbar } = useSnackbar();
+  const [datepick, setDatePick] = useState();
 
   const [date, setDate] = useState();
   const handleChange = (event) => {
@@ -67,6 +68,7 @@ const PurchaseOrder = () => {
     const req = {
       ...newForm,
       accs_spec: date,
+      accs_date: datepick.toString(),
     };
 
     console.log(req);
@@ -109,6 +111,17 @@ const PurchaseOrder = () => {
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Add New Accessories</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <DatePicker
+                      sx={{ paddingbottom: "1rem" }}
+                      required
+                      placeholder="Pick date"
+                      label="Select Date"
+                      withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField

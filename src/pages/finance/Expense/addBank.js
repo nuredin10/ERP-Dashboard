@@ -35,6 +35,7 @@ import ConfirmDialog from "src/components/confirmDialog ";
 import { useRouter } from "next/router";
 import CButton from "../../../components/Button";
 import { DatePicker } from "@mantine/dates";
+import { useSnackbar } from "notistack";
 // import paxios from '../../'
 const style = {
   position: "absolute",
@@ -68,7 +69,7 @@ const ProductionOrderGM = () => {
   const [orderInfo, setOrderInfo] = useState([]);
   const [regular, setRegular] = useState([]);
   const [selectedRegualr, setSelectedRegular] = useState(0);
- 
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { id } = router.query;
   const [datepick, setDatePick] = useState();
@@ -84,18 +85,6 @@ const ProductionOrderGM = () => {
       day = ("0" + date.getDate()).slice(-2);
     return [day, mnth, date.getFullYear()].join("/");
   }
-
-  // data.date_expense || today,
-  // data.Item_description || "-",
-  // data.uom || "-",
-  // data.unit_price || "0",
-  // data.total_price || "0",
-  // data.fs_number || "-",
-  // data.purchase_department || "Finance",
-  // data.remark || "-",
-  // data.catagory || "Others",
-  // data.addtional_info || "-",
-  // data.expense_quantity || "1",
 
   var newForm;
   const newRequest = (data) => {
@@ -115,14 +104,12 @@ const ProductionOrderGM = () => {
     axios
       .post("/addExpense", dataAll)
       .then((res) => {
-        console.log(res);
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
         setIsSuccess("success");
         setAlertMsg("Expense added");
       })
       .catch((err) => {
-        console.log(err);
-        setIsSuccess("error");
-        setAlertMsg("Error Occured");
+        enqueueSnackbar("Error Occured", { variant: "error" });
       });
   };
 
@@ -203,7 +190,7 @@ const ProductionOrderGM = () => {
                       {...register("Loan_payment")}
                     />
                   </Grid>
-          
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       name="Remark"

@@ -38,10 +38,10 @@ const Accessories = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const columns = [
-    { title: "Name", field: "mat_requestname" },
     { title: "Date", field: "mat_requestdate" },
-    { title: "Quantity", field: "mat_quantity" },
+    { title: "Name", field: "mat_requestname" },
     { title: "UOM", field: "mat_unit" },
+    { title: "Quantity", field: "mat_quantity" },
     { title: "Person Id", field: "mat_reqpersonid" },
     { title: "Status", field: "mat_status" },
   ];
@@ -69,6 +69,7 @@ const Accessories = () => {
         const pending = accessories.filter((pending) => pending.mat_status.includes("PENDING"));
         accessories.map((eachData) => {
           eachData.mat_requestdate = convert(eachData.mat_requestdate);
+          eachData.mat_quantity = parseFloat(eachData.mat_quantity).toLocaleString("en-US");
         });
         setData(accessories);
       })
@@ -92,8 +93,7 @@ const Accessories = () => {
         } else {
           console.log(response);
           Router.push("/warehouse/requesteditems/Accessories");
-          // setIsSuccess('success');
-          // setAlertMsg('Item Accepted')
+        
           enqueueSnackbar("Item Accepted", { variant: "success" });
         }
       })

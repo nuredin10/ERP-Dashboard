@@ -17,17 +17,13 @@ import {
   Container,
   Typography,
   Grid,
-  DatePicker,
-  Modal,
 } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import Table from "../../components/Table";
-import ToolBar from "../../components/ToolBar";
-import Link from "@mui/material/Link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { DatePicker } from "@mantine/dates";
+import { useSnackbar } from "notistack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+
 import { useForm } from "react-hook-form";
 import Router from "next/router";
 import axios from "../../components/productionWxios";
@@ -63,6 +59,7 @@ const salesProductionOrder = () => {
   const [indata, setIndata] = React.useState();
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -70,7 +67,7 @@ const salesProductionOrder = () => {
   const { register, handleSubmit, reset } = useForm();
   const [payment, setPayment] = useState("");
   const [MethodExe, setMethodExe] = useState("");
-
+  const [datepick, setDatePick] = useState();
   const [orderInfo, setOrderInfo] = useState([]);
   const [regular, setRegular] = useState([]);
   const [selectedRegualr, setSelectedRegular] = useState(0);
@@ -95,13 +92,14 @@ const salesProductionOrder = () => {
 
   var newForm;
   const newRequest = (data) => {
-    const newData = { ...data, payment };
+    const newData = { ...data, payment, sales_date: datepick.toString() };
     console.log(data);
     console.log("payment", newData);
     saxios
       .post("/creatSalesOrder", newData)
       .then(function (response) {
         console.log(response);
+        enqueueSnackbar("Sales Order Created", { variant: "success" });
         Router.push("/sales/salesorderlist");
       })
       .catch(function (error) {
@@ -141,6 +139,17 @@ const salesProductionOrder = () => {
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h5">Add customer detail</Typography>
+                  </Grid>
+                  <Grid item sm={6} md={2} lg={3}>
+                    <DatePicker
+                      sx={{ paddingbottom: "1rem" }}
+                      required
+                      placeholder="Pick date"
+                      label="Select Date"
+                      withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField

@@ -19,6 +19,8 @@ import ToolBar from "../../components/ToolBar";
 import FAxios from "../../components/financeAxios";
 import InfoIcon from "@mui/icons-material/Info";
 import { useForm } from "react-hook-form";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
@@ -27,6 +29,8 @@ const AccountRecieveable = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const Router = useRouter();
 
   function convert(str) {
     var date = new Date(str),
@@ -35,10 +39,10 @@ const AccountRecieveable = () => {
     return [day, mnth, date.getFullYear()].join("-");
   }
   const columns = [
+    { title: "Date", field: "sales_date" },
     { title: "Name", field: "customer_name" },
     { title: "Tin Number", field: "customer_tin" },
     { title: "Amount", field: "totalCash" },
-    { title: "Date", field: "sales_date" },
     { title: "Advance Payment", field: "advances" },
     { title: "Status", field: "status" },
   ];
@@ -47,6 +51,10 @@ const AccountRecieveable = () => {
       .then((res) => {
         res.data.map((eachData) => {
           eachData.sales_date = convert(eachData.sales_date);
+          eachData.totalCash =
+            eachData.totalCash !== "" ? parseFloat(eachData.totalCash).toLocaleString("en-US") : "";
+          eachData.advances =
+            eachData.advances !== "" ? parseFloat(eachData.advances).toLocaleString("en-US") : "";
         });
         setData(res.data);
         console.log("show data", res.data);
@@ -61,27 +69,16 @@ const AccountRecieveable = () => {
     const data = {};
     FAxios.post("/completeRecibableSalesOrder", newForm)
       .then((respo) => {
-        console.log(respo);
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
+
+        Router.reload();
       })
       .catch((err) => {
+        enqueueSnackbar("Something went wrong ", { variant: "error" });
         console.log(err);
       });
   };
 
-  // const GernerateDO = (ID, forms) => {
-  // console.log("ID", ID);
-  // console.log("Quan", forms);
-
-  // FAxios.post("/completeRecibableSalesOrder", {
-  //   ID: ID,
-  // })
-  //   .then((respo) => {
-  //     console.log(respo);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  // };
   const details = (data) => {
     setReason(data);
     // console.log(id)

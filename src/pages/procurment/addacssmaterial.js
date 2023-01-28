@@ -59,7 +59,7 @@ const Addpurchasedmaterial = () => {
       new_quantity: "",
       new_materialunit: "",
       new_materialcode: "",
-      new_spec: Spec,
+      new_spec: "",
       new_description: "",
       new_value: "",
       new_referncenum: "",
@@ -80,13 +80,13 @@ const Addpurchasedmaterial = () => {
   };
 
   const addFields = () => {
-    console.log(Spec)
+    console.log(Spec);
     let newfield = {
       new_name: "",
       new_quantity: "",
       new_materialunit: "",
       new_materialcode: "",
-      new_spec: Spec,
+      new_spec: "",
       new_description: "",
       new_value: "",
       new_referncenum: "",
@@ -120,21 +120,21 @@ const Addpurchasedmaterial = () => {
     });
     console.log("Catagory", Spec);
     handleClose();
-    // wareaxios
-    //   .post("/addnewPurchased", inputFields)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setIsSuccess("success");
-    //     enqueueSnackbar("Saved Successfully", { variant: "success" });
-    //     clearAllHandler();
-    //     setAlertMsg("Saved Successfully");
-    //   })
-    //   .catch((res) => {
-    //     console.log(res);
-    //     setIsSuccess("error");
-    //     setAlertMsg("Something went wrong");
-    //     enqueueSnackbar("Something Wend Wrong", { variant: "error" });
-    //   });
+    wareaxios
+      .post("/addnewPurchased", inputFields)
+      .then((res) => {
+        console.log(res);
+        setIsSuccess("success");
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
+        clearAllHandler();
+        setAlertMsg("Saved Successfully");
+      })
+      .catch((res) => {
+        console.log(res);
+        setIsSuccess("error");
+        setAlertMsg("Something went wrong");
+        enqueueSnackbar("Something Wend Wrong", { variant: "error" });
+      });
   };
 
   const clearAllHandler = () => {
@@ -293,13 +293,29 @@ const Addpurchasedmaterial = () => {
                          onChange={(event) => handleFormChange(index, event)}
                        /> */}
 
+                      {/* <Grid item sm={6} md={2} lg={3}>
+                      <TextField
+                        name="new_materialtype"
+                        label="Material Type"
+                        placeholder="Material Type"
+                        value={input.new_materialtype}
+                        select
+                        defaultValue="RAW"
+                        onChange={(event) => handleFormChange(index, event)}
+                        fullWidth
+                      >
+                        <MenuItem value="RAW">RAW</MenuItem>
+                        <MenuItem value="ACCS">ACCS</MenuItem>
+                      </TextField>
+                    </Grid> */}
+
                       <TextField
                         name="new_spec"
                         label="Material Specification"
                         placeholder="Material Specification"
                         select
                         defaultValue="Electrical"
-                        onChange={(event) => handleFormChangeSpec(event.target.value)}
+                        onChange={(event) => handleFormChange(index, event)}
                         fullWidth
                       >
                         <MenuItem value="Electrical">Electrical</MenuItem>

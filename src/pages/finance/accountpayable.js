@@ -21,11 +21,11 @@ import InfoIcon from "@mui/icons-material/Info";
 
 const AccountPayable = () => {
   const columns = [
+    { title: "First Date", field: "payable_firstdate" },
     { title: "Payable Name", field: "payable_name" },
     { title: "Account Number", field: "payable_accountnum" },
     { title: "Value", field: "payable_value" },
-    { title: "Person", field: "payable_person" },
-    { title: "First Date", field: "payable_firstdate" },
+    // { title: "Person", field: "payable_person" },
     { title: "Status", field: "payable_status" },
   ];
   function convert(str) {

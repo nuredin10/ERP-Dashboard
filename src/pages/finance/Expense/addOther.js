@@ -35,6 +35,7 @@ import ConfirmDialog from "src/components/confirmDialog ";
 import { useRouter } from "next/router";
 import CButton from "../../../components/Button";
 import { DatePicker } from "@mantine/dates";
+import { useSnackbar } from "notistack";
 // import paxios from '../../'
 const style = {
   position: "absolute",
@@ -70,6 +71,7 @@ const ProductionOrderGM = () => {
   const [selectedRegualr, setSelectedRegular] = useState(0);
   const [value, onChange] = useState(new Date());
   const [datepick, setDatePick] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const router = useRouter();
   const { id } = router.query;
@@ -105,14 +107,10 @@ const ProductionOrderGM = () => {
     axios
       .post("/addExpense", dataAll)
       .then((res) => {
-        console.log(res);
-        setIsSuccess("success");
-        setAlertMsg("Production Order Added Successfully");
+        enqueueSnackbar("Saved Successfully", { variant: "success" });
       })
       .catch((err) => {
-        console.log(err);
-        setIsSuccess("error");
-        setAlertMsg("Error Occured");
+        enqueueSnackbar("Error Occured", { variant: "error" });
       });
   };
 

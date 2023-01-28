@@ -121,10 +121,12 @@ const ViewBatch = () => {
                             variant: "succes",
                           });
                           console.log(response);
-                          // Router.reload();
+                          Router.reload();
                         })
                         .catch((error) => {
-                          console.log(error);
+                          enqueueSnackbar("Deleteing Error", {
+                            variant: "succes",
+                          });
                         });
                     }}
                     style={{ color: "#FF000A", marginLeft: "-3rem" }}
@@ -150,8 +152,6 @@ const ViewBatch = () => {
                           <TableCell>mat_requestname</TableCell>
                           <TableCell>Material Code</TableCell>
 
-                          {/* <TableCell>mat_unit</TableCell>
-                          <TableCell align="right">Quantity</TableCell> */}
                         </TableRow>
                       </TableHead>
                       <TableBody>
