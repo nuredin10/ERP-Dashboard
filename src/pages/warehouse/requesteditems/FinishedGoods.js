@@ -73,14 +73,6 @@ const FinishedGoods = () => {
 
     setUser(JSON.parse(Cookies.get("user")));
 
-    // fetch("https://versavvy.com/ERP_backend/wareHouse/showStoreRequestion")
-    //   .then((resp) => resp.json())
-    //   .then((resp) => {
-    //     console.log(resp)
-    //     // const finishedData = resp.filter((finish) => finish.req_materialtype.includes("FIN"));
-    //     // const pending = finishedData.filter((pending) => pending.mat_status.includes("PENDING"));
-    //     // setData(pending);
-    //   });
   }, []);
 
   const accept = (id) => {
@@ -100,9 +92,14 @@ const FinishedGoods = () => {
           console.log("lowwwww");
         } else {
           console.log(response);
-          // Router.push("/warehouse/requesteditems/FinishedGoods");
-          // setIsSuccess('success');
-          // setAlertMsg('Item Accepted')
+          waxios
+          .post("/sendNotification", {
+            To: "warehouse",
+            message: "New Finshed Item Requestion Accepted",
+          })
+          .then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+          });
           enqueueSnackbar("Item Accepted", { variant: "success" });
         }
         console.log(response.data.materials[0].fin_name);

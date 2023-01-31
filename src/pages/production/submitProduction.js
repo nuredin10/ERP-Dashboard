@@ -1,42 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import {
-  FormControl,
-  FormLabel,
-  FormControlLabel,
-  TextField,
-  MenuItem,
-  Select,
-  FormGroup,
-  Checkbox,
-  Box,
-  Button,
-  Card,
-  InputLabel,
-  ButtonBox,
-  Container,
-  Typography,
-  Grid,
-  DatePicker,
-  Modal,
-} from "@mui/material";
+import { TextField, MenuItem, Box, Button, Card, Typography, Grid } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import Table from "../../components/Table";
-import ToolBar from "../../components/ToolBar";
-import Link from "@mui/material/Link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
-import Router from "next/router";
 import axios from "../../components/productionWxios";
-// import axios from "axios";
-import RawMaterialNeed from "src/components/product/raw_Needed";
 import CustomAlert from "src/components/alert";
-import ConfirmDialog from "src/components/confirmDialog ";
 import { useRouter } from "next/router";
 import CButton from "../../components/Button";
+import { DatePicker } from "@mantine/dates";
 import { useSnackbar } from "notistack";
 
 const style = {
@@ -55,67 +28,43 @@ const style = {
 };
 
 const ProductionOrderGM = () => {
-  const [open, setOpen] = React.useState(false);
-  const [startDate, setStartDate] = React.useState();
-  const [endDate, setEndDate] = React.useState();
-  const [customOrRegular, setCustomOrRegular] = React.useState("regular");
-  const [indata, setIndata] = React.useState();
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
-  const { enqueueSnackbar } = useSnackbar();
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const { register, handleSubmit, reset } = useForm();
   const [payment, setPayment] = useState();
-  const [orderInfo, setOrderInfo] = useState([]);
-  const [regular, setRegular] = useState([]);
-  const [selectedRegualr, setSelectedRegular] = useState(0);
-
+  const [datepick, setDatePick] = useState();
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { id } = router.query;
 
-  const handlePaymentChange = (newValue) => {
-    setPayment(newValue.target.value);
-  };
-
-  function convert(str) {
-    var date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    return [day, mnth, date.getFullYear()].join("/");
-  }
-
-  var newForm;
   const newRequest = (data) => {
     console.log(data);
+    var newData = { ...data, newDate: datepick.toString() };
     axios
-      .post("/addproductionGM", data)
+      .post("/addproductFinished", newData)
       .then((res) => {
         console.log(res);
-        setIsSuccess("success");
-        setAlertMsg("Production Order Added Successfully");
+        enqueueSnackbar("Production Submitted", { variant: "success" });
         axios
           .post("/sendNotification", {
-            To: "Production",
-            message: "New Production Order Added",
+            To: "warehouse",
+            message: "New Production Report",
           })
           .then((respo) => {
             enqueueSnackbar("Notification Sent", { variant: "success" });
           });
+        router.reload();
       })
       .catch((err) => {
+        enqueueSnackbar("Fill all fileds please", { variant: "error" });
         console.log(err);
-        setIsSuccess("error");
-        setAlertMsg("Error Occured");
       });
   };
 
   return (
     <>
       <Head>
-        <title>Add Production Order</title>
+        <title>Add Production Report</title>
       </Head>
       <Box
         component="main"
@@ -143,7 +92,28 @@ const ProductionOrderGM = () => {
               <form onSubmit={handleSubmit(newRequest)}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h5">Add New Production Order</Typography>
+                    <Typography variant="h5">Add New Production Report</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <DatePicker
+                      sx={{ paddingbottom: "1rem" }}
+                      required
+                      placeholder="Pick date"
+                      label="Select Date"
+                      withAsterisk
+                      value={datepick}
+                      onChange={setDatePick}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="refernceNum"
+                      label="FS Number"
+                      type="text"
+                      fullWidth
+                      {...register("refernceNum")}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -180,6 +150,7 @@ const ProductionOrderGM = () => {
                       <MenuItem value="Green">GREEN</MenuItem>
                     </TextField>
                   </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -203,17 +174,6 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
-                      name="final_desc"
-                      label="Description"
-                      type="text"
-                      fullWidth
-                      {...register("final_desc")}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
                       name="final_quant"
                       label="Quantity"
                       type="text"
@@ -234,6 +194,36 @@ const ProductionOrderGM = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
+                      name="waste_measureunit"
+                      label="UOM Waste"
+                      type="text"
+                      fullWidth
+                      {...register("waste_measureunit")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="waste_Quantity"
+                      label="Waste Quantity"
+                      type="text"
+                      fullWidth
+                      {...register("waste_Quantity")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="Remark"
+                      label="Remark"
+                      type="text"
+                      fullWidth
+                      {...register("Remark")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
                       name="order_reciver"
                       label="Operator name"
                       type="text"
@@ -244,7 +234,7 @@ const ProductionOrderGM = () => {
 
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
-                      Make Order
+                      Submit
                     </CButton>
                   </Grid>
                   <Grid item>

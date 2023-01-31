@@ -59,6 +59,14 @@ const PurchaseOrder = () => {
       .then((res) => {
         console.log(res);
         enqueueSnackbar("Saved Successfully", { variant: "success" });
+        WAxios
+        .post("/sendNotification", {
+          To: "warehouse",
+          message: "New Finished Good Material Registered",
+        })
+        .then((respo) => {
+          enqueueSnackbar("Notification Sent", { variant: "success" });
+        });
       })
       .catch((err) => {
         console.log(err);

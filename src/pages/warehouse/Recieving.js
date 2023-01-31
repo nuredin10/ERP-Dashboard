@@ -64,6 +64,14 @@ const Recieving = () => {
       })
       .then(function (response) {
         enqueueSnackbar("Item Accepted", { variant: "success" });
+        waxios
+          .post("/sendNotification", {
+            To: "warehouse",
+            message: "New Material Accepted",
+          })
+          .then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+          });
         Router.reload(window.location.pathname);
         console.log(response);
       })
@@ -81,6 +89,14 @@ const Recieving = () => {
       })
       .then(function (response) {
         enqueueSnackbar("Item Declined", { variant: "error" });
+        waxios
+        .post("/sendNotification", {
+          To: "warehouse",
+          message: "New Material Declined",
+        })
+        .then((respo) => {
+          enqueueSnackbar("Notification Sent", { variant: "success" });
+        });
         Router.reload(window.location.pathname);
         console.log(response);
       })

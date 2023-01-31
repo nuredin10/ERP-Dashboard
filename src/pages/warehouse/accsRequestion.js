@@ -69,6 +69,14 @@ const PurchaseOrder = () => {
     WAxios.post("/accsRequestion", req)
       .then((res) => {
         console.log(res);
+        WAxios
+        .post("/sendNotification", {
+          To: "warehouse",
+          message: "New Accessory Material Requested",
+        })
+        .then((respo) => {
+          enqueueSnackbar("Notification Sent", { variant: "success" });
+        });
         enqueueSnackbar("Saved Successfully", { variant: "success" });
       })
       .catch((err) => {

@@ -38,11 +38,28 @@ const Profit = () => {
         eachData.sales_date = convert(eachData.sales_date);
         eachData.total_sales = parseFloat(eachData.total_sales).toLocaleString("en-US");
         eachData.profit = parseFloat(eachData.profit).toLocaleString("en-US");
-
       });
       setData(res.data);
     });
   }, []);
+
+  async function downloadExcel() {
+    try {
+      const response = await saxios.get("/generateExcel", {
+        responseType: "blob",
+      });
+
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "excel.xlsx";
+      link.click();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -58,7 +75,7 @@ const Profit = () => {
       >
         <Container maxWidth="ml">
           <ToolBar title="More Detail" href="/finance/addpettycash" />
-
+          <button onClick={downloadExcel}>Download Excel</button>
           <Card maxWidth="lg">
             <Table
               title="Profit Sales List"

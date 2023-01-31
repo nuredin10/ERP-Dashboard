@@ -38,12 +38,11 @@ import {
   Select,
   FormGroup,
 } from "@mui/material";
-
+import { DatePicker } from "@mantine/dates";
 import { DashboardLayout } from "../../components/dashboard-layout";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+
 import productionWxios from "../../components/productionWxios";
-import CustomAlert from "src/components/alert";
-import PauseIcon from "@mui/icons-material/Pause";
+
 import { useSnackbar } from "notistack";
 import CButton from "../../components/Button";
 const useStyles = makeStyles((theme) => ({
@@ -72,6 +71,7 @@ const ProducitonOngoing = () => {
   const classes = useStyles();
   const handleNOpen = () => setNOpen(true);
   const handleClose = () => setNOpen(false);
+  const [datepick, setDatePick] = useState();
 
   useEffect(() => {
     axios
@@ -133,7 +133,6 @@ const ProducitonOngoing = () => {
     const [finishModalOpen, setFinishModalOpen] = useState(false);
     const handleFormChange = (event) => {
       setfinName(event.target.value);
-
       console.log(event.target.value);
       console.log(finname);
     };
@@ -154,6 +153,7 @@ const ProducitonOngoing = () => {
       console.log("row", row);
       productionWxios
         .post("/addProductProduced", {
+          new_date: datepick.toString(),
           prodID: row.id,
           new_name: row.fin_product,
           new_color: row.final_color,
@@ -165,9 +165,7 @@ const ProducitonOngoing = () => {
           new_status: "NEW",
           salesID: row.custom_batch_id,
           FSNumber: data.Fs_number,
-          // new_spec: data.spec,
           personID: decoded.userName || "Production",
-          // new_description: data.desc,
           new_remark: data.Production_reasons,
           waste_quantity: data.waste_quantity,
           waste_unit: data.Wmaterial_unit,
@@ -175,6 +173,12 @@ const ProducitonOngoing = () => {
         })
         .then((respo) => {
           enqueueSnackbar("Production Completed", { variant: "success" });
+          WAxios.post("/sendNotification", {
+            To: "warehouse",
+            message: "New Finished Material Production Report",
+          }).then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+          });
           console.log(respo);
         })
         .catch((err) => {
@@ -270,16 +274,25 @@ const ProducitonOngoing = () => {
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={style}>
-                    
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                       <h1>Production Report</h1>
                     </Typography>
                     <Divider />
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      <div>
+                        <DatePicker
+                          sx={{ paddingbottom: "1rem" }}
+                          required
+                          placeholder="Pick date"
+                          label="Select Date"
+                          withAsterisk
+                          value={datepick}
+                          onChange={setDatePick}
+                          closeCalendarOnChange={false}
+                        />
+                      </div>
                       <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="grid grid-cols-3 gap-5">
-                          {/* <TextField label="Name" variant="outlined" {...register("name")} /> */}
-
                           <TextField
                             label="Produced Quantity"
                             variant="outlined"
@@ -290,7 +303,7 @@ const ProducitonOngoing = () => {
                             variant="outlined"
                             {...register("Fs_number")}
                           />
-                          {/* <TextField label="Description" variant="outlined" {...register("desc")} /> */}
+
                           <TextField
                             label="Produced UOM"
                             variant="outlined"
@@ -372,7 +385,6 @@ const ProducitonOngoing = () => {
                       <Box>
                         <Button
                           className="w-40 bg-[#61482A]  text-white font-bold text-md hover:shadow-lg hover:bg-[#EBE5D8] hover:text-[#61482A]"
-                          // onClick={() => setNOpen(true)}
                           onClick={handleNOpen}
                         >
                           Edit
@@ -448,12 +460,6 @@ const ProducitonOngoing = () => {
         item.id,
         item.custom_batch_id,
         item.GmID,
-
-        // item.shift,
-        // item.production_line,
-        // item.waste_name,
-        // item.waste_quan,
-        // item.waste_unit,
         item.rawmat_list ? JSON.parse(item.rawmat_list) : JSON.parse(item.raw_mat_needed)
       )
     );

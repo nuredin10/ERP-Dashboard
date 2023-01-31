@@ -33,7 +33,6 @@ const RawMaterial = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [user, setUser] = useState();
   const [item, setItem] = useState();
-  
 
   const { enqueueSnackbar } = useSnackbar();
   const columns = [
@@ -85,13 +84,18 @@ const RawMaterial = () => {
         if (response.data.message === "no_material") {
           setItem(response.data.materials[0].raw_name);
           setDialogOpen(true);
-
           console.log(response);
         } else {
           console.log(response);
+          waxios
+            .post("/sendNotification", {
+              To: "warehouse",
+              message: "New Raw Material Item Requestion Accepted",
+            })
+            .then((respo) => {
+              enqueueSnackbar("Notification Sent", { variant: "success" });
+            });
           Router.push("/warehouse/requesteditems/RawMaterial");
-          // setIsSuccess('success');
-          // setAlertMsg('Item Accepted')
           enqueueSnackbar("Item Accepted", { variant: "success" });
         }
       })

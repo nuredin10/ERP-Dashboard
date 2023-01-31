@@ -32,7 +32,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
 import axios from "../../components/productionWxios";
-
+import { useSnackbar } from "notistack";
 // import axios from "axios";
 import AddBatchFormula from "src/components/product/addbatchFormula";
 import CustomAlert from "src/components/alert";
@@ -80,7 +80,7 @@ const ProductionOrder = () => {
   const { id } = router.query;
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -155,11 +155,23 @@ const ProductionOrder = () => {
         console.log(res);
         setIsSuccess("success");
         setAlertMsg("Production Order Added Successfully");
+        enqueueSnackbar("Production Recipe Added", { variant: "success" });
+        axios
+        .post("/sendNotification", {
+          To: "Production",
+          message: "New Production Recipe Added",
+        })
+        .then((respo) => {
+          enqueueSnackbar("Notification Sent", { variant: "success" });
+        });
+        
       })
       .catch((err) => {
         console.log(err);
         setIsSuccess("error");
         setAlertMsg("Error Occured");
+        enqueueSnackbar("Production R", { variant: "error" });
+
       });
     console.log(newForm);
   };

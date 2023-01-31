@@ -39,6 +39,7 @@ const Addpurchasedmaterial = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [datepick, setDatePick] = useState();
+  const [userInfo, setUserInfo] = useState();
   const { user, setUser } = useUser();
   const handleClickOpen = () => {
     setDialogOpen(true);
@@ -121,6 +122,14 @@ const Addpurchasedmaterial = () => {
         console.log(res);
         setIsSuccess("success");
         enqueueSnackbar("Saved Successfully", { variant: "success" });
+        wareaxios
+          .post("/sendNotification", {
+            To: "warehouse",
+            message: "NEW PURCHASED ITEM",
+          })
+          .then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+          });
         clearAllHandler();
         setAlertMsg("Saved Successfully");
       })
@@ -155,6 +164,7 @@ const Addpurchasedmaterial = () => {
         console.log(err);
       } else {
         console.log(decoded);
+        setUserInfo(decoded);
         Cookies.set("username", decoded.userName);
       }
     });

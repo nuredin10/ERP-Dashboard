@@ -171,6 +171,11 @@ const production = [
     title: "Production Approved",
   },
   {
+    href: "/production/submitProduction",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Production Report",
+  },
+  {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
@@ -182,11 +187,11 @@ const production = [
     title: "Order List",
   },
 
-  {
-    href: "/production/rawrequestList",
-    icon: <ViewListIcon fontSize="small" />,
-    title: "Requestion List",
-  },
+  // {
+  //   href: "/production/rawrequestList",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "Requestion List",
+  // },
 
   {
     href: "/production/requestrawmaterials",
@@ -207,6 +212,11 @@ const GMproduction = [
     title: "Production Approved",
   },
   {
+    href: "/production/submitProduction",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Production Report",
+  },
+  {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
     title: "Production Finished",
@@ -224,11 +234,11 @@ const GMproduction = [
     title: "Add Production Order",
   },
 
-  {
-    href: "/production/rawrequestList",
-    icon: <AddIcon fontSize="small" />,
-    title: "Requestion List",
-  },
+  // {
+  //   href: "/production/rawrequestList",
+  //   icon: <AddIcon fontSize="small" />,
+  //   title: "Requestion List",
+  // },
 
   {
     href: "/production/requestrawmaterials",

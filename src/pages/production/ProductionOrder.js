@@ -90,6 +90,14 @@ const ViewBatch = () => {
           if (response.data.message === "Started !") {
             console.log("Production has been Started");
             CustomAlert("success", "Production has been started");
+            productionWxios
+            .post("/sendNotification", {
+              To: "Production",
+              message: "Batch Accepted",
+            })
+            .then((respo) => {
+              enqueueSnackbar("Notification Sent", { variant: "success" });
+            });
             Router.reload();
           } else if (response.data.message === "update status error") {
             console.log("update Server Error");

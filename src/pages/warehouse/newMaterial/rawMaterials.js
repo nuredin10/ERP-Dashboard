@@ -26,7 +26,6 @@ import { DashboardLayout } from "../../../components/dashboard-layout";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import WAxios from "../../../components/wareHouseAxios";
@@ -69,10 +68,15 @@ const PurchaseOrder = () => {
       .then((res) => {
         console.log(res);
         enqueueSnackbar("Saved Successfully", { variant: "success" });
+        WAxios.post("/sendNotification", {
+          To: "warehouse",
+          message: "New Raw Material Registered",
+        }).then((respo) => {
+          enqueueSnackbar("Notification Sent", { variant: "success" });
+        });
       })
       .catch((err) => {
         console.log(err);
-
         enqueueSnackbar("Something went wrong", { variant: "error" });
       });
   };

@@ -92,8 +92,15 @@ const Accessories = () => {
           setDialogOpen(true);
         } else {
           console.log(response);
+          waxios
+            .post("/sendNotification", {
+              To: "warehouse",
+              message: "New Accessory Item Requestion Accepted",
+            })
+            .then((respo) => {
+              enqueueSnackbar("Notification Sent", { variant: "success" });
+            });
           Router.push("/warehouse/requesteditems/Accessories");
-        
           enqueueSnackbar("Item Accepted", { variant: "success" });
         }
       })

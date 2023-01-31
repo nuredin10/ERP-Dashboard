@@ -49,7 +49,6 @@ const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
     setInputFields(data);
   };
 
-
   const submitHandler = () => {
     setRawmaterial.rowMaterialNeeded = inputFields;
     setRawmaterial.rowMaterialNeeded = inputFields;
@@ -72,6 +71,14 @@ const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
         console.log(res);
         await axios.post("/editBatch", newForm),
           then((respo) => {
+            axios
+              .post("/sendNotification", {
+                To: "Production",
+                message: "Production Recipe Edited",
+              })
+              .then((respo) => {
+                enqueueSnackbar("Notification Sent", { variant: "success" });
+              });
             console.log(respo);
           }).catch((err) => {
             console.log(err);
@@ -79,7 +86,6 @@ const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
       })
       .catch((err) => {
         console.log(err);
-  
       });
   };
   useEffect(() => {
@@ -182,7 +188,7 @@ const OrderInformation = ({ setOrderInfo, handleClose, setRawmaterial }) => {
           >
             Submit
           </Button>
-          <Button className="w-40 ml-10 g-5 " onClick={()=>handleClose()} variant="outlined">
+          <Button className="w-40 ml-10 g-5 " onClick={() => handleClose()} variant="outlined">
             Cancel
           </Button>
         </Grid>

@@ -104,8 +104,19 @@ const MonthlyReport = () => {
 
   const excel = () => {
     const XLSX = xlsx;
+
     const workbook = utils.book_new();
     const worksheet = utils.json_to_sheet(data);
+    const firstRow = worksheet["A1:Z1"];
+    for (const cell in firstRow) {
+      firstRow[cell].s = {
+        fill: {
+          fgColor: { rgb: "FFFF00" },
+        },
+      };
+    }
+    const bold = { font: { bold: true } };
+    worksheet[utils.encode_cell({ c: 0, r: 0 })].s = bold;
     utils.book_append_sheet(workbook, worksheet, "Report");
     writeFileXLSX(workbook, "Report.xlsx");
   };

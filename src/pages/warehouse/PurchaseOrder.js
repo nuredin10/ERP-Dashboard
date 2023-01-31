@@ -75,6 +75,14 @@ const PurchaseOrder = () => {
       .then((res) => {
         console.log(res);
         enqueueSnackbar("Saved Successfully", { variant: "success" });
+        WAxios
+        .post("/sendNotification", {
+          To: "warehouse",
+          message: "New Purchase Item Requested",
+        })
+        .then((respo) => {
+          enqueueSnackbar("Notification Sent", { variant: "success" });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -104,17 +112,7 @@ const PurchaseOrder = () => {
             alignItems: "center",
           }}
         >
-          {/* <Box sx={{ marginLeft: "-60%", marginBottom: "2%" }}>
-            <Link
-              href="/procurment/supplier"
-              color="black"
-              underline="none"
-              variant="subtitle2"
-              sx={{ cursor: "pointer" }}
-            >
-              <ArrowBackIcon /> purchase request
-            </Link>
-          </Box> */}
+         
           <form onSubmit={handleSubmit(onSubmit)}>
             <Card sx={{ width: "70%", padding: "2%" }}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>

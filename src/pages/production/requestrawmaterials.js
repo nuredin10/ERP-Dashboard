@@ -112,9 +112,6 @@ const Addpurchasedmaterial = () => {
     });
     console.log("FAll", inputFields);
 
-    // inputFields.push({ userName: Cookies.get("user") });
-    // const addUser = {data: inputFields, userName: Cookies.get("user")};
-    // console.log(addUser);
     handleClose();
     wareaxios
       .post("/rawmaterialRequest", inputFields)
@@ -122,6 +119,14 @@ const Addpurchasedmaterial = () => {
         console.log(res);
         setIsSuccess("success");
         enqueueSnackbar("Saved Successfully", { variant: "success" });
+        wareaxios
+          .post("/sendNotification", {
+            To: "warehouse",
+            message: "New Raw Material Requested",
+          })
+          .then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+          });
         clearAllHandler();
         setAlertMsg("Saved Successfully");
       })

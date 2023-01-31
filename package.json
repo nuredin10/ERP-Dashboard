@@ -45,6 +45,7 @@
     "nextjs-progressbar": "^0.0.14",
     "notistack": "^2.0.8",
     "nprogress": "^0.2.0",
+    "officegen": "^0.6.5",
     "print-js": "^1.6.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

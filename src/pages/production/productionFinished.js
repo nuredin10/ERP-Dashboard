@@ -21,16 +21,14 @@ import {
 const ProductionFinished = () => {
   const [data, setData] = useState([]);
   const columuns = [
-    { title: "ID", field: "id" },
-    { title: "Person Id", field: "personID" },
-    { title: "Name", field: "finished_name" },
-    { title: "Spec", field: "finished_spec" },
-    { title: "Quantity", field: "finished_qty" },
     { title: "Time", field: "finished_time" },
-    { title: "Description", field: "finished_description" },
-    { title: "Material Unit", field: "finished_materialunit" },
-    { title: "Remark", field: "finished_remark" },
+    { title: "Material Name", field: "finished_name" },
     { title: "Material Code", field: "finished_materialcode" },
+    { title: "Description", field: "finished_description" },
+    { title: "UOM", field: "finished_materialunit" },
+    { title: "Quantity", field: "finished_qty" },
+    { title: "Person Id", field: "personID" },
+    { title: "Remark", field: "finished_remark" },
   ];
   function convert(str) {
     var date = new Date(str),
