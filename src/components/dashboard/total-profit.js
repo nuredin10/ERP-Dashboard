@@ -29,7 +29,7 @@ export const Expense = (props) => {
   const [total, setTotal] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:11000/getMonthExpense")
+      .get("https://report.proplast.et/getMonthExpense")
       .then((res) => {
         const formatedCash = nFormatter(res.data.TOTALEXP);
         setTotal(formatedCash);

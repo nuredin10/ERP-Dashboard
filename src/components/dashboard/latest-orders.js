@@ -86,7 +86,7 @@ export const LatestOrders = (props) => {
   const [latestOrder, setlatestOrder] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:11000/lastFiveSalesOrders")
+      .get("https://report.proplast.et/lastFiveSalesOrders")
       .then((res) => {
         console.log("Do", res.data);
         setlatestOrder(res.data);
