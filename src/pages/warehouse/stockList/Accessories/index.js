@@ -103,7 +103,7 @@
 
 // export default Accessories;
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Head from "next/head";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import { DashboardLayout } from "../../../../components/dashboard-layout";
@@ -128,12 +128,18 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
+import PrintLayout from "../../../../components/PrintLayout";
+import {useReactToPrint} from "react-to-print";
 
 const Accessories = () => {
   const [drawer, setDrawer] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [selectedSummery, setSummery] = useState([]);
   const [data, setData] = useState([]);
+  const [isPrinting, setIsPrinting] = useState(false);
+  const sheetRef = useRef();
+  const [documentNo, setDocumentNo] = useState("")
+
   const columns = [
     { title: "Name", field: "accs_name" },
     { title: "Quantity", field: "accs_quantity" },
@@ -159,6 +165,22 @@ const Accessories = () => {
         console.log(response);
       });
   }, []);
+
+  const print = () => {
+    setIsPrinting(true);
+    setTimeout(() => {
+      pip();
+    }, 100);
+  }
+  const pip = useReactToPrint({
+
+    onAfterPrint: () => {
+      setIsPrinting(false);
+    },
+    content: () => sheetRef.current,
+  })
+
+
   return (
     <>
       <Head>

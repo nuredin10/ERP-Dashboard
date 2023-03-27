@@ -28,6 +28,7 @@ const Vender = () => {
 
     saxios.get('/showCustomers')
     .then((res) =>{
+      console.log(res)
       setData(res.data);
     })
 

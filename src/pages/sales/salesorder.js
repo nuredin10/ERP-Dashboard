@@ -103,6 +103,7 @@ const salesProductionOrder = () => {
         Router.push("/sales/salesorderlist");
       })
       .catch(function (error) {
+        enqueueSnackbar("Sales Order Create failed", { variant: "error" });
         console.log(error);
       });
   };
