@@ -106,152 +106,176 @@
 import React, {useState, useEffect, useRef} from "react";
 import Head from "next/head";
 import SummarizeIcon from "@mui/icons-material/Summarize";
-import { DashboardLayout } from "../../../../components/dashboard-layout";
+import {DashboardLayout} from "../../../../components/dashboard-layout";
 
 // import styles from '../styles/Home.module.css';
 import OrdersToolBar from "../../../../components/Accessories/order-toolbar";
-import { OrderResults } from "../../../../components/Accessories/order-results";
+import {OrderResults} from "../../../../components/Accessories/order-results";
 import RightDrawer from "../../../../components/Accessories/RightDrawer";
 import Router from "next/router";
 
 import Table from "../../../../components/Table";
 import waxios from "../../../../components/wareHouseAxios";
 import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormHelperText,
-  Link,
-  TextField,
-  Card,
-  Typography,
-  Divider,
+    Box,
+    Button,
+    Checkbox,
+    Container,
+    FormHelperText,
+    Link,
+    TextField,
+    Card,
+    Typography,
+    Divider,
 } from "@mui/material";
 import PrintLayout from "../../../../components/PrintLayout";
 import {useReactToPrint} from "react-to-print";
 
 const Accessories = () => {
-  const [drawer, setDrawer] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState([]);
-  const [selectedSummery, setSummery] = useState([]);
-  const [data, setData] = useState([]);
-  const [isPrinting, setIsPrinting] = useState(false);
-  const sheetRef = useRef();
-  const [documentNo, setDocumentNo] = useState("")
+    const [drawer, setDrawer] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState([]);
+    const [selectedSummery, setSummery] = useState([]);
+    const [data, setData] = useState([]);
+    const [isPrinting, setIsPrinting] = useState(false);
+    const sheetRef = useRef();
+    const [documentNo, setDocumentNo] = useState("")
 
-  const columns = [
-    { title: "Name", field: "accs_name" },
-    { title: "Quantity", field: "accs_quantity" },
-    // { title: "Description", field: "accs_description" },
-    { title: "Material Code", field: "accs_materialcode" },
-    // { title: "Specification", field: "accs_spec" },
-    { title: "UOM", field: "accs_materialunit" },
-    // { title: "Value", field: "accs_value" },
-    // { title: "Reference Number", field: "accs_referncenum" },
-    { title: "Date", field: "accs_date" },
-    // { title: "Remark", field: "accs_remark" },
-    // { title: "Status", field: "acss_status" }
-  ];
+    const columns = [
+        {title: "Name", field: "accs_name"},
+        {title: "Quantity", field: "accs_quantity"},
+        // { title: "Description", field: "accs_description" },
+        {title: "Material Code", field: "accs_materialcode"},
+        // { title: "Specification", field: "accs_spec" },
+        {title: "UOM", field: "accs_materialunit"},
+        // { title: "Value", field: "accs_value" },
+        // { title: "Reference Number", field: "accs_referncenum" },
+        {title: "Date", field: "accs_date"},
+        // { title: "Remark", field: "accs_remark" },
+        // { title: "Status", field: "acss_status" }
+    ];
 
-  useEffect(() => {
-    waxios
-      .get("/accessory")
-      .then((response) => {
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((response) => {
-        console.log(response);
-      });
-  }, []);
+    useEffect(() => {
+        waxios
+            .get("/accessory")
+            .then((response) => {
+                setData(response.data);
+                console.log(response.data);
+            })
+            .catch((response) => {
+                console.log(response);
+            });
+    }, []);
 
-  const print = () => {
-    setIsPrinting(true);
-    setTimeout(() => {
-      pip();
-    }, 100);
-  }
-  const pip = useReactToPrint({
+    const print = () => {
+        setIsPrinting(true);
+        setTimeout(() => {
+            pip();
+        }, 100);
+    }
+    const pip = useReactToPrint({
 
-    onAfterPrint: () => {
-      setIsPrinting(false);
-    },
-    content: () => sheetRef.current,
-  })
+        onAfterPrint: () => {
+            setIsPrinting(false);
+        },
+        content: () => sheetRef.current,
+    })
 
 
-  return (
-    <>
-      <Head>
-        <title>Accessories | Proplast</title>
-      </Head>
-      <Box component="main">
-        <Container
-          sx={{
-            display: {
-              xs: "none",
-              lg: "block",
-            },
-          }}
-          maxWidth="ml"
-        >
-          <Card maxWidth="lg">
-            <Table
-              title="Accessories"
-              data={data}
-              columns={columns}
-              actions={[
-                (rowData) => ({
-                  icon: () => <SummarizeIcon size="small" />,
-                  tooltip: "Summary",
-                  onClick: () => {
-                    Router.push({
-                      pathname: "/warehouse/stockList/Accessories/monthlyReport",
-                      query: { id: rowData.id },
-                    });
-                  },
-                }),
-              ]}
-              localization={{
-                header: {
-                  actions: "SUMMARY",
-                },
-              }}
-            ></Table>
-          </Card>
-        </Container>
+    return (
+        <>
+            <Head>
+                <title>Accessories | Proplast</title>
+            </Head>
+            <Box component="main">
+                <Container
+                    sx={{
+                        display: {
+                            xs: "none",
+                            lg: "block",
+                        },
+                        pt: 5,
+                    }}
+                    maxWidth="ml"
+                >
+                    <Box className="mb-4">
 
-        <Container
-          sx={{
-            display: {
-              xs: "block",
-              lg: "none",
-            },
-          }}
-          maxWidth={false}
-        >
-          <Box>
-            <OrdersToolBar drawer={drawer}></OrdersToolBar>
-            <OrderResults
-              drawer={drawer}
-              setDrawer={setDrawer}
-              setSelectedOrder={setSelectedOrder}
-              setSummery={setSummery}
-              data={data}
-            />
-            <RightDrawer
-              drawer={drawer}
-              setDrawer={setDrawer}
-              selectedOrder={selectedOrder}
-              selectedSummery={selectedSummery}
-            />
-            <Divider sx={{ borderColor: "gray", mt: 3 }} />
-          </Box>
-        </Container>
-      </Box>
-    </>
-  );
+                        <TextField label="Document No" value={documentNo}
+                                   onChange={(e) => setDocumentNo(e.target.value)}/>
+
+                        <Button
+                            onClick={print}
+                            sx={{
+                                ml: 5,
+                            }}
+                            component="a"
+                            disableRipple
+                            variant="contained"
+                        >
+                            Print
+                        </Button>
+                    </Box>
+                    <div ref={sheetRef}>
+                        <PrintLayout documentNo={documentNo} isPrinting={isPrinting}>
+
+                            <Card maxWidth="lg">
+                                <Table
+                                    title="Accessories"
+                                    data={data}
+                                    columns={columns}
+                                    actions={[
+                                        (rowData) => ({
+                                            icon: () => <SummarizeIcon size="small"/>,
+                                            tooltip: "Summary",
+                                            onClick: () => {
+                                                Router.push({
+                                                    pathname: "/warehouse/stockList/Accessories/monthlyReport",
+                                                    query: {id: rowData.id},
+                                                });
+                                            },
+                                        }),
+                                    ]}
+                                    localization={{
+                                        header: {
+                                            actions: "SUMMARY",
+                                        },
+                                    }}
+                                ></Table>
+                            </Card>
+                        </PrintLayout>
+
+                    </div>
+                </Container>
+
+                <Container
+                    sx={{
+                        display: {
+                            xs: "block",
+                            lg: "none",
+                        },
+                    }}
+                    maxWidth={false}
+                >
+                    <Box>
+                        <OrdersToolBar drawer={drawer}></OrdersToolBar>
+                        <OrderResults
+                            drawer={drawer}
+                            setDrawer={setDrawer}
+                            setSelectedOrder={setSelectedOrder}
+                            setSummery={setSummery}
+                            data={data}
+                        />
+                        <RightDrawer
+                            drawer={drawer}
+                            setDrawer={setDrawer}
+                            selectedOrder={selectedOrder}
+                            selectedSummery={selectedSummery}
+                        />
+                        <Divider sx={{borderColor: "gray", mt: 3}}/>
+                    </Box>
+                </Container>
+            </Box>
+        </>
+    );
 };
 
 Accessories.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

@@ -150,7 +150,7 @@ const FinishedGoods = () => {
                                                     });
                                                 },
                                             }),
-                                        ]}
+                                          ]}
                                         localization={{
                                             header: {
                                                 actions: "SUMMARY",
