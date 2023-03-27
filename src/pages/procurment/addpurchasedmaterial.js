@@ -20,6 +20,7 @@ import {
   DialogContentText,
   Autocomplete,
 } from "@mui/material";
+import CircularProgress from '@mui/material/CircularProgress';
 import { DashboardLayout } from "../../components/dashboard-layout";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -41,6 +42,7 @@ const Addpurchasedmaterial = () => {
   const [datepick, setDatePick] = useState();
   const [userInfo, setUserInfo] = useState();
   const { user, setUser } = useUser();
+  const [loading, setLoading] = useState(false);
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
@@ -116,10 +118,12 @@ const Addpurchasedmaterial = () => {
     // const addUser = {data: inputFields, userName: Cookies.get("user")};
     // console.log(addUser);
     handleClose();
+    setLoading(true);
     wareaxios
       .post("/addnewPurchased", inputFields)
       .then((res) => {
         console.log(res);
+        setLoading(false);
         setIsSuccess("success");
         enqueueSnackbar("Saved Successfully", { variant: "success" });
         wareaxios
@@ -189,35 +193,47 @@ const Addpurchasedmaterial = () => {
           message="Do you want to save this item?"
         />
 
-        <Grid container>
-          <Grid item lg={6} md={12} sm={12} sx={{ m: 5 }}>
-            <Typography className="text-[#61482A]" variant="h4">
-              Add New Purchased Raw Material
-            </Typography>
-          </Grid>
+        {
+          loading ? (
+              <CircularProgress
+                  size={68}
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    zIndex: 1,
+                  }}
+              />
+          ) : (
+              <Grid container>
+                <Grid item lg={6} md={12} sm={12} sx={{ m: 5 }}>
+                  <Typography className="text-[#61482A]" variant="h4">
+                    Add New Purchased Raw Material
+                  </Typography>
+                </Grid>
 
-          {isSuccess != "" ? (
-            <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
-          ) : null}
-          <Grid item lg={12} sm={12} md={12} sx={{ p: 5, mt: -3 }}>
-            <Grid container spacing={4}>
-              {inputFields.map((input, index) => {
-                return (
-                  <Grid
-                    container
-                    spacing={2}
-                    // columns={{xs: 4, md: 3}}
-                    sx={{
-                      boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                      ml: 3,
-                      mt: 3,
-                      backgroundColor: "white",
-                      pb: 2,
-                      pr: 4,
-                      borderRadius: "10px",
-                    }}
-                  >
-                    {/* <Grid item sm={6} md={2} lg={3}>
+                {isSuccess != "" ? (
+                    <CustomAlert setIsSuccess={setIsSuccess} type={isSuccess} message={alertMsg} />
+                ) : null}
+                <Grid item lg={12} sm={12} md={12} sx={{ p: 5, mt: -3 }}>
+                  <Grid container spacing={4}>
+                    {inputFields.map((input, index) => {
+                      return (
+                          <Grid
+                              container
+                              spacing={2}
+                              // columns={{xs: 4, md: 3}}
+                              sx={{
+                                boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+                                ml: 3,
+                                mt: 3,
+                                backgroundColor: "white",
+                                pb: 2,
+                                pr: 4,
+                                borderRadius: "10px",
+                              }}
+                          >
+                            {/* <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         name="new_materialtype"
                         label="Material Type"
@@ -232,77 +248,77 @@ const Addpurchasedmaterial = () => {
                         <MenuItem value="ACCS">ACCS</MenuItem>
                       </TextField>
                     </Grid> */}
-                    <Grid item sm={6} md={2} lg={3}>
-                      <DatePicker
-                        sx={{ paddingbottom: "1rem" }}
-                        required
-                        placeholder="Pick date"
-                        label="Select Date"
-                        withAsterisk
-                        value={datepick}
-                        onChange={setDatePick}
-                      />
-                    </Grid>
-                    <Grid item sm={6} md={2} lg={3}></Grid>
-                    <Grid item sm={6} md={2} lg={3}></Grid>
-                    <Grid item sm={6} md={2} lg={3}></Grid>
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        required
-                        name="new_materialtype"
-                        label="Material Type"
-                        placeholder="RAW"
-                        value="RAW"
-                        defaultValue="RAW"
-                        onChange={(event) => handleFormChange(index, event)}
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        required
-                        name="new_name"
-                        label="Name"
-                        type="text"
-                        value={input.new_name}
-                        onChange={(event) => handleFormChange(index, event)}
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="new_quantity"
-                        label="Quantity"
-                        type="text"
-                        value={input.new_quantity}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="new_materialunit"
-                        label="Material Unit"
-                        type="text"
-                        value={input.new_materialunit}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="new_materialcode"
-                        label="MaterialCode"
-                        type="text"
-                        value={input.new_materialcode}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
-                    {/* <Grid item sm={6} md={2} lg={3}>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <DatePicker
+                                  sx={{ paddingbottom: "1rem" }}
+                                  required
+                                  placeholder="Pick date"
+                                  label="Select Date"
+                                  withAsterisk
+                                  value={datepick}
+                                  onChange={setDatePick}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}></Grid>
+                            <Grid item sm={6} md={2} lg={3}></Grid>
+                            <Grid item sm={6} md={2} lg={3}></Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  required
+                                  name="new_materialtype"
+                                  label="Material Type"
+                                  placeholder="RAW"
+                                  value="RAW"
+                                  defaultValue="RAW"
+                                  onChange={(event) => handleFormChange(index, event)}
+                                  fullWidth
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  required
+                                  name="new_name"
+                                  label="Name"
+                                  type="text"
+                                  value={input.new_name}
+                                  onChange={(event) => handleFormChange(index, event)}
+                                  fullWidth
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  fullWidth
+                                  required
+                                  name="new_quantity"
+                                  label="Quantity"
+                                  type="text"
+                                  value={input.new_quantity}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  fullWidth
+                                  required
+                                  name="new_materialunit"
+                                  label="Material Unit"
+                                  type="text"
+                                  value={input.new_materialunit}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  fullWidth
+                                  required
+                                  name="new_materialcode"
+                                  label="MaterialCode"
+                                  type="text"
+                                  value={input.new_materialcode}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            {/* <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         fullWidth
                         required
@@ -313,7 +329,7 @@ const Addpurchasedmaterial = () => {
                         onChange={(event) => handleFormChange(index, event)}
                       />
                     </Grid> */}
-                    {/* <Grid item sm={6} md={2} lg={3}>
+                            {/* <Grid item sm={6} md={2} lg={3}>
                       <TextField
                         required
                         name="new_description"
@@ -324,91 +340,95 @@ const Addpurchasedmaterial = () => {
                         fullWidth
                       />
                     </Grid> */}
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="new_value"
-                        label="Value"
-                        type="text"
-                        value={input.new_value}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="new_referncenum"
-                        label="Reference Number"
-                        type="text"
-                        value={input.new_referncenum}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  fullWidth
+                                  required
+                                  name="new_value"
+                                  label="Value"
+                                  type="text"
+                                  value={input.new_value}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  fullWidth
+                                  required
+                                  name="new_referncenum"
+                                  label="Reference Number"
+                                  type="text"
+                                  value={input.new_referncenum}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
 
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="payable_name"
-                        label="Payable Name"
-                        type="text"
-                        value={input.payable_name}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        required
-                        fullWidth
-                        name="payable_account"
-                        label="Payable Account"
-                        type="text"
-                        value={input.payable_account}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  fullWidth
+                                  required
+                                  name="payable_name"
+                                  label="Payable Name"
+                                  type="text"
+                                  value={input.payable_name}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  required
+                                  fullWidth
+                                  name="payable_account"
+                                  label="Payable Account"
+                                  type="text"
+                                  value={input.payable_account}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
 
-                    <Grid item sm={6} md={2} lg={3}>
-                      <TextField
-                        fullWidth
-                        required
-                        name="new_remark"
-                        label="Remark"
-                        type="text"
-                        value={input.new_remark}
-                        onChange={(event) => handleFormChange(index, event)}
-                      />
-                    </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                  fullWidth
+                                  required
+                                  name="new_remark"
+                                  label="Remark"
+                                  type="text"
+                                  value={input.new_remark}
+                                  onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
 
-                    <Grid item xs={1} lg={2} sm={1} md={1} sx={{ mt: "2%", ml: "2%" }}>
-                      <IconButton onClick={() => removeFields(index)}>
-                        <p className="text-lg "> Remove Item </p> <RemoveIcon />
+                            <Grid item xs={1} lg={2} sm={1} md={1} sx={{ mt: "2%", ml: "2%" }}>
+                              <IconButton onClick={() => removeFields(index)}>
+                                <p className="text-lg "> Remove Item </p> <RemoveIcon />
+                              </IconButton>
+                            </Grid>
+                          </Grid>
+                      );
+                    })}
+                    <Grid item lg={12} md={12} sm={12}>
+                      <IconButton type="submit" onClick={addFields} size="large">
+                        <p className="text-lg ml-5 mr-2"> Add New Material</p> <AddIcon />
                       </IconButton>
                     </Grid>
-                  </Grid>
-                );
-              })}
-              <Grid item lg={12} md={12} sm={12}>
-                <IconButton type="submit" onClick={addFields} size="large">
-                  <p className="text-lg ml-5 mr-2"> Add New Material</p> <AddIcon />
-                </IconButton>
-              </Grid>
-              {/* <Grid item lg={12} md={12} sm={12}>
+                    {/* <Grid item lg={12} md={12} sm={12}>
                 <CButton onClick ={()=>console.log("Asdcasdc")}>asdc</CButton>
               </Grid> */}
-              <Grid item>
-                <CButton onClick={handleClickOpen}>Save</CButton>
+                    <Grid item>
+                      <CButton onClick={handleClickOpen}>Save</CButton>
+                    </Grid>
+                    <Grid item>
+                      <Button className="w-40 h-10 " variant="outlined" onClick={handleClose}>
+                        Clear All
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Button className="w-40 h-10 " variant="outlined" onClick={handleClose}>
-                  Clear All
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+          )
+        }
+
+
       </Box>
     </>
   );
