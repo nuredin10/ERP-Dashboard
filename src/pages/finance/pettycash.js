@@ -26,7 +26,6 @@ import xlsx from "xlsx";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
 import { useSnackbar } from "notistack";
 
-
 const AccountRecieveable = () => {
   const { register, handleSubmit, reset } = useForm();
   const [data, setData] = useState([]);
@@ -65,6 +64,12 @@ const AccountRecieveable = () => {
     { title: "Total", field: "totalCash" },
     { title: "Status", field: "status" },
   ];
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   useEffect(() => {
     FAxios.get("/showsalesOrderprofit")
       .then((res) => {

@@ -187,11 +187,11 @@ const production = [
     title: "Order List",
   },
 
-  // {
-  //   href: "/production/rawrequestList",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "Requestion List",
-  // },
+  {
+    href: "/production/finishedRequestion",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Requestion List",
+  },
 
   {
     href: "/production/requestrawmaterials",
@@ -234,12 +234,6 @@ const GMproduction = [
     title: "Add Production Order",
   },
 
-  // {
-  //   href: "/production/rawrequestList",
-  //   icon: <AddIcon fontSize="small" />,
-  //   title: "Requestion List",
-  // },
-
   {
     href: "/production/requestrawmaterials",
     icon: <AddIcon fontSize="small" />,
@@ -269,11 +263,12 @@ const sales = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Sales Order",
   },
-  // {
-  //   href: "/sales/salessummery",
-  //   icon: <PurchaseOrderIcon fontSize="small" />,
-  //   title: "Sales Summery",
-  // },
+
+  {
+    href: "/sales/finishedRequestion",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Finished Good Requestion",
+  },
 ];
 
 const StockListItems = [
