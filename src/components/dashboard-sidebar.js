@@ -239,6 +239,11 @@ const GMproduction = [
     icon: <AddIcon fontSize="small" />,
     title: "Raw material Requestion",
   },
+  {
+    href: "/production/rawmaterialValue",
+    icon: <AddIcon fontSize="small" />,
+    title: "Raw material value",
+  },
 ];
 
 const sales = [
