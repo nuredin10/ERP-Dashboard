@@ -62,22 +62,25 @@ const Recieving = () => {
         id: id,
         status: "Accept",
       })
-      .then(function (response) {
+      .then((response) => {
         enqueueSnackbar("Item Accepted", { variant: "success" });
-        waxios
-          .post("/sendNotification", {
-            To: "warehouse",
-            message: "New Material Accepted",
-          })
-          .then((respo) => {
-            enqueueSnackbar("Notification Sent", { variant: "success" });
-          });
-        Router.reload(window.location.pathname);
+        // waxios
+        //   .post("/sendNotification", {
+        //     To: "warehouse",
+        //     message: "New Material Accepted",
+        //   })
+        //   .then((respo) => {
+        //     enqueueSnackbar("Notification Sent", { variant: "success" });
+        //     window.location.reload();
+        //   });
+        window.location.reload();
+        // Router.reload(window.location.pathname);
+
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
-        enqueueSnackbar("Something went wrong", { variant: "error" });
+        enqueueSnackbar(error.response.data, { variant: "error" });
       });
   };
 
@@ -89,19 +92,20 @@ const Recieving = () => {
       })
       .then(function (response) {
         enqueueSnackbar("Item Declined", { variant: "error" });
-        waxios
-        .post("/sendNotification", {
-          To: "warehouse",
-          message: "New Material Declined",
-        })
-        .then((respo) => {
-          enqueueSnackbar("Notification Sent", { variant: "success" });
-        });
-        Router.reload(window.location.pathname);
+        // waxios
+        //   .post("/sendNotification", {
+        //     To: "warehouse",
+        //     message: "New Material Declined",
+        //   })
+        //   .then((respo) => {
+        //     enqueueSnackbar("Notification Sent", { variant: "success" });
+        //   });
+        // Router.reload(window.location.pathname);
+        window.location.reload();
         console.log(response);
       })
       .catch(function (error) {
-        enqueueSnackbar("Something went wrong", { variant: "error" });
+        enqueueSnackbar(error.data, { variant: "error" });
 
         console.log(error);
       });

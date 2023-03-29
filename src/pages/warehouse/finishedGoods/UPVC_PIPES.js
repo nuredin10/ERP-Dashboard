@@ -254,9 +254,9 @@ const Summary = () => {
         response.data.map((eachData) => {
           eachData.finished_date = convert(eachData.finished_date);
           eachData.finished_quantity =
-          eachData.finished_quantity !== ""
-            ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
-            : "";
+            eachData.finished_quantity !== ""
+              ? parseFloat(eachData.finished_quantity).toLocaleString("en-US")
+              : "";
         });
         setData(response.data);
         console.log(response.data);
@@ -309,36 +309,7 @@ const Summary = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add OD
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="od" label="Add OD" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xg={3} lg={3} sm={6} sx={{ mb: 3 }}>
-              <Typography sx={{ mb: 3 }} variant="h6">
-                Add PPR
-              </Typography>
-              <Grid container>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <TextField name="ppr" label="Add PPR" type="text" />
-                </Grid>
-                <Grid item lg={6} sm={6} xg={6}>
-                  <IconButton size="large" sx={{ mt: 0.5, ml: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
+
             <Grid item xg={12} lg={12} sm={12}>
               <Card maxWidth="lg">
                 <Table

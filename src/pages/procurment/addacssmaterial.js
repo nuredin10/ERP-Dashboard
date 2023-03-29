@@ -115,34 +115,39 @@ const Addpurchasedmaterial = () => {
 
   const submitHandler = () => {
     console.log(inputFields);
-    inputFields.map((eachData) => {
-      eachData.new_date = datepick.toString();
-    });
-    console.log("Catagory", Spec);
-    handleClose();
-    wareaxios
-      .post("/addnewPurchased", inputFields)
-      .then((res) => {
-        console.log(res);
-        setIsSuccess("success");
-        enqueueSnackbar("Saved Successfully", { variant: "success" });
-        wareaxios
-          .post("/sendNotification", {
-            To: "warehouse",
-            message: "NEW PURCHASED ITEM",
-          })
-          .then((respo) => {
-            enqueueSnackbar("Notification Sent", { variant: "success" });
-          });
-        clearAllHandler();
-        setAlertMsg("Saved Successfully");
-      })
-      .catch((res) => {
-        console.log(res);
-        setIsSuccess("error");
-        setAlertMsg("Something went wrong");
-        enqueueSnackbar("Something Wend Wrong", { variant: "error" });
+    if (datepick instanceof Date && !isNaN(datepick)) {
+      inputFields.map((eachData) => {
+        eachData.new_date = datepick.toString();
+        eachData.new_spec = eachData.new_spec == "" ? "Electrical" : eachData.new_spec;
       });
+      console.log("Catagory", inputFields);
+      handleClose();
+      wareaxios
+        .post("/addnewPurchased", inputFields)
+        .then((res) => {
+          console.log(res);
+          setIsSuccess("success");
+          enqueueSnackbar("Saved Successfully", { variant: "success" });
+          wareaxios
+            .post("/sendNotification", {
+              To: "warehouse",
+              message: "NEW PURCHASED ITEM",
+            })
+            .then((respo) => {
+              enqueueSnackbar("Notification Sent", { variant: "success" });
+            });
+          clearAllHandler();
+          setAlertMsg("Saved Successfully");
+        })
+        .catch((res) => {
+          console.log(res);
+          setIsSuccess("error");
+          setAlertMsg("Something went wrong");
+          enqueueSnackbar("Something Wend Wrong", { variant: "error" });
+        });
+    } else {
+      enqueueSnackbar("Please Pick a Date from the calander", { variant: "error" });
+    }
   };
 
   const clearAllHandler = () => {
