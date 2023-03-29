@@ -368,8 +368,8 @@ const ProducitonOngoing = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {row.rowMaterialNeeded.map((matNeeded) => (
-                          <TableRow key={matNeeded.mat_requestname}>
+                        {row.rowMaterialNeeded.map((matNeeded, index) => (
+                          <TableRow key={index}>
                             <TableCell component="th" scope="row">
                               {matNeeded.mat_requestname}
                             </TableCell>
@@ -416,23 +416,23 @@ const ProducitonOngoing = () => {
     );
   }
 
-  Row.propTypes = {
-    row: PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbs: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      history: PropTypes.arrayOf(
-        PropTypes.shape({
-          amount: PropTypes.number.isRequired,
-          customerId: PropTypes.string.isRequired,
-          date: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      protein: PropTypes.number.isRequired,
-    }).isRequired,
-  };
+  // Row.propTypes = {
+  //   row: PropTypes.shape({
+  //     calories: PropTypes.number.isRequired,
+  //     carbs: PropTypes.number.isRequired,
+  //     fat: PropTypes.number.isRequired,
+  //     history: PropTypes.arrayOf(
+  //       PropTypes.shape({
+  //         amount: PropTypes.number.isRequired,
+  //         customerId: PropTypes.string.isRequired,
+  //         date: PropTypes.string.isRequired,
+  //       })
+  //     ).isRequired,
+  //     name: PropTypes.string.isRequired,
+  //     price: PropTypes.number.isRequired,
+  //     protein: PropTypes.number.isRequired,
+  //   }).isRequired,
+  // };
 
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -492,8 +492,8 @@ const ProducitonOngoing = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <Row key={row.name} row={row} />
+              {rows.map((row, index) => (
+                <Row key={index} row={row} />
               ))}
             </TableBody>
           </Table>
