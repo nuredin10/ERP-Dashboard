@@ -33,7 +33,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Versavvy Media PLC, 2022
+        Versavvy Media PLC, 2023
       </Link>{" "}
       {/* {new Date().getFullYear()} */}
       {/* {'.'} */}
