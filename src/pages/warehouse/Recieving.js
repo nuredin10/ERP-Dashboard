@@ -40,7 +40,7 @@ const Recieving = () => {
     { title: "Quantity", field: "new_quantity" },
     { title: "Material Code", field: "new_materialcode" },
     { title: "Description", field: "new_description" },
-    { title: "COLOR", field: "new_color" },
+    { title: "COLOR", field: "color" },
     { title: "Person", field: "new_person" },
     { title: "Status", field: "new_status" },
   ];

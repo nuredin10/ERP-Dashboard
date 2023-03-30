@@ -27,6 +27,7 @@ const ProductionFinished = () => {
     { title: "Description", field: "finished_description" },
     { title: "UOM", field: "finished_materialunit" },
     { title: "Quantity", field: "finished_qty" },
+    { title: "Scrap in Kg", field: "waste_quantity" },
     { title: "Person Id", field: "personID" },
     { title: "Remark", field: "finished_remark" },
   ];
