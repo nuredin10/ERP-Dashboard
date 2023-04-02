@@ -99,6 +99,8 @@ const Addpurchasedmaterial = () => {
     enqueueSnackbar("Item Removed", { variant: "warning" });
   };
 
+  
+
   const submitHandler = () => {
     console.log("Inputfields", inputFields);
     console.log("BatchID", batchNumber);

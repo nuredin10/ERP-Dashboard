@@ -20,10 +20,11 @@ import FAxios from "../../components/financeAxios";
 import InfoIcon from "@mui/icons-material/Info";
 import { useSnackbar } from "notistack";
 import CButton from "../../components/Button";
+import Router from "next/router";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
-  const [reason, setReason] = useState({});
+  const [reason, setReason] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
   const [open, setOpen] = React.useState(false);
@@ -37,6 +38,7 @@ const AccountRecieveable = () => {
     { title: "Amount", field: "cus_total" },
     { title: "Payment status", field: "payment" },
     { title: "Payment Advance", field: "cus_advance" },
+    { title: "Payment Remaining", field: "cust_remaining" },
     { title: "Status", field: "status" },
   ];
 
@@ -73,10 +75,17 @@ const AccountRecieveable = () => {
         enqueueSnackbar("Something went wrong", { variant: "error" });
       });
   };
-  const details = (data) => {
-    setReason(data);
-    console.log(reason);
-    handleOpen();
+
+  const details = async (data) => {
+    try {
+      Router.push({
+        pathname: "/sales/productList",
+        query: { reason: data.id },
+      });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
   };
 
   const style = {
@@ -90,6 +99,29 @@ const AccountRecieveable = () => {
     borderRadius: 1,
     p: 4,
     pb: 10,
+    height: "500px",
+    overflow: "auto",
+  };
+
+  const styles = {
+    box: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 600,
+      maxHeight: "90%",
+      overflowY: "auto",
+      backgroundColor: "#FFF",
+      border: "2px solid #111",
+      boxShadow: 24,
+      p: 4,
+    },
+    gridItem: {
+      border: "1px solid #CCC",
+      padding: "8px",
+      width: "50%",
+    },
   };
 
   const buttonstyle = {
@@ -135,70 +167,101 @@ const AccountRecieveable = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style}>
-              <Grid container spacing={3}>
-                <Grid item lg={12}>
-                  <Typography variant="h5" component="h2">
-                    Product Order
-                  </Typography>
-                </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="h6" component="h2">
-                    Material Name
-                  </Typography>
-                </Grid>
-                <Grid item lg={7}>
-                  <Typography>{reason.final_product}</Typography>
-                </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="h6" component="h2">
-                    Material Color
-                  </Typography>
-                </Grid>
-                <Grid item lg={7}>
-                  <Typography>{reason.final_color}</Typography>
-                </Grid>
-
-                <Grid item lg={4}>
-                  <Typography variant="h6" component="h2">
-                    Material Quantity
-                  </Typography>
-                </Grid>
-                <Grid item lg={7}>
-                  <Typography>{reason.final_quant}</Typography>
-                </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="h6" component="h2">
-                    Material Specification
-                  </Typography>
-                </Grid>
-                <Grid item lg={7}>
-                  <Typography>{reason.final_diameter}</Typography>
-                </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="h6" component="h2">
-                    Material Code
-                  </Typography>
-                </Grid>
-                <Grid item lg={7}>
-                  <Typography>{reason.final_materialCode}</Typography>
-                </Grid>
-                <Grid item lg={4}>
-                  <Typography variant="h6" component="h2">
-                    Material Color
-                  </Typography>
-                </Grid>
-                <Grid item lg={7}>
-                  <Typography>{reason.final_color}</Typography>
-                </Grid>
+            <Box sx={styles.box}>
+              {/* id : 51 item_color : "Proident autem nihi" item_description : "Molestiae molestias "
+              item_diameter : "Tempora dolorum aut " item_name : "Consectetur est quos"
+              item_quantity : "223" item_spec : "" material_id : "53" measuring_unit : 0 total_price
+              : "72" unit_price : "596" */}
+              <Grid container spacing={0}>
+                {reason.map((items) => (
+                  <Grid item key={items.id} xs={6} sx={styles.gridItem}>
+                    <Grid item lg={12}>
+                      <Typography variant="h5" component="h2">
+                        Product Order
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        Material Name
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.item_name}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        Material Color
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.item_color}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        MOU
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.measuring_unit}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        Material Quantity
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.item_quantity}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        Material Specification
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.item_description}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        Material Code
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.item_description}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        OD
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.item_diameter}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        Unit Price
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.unit_price}</Typography>
+                    </Grid>
+                    <Grid item lg={4}>
+                      <Typography variant="h6" component="h2">
+                        Total Price
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={8}>
+                      <Typography>{items.total_price}</Typography>
+                    </Grid>
+                  </Grid>
+                ))}
               </Grid>
-              {reason.status !== "Accepted" ? (
-                <Button sx={buttonstyle} variant="outlined" onClick={() => GernerateDO(reason.id)}>
-                  Accept Order
-                </Button>
-              ) : (
-                <></>
-              )}
+              {/* {item.status !== "Accepted" ? ( */}
+              <Button sx={buttonstyle} variant="outlined" onClick={() => GernerateDO("item.id")}>
+                Accept Order
+              </Button>
+              {/* ) : (
+                  <></>
+                )} */}
             </Box>
           </Modal>
         </Container>

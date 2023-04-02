@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import {
   FormControl,
   FormLabel,
   FormControlLabel,
+  IconButton,
   TextField,
   MenuItem,
   Select,
@@ -74,6 +77,45 @@ const salesProductionOrder = () => {
 
   const router = useRouter();
   const { id } = router.query;
+  const addFields = () => {
+    let newfield = {
+      fin_product: "",
+      final_color: "",
+      final_materialCode: "",
+      final_diameter: "",
+      final_quant: "",
+      final_measureunit: "",
+      unit_price: "",
+      total_price: "",
+    };
+    setIsSuccess("info");
+    setInputFields([...inputFields, newfield]);
+    setIsSuccess("info");
+    setAlertMsg("item added");
+    enqueueSnackbar("Item Added", { variant: "success" });
+  };
+
+  const removeFields = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1);
+    setInputFields(data);
+    setIsSuccess("info");
+    setAlertMsg("item removed");
+    enqueueSnackbar("Item Removed", { variant: "warning" });
+  };
+
+  const [inputFields, setInputFields] = useState([
+    {
+      fin_product: "",
+      final_color: "",
+      final_materialCode: "",
+      final_diameter: "",
+      final_quant: "",
+      final_measureunit: "",
+      unit_price: "",
+      total_price: "",
+    },
+  ]);
 
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
@@ -81,6 +123,35 @@ const salesProductionOrder = () => {
 
   const handleMethodChange = (newValue) => {
     setMethodExe(newValue.target.value);
+  };
+
+  const handleFormChange = (index, event) => {
+    let data = [...inputFields];
+    data[index][event.target.name] = event.target.value;
+    console.log(data[index][event.target.name]);
+    setInputFields(data);
+  };
+
+  const handleFormChangePrice = (index, event) => {
+    let data = [...inputFields];
+    data[index]["unit_price"] = event.target.value;
+    console.log(data[index][event.target.name]);
+    var unitPrice = parseFloat(event.target.value) || 0;
+    var quantity = parseFloat(data[index]["final_quant"]) || 0;
+    data[index]["total_price"] = unitPrice * quantity;
+
+    setInputFields(data);
+  };
+
+  const handleFormChangeQuantity = (index, event) => {
+    let data = [...inputFields];
+    data[index]["final_quant"] = event.target.value;
+    var unitPrice = parseFloat(data[index]["final_quant"]) || 0;
+    var quantity = parseFloat(event.target.value) || 0;
+    console.log(data[index][event.target.name]);
+    data[index]["total_price"] = unitPrice * quantity;
+
+    setInputFields(data);
   };
 
   function convert(str) {
@@ -94,13 +165,13 @@ const salesProductionOrder = () => {
   const newRequest = (data) => {
     const newData = { ...data, payment, sales_date: datepick.toString() };
     console.log(data);
-    console.log("payment", newData);
+    console.log("payment", inputFields);
     saxios
-      .post("/creatSalesOrder", newData)
+      .post("/creatBulkSalesOrder", { form: newData, cart: inputFields })
       .then(function (response) {
         console.log(response);
-        enqueueSnackbar("Sales Order Created", { variant: "success" });
-        Router.push("/sales/salesorderlist");
+        // enqueueSnackbar("Sales Order Created", { variant: "success" });
+        // Router.push("/sales/salesorderlist");
       })
       .catch(function (error) {
         enqueueSnackbar("Sales Order Create failed", { variant: "error" });
@@ -111,7 +182,7 @@ const salesProductionOrder = () => {
   return (
     <>
       <Head>
-        <title>Add Production Order</title>
+        <title>Add Sales Order</title>
       </Head>
       <Box
         component="main"
@@ -141,7 +212,7 @@ const salesProductionOrder = () => {
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h5">Add customer detail</Typography>
                   </Grid>
-                  <Grid item sm={6} md={2} lg={3}>
+                  <Grid item xs={12} sm={12}>
                     <DatePicker
                       sx={{ paddingbottom: "1rem" }}
                       required
@@ -152,6 +223,7 @@ const salesProductionOrder = () => {
                       onChange={setDatePick}
                     />
                   </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -162,7 +234,6 @@ const salesProductionOrder = () => {
                       {...register("salesID")}
                     />
                   </Grid>
-
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -196,6 +267,135 @@ const salesProductionOrder = () => {
                     />
                   </Grid>
 
+                  {/* =================product desciption====================  */}
+                  <Grid item xs={12} sm={12}>
+                    <Typography variant="h5">Add product detail</Typography>
+                  </Grid>
+                  <Grid item lg={12} sm={12} md={12} sx={{ p: 5, mt: -3 }}>
+                    <Grid container spacing={4}>
+                      {inputFields.map((input, index) => {
+                        return (
+                          <Grid
+                            container
+                            spacing={2}
+                            // columns={{xs: 4, md: 3}}
+                            sx={{
+                              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+                              ml: 3,
+                              mt: 3,
+                              backgroundColor: "white",
+                              pb: 2,
+                              pr: 4,
+                              borderRadius: "10px",
+                            }}
+                          >
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                required
+                                name="fin_product"
+                                label="Finished Good"
+                                type="text"
+                                value={input.fin_product}
+                                onChange={(event) => handleFormChange(index, event)}
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                fullWidth
+                                required
+                                name="final_color"
+                                label="Product Color"
+                                type="text"
+                                value={input.final_color}
+                                onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                fullWidth
+                                required
+                                name="final_materialCode"
+                                label="Materials Code"
+                                type="text"
+                                value={input.final_materialCode}
+                                onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                fullWidth
+                                required
+                                name="final_diameter"
+                                label="Material Diameter(OD)"
+                                type="text"
+                                value={input.final_diameter}
+                                onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                fullWidth
+                                required
+                                name="final_quant"
+                                label="Quantity"
+                                type="text"
+                                value={input.final_quant}
+                                onChange={(event) => handleFormChangeQuantity(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                fullWidth
+                                required
+                                name="final_measureunit"
+                                label="UOM"
+                                type="text"
+                                value={input.final_measureunit}
+                                onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                fullWidth
+                                required
+                                name="unit_price"
+                                label="Unit Price"
+                                type="text"
+                                value={input.unit_price}
+                                onChange={(event) => handleFormChangePrice(index, event)}
+                              />
+                            </Grid>
+                            <Grid item sm={6} md={2} lg={3}>
+                              <TextField
+                                fullWidth
+                                required
+                                name="total_price"
+                                label="Total Price"
+                                type="text"
+                                value={input.total_price}
+                                onChange={(event) => handleFormChange(index, event)}
+                              />
+                            </Grid>
+
+                            <Grid item xs={1} lg={2} sm={1} md={1} sx={{ mt: "2%", ml: "2%" }}>
+                              <IconButton onClick={() => removeFields(index)}>
+                                <RemoveIcon />
+                              </IconButton>
+                            </Grid>
+                          </Grid>
+                        );
+                      })}
+                      <Grid item lg={12} md={12} sm={12}>
+                        <IconButton onClick={addFields} size="large">
+                          <AddIcon />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Typography variant="h5">Add Payment Detail</Typography>
+                  </Grid>
                   <Grid item lg={12} sm={6}>
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">Payment Method</InputLabel>
@@ -212,7 +412,26 @@ const salesProductionOrder = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="bank_name"
+                      label="Bank Name"
+                      type="text"
+                      fullWidth
+                      {...register("bank_name")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="account_num"
+                      label="Account Number"
+                      type="text"
+                      fullWidth
+                      {...register("account_num")}
+                    />
+                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
@@ -223,8 +442,28 @@ const salesProductionOrder = () => {
                       {...register("cus_total")}
                     />
                   </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="cus_advance"
+                      label="Advance"
+                      type="text"
+                      fullWidth
+                      {...register("cus_advance")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="Remaining"
+                      label="Remaining"
+                      type="text"
+                      fullWidth
+                      {...register("Remaining")}
+                    />
+                  </Grid>
 
-                  {payment == "Advanced" ? (
+                  {/* {payment == "Advanced" || payment == "Cash" ? (
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
@@ -235,76 +474,7 @@ const salesProductionOrder = () => {
                         {...register("cus_advance")}
                       />
                     </Grid>
-                  ) : null}
-                  {/* =================product desciption====================  */}
-
-                  <>
-                    <Grid item xs={12} sm={12}>
-                      <Typography variant="h5">Add product detail</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        name="fin_product"
-                        label="Final Product"
-                        type="text"
-                        fullWidth
-                        {...register("final_product")}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        name="final_color"
-                        label="Product Color"
-                        type="text"
-                        fullWidth
-                        {...register("final_color")}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        name="fin_spec"
-                        label="Materials Code"
-                        type="text"
-                        fullWidth
-                        {...register("final_materialCode")}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        name="final_desc"
-                        label="Diameter"
-                        type="text"
-                        fullWidth
-                        {...register("final_diameter")}
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        name="final_quant"
-                        label="Quantity"
-                        type="text"
-                        fullWidth
-                        {...register("final_quant")}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        name="final_measureunit"
-                        label="Unit of measurement"
-                        type="text"
-                        fullWidth
-                        {...register("final_measureunit")}
-                      />
-                    </Grid>
-                  </>
-
+                  ) : null} */}
                   <Grid item>
                     <CButton type="submit" sx={{ marginRight: "2rem" }} variant="contained">
                       Make Order
