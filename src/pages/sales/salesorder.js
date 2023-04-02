@@ -120,6 +120,8 @@ const salesProductionOrder = () => {
     },
   ]);
 
+
+
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
@@ -205,6 +207,8 @@ const salesProductionOrder = () => {
         console.log(error);
       });
   };
+
+
 
   return (
     <>
