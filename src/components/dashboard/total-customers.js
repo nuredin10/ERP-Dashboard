@@ -1,7 +1,7 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import PeopleIcon from "@mui/icons-material/PeopleOutlined";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ export const TotalCustomers = (props) => {
   const [total, setTotal] = useState("");
   useEffect(() => {
     axios
-      .get("https://report.proplast.et/getuncollectedMoney")
+      .get("http://localhost:12000/getuncollectedMoney")
       .then((res) => {
         const formatedCash = nFormatter(res.data.Total);
         setTotal(formatedCash);
@@ -49,15 +49,15 @@ export const TotalCustomers = (props) => {
             </Typography>
           </Grid>
           <Grid item>
-          <Avatar
-            sx={{
-              backgroundColor: 'primary.main',
-              height: 56,
-              width: 56
-            }}
-          >
-            <AttachMoneyIcon />
-          </Avatar>
+            <Avatar
+              sx={{
+                backgroundColor: "primary.main",
+                height: 56,
+                width: 56,
+              }}
+            >
+              <AttachMoneyIcon />
+            </Avatar>
           </Grid>
         </Grid>
         <Box
@@ -66,9 +66,7 @@ export const TotalCustomers = (props) => {
             display: "flex",
             pt: 2,
           }}
-        >
-         
-        </Box>
+        ></Box>
       </CardContent>
     </Card>
   );

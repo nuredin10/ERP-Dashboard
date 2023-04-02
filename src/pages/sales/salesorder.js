@@ -62,6 +62,9 @@ const salesProductionOrder = () => {
   const [indata, setIndata] = React.useState();
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
+  const [totalAmount, settotalAmount] = useState(0);
+  const [advance, setAdvance] = useState();
+  const [remaining, setRemaining] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOpen = () => setOpen(true);
@@ -131,6 +134,11 @@ const salesProductionOrder = () => {
     console.log(data[index][event.target.name]);
     setInputFields(data);
   };
+  const handleAdvance = (value) => {
+    console.log(value.target.value);
+    setAdvance(value.target.value);
+    setRemaining(parseFloat(totalAmount) - parseFloat(value.target.value));
+  };
 
   const handleFormChangePrice = (index, event) => {
     let data = [...inputFields];
@@ -139,17 +147,29 @@ const salesProductionOrder = () => {
     var unitPrice = parseFloat(event.target.value) || 0;
     var quantity = parseFloat(data[index]["final_quant"]) || 0;
     data[index]["total_price"] = unitPrice * quantity;
-
+    register.cus_total = data[index]["total_price"];
+    var totals = 0.0;
+    for (let i = 0; i <= index; i++) {
+      totals += parseFloat(data[i]["total_price"]);
+    }
+    settotalAmount(totals);
+    advance == null ? setRemaining(totals) : setRemaining(totals - advance);
     setInputFields(data);
   };
 
   const handleFormChangeQuantity = (index, event) => {
     let data = [...inputFields];
     data[index]["final_quant"] = event.target.value;
-    var unitPrice = parseFloat(data[index]["final_quant"]) || 0;
+    var unitPrice = parseFloat(data[index]["unit_price"]) || 0;
     var quantity = parseFloat(event.target.value) || 0;
-    console.log(data[index][event.target.name]);
+
     data[index]["total_price"] = unitPrice * quantity;
+    var totals = 0.0;
+    for (let i = 0; i <= index; i++) {
+      totals += parseFloat(data[i]["total_price"]);
+    }
+    settotalAmount(totals);
+    advance == 0 ? setRemaining(totals) : setRemaining(totals - advance);
 
     setInputFields(data);
   };
@@ -163,15 +183,22 @@ const salesProductionOrder = () => {
 
   var newForm;
   const newRequest = (data) => {
-    const newData = { ...data, payment, sales_date: datepick.toString() };
-    console.log(data);
+    const newData = {
+      ...data,
+      payment,
+      sales_date: datepick.toString(),
+      cus_total: totalAmount,
+      cus_advance: advance,
+      Remaining: remaining,
+    };
+    console.log(newData);
     console.log("payment", inputFields);
     saxios
       .post("/creatBulkSalesOrder", { form: newData, cart: inputFields })
       .then(function (response) {
         console.log(response);
-        // enqueueSnackbar("Sales Order Created", { variant: "success" });
-        // Router.push("/sales/salesorderlist");
+        enqueueSnackbar("Sales Order Created", { variant: "success" });
+        Router.push("/sales/salesorderlist");
       })
       .catch(function (error) {
         enqueueSnackbar("Sales Order Create failed", { variant: "error" });
@@ -368,13 +395,14 @@ const salesProductionOrder = () => {
                             </Grid>
                             <Grid item sm={6} md={2} lg={3}>
                               <TextField
+                                readOnly
                                 fullWidth
                                 required
                                 name="total_price"
                                 label="Total Price"
                                 type="text"
                                 value={input.total_price}
-                                onChange={(event) => handleFormChange(index, event)}
+                                // onChange={(event) => handleFormChange(index, event)}
                               />
                             </Grid>
 
@@ -439,7 +467,8 @@ const salesProductionOrder = () => {
                       label="Payment Total"
                       type="text"
                       fullWidth
-                      {...register("cus_total")}
+                      value={totalAmount}
+                      // {...register("cus_total")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -449,7 +478,9 @@ const salesProductionOrder = () => {
                       label="Advance"
                       type="text"
                       fullWidth
-                      {...register("cus_advance")}
+                      value={advance}
+                      onChange={handleAdvance}
+                      // {...register("cus_advance")}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -459,7 +490,8 @@ const salesProductionOrder = () => {
                       label="Remaining"
                       type="text"
                       fullWidth
-                      {...register("Remaining")}
+                      value={remaining}
+                      // {...register("Remaining")}
                     />
                   </Grid>
 
