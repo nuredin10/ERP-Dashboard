@@ -64,7 +64,16 @@ export default function SignIn() {
         Cookies.set("token", res.data.jwt);
         Cookies.set("loggedIn", true);
         enqueueSnackbar("Login Success", { variant: "success" });
-        Router.push("/dashboard");
+        if(res.data.role === 'Super Admin'){
+          Router.push("/dashboard");
+        } else if(res.data.role === 'Ware House'){
+          Router.push("/warehouse/stockList/RawMaterial");
+        } else if(res.data.role === 'Sales') {
+            Router.push("/dashboard/uncollected");
+        } else if(res.data.role === 'Production') {
+            Router.push('/production/productionOngoing')
+        }
+
       })
       .catch((res) => {
         console.log(res);
