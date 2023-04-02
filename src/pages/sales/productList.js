@@ -182,11 +182,11 @@ const cartlist = () => {
           </Grid>
         ))}
       </Grid>
-      <Box sx={{ mt: 3 }}>
-        <CButton color="primary" sx={{ mr: 4 }} onClick={handleAcceptOrder}>
+      <Box sx={{ display:'flex', gap:5 }}>
+        <CButton color="primary" onClick={handleAcceptOrder}>
           Accept Order
         </CButton>
-        <CButton color="error" sx={{ ml: 4 }} onClick={handleDeclineOrder}>
+        <CButton color="error" onClick={handleDeclineOrder}>
           Decline Order
         </CButton>
       </Box>
