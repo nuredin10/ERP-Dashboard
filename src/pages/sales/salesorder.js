@@ -69,6 +69,7 @@ const salesProductionOrder = () => {
 
   const { register, handleSubmit, reset } = useForm();
   const [payment, setPayment] = useState("");
+  const [paymentTotal, setPaymentTotal] = useState("");
   const [MethodExe, setMethodExe] = useState("");
   const [datepick, setDatePick] = useState();
   const [orderInfo, setOrderInfo] = useState([]);
@@ -117,6 +118,8 @@ const salesProductionOrder = () => {
     },
   ]);
 
+
+
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
@@ -139,7 +142,7 @@ const salesProductionOrder = () => {
     var unitPrice = parseFloat(event.target.value) || 0;
     var quantity = parseFloat(data[index]["final_quant"]) || 0;
     data[index]["total_price"] = unitPrice * quantity;
-
+    // setPaymentTotal(()=>paymentTotal+data[index]["total_price"])
     setInputFields(data);
   };
 
@@ -150,7 +153,7 @@ const salesProductionOrder = () => {
     var quantity = parseFloat(event.target.value) || 0;
     console.log(data[index][event.target.name]);
     data[index]["total_price"] = unitPrice * quantity;
-
+    setPaymentTotal(()=>paymentTotal+data[index]["total_price"])
     setInputFields(data);
   };
 
@@ -178,6 +181,8 @@ const salesProductionOrder = () => {
         console.log(error);
       });
   };
+
+
 
   return (
     <>
@@ -437,6 +442,7 @@ const salesProductionOrder = () => {
                       required
                       name="cus_total"
                       label="Payment Total"
+                      value={paymentTotal}
                       type="text"
                       fullWidth
                       {...register("cus_total")}
