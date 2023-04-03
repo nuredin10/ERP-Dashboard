@@ -29,11 +29,19 @@ const GmOrderList = () => {
   const [type, setType] = useState("RAW");
   const router = useRouter();
 
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [day, mnth, date.getFullYear()].join("-");
+  }
   const handleChange = (event) => {
     setType(event.target.value);
     PAxios.post("/showAssetByType", { materialType: type })
       .then((res) => {
-        console.log(res.data);
+        res.data.map((eachData) => {
+          eachData.order_date = convert(eachData.order_date);
+        });
         setData(res.data);
       })
       .catch((err) => {
