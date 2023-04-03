@@ -49,7 +49,7 @@ const AccountRecieveable = () => {
     return [day, mnth, date.getFullYear()].join("-");
   }
   useEffect(() => {
-    FAxios.get("/showSalesOrder")
+    FAxios.get("/showSalesOrderpayment")
       .then((resp) => {
         console.log(resp);
         resp.data.map((eachData) => {
