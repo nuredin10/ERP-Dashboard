@@ -51,6 +51,7 @@ const AccountRecieveable = () => {
   useEffect(async () => {
     if (id) {
       try {
+        console.log("here", id)
         const response = await FAxios.post("/showBankStatment", {
           ID: id,
         });
