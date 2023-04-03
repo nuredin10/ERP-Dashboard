@@ -120,8 +120,6 @@ const salesProductionOrder = () => {
     },
   ]);
 
-
-
   const handlePaymentChange = (newValue) => {
     setPayment(newValue.target.value);
   };
@@ -200,15 +198,21 @@ const salesProductionOrder = () => {
       .then(function (response) {
         console.log(response);
         enqueueSnackbar("Sales Order Created", { variant: "success" });
-        Router.push("/sales/salesorderlist");
+        saxios
+          .post("/sendNotification", {
+            To: "sales",
+            message: "New Sales Order Arrived",
+          })
+          .then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+          });
+        Router.push("/sales/salesPayment");
       })
       .catch(function (error) {
         enqueueSnackbar("Sales Order Create failed", { variant: "error" });
         console.log(error);
       });
   };
-
-
 
   return (
     <>

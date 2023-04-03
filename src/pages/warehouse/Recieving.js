@@ -64,15 +64,15 @@ const Recieving = () => {
       })
       .then((response) => {
         enqueueSnackbar("Item Accepted", { variant: "success" });
-        // waxios
-        //   .post("/sendNotification", {
-        //     To: "warehouse",
-        //     message: "New Material Accepted",
-        //   })
-        //   .then((respo) => {
-        //     enqueueSnackbar("Notification Sent", { variant: "success" });
-        //     window.location.reload();
-        //   });
+        waxios
+          .post("/sendNotification", {
+            To: "warehouse",
+            message: "New Material Accepted To Store",
+          })
+          .then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+            window.location.reload();
+          });
         window.location.reload();
         // Router.reload(window.location.pathname);
 
@@ -92,14 +92,14 @@ const Recieving = () => {
       })
       .then(function (response) {
         enqueueSnackbar("Item Declined", { variant: "error" });
-        // waxios
-        //   .post("/sendNotification", {
-        //     To: "warehouse",
-        //     message: "New Material Declined",
-        //   })
-        //   .then((respo) => {
-        //     enqueueSnackbar("Notification Sent", { variant: "success" });
-        //   });
+        waxios
+          .post("/sendNotification", {
+            To: "warehouse",
+            message: "New Material Declined",
+          })
+          .then((respo) => {
+            enqueueSnackbar("Notification Sent", { variant: "success" });
+          });
         // Router.reload(window.location.pathname);
         window.location.reload();
         console.log(response);

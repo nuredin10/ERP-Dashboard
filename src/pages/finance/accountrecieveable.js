@@ -39,22 +39,30 @@ const AccountRecieveable = () => {
     return [day, mnth, date.getFullYear()].join("-");
   }
   const columns = [
-    { title: "Date", field: "sales_date" },
+    { title: "Date", field: "order_date" },
     { title: "Name", field: "customer_name" },
-    { title: "Tin Number", field: "customer_tin" },
-    { title: "Amount", field: "totalCash" },
-    { title: "Advance Payment", field: "advances" },
+    { title: "Sales Number", field: "salesID" },
+    { title: "Amount", field: "cus_total" },
+    { title: "Payment status", field: "payment" },
+    { title: "Payment Advance", field: "cus_advance" },
+    { title: "Payment Remaining", field: "cust_remaining" },
     { title: "Status", field: "status" },
   ];
   useEffect(() => {
-    FAxios.get("/shoesalesOrderProd")
+    FAxios.get("/showSalesOrder")
       .then((res) => {
         res.data.map((eachData) => {
-          eachData.sales_date = convert(eachData.sales_date);
-          eachData.totalCash =
-            eachData.totalCash !== "" ? parseFloat(eachData.totalCash).toLocaleString("en-US") : "";
-          eachData.advances =
-            eachData.advances !== "" ? parseFloat(eachData.advances).toLocaleString("en-US") : "";
+          eachData.order_date = convert(eachData.order_date);
+          eachData.cus_total =
+            eachData.cus_total !== "" ? parseFloat(eachData.cus_total).toLocaleString("en-US") : "";
+          eachData.cus_advance =
+            eachData.cus_advance !== ""
+              ? parseFloat(eachData.cus_advance).toLocaleString("en-US")
+              : "";
+          eachData.cust_remaining =
+            eachData.cust_remaining !== ""
+              ? parseFloat(eachData.cust_remaining).toLocaleString("en-US")
+              : "";
         });
         setData(res.data);
         console.log("show data", res.data);

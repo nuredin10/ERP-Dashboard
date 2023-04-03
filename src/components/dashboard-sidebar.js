@@ -153,6 +153,11 @@ const wareHouseItems = [
     title: "Accessory Requisition",
   },
   {
+    href: "/production/submitProduction",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Production Report",
+  },
+  {
     href: "/warehouse/PurchaseOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Purchase Requisition",
@@ -170,11 +175,11 @@ const production = [
     icon: <AutorenewIcon fontSize="small" />,
     title: "Production Approved",
   },
-  {
-    href: "/production/submitProduction",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Production Report",
-  },
+  // {
+  //   href: "/production/submitProduction",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Production Report",
+  // },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
@@ -211,11 +216,11 @@ const GMproduction = [
     icon: <AutorenewIcon fontSize="small" />,
     title: "Production Approved",
   },
-  {
-    href: "/production/submitProduction",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Production Report",
-  },
+  // {
+  //   href: "/production/submitProduction",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Production Report",
+  // },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
@@ -247,6 +252,41 @@ const GMproduction = [
 ];
 
 const sales = [
+  {
+    href: "/dashboard/uncollected",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Uncollected Sales",
+  },
+  {
+    href: "/sales/salesorderlist",
+    icon: <RequestedIcon fontSize="small" />,
+    title: "Sales Order List",
+  },
+
+  // {
+  //   href: "/sales/vender",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "Custu",
+  // },
+  {
+    href: "/sales/salesPayment",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Sales Payment",
+  },
+  {
+    href: "/sales/salesorder",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Sales Order",
+  },
+
+  {
+    href: "/sales/finishedRequestion",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Finished Good Requestion",
+  },
+];
+
+const salesRole = [
   {
     href: "/dashboard/uncollected",
     icon: <PurchaseOrderIcon fontSize="small" />,
@@ -318,7 +358,7 @@ const RequestedItems = [
   {
     href: "/warehouse/requesteditems/FinishedGoods",
     icon: <FinishedGoodsIcon fontSize="small" />,
-    title: "Finished Goods",
+    title: "Load Request",
   },
 ];
 
@@ -465,11 +505,11 @@ const Finance = [
     icon: <CreditScoreIcon fontSize="small" />,
     title: "Approved Production Cost",
   },
-  {
-    href: "/finance/accountRecivableSales",
-    icon: <CreditScoreIcon fontSize="small" />,
-    title: "Sales List",
-  },
+  // {
+  //   href: "/finance/accountRecivableSales",
+  //   icon: <CreditScoreIcon fontSize="small" />,
+  //   title: "Sales List",
+  // },
   {
     href: "/finance/pettycash",
     icon: <PaymentIcon fontSize="small" />,
@@ -1052,7 +1092,7 @@ export const DashboardSidebar = (props) => {
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">SALES</Typography>
 
-            {sales.map((item) => (
+            {salesRole.map((item) => (
               <>
                 <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
               </>

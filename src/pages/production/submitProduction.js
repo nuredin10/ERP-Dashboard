@@ -48,7 +48,7 @@ const ProductionOrderGM = () => {
         axios
           .post("/sendNotification", {
             To: "warehouse",
-            message: "New Production Report",
+            message: "New Production Report Added",
           })
           .then((respo) => {
             enqueueSnackbar("Notification Sent", { variant: "success" });

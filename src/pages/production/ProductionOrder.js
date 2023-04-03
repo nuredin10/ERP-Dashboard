@@ -86,18 +86,19 @@ const ViewBatch = () => {
           status: "START",
           userName: "PRODUTION",
         })
-        .then(function (response) {
+        .then(async (response) => {
           if (response.data.message === "Started !") {
             console.log("Production has been Started");
-            CustomAlert("success", "Production has been started");
-            productionWxios
-            .post("/sendNotification", {
-              To: "Production",
-              message: "Batch Accepted",
-            })
-            .then((respo) => {
-              enqueueSnackbar("Notification Sent", { variant: "success" });
-            });
+            enqueueSnackbar("Batch Approved", { variant: "success" });
+
+            await productionWxios
+              .post("/sendNotification", {
+                To: "Production",
+                message: "Batch Accepted",
+              })
+              .then((respo) => {
+                enqueueSnackbar("Notification Sent", { variant: "success" });
+              });
             Router.reload();
           } else if (response.data.message === "update status error") {
             console.log("update Server Error");
@@ -108,6 +109,7 @@ const ViewBatch = () => {
           }
         })
         .catch((error) => {
+          enqueueSnackbar("Error Approving", { variant: "success" });
           console.log(error);
         });
     };

@@ -107,6 +107,14 @@ const cartlist = () => {
       });
       const reason2 = response.data;
       enqueueSnackbar("Sales Order Created", { variant: "success" });
+      FAxios
+      .post("/sendNotification", {
+        To: "sales",
+        message: "Sales Order Accepted",
+      })
+      .then((respo) => {
+        enqueueSnackbar("Notification Sent", { variant: "success" });
+      });
       Router.push("/sales/salesorderlist");
       setOrderAccepted(false);
     } catch (err) {

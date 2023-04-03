@@ -69,7 +69,12 @@ const AccountRecieveable = () => {
     FAxios.post("/completePayment", newForm)
       .then((respo) => {
         enqueueSnackbar("Saved Successfully", { variant: "success" });
-
+        FAxios.post("/sendNotification", {
+          To: "finance",
+          message: "New Finshed Item Requestion Accepted",
+        }).then((respo) => {
+          enqueueSnackbar("Notification Sent", { variant: "success" });
+        });
         Router.reload();
       })
       .catch((err) => {
