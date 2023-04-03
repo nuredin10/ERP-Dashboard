@@ -262,12 +262,6 @@ const sales = [
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",
   },
-
-  // {
-  //   href: "/sales/vender",
-  //   icon: <ViewListIcon fontSize="small" />,
-  //   title: "Custu",
-  // },
   {
     href: "/sales/salesPayment",
     icon: <ViewListIcon fontSize="small" />,
@@ -283,6 +277,11 @@ const sales = [
     href: "/sales/finishedRequestion",
     icon: <ViewListIcon fontSize="small" />,
     title: "Finished Good Requestion",
+  },
+  {
+    href: "/sales/salesReport",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Sales Report",
   },
 ];
 
@@ -307,6 +306,11 @@ const salesRole = [
     href: "/sales/salesPayment",
     icon: <ViewListIcon fontSize="small" />,
     title: "Sales Payment",
+  },
+  {
+    href: "/sales/salesReport",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Sales Report",
   },
   {
     href: "/sales/salesorder",
