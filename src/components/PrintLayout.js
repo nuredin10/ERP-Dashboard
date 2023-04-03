@@ -27,13 +27,15 @@ const PrintLayout = ({children, isPrinting, documentNo}) => {
             <div className='flex justify-center gap-5 border-[1px] border-black'>
                 <div className='w-[15%] flex justify-center flex-col items-center py-10'>
                     {/*<h1>Revision No</h1>*/}
-                    <Image src="/fav.svg" height="100" width="200"></Image>
+                    <img src='/logo2.svg'/>
+                    {/*<Image src="/fav.svg" height="100" width="200"></Image>*/}
                 </div>
                 <div
                     className='w-[70%] py-5 border-x-[1px] border-black flex flex-col justify-center items-start px-5 gap-5'>
                     <h1>Company name</h1>
-                    <h1 className='text-2xl font-semibold'>RAHMENT MAHMUD PLASTIC PRODUCTION FACTORY PROPLAST
+                    <h1 className='text-center font-semibold w-full'>RAHMENT MAHMUD PLASTIC PRODUCTS FACTORY <br/>PROPLAST
                         PIPE $ FITTING MANUFACTURING </h1>
+                    {/*<h1 className='text-center font-semibold w-full border-1'>Proplast</h1>*/}
                     <h1>Documnet title</h1>
                 </div>
                 <div className='w-[15%] flex flex-col justify-center items-start px-5 gap-5'>
@@ -51,8 +53,9 @@ const PrintLayout = ({children, isPrinting, documentNo}) => {
                 </div>
             <div className='pt-5 flex justify-around gap-5 w-[90%] border-t-[6px] border-red-900 m-auto flex-wrap'>
 
-                <div className='w-[40%]'>
-                    <Image src="/fav.svg" height="100" width="200"></Image>
+                <div className='w-[20%] '>
+                    <img src='/logo2.svg' className='w-80'/>
+                    {/*<Image src="/logo.svg" height="100" width="100"></Image>*/}
                 </div>
 
                 <div className='w-[40%] flex flex-col items-center'>
