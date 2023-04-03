@@ -34,8 +34,8 @@ const AccountRecieveable = () => {
   const columns = [
     { title: "Date", field: "order_date" },
     { title: "Name", field: "customer_name" },
-    { title: "Sales Number", field: "salesID" },
-    { title: "Amount", field: "cus_total"},
+    { title: "Tin Number", field: "Tin_number" },
+    { title: "Amount", field: "cus_total" },
     { title: "Payment status", field: "payment" },
     { title: "Payment Advance", field: "cus_advance" },
     { title: "Payment Remaining", field: "cust_remaining" },
@@ -49,7 +49,7 @@ const AccountRecieveable = () => {
     return [day, mnth, date.getFullYear()].join("-");
   }
   useEffect(() => {
-    FAxios.get("/showSalesOrder")
+    FAxios.get("/showSalesOrderpayment")
       .then((resp) => {
         console.log(resp);
         resp.data.map((eachData) => {
@@ -79,8 +79,8 @@ const AccountRecieveable = () => {
   const details = async (data) => {
     try {
       Router.push({
-        pathname: "/sales/productList",
-        query: { reason: data.id },
+        pathname: "/sales/BankList",
+        query: { id: data.id },
       });
     } catch (error) {
       console.log(error);
@@ -148,7 +148,7 @@ const AccountRecieveable = () => {
           {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
           <Card maxWidth="lg">
             <Table
-              title="Sales Order"
+              title="Sales Order Approved"
               data={data}
               columns={columns}
               actions={[

@@ -153,6 +153,11 @@ const wareHouseItems = [
     title: "Accessory Requisition",
   },
   {
+    href: "/production/submitProduction",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Production Report",
+  },
+  {
     href: "/warehouse/PurchaseOrder",
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Purchase Requisition",
@@ -170,11 +175,11 @@ const production = [
     icon: <AutorenewIcon fontSize="small" />,
     title: "Production Approved",
   },
-  {
-    href: "/production/submitProduction",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Production Report",
-  },
+  // {
+  //   href: "/production/submitProduction",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Production Report",
+  // },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
@@ -211,11 +216,11 @@ const GMproduction = [
     icon: <AutorenewIcon fontSize="small" />,
     title: "Production Approved",
   },
-  {
-    href: "/production/submitProduction",
-    icon: <PurchaseOrderIcon fontSize="small" />,
-    title: "Production Report",
-  },
+  // {
+  //   href: "/production/submitProduction",
+  //   icon: <PurchaseOrderIcon fontSize="small" />,
+  //   title: "Production Report",
+  // },
   {
     href: "/production/productionFinished",
     icon: <CheckCircleOutlineIcon fontSize="small" />,
@@ -257,11 +262,55 @@ const sales = [
     icon: <RequestedIcon fontSize="small" />,
     title: "Sales Order List",
   },
+  {
+    href: "/sales/salesPayment",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Sales Payment",
+  },
+  {
+    href: "/sales/salesorder",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Sales Order",
+  },
 
   {
-    href: "/sales/vender",
+    href: "/sales/finishedRequestion",
     icon: <ViewListIcon fontSize="small" />,
-    title: "Customers list (CRM)",
+    title: "Finished Good Requestion",
+  },
+  {
+    href: "/sales/salesReport",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Sales Report",
+  },
+];
+
+const salesRole = [
+  {
+    href: "/dashboard/uncollected",
+    icon: <PurchaseOrderIcon fontSize="small" />,
+    title: "Uncollected Sales",
+  },
+  // {
+  //   href: "/sales/salesorderlist",
+  //   icon: <RequestedIcon fontSize="small" />,
+  //   title: "Sales Order List",
+  // },
+
+  // {
+  //   href: "/sales/vender",
+  //   icon: <ViewListIcon fontSize="small" />,
+  //   title: "Custu",
+  // },
+  {
+    href: "/sales/salesPayment",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Sales Payment",
+  },
+  {
+    href: "/sales/salesReport",
+    icon: <ViewListIcon fontSize="small" />,
+    title: "Sales Report",
   },
   {
     href: "/sales/salesorder",
@@ -313,7 +362,7 @@ const RequestedItems = [
   {
     href: "/warehouse/requesteditems/FinishedGoods",
     icon: <FinishedGoodsIcon fontSize="small" />,
-    title: "Finished Goods",
+    title: "Load Request",
   },
 ];
 
@@ -460,11 +509,11 @@ const Finance = [
     icon: <CreditScoreIcon fontSize="small" />,
     title: "Approved Production Cost",
   },
-  {
-    href: "/finance/accountRecivableSales",
-    icon: <CreditScoreIcon fontSize="small" />,
-    title: "Sales List",
-  },
+  // {
+  //   href: "/finance/accountRecivableSales",
+  //   icon: <CreditScoreIcon fontSize="small" />,
+  //   title: "Sales List",
+  // },
   {
     href: "/finance/pettycash",
     icon: <PaymentIcon fontSize="small" />,
@@ -842,198 +891,198 @@ export const DashboardSidebar = (props) => {
             </Box>
           </>
         ) : user.role === "Ware House" ? (
-           <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="menuTitle">WARE HOUSE</Typography>
-              <Box sx={{ marginTop: "2vh" }}>
-                <Accordion
-                  expanded={expanded === "panel1"}
-                  onChange={handleChange("panel1")}
-                  sx={{
-                    backgroundColor: "rgb(38, 28, 16)",
-                    "&:before": {
-                      display: "none",
-                    },
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                  >
-                    <DropdownNavItem
-                      icon={<WarehouseIcon />}
-                      title={wareHouseItemsAccordion[0].title}
-                      sx={{ marginBottom: -2, marginTop: -2 }}
-                    />
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {StockListItems.map((item) => (
-                      <NavItem
-                        key={item.title}
-                        icon={item.icon}
-                        href={item.href}
-                        title={item.title}
-                      />
-                    ))}
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion
-                  expanded={expanded === "panel2"}
-                  onChange={handleChange("panel2")}
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="menuTitle">WARE HOUSE</Typography>
+            <Box sx={{ marginTop: "2vh" }}>
+              <Accordion
+                expanded={expanded === "panel1"}
+                onChange={handleChange("panel1")}
+                sx={{
+                  backgroundColor: "rgb(38, 28, 16)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1bh-content"
                   id="panel1bh-header"
-                  sx={{
-                    backgroundColor: "rgb(38, 28, 16)",
-                    "&:before": {
-                      display: "none",
-                    },
-                  }}
                 >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                  >
-                    <DropdownNavItem
-                      icon={<FinishedGoodsIcon />}
-                      title={wareHouseItemsAccordion[1].title}
-                      sx={{ marginBottom: -2, marginTop: -2 }}
+                  <DropdownNavItem
+                    icon={<WarehouseIcon />}
+                    title={wareHouseItemsAccordion[0].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                </AccordionSummary>
+                <AccordionDetails>
+                  {StockListItems.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
                     />
-                    {/* <Typography>Accordion 1</Typography> */}
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {FinishedItems.map((item) => (
-                      <NavItem
-                        key={item.title}
-                        icon={item.icon}
-                        href={item.href}
-                        title={item.title}
-                      />
-                    ))}
-                  </AccordionDetails>
-                </Accordion>
-                {/* //////////////////////////////// here */}
-                <Accordion
-                  expanded={expanded === "panel3"}
-                  onChange={handleChange("panel3")}
-                  aria-controls="panel1bh-content"
-                  id="panel1bh-header"
-                  sx={{
-                    backgroundColor: "rgb(38, 28, 16)",
-                    "&:before": {
-                      display: "none",
-                    },
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                  >
-                    <DropdownNavItem
-                      icon={<AccessoriesIcon />}
-                      title={wareHouseItemsAccordion[2].title}
-                      sx={{ marginBottom: -2, marginTop: -2 }}
-                    />
-                    {/* <Typography>Accordion 1</Typography> */}
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {AccessoriesItems.map((item) => (
-                      <NavItem
-                        key={item.title}
-                        icon={item.icon}
-                        href={item.href}
-                        title={item.title}
-                      />
-                    ))}
-                  </AccordionDetails>
-                </Accordion>
-                {/* ////////////////////////// here */}
-                <Accordion
-                  expanded={expanded === "panel4"}
-                  onChange={handleChange("panel4")}
-                  aria-controls="panel1bh-content"
-                  id="panel1bh-header"
-                  sx={{
-                    backgroundColor: "rgb(38, 28, 16)",
-                    "&:before": {
-                      display: "none",
-                    },
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                  >
-                    <DropdownNavItem
-                      icon={<RequestedIcon />}
-                      title={wareHouseItemsAccordion[3].title}
-                      sx={{ marginBottom: -2, marginTop: -2 }}
-                    />
-                    {/* <Typography>Accordion 1</Typography> */}
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {RequestedItems.map((item) => (
-                      <NavItem
-                        key={item.title}
-                        icon={item.icon}
-                        href={item.href}
-                        title={item.title}
-                      />
-                    ))}
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion
-                  expanded={expanded === "panel5"}
-                  onChange={handleChange("panel5")}
-                  aria-controls="panel1bh-content"
-                  id="panel1bh-header"
-                  sx={{
-                    backgroundColor: "rgb(38, 28, 16)",
-                    "&:before": {
-                      display: "none",
-                    },
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                  >
-                    <DropdownNavItem
-                      icon={<CreateNewFolderIcon />}
-                      title={wareHouseItemsAccordion[4].title}
-                      sx={{ marginBottom: -2, marginTop: -2 }}
-                    />
-                    {/* <Typography>Accordion 1</Typography> */}
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {NewMaterial.map((item) => (
-                      <NavItem
-                        key={item.title}
-                        icon={item.icon}
-                        href={item.href}
-                        title={item.title}
-                      />
-                    ))}
-                  </AccordionDetails>
-                </Accordion>
-                <Box>
-                  {wareHouseItems.map((item) => (
-                    <>
-                      <NavItem
-                        sx={{ marginLeft: 1, maxWidth: " 90%" }}
-                        key={item.title}
-                        icon={item.icon}
-                        href={item.href}
-                        title={item.title}
-                      />
-                    </>
                   ))}
-                </Box>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                expanded={expanded === "panel2"}
+                onChange={handleChange("panel2")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(38, 28, 16)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<FinishedGoodsIcon />}
+                    title={wareHouseItemsAccordion[1].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {FinishedItems.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              {/* //////////////////////////////// here */}
+              <Accordion
+                expanded={expanded === "panel3"}
+                onChange={handleChange("panel3")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(38, 28, 16)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<AccessoriesIcon />}
+                    title={wareHouseItemsAccordion[2].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {AccessoriesItems.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              {/* ////////////////////////// here */}
+              <Accordion
+                expanded={expanded === "panel4"}
+                onChange={handleChange("panel4")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(38, 28, 16)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<RequestedIcon />}
+                    title={wareHouseItemsAccordion[3].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {RequestedItems.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                expanded={expanded === "panel5"}
+                onChange={handleChange("panel5")}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                sx={{
+                  backgroundColor: "rgb(38, 28, 16)",
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1d-content"
+                  id="panel1d-header"
+                >
+                  <DropdownNavItem
+                    icon={<CreateNewFolderIcon />}
+                    title={wareHouseItemsAccordion[4].title}
+                    sx={{ marginBottom: -2, marginTop: -2 }}
+                  />
+                  {/* <Typography>Accordion 1</Typography> */}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {NewMaterial.map((item) => (
+                    <NavItem
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+              <Box>
+                {wareHouseItems.map((item) => (
+                  <>
+                    <NavItem
+                      sx={{ marginLeft: 1, maxWidth: " 90%" }}
+                      key={item.title}
+                      icon={item.icon}
+                      href={item.href}
+                      title={item.title}
+                    />
+                  </>
+                ))}
               </Box>
             </Box>
+          </Box>
         ) : user.role == "Production" ? (
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">PRODUCTION</Typography>
@@ -1047,7 +1096,7 @@ export const DashboardSidebar = (props) => {
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="menuTitle">SALES</Typography>
 
-            {sales.map((item) => (
+            {salesRole.map((item) => (
               <>
                 <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
               </>

@@ -44,15 +44,15 @@ export const Budget = (props) => {
           
           totalProfit += parseFloat(sing.profit);
         });
-        if(totalProfit > 0){
-          setTotal(nFormatter(323456, 2));
-        }else{
-          setSign("-");
-         const withoutSign = parseFloat(totalProfit) * -1
-          setTotal(nFormatter(withoutSign, 2));
-        }
-        console.log(totalProfit)
-        // setTotal(nFormatter(totalProfit, 2));
+        // if(totalProfit > 0){
+        //   setTotal(nFormatter(323456, 2));
+        // }else{
+        //   setSign("-");
+        //  const withoutSign = parseFloat(totalProfit) * -1
+        //   setTotal(nFormatter(withoutSign, 2));
+        // }
+        // console.log(totalProfit)
+        setTotal(parseFloat(totalProfit).toFixed(2));
 
         console.log(total);
       })
@@ -68,7 +68,7 @@ export const Budget = (props) => {
               TOTAL PROFIT
             </Typography>
             <Typography color="textPrimary" variant="h4">
-              {sign} {total} ETB
+               {total} ETB
             </Typography>
           </Grid>
           <Grid item>

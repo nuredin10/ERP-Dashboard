@@ -24,6 +24,7 @@ import { styled } from "@mui/material/styles";
 
 import { useRouter } from "next/router";
 const cartlist = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { reason } = router.query;
   console.log(reason);
@@ -98,13 +99,43 @@ const cartlist = () => {
   const [orderDeclined, setOrderDeclined] = useState(false);
   const [productList, setproductList] = useState([]);
   // Function to handle order acceptance
-  const handleAcceptOrder = () => {
+  const handleAcceptOrder = async () => {
     setOrderAccepted(true);
+    try {
+      const response = await FAxios.post("/acceptBulkSalesOrder", {
+        ID: reason,
+      });
+      const reason2 = response.data;
+      enqueueSnackbar("Sales Order Created", { variant: "success" });
+      FAxios
+      .post("/sendNotification", {
+        To: "sales",
+        message: "Sales Order Accepted",
+      })
+      .then((respo) => {
+        enqueueSnackbar("Notification Sent", { variant: "success" });
+      });
+      Router.push("/sales/salesorderlist");
+      setOrderAccepted(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // Function to handle order rejection
-  const handleDeclineOrder = () => {
+  const handleDeclineOrder = async () => {
     setOrderDeclined(true);
+    try {
+      const response = await FAxios.post("/DeleteSales", {
+        ID: reason,
+      });
+      const reason2 = response.data;
+      enqueueSnackbar("Sales Order Deleted", { variant: "success" });
+      Router.push("/sales/salesorderlist");
+      setOrderAccepted(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(async () => {
@@ -182,7 +213,7 @@ const cartlist = () => {
           </Grid>
         ))}
       </Grid>
-      <Box sx={{ display:'flex', gap:5 }}>
+      <Box sx={{ display: "flex", gap: 5 }}>
         <CButton color="primary" onClick={handleAcceptOrder}>
           Accept Order
         </CButton>
