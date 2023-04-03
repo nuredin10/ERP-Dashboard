@@ -292,11 +292,11 @@ const salesRole = [
     icon: <PurchaseOrderIcon fontSize="small" />,
     title: "Uncollected Sales",
   },
-  {
-    href: "/sales/salesorderlist",
-    icon: <RequestedIcon fontSize="small" />,
-    title: "Sales Order List",
-  },
+  // {
+  //   href: "/sales/salesorderlist",
+  //   icon: <RequestedIcon fontSize="small" />,
+  //   title: "Sales Order List",
+  // },
 
   // {
   //   href: "/sales/vender",
