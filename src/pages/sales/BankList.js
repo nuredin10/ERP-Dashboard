@@ -53,7 +53,7 @@ const AccountRecieveable = () => {
       try {
         console.log("here", id)
         const response = await FAxios.post("/showBankStatment", {
-          ID: router.query.id,
+          ID: id,
         });
         const reason2 = response.data;
         console.log(reason2);
