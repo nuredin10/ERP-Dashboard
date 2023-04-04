@@ -133,13 +133,7 @@ const AccountRecieveable = () => {
               title="Account Recieveable"
               data={data}
               columns={columns}
-              actions={[
-                (rowData) => ({
-                  icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
-                  tooltip: "Details",
-                  onClick: () => details(rowData),
-                }),
-              ]}
+              // actions={}
             />
           </Card>
 

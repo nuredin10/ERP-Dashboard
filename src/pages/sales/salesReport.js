@@ -72,36 +72,10 @@ const MonthlyReport = () => {
       })
       .then(function (res) {
         console.log("response", res.data);
-        // res.data.map((eachData) => {
-        //   eachData.summery_date = convert(eachData.summery_date);
-        //   eachData.stock_recieved =
-        //     eachData.stock_recieved !== ""
-        //       ? parseFloat(eachData.stock_recieved).toLocaleString("en-US")
-        //       : "";
-
-        //   eachData.recived_kg =
-        //     eachData.recived_kg !== ""
-        //       ? parseFloat(eachData.recived_kg).toLocaleString("en-US")
-        //       : "";
-
-        //   eachData.stock_issued =
-        //     eachData.stock_issued !== ""
-        //       ? parseFloat(eachData.stock_issued).toLocaleString("en-US")
-        //       : "";
-
-        //   eachData.issues_kg =
-        //     eachData.issues_kg !== "" ? parseFloat(eachData.issues_kg).toLocaleString("en-US") : "";
-
-        //   eachData.stockat_end =
-        //     eachData.stockat_end !== ""
-        //       ? parseFloat(eachData.stockat_end).toLocaleString("en-US")
-        //       : "";
-
-        //   eachData.stockatend_kg =
-        //     eachData.stockatend_kg !== ""
-        //       ? parseFloat(eachData.stockatend_kg).toLocaleString("en-US")
-        //       : "";
-        // });
+        res.data.map((eachData) => {
+          eachData.order_date = convert(eachData.order_date);
+         
+        });
         setData(res.data);
         console.log(res.data);
         console.log("Works");

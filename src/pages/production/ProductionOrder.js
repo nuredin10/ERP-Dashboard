@@ -102,9 +102,13 @@ const ViewBatch = () => {
             Router.reload();
           } else if (response.data.message === "update status error") {
             console.log("update Server Error");
+            enqueueSnackbar("update Server Error", { variant: "success" });
           } else if (response.data.message === "error making raw material request") {
             console.log("Error making new request");
+            enqueueSnackbar("Error making new request", { variant: "success" });
           } else if (response.data.message === "cant found the order to start") {
+            enqueueSnackbar("Cant find the order", { variant: "success" });
+
             console.log("Cant find the order");
           }
         })

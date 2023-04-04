@@ -72,7 +72,6 @@ const FinishedGoods = () => {
       });
 
     setUser(JSON.parse(Cookies.get("user")));
-
   }, []);
 
   const accept = (id) => {
@@ -81,7 +80,7 @@ const FinishedGoods = () => {
         id: id,
         status: "Accept",
       })
-      .then(function (response) {
+      .then(async (response) => {
         if (response.data.message === "no_material") {
           setItem(response.data.materials[0].fin_name);
           setDialogOpen(true);
@@ -92,23 +91,23 @@ const FinishedGoods = () => {
           console.log("lowwwww");
         } else {
           console.log(response);
-          waxios
-          .post("/sendNotification", {
-            To: "warehouse",
-            message: "New Finshed Item Requestion Accepted",
-          })
-          .then((respo) => {
-            enqueueSnackbar("Notification Sent", { variant: "success" });
-          });
-          enqueueSnackbar("Item Accepted", { variant: "success" });
+          await waxios
+            .post("/sendNotification", {
+              To: "warehouse",
+              message: "New Finshed Item Requestion Accepted",
+            })
+            .then((respo) => {
+              enqueueSnackbar("Item Accepted", { variant: "success" });
+              enqueueSnackbar("Notification Sent", { variant: "success" });
+              window.location.reload();
+            });
+            enqueueSnackbar("Item Accepted", { variant: "success" });
         }
         console.log(response.data.materials[0].fin_name);
       })
       .catch(function (error) {
         console.log("eeeerrrrrrrrrrrrrr", error);
-        enqueueSnackbar("Something went wrong", { variant: "error" });
-
-        // setDialogOpen(true);
+        enqueueSnackbar("Something went wrong", { variant: "success" });
       });
   };
 

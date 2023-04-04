@@ -63,7 +63,7 @@ const salesProductionOrder = () => {
   const [isSuccess, setIsSuccess] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const [totalAmount, settotalAmount] = useState(0);
-  const [advance, setAdvance] = useState();
+  const [advance, setAdvance] = useState(0);
   const [remaining, setRemaining] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -430,6 +430,20 @@ const salesProductionOrder = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={12}>
+                    <Typography variant="h5">Total Amount:</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      name="cus_total"
+                      label="Payment Total"
+                      type="text"
+                      fullWidth
+                      value={totalAmount}
+                      // {...register("cus_total")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
                     <Typography variant="h5">Add Payment Detail</Typography>
                   </Grid>
                   <Grid item lg={12} sm={6}>
@@ -468,17 +482,7 @@ const salesProductionOrder = () => {
                       {...register("account_num")}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      name="cus_total"
-                      label="Payment Total"
-                      type="text"
-                      fullWidth
-                      value={totalAmount}
-                      // {...register("cus_total")}
-                    />
-                  </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
