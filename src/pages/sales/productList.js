@@ -103,7 +103,7 @@ const cartlist = () => {
     setOrderAccepted(true);
     try {
       const response = await FAxios.post("/acceptBulkSalesOrder", {
-        ID: reason,
+        ID: router.query.reason,
       });
       const reason2 = response.data;
       enqueueSnackbar("Sales Order Created", { variant: "success" });
