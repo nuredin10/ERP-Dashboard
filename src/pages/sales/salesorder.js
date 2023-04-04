@@ -200,7 +200,7 @@ const salesProductionOrder = () => {
         enqueueSnackbar("Sales Order Created", { variant: "success" });
         saxios
           .post("/sendNotification", {
-            To: "sales",
+            To: "Sales",
             message: "New Sales Order Arrived",
           })
           .then((respo) => {
