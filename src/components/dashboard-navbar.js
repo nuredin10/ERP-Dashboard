@@ -7,11 +7,11 @@ import { Bell as BellIcon } from "../icons/bell";
 import { UserCircle as UserCircleIcon } from "../icons/user-circle";
 import { Users as UsersIcon } from "../icons/users";
 import { Typography } from "@material-ui/core";
-import jwt from 'jsonwebtoken'
-import Cookies from 'js-cookie'
-import { useState, useEffect } from 'react'
-import Router from 'next/router'
-import LogoutIcon from '@mui/icons-material/Logout';
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
+import Router from "next/router";
+import LogoutIcon from "@mui/icons-material/Logout";
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3],
@@ -19,8 +19,8 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
-  const token = Cookies.get('token')
-  const [user, setUser] = useState({})
+  const token = Cookies.get("token");
+  const [user, setUser] = useState({});
 
   // useEffect(()=>{
   //   jwt.verify(token,'PROPLAST', (err, decoded) =>{
@@ -34,12 +34,12 @@ export const DashboardNavbar = (props) => {
   // },[])
   var width;
 
-  if (typeof window != 'undefined') {
-    console.log('You are on the browser');
+  if (typeof window != "undefined") {
+    console.log("You are on the browser");
     console.log(window.innerWidth);
     width = window.innerWidth;
   } else {
-    console.log('You are on the server')
+    console.log("You are on the server");
   }
 
   function convert(str) {
@@ -61,9 +61,7 @@ export const DashboardNavbar = (props) => {
             // xs: '100%',
             // sm: '100%'
             // md: "100%",
-
           },
-         
         }}
         {...other}
       >
@@ -98,13 +96,18 @@ export const DashboardNavbar = (props) => {
             </IconButton>
           </Tooltip> */}
           <Tooltip title="Logout">
-            <IconButton sx={{ ml: 1 }} onClick={() => {
-              Cookies.remove("loggedIn")
-              Cookies.remove("token")
-              Router.push('/')
-            }}>
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={() => {
+                Cookies.remove("loggedIn");
+                Cookies.remove("token");
+                Cookies.remove("user");
+                Cookies.remove("username");
+                Router.push("/");
+              }}
+            >
               {/* <Badge badgeContent={4} color="primary" variant="dot"> */}
-                <LogoutIcon fontSize="small" />
+              <LogoutIcon fontSize="small" />
               {/* </Badge> */}
             </IconButton>
           </Tooltip>

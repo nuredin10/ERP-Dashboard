@@ -53,27 +53,27 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data);
+    // console.log(data);
     authAxios
       .post("/login", {
         email: data.get("email"),
         password: data.get("password"),
       })
       .then((res) => {
-        console.log(res);
+        const user = jwt.decode(res.data.jwt);
         Cookies.set("token", res.data.jwt);
         Cookies.set("loggedIn", true);
+        Cookies.set("user", JSON.stringify(user));
         enqueueSnackbar("Login Success", { variant: "success" });
-        if(res.data.role === 'Super Admin'){
+        if (res.data.role === "Super Admin") {
           Router.push("/dashboard");
-        } else if(res.data.role === 'Ware House'){
+        } else if (res.data.role === "Ware House") {
           Router.push("/warehouse/stockList/RawMaterial");
-        } else if(res.data.role === 'Sales') {
-            Router.push("/dashboard/uncollected");
-        } else if(res.data.role === 'Production') {
-            Router.push('/production/productionOngoing')
+        } else if (res.data.role === "Sales") {
+          Router.push("/dashboard/uncollected");
+        } else if (res.data.role === "Production") {
+          Router.push("/production/productionOngoing");
         }
-
       })
       .catch((res) => {
         console.log(res);

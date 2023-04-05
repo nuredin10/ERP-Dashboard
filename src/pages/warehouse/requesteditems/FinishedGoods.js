@@ -185,12 +185,7 @@ const FinishedGoods = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <Typography
-            sx={{ mb: 3 }}
-            variant="h4"
-          >
-            Raw Material stockList
-          </Typography> */}
+     
           <Card maxWidth="lg">
             {user && user.role === "Super Admin" ? (
               <Table
