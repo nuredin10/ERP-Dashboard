@@ -60,6 +60,7 @@ export default function SignIn() {
         password: data.get("password"),
       })
       .then((res) => {
+        console.log(res);
         const user = jwt.decode(res.data.jwt);
         Cookies.set("token", res.data.jwt);
         Cookies.set("loggedIn", true);
@@ -73,6 +74,8 @@ export default function SignIn() {
           Router.push("/dashboard/uncollected");
         } else if (res.data.role === "Production") {
           Router.push("/production/productionOngoing");
+        } else if (res.data.role === "Finance") {
+          Router.push("/finance/accountrecieveable");
         }
       })
       .catch((res) => {
