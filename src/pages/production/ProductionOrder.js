@@ -234,7 +234,7 @@ const ViewBatch = () => {
                             .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
                           KG
                         </p>
-                        <h3 className="mt-5 "> cost of 1 Product:</h3>
+                        <h3 className="mt-5 "> Production Cost:</h3>
                         <p className="mt-5 text-right ">
                           {" "}
                           {parseFloat(row.oneFinCost)
@@ -250,7 +250,7 @@ const ViewBatch = () => {
                             .replace(/\d(?=(\d{3})+\.)/g, "$&,")}{" "}
                           ETB
                         </p>
-                        <h3 className="mt-5"> Production Cost:</h3>
+                        <h3 className="mt-5"> Total Cost:</h3>
                         <p className="mt-5 text-right">
                           {" "}
                           {parseFloat(row.finishedWVat)

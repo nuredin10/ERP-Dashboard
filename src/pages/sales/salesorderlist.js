@@ -21,6 +21,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useSnackbar } from "notistack";
 import CButton from "../../components/Button";
 import Router from "next/router";
+import TableContainer from "@material-ui/core/TableContainer";
+import Paper from "@material-ui/core/Paper";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
@@ -35,7 +37,7 @@ const AccountRecieveable = () => {
     { title: "Date", field: "order_date" },
     { title: "Name", field: "customer_name" },
     { title: "Sales Number", field: "salesID" },
-    { title: "Amount", field: "cus_total"},
+    { title: "Amount", field: "cus_total" },
     { title: "Payment status", field: "payment" },
     { title: "Payment Advance", field: "cus_advance" },
     { title: "Payment Remaining", field: "cust_remaining" },
@@ -146,11 +148,44 @@ const AccountRecieveable = () => {
       >
         <Container maxWidth="ml">
           {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
-          <Card maxWidth="lg">
+
+          {/* <TableContainer component={Paper} sx={{ maxHeight: 800 }}>
+            <Card maxWidth="lg">
+              <Table
+                title="Sales Order"
+                data={data}
+                columns={columns}
+                options={{
+                  pageSize: data.length, // set pageSize to the total number of rows
+                  pagination: false, // disable pagination
+                }}
+                actions={[
+                  (rowData) => ({
+                    icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
+                    tooltip: "Details",
+                    onClick: () => details(rowData),
+                  }),
+                ]}
+              />
+            </Card>
+          </TableContainer> */}
+
+          <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
             <Table
               title="Sales Order"
               data={data}
               columns={columns}
+              options={{
+                pageSize: data.length, // set pageSize to the total number of rows
+                pagination: false, // disable pagination
+              }}
+              components={{
+                Container: ({ children, ...rest }) => (
+                  <div {...rest} style={{ overflow: "auto" }}>
+                    {children}
+                  </div>
+                ),
+              }}
               actions={[
                 (rowData) => ({
                   icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
@@ -159,7 +194,7 @@ const AccountRecieveable = () => {
                 }),
               ]}
             />
-          </Card>
+          </TableContainer>
 
           <Modal
             open={open}

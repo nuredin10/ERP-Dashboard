@@ -32,7 +32,7 @@ export const TotalCustomers = (props) => {
       .get("https://report.proplast.et/getuncollectedMoney")
       .then((res) => {
         const formatedCash = nFormatter(res.data.Total);
-        setTotal(formatedCash);
+        setTotal(res.data.Total.toFixed(2));
       })
       .catch((err) => console.log(err));
   }, []);

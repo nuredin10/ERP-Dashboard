@@ -106,7 +106,7 @@ const FinishedGoods = () => {
         console.log(response.data.materials[0].fin_name);
       })
       .catch(function (error) {
-        console.log("eeeerrrrrrrrrrrrrr", error);
+        console.log("eer", error);
         enqueueSnackbar("Something went wrong", { variant: "success" });
       });
   };

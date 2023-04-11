@@ -66,6 +66,7 @@ const FinishedGoods = () => {
         costId: newForm.BatchId,
         VAT: newForm.VAT,
         ProfitID: data[0].id,
+        mass: newForm.mass,
       })
       .then((respo) => {
         console.log(respo);
@@ -436,6 +437,21 @@ const FinishedGoods = () => {
                       type="text"
                       fullWidth
                       {...register("BatchId")}
+                    />
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Typography variant="h6" component="h2">
+                      Finished Good Mass
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={7}>
+                    <TextField
+                      required
+                      name="BatchId"
+                      label="Mass in Kg"
+                      type="text"
+                      fullWidth
+                      {...register("mass")}
                     />
                   </Grid>
                   <Grid item lg={4}>

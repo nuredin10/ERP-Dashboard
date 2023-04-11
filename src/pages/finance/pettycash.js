@@ -43,6 +43,7 @@ const AccountRecieveable = () => {
       salesID: selectedID,
       costId: newForm.BatchId,
       VAT: newForm.VAT,
+      mass: newForm.mass,
     })
       .then((respo) => {
         enqueueSnackbar("Saved Generated", { variant: "success" });
@@ -191,6 +192,21 @@ const AccountRecieveable = () => {
                       type="text"
                       fullWidth
                       {...register("BatchId")}
+                    />
+                  </Grid>
+                  <Grid item lg={4}>
+                    <Typography variant="h6" component="h2">
+                      Finished Good Mass
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={7}>
+                    <TextField
+                      required
+                      name="BatchId"
+                      label="Mass in Kg"
+                      type="text"
+                      fullWidth
+                      {...register("mass")}
                     />
                   </Grid>
                   <Grid item lg={4}>

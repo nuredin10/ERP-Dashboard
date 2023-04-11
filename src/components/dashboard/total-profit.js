@@ -1,7 +1,7 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import PeopleIcon from "@mui/icons-material/PeopleOutlined";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -32,7 +32,7 @@ export const Expense = (props) => {
       .get("https://report.proplast.et/getMonthExpense")
       .then((res) => {
         const formatedCash = nFormatter(res.data.TOTALEXP);
-        setTotal(formatedCash);
+        setTotal(res.data.TOTALEXP.toFixed(2));
       })
       .catch((err) => console.log(err));
   }, []);
@@ -49,15 +49,15 @@ export const Expense = (props) => {
             </Typography>
           </Grid>
           <Grid item>
-          <Avatar
-            sx={{
-              backgroundColor: 'primary.main',
-              height: 56,
-              width: 56
-            }}
-          >
-            <AttachMoneyIcon />
-          </Avatar>
+            <Avatar
+              sx={{
+                backgroundColor: "primary.main",
+                height: 56,
+                width: 56,
+              }}
+            >
+              <AttachMoneyIcon />
+            </Avatar>
           </Grid>
         </Grid>
         <Box
@@ -66,9 +66,7 @@ export const Expense = (props) => {
             display: "flex",
             pt: 2,
           }}
-        >
-         
-        </Box>
+        ></Box>
       </CardContent>
     </Card>
   );

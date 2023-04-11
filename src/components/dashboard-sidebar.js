@@ -509,11 +509,11 @@ const Finance = [
     icon: <CreditScoreIcon fontSize="small" />,
     title: "Approved Production Cost",
   },
-  // {
-  //   href: "/finance/accountRecivableSales",
-  //   icon: <CreditScoreIcon fontSize="small" />,
-  //   title: "Sales List",
-  // },
+  {
+    href: "/finance/bankStatment",
+    icon: <CreditScoreIcon fontSize="small" />,
+    title: "Bank Statment",
+  },
   {
     href: "/finance/pettycash",
     icon: <PaymentIcon fontSize="small" />,
