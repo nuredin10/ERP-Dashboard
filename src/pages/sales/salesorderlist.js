@@ -147,9 +147,8 @@ const AccountRecieveable = () => {
         }}
       >
         <Container maxWidth="ml">
-          {/* <ToolBar title="customer" href="/sales/Customers/addCustomers" /> */}
+          <ToolBar title="customer" href="/sales/Customers/addCustomers" />
 
-          {/* <TableContainer component={Paper} sx={{ maxHeight: 800 }}>
             <Card maxWidth="lg">
               <Table
                 title="Sales Order"
@@ -168,9 +167,9 @@ const AccountRecieveable = () => {
                 ]}
               />
             </Card>
-          </TableContainer> */}
+         
 
-          <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
+          {/* <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
             <Table
               title="Sales Order"
               data={data}
@@ -194,7 +193,7 @@ const AccountRecieveable = () => {
                 }),
               ]}
             />
-          </TableContainer>
+          </TableContainer> */}
 
           <Modal
             open={open}
