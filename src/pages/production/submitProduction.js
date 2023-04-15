@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import CButton from "../../components/Button";
 import { DatePicker } from "@mantine/dates";
 import { useSnackbar } from "notistack";
+import saxios from "../../components/salesAxios";
 
 const style = {
   position: "absolute",
@@ -37,6 +38,19 @@ const ProductionOrderGM = () => {
   const router = useRouter();
   const { id } = router.query;
 
+
+  const [finishedGoods, setFinishedGoods] = useState([]);
+  const [diameter, setDiameter] = useState([]);
+  const [color, setColor] = useState([]);
+  const [materialCode, setMaterialCode] = useState([]);
+
+  const [selectedFinishedGoods, setSelectedFinishedGoods] = useState('');
+  const [selecteddiameter, setSelectedDiameter] = useState('');
+  const [selectedcolor, setSelectedColor] = useState('');
+  const [selectedmaterialCode, setSelectedMaterialCode] = useState('');
+
+
+
   const newRequest = (data) => {
     console.log(data);
     var newData = { ...data, newDate: datepick.toString() };
@@ -60,6 +74,21 @@ const ProductionOrderGM = () => {
         console.log(err);
       });
   };
+
+
+  useEffect(() => {
+    axios.get('/finishedGoodSelect')
+        .then((res) => {
+          console.log(res,"proddddddddd")
+          setFinishedGoods(res.data.Names)
+          setDiameter(res.data.Diameter)
+          setColor(res.data.colors)
+          setMaterialCode(res.data.MaterialCodes)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+  }, [])
 
   return (
     <>
@@ -120,17 +149,15 @@ const ProductionOrderGM = () => {
                       name="Final Product"
                       label="Final Product"
                       select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
+                      // onChange={(event) => handleFormChange(index, event)}
                       fullWidth
                       {...register("final_product")}
                     >
-                      <MenuItem value="PPR PIPE">PPR PIPES</MenuItem>
-                      <MenuItem value="UPVC PIPE">UPVC PIPES</MenuItem>
-                      <MenuItem value="HDPE PIPE">HDPE PIPES</MenuItem>
-                      <MenuItem value="UPVC FITTINGS">UPVC FITTINGS</MenuItem>
-                      <MenuItem value="PPR FITTINGS">PPR FITTINGS</MenuItem>
-                      <MenuItem value="Conduit">Conduit</MenuItem>
+                      {
+                        finishedGoods.map((item) => (
+                            <MenuItem value={item}>{item}</MenuItem>
+                        ))
+                      }
                     </TextField>
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -138,39 +165,54 @@ const ProductionOrderGM = () => {
                       name="final_color"
                       label="Product Color"
                       select
-                      defaultValue="RAW"
-                      onChange={(event) => handleFormChange(index, event)}
+                      // onChange={(event) => handleFormChange(index, event)}
                       fullWidth
                       {...register("final_color")}
                     >
-                      <MenuItem value="GRAY">GRAY</MenuItem>
-                      <MenuItem value="BLACK">BLACK</MenuItem>
-                      <MenuItem value="ORANGE">ORANGE</MenuItem>
-                      <MenuItem value="White">WHITE</MenuItem>
-                      <MenuItem value="Green">GREEN</MenuItem>
+                      {
+                        color.map((item) => (
+                            <MenuItem value={item}>{item}</MenuItem>
+                        ))
+                      }
+
                     </TextField>
                   </Grid>
 
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
-                      name="finished_diameter"
-                      label="Diameter(OD)"
-                      type="text"
-                      fullWidth
-                      {...register("finished_diameter")}
-                    />
+                        name="finished_diameter"
+                        label="Diameter(OD)"
+                        select
+                        // onChange={(event) => handleFormChange(index, event)}
+                        fullWidth
+                        {...register("finished_diameter")}
+                    >
+                      {
+                        diameter.map((item) => (
+                            <MenuItem value={item}>{item}</MenuItem>
+                        ))
+                      }
+                    </TextField>
                   </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
-                      name="finished_materialcode"
-                      label="Material Code"
-                      type="text"
-                      fullWidth
-                      {...register("finished_materialcode")}
-                    />
+                        name="finished_materialcode"
+                        label="Material Code"
+                        select
+                        // onChange={(event) => handleFormChange(index, event)}
+                        fullWidth
+                        {...register("finished_materialcode")}
+                    >
+                      {
+                        materialCode.map((item) => (
+                            <MenuItem value={item}>{item}</MenuItem>
+                        ))
+                      }
+                    </TextField>
                   </Grid>
+
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
