@@ -1,6 +1,9 @@
 name: Deploy Next.js App
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
