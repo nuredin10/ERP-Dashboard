@@ -45,12 +45,12 @@ const MonthlyReport = () => {
   // var nowYead = new
   const [data, setData] = useState([]);
   const [date, setDate] = useState([]);
-
-
+  const [report, setReport] = useState([]);
+  const [isReportSet, setIsReportSet] = useState(false);
   const columns = [
     { title: "Date", field: "order_date" },
     { title: "Name", field: "customer_name" },
-    { title: "Tin Number", field: "Tin_number" },
+    { title: "Fs Number", field: "salesID" },
     { title: "Payment status", field: "payment" },
     { title: "Amount", field: "cus_total" },
     { title: "Payment Advance", field: "cus_advance" },
@@ -74,23 +74,55 @@ const MonthlyReport = () => {
         console.log("response", res.data);
         res.data.map((eachData) => {
           eachData.order_date = convert(eachData.order_date);
-         
         });
         setData(res.data);
-        console.log(res.data);
-        console.log("Works");
+        let keys = [
+          "id",
+          "final_color",
+          "final_diameter",
+          "final_materialCode",
+          "final_measureunit",
+          "final_product",
+          "final_quant",
+          "tableData",
+        ]; // keys to be removed from each object
+
+        let newArr = res.data.map(
+          ({
+            [keys[0]]: _,
+            [keys[1]]: __,
+            [keys[2]]: ___,
+            [keys[3]]: ____,
+            [keys[4]]: _____,
+            [keys[5]]: ______,
+            [keys[6]]: _______,
+            [keys[7]]: ________,
+            ...rest
+          }) => rest
+        );
+        setReport(newArr);
+
+        if (!isReportSet) {
+          setIsReportSet(true);
+        }
+
       })
       .catch(function (res) {
         console.log(res);
       });
   }, [date[1]]);
+  const getReport = () => report;
 
   const excel = () => {
-    const XLSX = xlsx;
-    const workbook = utils.book_new();
-    const worksheet = utils.json_to_sheet(data);
-    utils.book_append_sheet(workbook, worksheet, "Report");
-    writeFileXLSX(workbook, "Report.xlsx");
+    if (isReportSet) {
+      const XLSX = xlsx;
+      const workbook = utils.book_new();
+      const worksheet = utils.json_to_sheet(report);
+      utils.book_append_sheet(workbook, worksheet, "Report");
+      writeFileXLSX(workbook, "Report.xlsx");
+    } else {
+      console.log("Report data is not set yet");
+    }
   };
   const print = () => {
     setIsPrinting(true);
@@ -161,7 +193,7 @@ const MonthlyReport = () => {
                 icon={<IconCalendar size={16} />}
               />
             </Grid>
-           
+
             <Grid
               sx={{
                 marginLeft: 20,
