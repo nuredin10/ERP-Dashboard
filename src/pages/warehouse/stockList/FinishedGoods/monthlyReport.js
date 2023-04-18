@@ -35,6 +35,7 @@ import PrintLayout from "../../../../components/PrintLayout";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useSnackbar } from "notistack";
 import Router from "next/router";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const MonthlyReport = () => {
   const [selectMonth, setSelectMonth] = useState("");
@@ -49,7 +50,7 @@ const MonthlyReport = () => {
   const [data, setData] = useState([]);
   const [date, setDate] = useState([]);
   const [year, setYear] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [recievedSummery, setRecivedSummery] = useState([]);
   const [issuedSummery, setIssuedSummery] = useState([]);
 
@@ -275,37 +276,51 @@ const MonthlyReport = () => {
         </Grid>
 
         <Container maxWidth="ml">
-          <div ref={sheetRef}>
-            <PrintLayout documentNo={documentNo} isPrinting={isPrinting}>
-              <Card maxWidth="lg">
-                <Table
-                  title={title}
-                  data={data}
-                  columns={issuedcolumns}
-                  actions={[
-                    (rowData) => ({
-                      icon: () => <RemoveCircleOutlineIcon size="small" />,
-                      tooltip: "Remove",
-                      onClick: () => {
-                        console.log(rowData);
-
-                        try {
-                          waxios.post("/deleteStockSummery", {
-                            id: rowData.id,
-                            materialId: rowData.material_id,
-                            materialType: "FIN",
-                          });
-                          enqueueSnackbar("Deleted Successfully", { variant: "success" });
-                          console.log(res.data);
-                          Router.reload();
-                        } catch (err) {}
-                      },
-                    }),
-                  ]}
-                />
-              </Card>
-            </PrintLayout>
-          </div>
+          {loading ? (
+            <CircularProgress
+              size={68}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                zIndex: 1,
+              }}
+            />
+          ) : (
+            <div ref={sheetRef}>
+              <PrintLayout documentNo={documentNo} isPrinting={isPrinting}>
+                <Card maxWidth="lg">
+                  <Table
+                    title={title}
+                    data={data}
+                    columns={issuedcolumns}
+                    actions={[
+                      (rowData) => ({
+                        icon: () => <RemoveCircleOutlineIcon size="small" />,
+                        tooltip: "Remove",
+                        onClick: () => {
+                          console.log(rowData);
+                          setLoading(true);
+                          try {
+                            waxios.post("/deleteStockSummery", {
+                              id: rowData.id,
+                              materialId: rowData.material_id,
+                              materialType: "FIN",
+                            });
+                            setLoading(false);
+                            enqueueSnackbar("Deleted Successfully", { variant: "success" });
+                            router2.back();
+                          } catch (err) {
+                            enqueueSnackbar("Deleting Error", { variant: "error" });
+                          }
+                        },
+                      }),
+                    ]}
+                  />
+                </Card>
+              </PrintLayout>
+            </div>
+          )}
         </Container>
       </Box>
     </>
