@@ -20,12 +20,13 @@ import waxios from "../../components/wareHouseAxios";
 import Router from "next/router";
 import Cookies from "js-cookie";
 import { useSnackbar } from "notistack";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Recieving = () => {
   const [data, setData] = useState([]);
   const [user, setUser] = useState();
   const { enqueueSnackbar } = useSnackbar();
-
+  const [loading, setLoading] = useState(false);
   function convert(str) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -57,14 +58,16 @@ const Recieving = () => {
     setUser(JSON.parse(Cookies.get("user")));
   }, []);
   const accept = async (id) => {
+    setLoading(true);
     await waxios
       .post("/confirmPurchased", {
         id: id,
         status: "Accept",
       })
-      .then((response) => {
+      .then(async (response) => {
+        setLoading(false);
         enqueueSnackbar("Item Accepted", { variant: "success" });
-        waxios
+        await waxios
           .post("/sendNotification", {
             To: "warehouse",
             message: "New Material Accepted To Store",
@@ -74,23 +77,26 @@ const Recieving = () => {
             window.location.reload();
           });
         window.location.reload();
-        // Router.reload(window.location.pathname);
+        //  Router.reload(window.location.pathname);
 
         console.log(response);
       })
       .catch(function (error) {
+        setLoading(false);
         console.log(error);
         enqueueSnackbar(error.response.data, { variant: "error" });
       });
   };
 
   const decline = async (id) => {
+    setLoading(true);
     await waxios
       .post("/confirmPurchased", {
         id: id,
         status: "Decline",
       })
       .then(function (response) {
+        setLoading(false);
         enqueueSnackbar("Item Declined", { variant: "error" });
         waxios
           .post("/sendNotification", {
@@ -100,7 +106,7 @@ const Recieving = () => {
           .then((respo) => {
             enqueueSnackbar("Notification Sent", { variant: "success" });
           });
-        // Router.reload(window.location.pathname);
+        //  Router.reload(window.location.pathname);
         window.location.reload();
         console.log(response);
       })
@@ -124,29 +130,41 @@ const Recieving = () => {
         }}
       >
         <Container maxWidth="ml">
-          <Card maxWidth="lg">
-            {user && user.role === "Super Admin" ? (
-              <Table
-                title="Recieving"
-                data={data}
-                columns={columns}
-                actions={[
-                  (rowData) => ({
-                    icon: () => <DoneIcon />,
-                    tooltip: "Accpet ",
-                    onClick: () => accept(rowData.id),
-                  }),
-                  (rowData) => ({
-                    icon: () => <CloseIcon />,
-                    tooltip: "Reject ",
-                    onClick: () => decline(rowData.id),
-                  }),
-                ]}
-              />
-            ) : (
-              <Table title="Recieving" data={data} columns={columns} />
-            )}
-          </Card>
+          {loading ? (
+            <CircularProgress
+              size={68}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                zIndex: 1,
+              }}
+            />
+          ) : (
+            <Card maxWidth="lg">
+              {user && user.role === "Super Admin" ? (
+                <Table
+                  title="Recieving"
+                  data={data}
+                  columns={columns}
+                  actions={[
+                    (rowData) => ({
+                      icon: () => <DoneIcon />,
+                      tooltip: "Accpet ",
+                      onClick: () => accept(rowData.id),
+                    }),
+                    (rowData) => ({
+                      icon: () => <CloseIcon />,
+                      tooltip: "Reject ",
+                      onClick: () => decline(rowData.id),
+                    }),
+                  ]}
+                />
+              ) : (
+                <Table title="Recieving" data={data} columns={columns} />
+              )}
+            </Card>
+          )}
         </Container>
       </Box>
     </>
