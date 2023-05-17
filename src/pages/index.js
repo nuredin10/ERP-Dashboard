@@ -46,7 +46,7 @@ const theme = createTheme();
 export default function SignIn() {
   const [incorrect, setIncorrect] = React.useState(false);
   const [alertS, setAlertS] = useState(false);
-  const alertComponent = <Alert severity="error">Incorrect Username or Password</Alert>;
+  // const alertComponent = <Alert severity="error">Incorrect Username or Password</Alert>;
   const { enqueueSnackbar } = useSnackbar();
   const { user, setUser } = useUser();
 

@@ -48,52 +48,6 @@ const cartlist = () => {
     },
   });
   //    const parsedReason = JSON.parse(reason);
-
-  // Sample list of products
-  //   const productList = [
-  //     {
-  //       name: "Product A",
-  //       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  //       color: "Red",
-  //       quantity: 2,
-  //       uom: "pcs",
-  //       materialCode: "12345",
-  //       unitPrice: 10.0,
-  //       totalPrice: 20.0,
-  //     },
-  //     {
-  //       name: "Product B",
-  //       description: "Pellentesque euismod nunc at mauris bibendum rhoncus.",
-  //       color: "Blue",
-  //       quantity: 1,
-  //       uom: "m",
-  //       materialCode: "67890",
-  //       unitPrice: 5.0,
-  //       totalPrice: 5.0,
-  //     },
-  //     {
-  //       name: "Product B",
-  //       description: "Pellentesque euismod nunc at mauris bibendum rhoncus.",
-  //       color: "Blue",
-  //       quantity: 1,
-  //       uom: "m",
-  //       materialCode: "67890",
-  //       unitPrice: 5.0,
-  //       totalPrice: 5.0,
-  //     },
-  //     {
-  //       name: "Product B",
-  //       description: "Pellentesque euismod nunc at mauris bibendum rhoncus.",
-  //       color: "Blue",
-  //       quantity: 1,
-  //       uom: "m",
-  //       materialCode: "67890",
-  //       unitPrice: 5.0,
-  //       totalPrice: 5.0,
-  //     },
-  //     // Add more products here...
-  //   ];
-
   // State variables for order acceptance
   const [orderAccepted, setOrderAccepted] = useState(false);
   const [orderDeclined, setOrderDeclined] = useState(false);

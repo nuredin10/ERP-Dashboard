@@ -35,7 +35,7 @@ import PrintLayout from "../../../../components/PrintLayout";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useSnackbar } from "notistack";
 import Router from "next/router";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 const MonthlyReport = () => {
   const [selectMonth, setSelectMonth] = useState("");
@@ -294,28 +294,80 @@ const MonthlyReport = () => {
                     title={title}
                     data={data}
                     columns={issuedcolumns}
-                    actions={[
-                      (rowData) => ({
-                        icon: () => <RemoveCircleOutlineIcon size="small" />,
-                        tooltip: "Remove",
-                        onClick: () => {
-                          console.log(rowData);
-                          setLoading(true);
-                          try {
-                            waxios.post("/deleteStockSummery", {
-                              id: rowData.id,
-                              materialId: rowData.material_id,
-                              materialType: "FIN",
-                            });
-                            setLoading(false);
-                            enqueueSnackbar("Deleted Successfully", { variant: "success" });
-                            router2.back();
-                          } catch (err) {
-                            enqueueSnackbar("Deleting Error", { variant: "error" });
-                          }
-                        },
-                      }),
-                    ]}
+                    // actions={[
+                    //   (rowData) => ({
+                    //     icon: () => <RemoveCircleOutlineIcon size="small" />,
+                    //     tooltip: "Remove",
+                    //     onClick: () => {
+                    //       console.log(rowData);
+                    //       setLoading(true);
+                    //       try {
+                    //         waxios.post("/deleteStockSummery", {
+                    //           id: rowData.id,
+                    //           materialId: rowData.material_id,
+                    //           materialType: "FIN",
+                    //         });
+                    //         setLoading(false);
+                    //         enqueueSnackbar("Deleted Successfully", { variant: "success" });
+                    //         router2.back();
+                    //       } catch (err) {
+                    //         enqueueSnackbar("Deleting Error", { variant: "error" });
+                    //       }
+                    //     },
+                    //   }),
+                    // ]}
+                    editable={{
+                      // isEditable: rowData => rowData.name === 'a', // only name(a) rows would be editable
+                      // isEditHidden: rowData => rowData.name === 'x',
+                      // isDeletable: rowData => rowData.name === 'b', // only name(b) rows would be deletable,
+                      // isDeleteHidden: rowData => rowData.name === 'y',
+
+                      onRowUpdate: (newData, oldData) =>
+                        new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            const dataUpdate = [...data];
+                            const index = oldData.tableData.id;
+                            dataUpdate[index] = newData;
+                            waxios
+                              .put("/updateFinishedSummery", {
+                                summery: newData,
+                                matId: router2.query.id,
+                              })
+                              .then((res) => {
+                                setData([...dataUpdate]);
+                                console.log(res);
+                                resolve();
+                              })
+                              .catch((err) => {
+                                reject();
+                                console.log(err);
+                              });
+                          }, 1000);
+                        }),
+                      onRowDelete: (oldData) =>
+                        new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            const dataDelete = [...data];
+                            const index = oldData.tableData.id;
+                            dataDelete.splice(index, 1);
+                            console.log(oldData);
+                            waxios
+                              .post("/deleteFinishedSummery", {
+                                summery: oldData,
+                                matId: router2.query.id,
+                              })
+                              .then((res) => {
+                                setData([...dataDelete]);
+                                console.log(res);
+                                resolve();
+                              })
+                              .catch((err) => {
+                                reject();
+                                console.log(err);
+                              });
+                          }, 1000);
+                        }),
+                    }}
                   />
                 </Card>
               </PrintLayout>
