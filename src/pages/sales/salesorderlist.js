@@ -23,6 +23,7 @@ import CButton from "../../components/Button";
 import Router from "next/router";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const AccountRecieveable = () => {
   const [data, setData] = useState([]);
@@ -90,6 +91,28 @@ const AccountRecieveable = () => {
     }
   };
 
+  const delate = async (data) => {
+    const confirmed = await new Promise((resolve) => {
+      const result = window.confirm("Are you sure you want to delete?");
+      resolve(result);
+    });
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const respo = await FAxios.post("/salesDelete", {
+        Status: data.status,
+        ID: data.id,
+        Fs: data.salesID,
+        date: data.order_date,
+      });
+      console.log("respo", respo)
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
+  };
   const style = {
     position: "relative",
     top: "50%",
@@ -149,25 +172,29 @@ const AccountRecieveable = () => {
         <Container maxWidth="ml">
           <ToolBar title="customer" href="/sales/Customers/addCustomers" />
 
-            <Card maxWidth="lg">
-              <Table
-                title="Sales Order"
-                data={data}
-                columns={columns}
-                options={{
-                  pageSize: data.length, // set pageSize to the total number of rows
-                  pagination: false, // disable pagination
-                }}
-                actions={[
-                  (rowData) => ({
-                    icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
-                    tooltip: "Details",
-                    onClick: () => details(rowData),
-                  }),
-                ]}
-              />
-            </Card>
-         
+          <Card maxWidth="lg">
+            <Table
+              title="Sales Order"
+              data={data}
+              columns={columns}
+              options={{
+                pageSize: data.length, // set pageSize to the total number of rows
+                pagination: false, // disable pagination
+              }}
+              actions={[
+                (rowData) => ({
+                  icon: () => <InfoIcon sx={{ color: "primary.main" }} />,
+                  tooltip: "Details",
+                  onClick: () => details(rowData),
+                }),
+                (rowData) => ({
+                  icon: () => <RemoveCircleOutlineIcon size="small" />,
+                  tooltip: "Delete",
+                  onClick: () => delate(rowData),
+                }),
+              ]}
+            />
+          </Card>
 
           {/* <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
             <Table
