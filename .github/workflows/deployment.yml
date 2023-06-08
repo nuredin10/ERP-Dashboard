@@ -1,0 +1,20 @@
+on: push
+  push:
+    branches:
+      - main
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 📂 Sync files
+        uses: webitsbr/github-to-ftp@1.0.1
+        with:
+          server: ${{ secrets.CPANEL_HOST }}
+          server-dir: /public_html/erp_frontend
+          username: ${{ secrets.CPANEL_USERNAME  }}
+          password: ${{ secrets.CPANEL_PASSWORD  }}
