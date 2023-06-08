@@ -17,6 +17,6 @@ jobs:
         uses: webitsbr/github-to-ftp@1.0.1
         with:
           server: ${{ secrets.CPANEL_HOST }}
-          server-dir: /public_html/erp_frontend
+          server-dir: /public_html/erp_frontend/
           username: ${{ secrets.CPANEL_USERNAME  }}
           password: ${{ secrets.CPANEL_PASSWORD  }}
