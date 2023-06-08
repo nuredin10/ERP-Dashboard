@@ -1,6 +1,6 @@
 name: 🚀 Deploy website on push
 
-on: push
+on:
   push:
     branches:
       - main
