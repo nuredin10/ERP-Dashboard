@@ -13,10 +13,10 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
-      - name: 📂 Sync files
-        uses: webitsbr/github-to-ftp@1.0.1
+      - name: Deploy to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
-          server: ${{ secrets.CPANEL_HOST }}
-          server-dir: /public_html/erp_frontend/
-          username: ${{ secrets.CPANEL_USERNAME  }}
-          password: ${{ secrets.CPANEL_PASSWORD  }}
+          server: ${{ secrets.CPANEL_SERVER }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          remote-dir: public_html/
