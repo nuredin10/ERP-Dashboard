@@ -19,4 +19,4 @@ jobs:
           server: ${{ secrets.CPANEL_SERVER }}
           username: ${{ secrets.CPANEL_USERNAME }}
           password: ${{ secrets.CPANEL_PASSWORD }}
-          remote-dir: public_html/
+          server-dir: public_html/
