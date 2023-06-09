@@ -13,6 +13,12 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Build app
+        run: npm run build
+
       - name: Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
