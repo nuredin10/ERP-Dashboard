@@ -16,8 +16,8 @@ jobs:
       - name: Install dependencies
         run: npm install --force
 
-      # - name: Build app
-      #   run: npm run build
+      - name: Build app
+        run: npm run build
 
       - name: Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
