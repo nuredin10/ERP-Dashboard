@@ -83,7 +83,7 @@ const AccountRecieveable = () => {
     try {
       Router.push({
         pathname: "/sales/productList",
-        query: { reason: data.id },
+        query: { reason: data.id, status: data.status },
       });
     } catch (error) {
       console.log(error);

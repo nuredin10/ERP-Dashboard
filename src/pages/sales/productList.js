@@ -27,6 +27,7 @@ const cartlist = () => {
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { reason } = router.query;
+  const {status} = router.query;
   console.log(reason);
 
   const AcceptButton = styled(Button)({
@@ -98,6 +99,7 @@ const cartlist = () => {
         const response = await FAxios.post("/showCartbyId", {
           ID: reason,
         });
+        console.log(response)
         const reason2 = response.data;
 
         setproductList(reason2);
@@ -116,7 +118,7 @@ const cartlist = () => {
       <Typography
         variant="h5"
         sx={{
-          fontSize: { xs: "1.5rem", md: "2rem", lg: "3rem" },
+          fontSize: { xs: "1rem", md: "1.5rem", lg: "1.5rem" },
           fontWeight: "bold",
           textAlign: "center",
           textTransform: "uppercase",
@@ -167,11 +169,11 @@ const cartlist = () => {
           </Grid>
         ))}
       </Grid>
-      <Box sx={{ display: "flex", gap: 5 }}>
-        <CButton color="primary" onClick={handleAcceptOrder}>
+      <Box sx={{ display: "flex", gap: 5, mt: 5 }}>
+        <CButton disabled={ status === 'Accepted' ? true : false } onClick={handleAcceptOrder}>
           Accept Order
         </CButton>
-        <CButton color="error" onClick={handleDeclineOrder}>
+        <CButton disabled={ status === 'Accepted' ? true : false } onClick={handleDeclineOrder}>
           Decline Order
         </CButton>
       </Box>

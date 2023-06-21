@@ -122,7 +122,7 @@ const Profit = () => {
             </Box>
           </Grid>
           <div ref={sheetRef}>
-            <PrintLayout documentNo={documentNo} isPrinting={true}>
+            <PrintLayout documentNo={documentNo} isPrinting={isPrinting}>
               <Card maxWidth="lg">
                 <Table
                   title="Profit Sales List"

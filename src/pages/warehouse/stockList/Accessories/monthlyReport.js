@@ -288,7 +288,58 @@ const MonthlyReport = () => {
                     <div ref={sheetRef}>
                         <PrintLayout documentNo={documentNo} isPrinting={isPrinting}>
                             <Card maxWidth="lg">
-                                <Table title="Monthly Stock Issued Report" data={data} columns={issuedcolumns}/>
+                                <Table title="Monthly Stock Issued Report" data={data} columns={issuedcolumns}  editable={{
+                                    // isEditable: rowData => rowData.name === 'a', // only name(a) rows would be editable
+                                    // isEditHidden: rowData => rowData.name === 'x',
+                                    // isDeletable: rowData => rowData.name === 'b', // only name(b) rows would be deletable,
+                                    // isDeleteHidden: rowData => rowData.name === 'y',
+
+                                    onRowUpdate: (newData, oldData) =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                                const dataUpdate = [...data];
+                                                const index = oldData.tableData.id;
+                                                dataUpdate[index] = newData;
+                                                waxios
+                                                    .put("/updateFinishedSummery", {
+                                                        summery: newData,
+                                                        matId: router2.query.id,
+                                                    })
+                                                    .then((res) => {
+                                                        setData([...dataUpdate]);
+                                                        console.log(res);
+                                                        resolve();
+                                                    })
+                                                    .catch((err) => {
+                                                        reject();
+                                                        console.log(err);
+                                                    });
+                                            }, 1000);
+                                        }),
+                                    onRowDelete: (oldData) =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                                const dataDelete = [...data];
+                                                const index = oldData.tableData.id;
+                                                dataDelete.splice(index, 1);
+                                                console.log(oldData);
+                                                waxios
+                                                    .post("/deleteFinishedSummery", {
+                                                        summery: oldData,
+                                                        matId: router2.query.id,
+                                                    })
+                                                    .then((res) => {
+                                                        setData([...dataDelete]);
+                                                        console.log(res);
+                                                        resolve();
+                                                    })
+                                                    .catch((err) => {
+                                                        reject();
+                                                        console.log(err);
+                                                    });
+                                            }, 1000);
+                                        }),
+                                }}/>
                             </Card>
                         </PrintLayout>
                     </div>
