@@ -1,0 +1,29 @@
+name: Deploy to cPanel
+on:
+  push:
+    branches:
+      - dev_erp
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js application
+        run: npm run build
+
+      - name: Deploy to cPanel
+        run: |
+          sshpass -p ${{ secrets.CPANEL_PASSWORD }} scp -r -P ${{ secrets.CPANEL_PORT }} ./path/to/your/nextjs-app/ ${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}:${{ secrets.CPANEL_DESTINATION_PATH }}
+

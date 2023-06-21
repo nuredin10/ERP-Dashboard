@@ -229,6 +229,7 @@ const Summary = () => {
     { title: "Material Code", field: "finished_materialcode" },
     { title: "Color", field: "color" },
     { title: "Stock At Hand", field: "finished_quantity" },
+    { title: "Finished Mass", field: "finished_mass" },
   ];
   function convert(str) {
     var date = new Date(str),
@@ -336,6 +337,59 @@ const Summary = () => {
                       },
                     }),
                   ]}
+
+                  editable={{
+                    // isEditable: rowData => rowData.name === 'a', // only name(a) rows would be editable
+                    // isEditHidden: rowData => rowData.name === 'x',
+                    // isDeletable: rowData => rowData.name === 'b', // only name(b) rows would be deletable,
+                    // isDeleteHidden: rowData => rowData.name === 'y',
+
+                    onRowUpdate: (newData, oldData) =>
+                        new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            const dataUpdate = [...data];
+                            const index = oldData.tableData.id;
+                            dataUpdate[index] = newData;
+                              waxios
+                                  .put("/updateFinishgoods", {
+                                      id: newData.id,
+                                      data: newData,
+                                  })
+                                  .then((res) => {
+                                      setData([...dataUpdate]);
+                                      console.log(res);
+                                      resolve();
+                                  })
+                                  .catch((err) => {
+                                      reject();
+                                      console.log(err);
+                                  });
+                          }, 1000);
+                        }),
+                    // onRowDelete: (oldData) =>
+                    //     new Promise((resolve, reject) => {
+                    //       setTimeout(() => {
+                    //         const dataDelete = [...data];
+                    //         const index = oldData.tableData.id;
+                    //         dataDelete.splice(index, 1);
+                    //         console.log(oldData);
+                    //         waxios
+                    //             .post("/deleteFinishedSummery", {
+                    //               summery: oldData,
+                    //               matId: router2.query.id,
+                    //             })
+                    //             .then((res) => {
+                    //               setData([...dataDelete]);
+                    //               console.log(res);
+                    //               resolve();
+                    //             })
+                    //             .catch((err) => {
+                    //               reject();
+                    //               console.log(err);
+                    //             });
+                    //       }, 1000);
+                    //     }),
+                  }}
                 />
               </Card>
             </Grid>
