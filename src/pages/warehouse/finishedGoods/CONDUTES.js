@@ -39,7 +39,7 @@ const FinishedGoods = () => {
     { title: "Description", field: "finished_diameter" },
     { title: "Material Code", field: "finished_materialcode" },
     { title: "Color", field: "color" },
-    { title: "Stock At Hand", field: "stockat_hand" },
+    { title: "Stock At Hand", field: "finished_quantity" },
     { title: "Finished Mass", field: "finished_mass" },
   ];
 
